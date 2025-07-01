@@ -1,0 +1,63 @@
+site_name: BeepyRC/Wiki
+repo_name: BeepyRC
+site_description: >-
+  Using old RC components to create a smart RC vehicle.
+copyright: Copyright © 2025 David Arnaiz
+theme:
+  name: material
+  language: en
+  logo: imgs/test_icon.png
+  favicon: imgs/test_icon.png
+  features:
+    - navigation.tabs
+    - navigation.tabs.sticky
+    - navigation.indexes
+    - navigation.top
+    - navigation.instant
+    - navigation.tracking
+    - navigation.sections
+
+  palette:
+    - scheme: default
+      primary: blue
+      accent: blue
+      toggle:
+        icon: material/brightness-3
+        name: Switch to light mode
+    - scheme: slate
+      primary: blue
+      accent: blue
+      toggle:
+        icon: material/brightness-7
+        name: Switch to dark mode
+
+plugins:
+    - search:
+    - mkdoxy:
+        projects:
+          template:
+            src-dirs: firmware
+            full-doc: True
+            doxy-cfg:
+              FILE_PATTERNS: "*.c *.h*"
+              RECURSIVE: True
+              EXCLUDE_PATTERNS: "*/docs/* */firmware/make/build/* */mcu/* */firmware/make/bin/*"
+              EXTRACT_STATIC: "YES"
+
+nav:
+    - Home: README.md
+    - Getting Started:
+        - getting_started/setup.md
+        - getting_started/hardware.md
+    - About:
+        - about/credits.md
+        - license.md
+    - Source:
+        - template/files.md
+        - Modules:
+            - Main: template/group___main.md
+        - Platform:
+            - Utils: template/group___plt_utils.md
+            - Types: template/group___plt_types.md
+            - Assert: template/group___plt_assert.md
+
