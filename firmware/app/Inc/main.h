@@ -1,8 +1,7 @@
-/* USER CODE BEGIN Header */
+// TODO modify header after file modification
 /**
  ******************************************************************************
  * @file           : main.h
- * @brief          : Header for main.c file.
  *                   This file contains the common defines of the application.
  ******************************************************************************
  * @attention
@@ -16,7 +15,6 @@
  *
  ******************************************************************************
  */
-/* USER CODE END Header */
 
 /* Define to prevent recursive inclusion -------------------------------------*/
 #ifndef __MAIN_H
@@ -27,6 +25,8 @@ extern "C" {
 #endif
 
 /* Includes ------------------------------------------------------------------*/
+#include "stm32f4xx_hal.h"
+
 #include "stm32f4xx_ll_bus.h"
 #include "stm32f4xx_ll_cortex.h"
 #include "stm32f4xx_ll_dma.h"
@@ -44,31 +44,11 @@ extern "C" {
 #endif /* USE_FULL_ASSERT */
 
 /* Private includes ----------------------------------------------------------*/
-/* USER CODE BEGIN Includes */
-
-/* USER CODE END Includes */
-
 /* Exported types ------------------------------------------------------------*/
-/* USER CODE BEGIN ET */
-
-/* USER CODE END ET */
-
 /* Exported constants --------------------------------------------------------*/
-/* USER CODE BEGIN EC */
-
-/* USER CODE END EC */
-
 /* Exported macro ------------------------------------------------------------*/
-/* USER CODE BEGIN EM */
-
-/* USER CODE END EM */
-
 /* Exported functions prototypes ---------------------------------------------*/
 void Error_Handler(void);
-
-/* USER CODE BEGIN EFP */
-
-/* USER CODE END EFP */
 
 /* Private defines -----------------------------------------------------------*/
 #define B1_Pin        LL_GPIO_PIN_13
@@ -81,27 +61,7 @@ void Error_Handler(void);
 #define TCK_GPIO_Port GPIOA
 #define SWO_Pin       LL_GPIO_PIN_3
 #define SWO_GPIO_Port GPIOB
-#ifndef NVIC_PRIORITYGROUP_0
-#define NVIC_PRIORITYGROUP_0                                     \
-    ((uint32_t)0x00000007) /*!< 0 bit  for pre-emption priority, \
-                                4 bits for subpriority */
-#define NVIC_PRIORITYGROUP_1                                     \
-    ((uint32_t)0x00000006) /*!< 1 bit  for pre-emption priority, \
-                                3 bits for subpriority */
-#define NVIC_PRIORITYGROUP_2                                     \
-    ((uint32_t)0x00000005) /*!< 2 bits for pre-emption priority, \
-                                2 bits for subpriority */
-#define NVIC_PRIORITYGROUP_3                                     \
-    ((uint32_t)0x00000004) /*!< 3 bits for pre-emption priority, \
-                                1 bit  for subpriority */
-#define NVIC_PRIORITYGROUP_4                                     \
-    ((uint32_t)0x00000003) /*!< 4 bits for pre-emption priority, \
-                                0 bit  for subpriority */
-#endif
 
-/* USER CODE BEGIN Private defines */
-
-/* USER CODE END Private defines */
 
 #ifdef __cplusplus
 }

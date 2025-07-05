@@ -45,7 +45,10 @@ There files can be recognized because of their file header, which state their co
 
 #### FreeRTOS
 
-TODO - wait for it to be added
+* Path: ```firmware\external_libs\FreeRTOS```
+* Version: [V202406.01-LTS](https://github.com/FreeRTOS/FreeRTOS-LTS)
+* Copyright: Amazon.com, Inc. or its affiliates.
+* License [MIT](https://mit-license.org/)
 
 ### Beepy RC
 The remaining parts of the code, which can be identified because of their file header, which states their are part of the Beepy RC project. Refer to the ```LICENSE``` file for the complete disclosure.

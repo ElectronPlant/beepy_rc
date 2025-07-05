@@ -15,41 +15,22 @@
  *
  ******************************************************************************
  */
-/* USER CODE END Header */
 /* Includes ------------------------------------------------------------------*/
 #include "main.h"
+#include "FreeRTOS.h"
 #include "string.h"
+#include "task.h"
 
 
 /* Private includes ----------------------------------------------------------*/
-/* USER CODE BEGIN Includes */
-
-/* USER CODE END Includes */
-
 /* Private typedef -----------------------------------------------------------*/
-/* USER CODE BEGIN PTD */
-
-/* USER CODE END PTD */
-
 /* Private define ------------------------------------------------------------*/
-/* USER CODE BEGIN PD */
-
-/* USER CODE END PD */
-
 /* Private macro -------------------------------------------------------------*/
-/* USER CODE BEGIN PM */
-
-/* USER CODE END PM */
-
 /* Private variables ---------------------------------------------------------*/
-
-/* USER CODE BEGIN PV */
-
-/* USER CODE END PV */
-
 /* Private function prototypes -----------------------------------------------*/
 void        SystemClock_Config(void);
 static void MX_GPIO_Init(void);
+static void exampleTask(void *parameters);
 /* USER CODE BEGIN PFP */
 
 /* USER CODE END PFP */
@@ -72,76 +53,43 @@ int _write(int file, char *ptr, int len) {
 
 
 static SBUS_STATUS_T TestSbus;
-
-/* USER CODE END 0 */
+TaskHandle_t         TaskHandle;
 
 /**
  * @brief  The application entry point.
  * @retval int
  */
 int main(void) {
-    /* USER CODE BEGIN 1 */
-
-    /* USER CODE END 1 */
-
-    /* MCU Configuration--------------------------------------------------------*/
-
     /* Reset of all peripherals, Initializes the Flash interface and the Systick.
      */
     LL_APB2_GRP1_EnableClock(LL_APB2_GRP1_PERIPH_SYSCFG);
     LL_APB1_GRP1_EnableClock(LL_APB1_GRP1_PERIPH_PWR);
 
     /* System interrupt init*/
-    NVIC_SetPriorityGrouping(NVIC_PRIORITYGROUP_0);
-
-    /* USER CODE BEGIN Init */
-
-    /* USER CODE END Init */
+    /* https://www.freertos.org/Documentation/02-Kernel/03-Supported-devices/04-Demos/ARM-Cortex/RTOS-Cortex-M3-M4
+     */
+    NVIC_SetPriorityGrouping(NVIC_PRIORITYGROUP_4);
 
     /* Configure the system clock */
     SystemClock_Config();
 
-    /* USER CODE BEGIN SysInit */
-
-    /* USER CODE END SysInit */
-
     /* Initialize all configured peripherals */
     MX_GPIO_Init();
-    /* USER CODE BEGIN 2 */
-
-    /* USER CODE END 2 */
-
-    /* Infinite loop */
-    /* USER CODE BEGIN WHILE */
-    bool_t ok;
-    ok = Sbus_Init();
+    bool_t ok = Sbus_Init();
     PLT_ASSERT(DEF_TRUE == ok);
-    while (1) {
-        /* USER CODE END WHILE */
 
-        /* --- Sbus Beging RX --- */
-        printf("--------------\n");
-        printf("Start reception\n");
-        ok = Sbus_StartRx();
-        PLT_ASSERT(DEF_TRUE == ok);
+    BaseType_t task_ok = xTaskCreate(
+        exampleTask,
+        "main",
+        configMINIMAL_STACK_SIZE * 5,
+        NULL,
+        configMAX_PRIORITIES - 1U,
+        &TaskHandle
+    );
+    PLT_ASSERT(pdPASS == task_ok);
 
-        LL_GPIO_TogglePin(LD2_GPIO_Port, LD2_Pin);
-        for (uint32_t i = 0; i < 9999999; i++) {}
-
-        /* --- SBUS check RX --- */
-        Sbus_GetFrame(&TestSbus);
-        printf("SBUS State: %u\n", TestSbus.State);
-        if (SBUS_STATE_OK == TestSbus.State || SBUS_STATE_FRAME_LOST == TestSbus.State
-            || SBUS_STATE_FAILSAFE == TestSbus.State) {
-            Sbus_DebugFrame(TestSbus.FramePtr);
-        } else {
-            printf("Frame reception failed\n");
-            printf("-----------------\n");
-        }
-
-        /* USER CODE BEGIN 3 */
-    }
-    /* USER CODE END 3 */
+    vTaskStartScheduler();
+    PLT_UNREACHABLE;
 }
 
 /**
@@ -171,8 +119,12 @@ void SystemClock_Config(void) {
 
     /* Wait till System clock is ready */
     while (LL_RCC_GetSysClkSource() != LL_RCC_SYS_CLKSOURCE_STATUS_PLL) {}
-    LL_Init1msTick(84000000);
     LL_SetSystemCoreClock(84000000);
+
+    /* Update the time base */
+    if (HAL_InitTick(TICK_INT_PRIORITY) != HAL_OK) { // TODO avoid the use of high-level HAL here.
+        Error_Handler();
+    }
     LL_RCC_SetTIMPrescaler(LL_RCC_TIM_PRESCALER_TWICE);
 }
 
@@ -220,26 +172,16 @@ static void MX_GPIO_Init(void) {
     GPIO_InitStruct.OutputType = LL_GPIO_OUTPUT_PUSHPULL;
     GPIO_InitStruct.Pull = LL_GPIO_PULL_NO;
     LL_GPIO_Init(LD2_GPIO_Port, &GPIO_InitStruct);
-
-    /* USER CODE BEGIN MX_GPIO_Init_2 */
-
-    /* USER CODE END MX_GPIO_Init_2 */
 }
-
-/* USER CODE BEGIN 4 */
-
-/* USER CODE END 4 */
 
 /**
  * @brief  This function is executed in case of error occurrence.
  * @retval None
  */
-void Error_Handler(void) {
-    /* USER CODE BEGIN Error_Handler_Debug */
+void Error_Handler(void) { // TODO use PLT_ASSERT for this.
     /* User can add his own implementation to report the HAL error return state */
     __disable_irq();
     while (1) {}
-    /* USER CODE END Error_Handler_Debug */
 }
 
 #ifdef USE_FULL_ASSERT
@@ -258,3 +200,75 @@ void assert_failed(uint8_t *file, uint32_t line) {
     /* USER CODE END 6 */
 }
 #endif /* USE_FULL_ASSERT */
+
+
+/******************************************
+ * FreeRTOS
+ ******************************************/
+// TODO: complete
+void vApplicationTickHook(void) {}
+
+void vApplicationMallocFailedHook(void) {
+    taskDISABLE_INTERRUPTS();
+    PLT_UNREACHABLE;
+}
+
+// TODO check if needed.
+void vApplicationIdleHook(void) {}
+
+/**
+ * @brief  Stack overflow hook // TODO: implement
+ */
+void vApplicationStackOverflowHook(TaskHandle_t xTask, char *pcTaskName) {
+    /* Check pcTaskName for the name of the offending task,
+     * or pxCurrentTCB if pcTaskName has itself been corrupted. */
+    (void)xTask;
+    (void)pcTaskName;
+}
+
+/**
+ * @brief  Example task to test FreeRTOS
+ *
+ * @param  parameters pointer to the task parameters.
+ *
+ */
+static void exampleTask(void *parameters) {
+    /* Unused parameters. */
+    (void)parameters;
+
+    for (;;) {
+        /* --- Sbus Beging RX --- */
+        printf("--------------\n");
+        printf("Start reception\n");
+        bool_t ok = Sbus_StartRx();
+        PLT_ASSERT(DEF_TRUE == ok);
+
+        LL_GPIO_TogglePin(LD2_GPIO_Port, LD2_Pin);
+        vTaskDelay(1000); /* delay 100 ticks */
+
+        /* --- SBUS check RX --- */
+        Sbus_GetFrame(&TestSbus);
+        printf("SBUS State: %u\n", TestSbus.State);
+        if (SBUS_STATE_OK == TestSbus.State || SBUS_STATE_FRAME_LOST == TestSbus.State
+            || SBUS_STATE_FAILSAFE == TestSbus.State) {
+            Sbus_DebugFrame(TestSbus.FramePtr);
+        } else {
+            printf("Frame reception failed\n");
+            printf("-----------------\n");
+        }
+    }
+}
+
+// TODO check this
+void vApplicationGetIdleTaskMemory(
+    StaticTask_t          **ppxIdleTaskTCBBuffer,
+    StackType_t           **ppxIdleTaskStackBuffer,
+    configSTACK_DEPTH_TYPE *puxIdleTaskStackSize
+) {
+    static StaticTask_t xIdleTaskTCB;
+    static StackType_t  uxIdleTaskStack[configMINIMAL_STACK_SIZE];
+
+    *ppxIdleTaskTCBBuffer = &(xIdleTaskTCB);
+    *ppxIdleTaskStackBuffer = &(uxIdleTaskStack[0]);
+    *puxIdleTaskStackSize = configMINIMAL_STACK_SIZE;
+}
