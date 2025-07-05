@@ -15,6 +15,9 @@ Inverted SBUS
 * [extracting inverted SBUS from the module](https://oscarliang.com/uninverted-sbus-smart-port-frsky-receivers/)
 * [Hardware inverter](https://www.diyengineers.com/2020/12/17/2n2222-transistor-npn/)
 
+FrSky RSII:
+* [RSSI is on CH16](https://drones.stackexchange.com/questions/803/how-do-i-set-up-the-rssi-readout-on-an-xm-receiver-channel)
+
 SBUS information:
 * https://uwarg-docs.atlassian.net/wiki/spaces/ZP/pages/2238283817/SBUS+Protocol
 
@@ -29,7 +32,7 @@ Nice to have:
 
 
 Process:
-* First trying to connect SBUS (interted signal)
+* First trying to connect SBUS (inverted signal)
 * Binding... another problem + having to update the radio.
 * Problem with the HAL
 * Transision to LL_HAL + working.
