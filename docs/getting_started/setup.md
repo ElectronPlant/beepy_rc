@@ -103,3 +103,48 @@ Ensure that the board is connected through the ST-link, in the Nucleo board this
 
 Then on VS code select the __Run and Debug__ tab on the left menu, followed by start debugging. Note that you should have selected the "Cortex ST-Link" configuration created earlier.
 This should created the GDB session stopping the execution in the main function. From this point on it should work just as any other GDB session.
+
+## Intellisense
+The Intellisense manages the code completing code checking in the IDE. In VSCode is configured through the c_cpp_properties.json file.
+A key aspect to configure the Intellisense is to give it the paths of the files that compose the project, so it can extract the names of the valid symbols, variables, defines, etc.
+
+The project's dependencies can be extracted directly from the makefile using [compiledb](https://github.com/nickdiego/compiledb), which generates a Clang JSON compilation database, which is then used by the IDE's Intellisense.
+
+Install _compiledb_
+```
+python -m pip install compiledb
+```
+
+Generate the compile_commands.json, this needs to be done now and then to ensure it remains updated.
+```
+cd firmware/make
+python -m compiledb make all
+mv compile_commands.json ../../.vscode/compile_commands.json
+```
+
+Then, configure VSCode to ensure it uses the compile_commands.json file, by modifying the ```c_cpp_properties.json``` file:
+```
+{
+    "configurations": [
+        {
+            "name": "Win32",
+            "includePath": [
+                "${workspaceFolder}/**"
+            ],
+            "defines": [
+                "_DEBUG",
+                "UNICODE",
+                "_UNICODE"
+            ],
+            "windowsSdkVersion": "10.0.22621.0",
+            "compilerPath": "1 - Arm GNU Toolchain arm-none-eabi",
+            "cStandard": "c17",
+            "cppStandard": "c++17",
+            "intelliSenseMode": "windows-gcc-x86",
+            "compileCommands": "${workspaceFolder}/.vscode/compile_commands.json"
+        }
+    ],
+    "version": 4
+}
+```
+1. This is the path to the Arm tool chain's bin directory. ```<install path>\\Arm GNU Toolchain arm-none-eabi\\14.2 rel1\\bin"```
