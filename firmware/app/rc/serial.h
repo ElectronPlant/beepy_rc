@@ -1,29 +1,20 @@
 /**
- * @file     plt_assert.c
- * @brief    Assert implementation for the platform.
+ * @file     serial.h
+ * @brief    Generic Serial implementation.
  *
- * @ingroup   PltAssert
+ * @ingroup   Main
  * @version   V0.0
  * @author    David Arnaiz
- * @copyright (c) 2025 David Arnaiz
+ * @copyright 2025 David Arnaiz
  *
  * This file is part of BeepyRC <TODO: link to repo>.
  * This project is licensed under the GNU General Public License v3.0 license.
- *
- * @note    Module Prefix: PltAssert_
- *
  */
 
-#include "stdio.h"
+#ifndef __SERIAL_H__
+#define __SERIAL_H__
 
 #include "plt_types.h"
-#include "target.h"
-
-
-/** @addtogroup PltAssert
- *   @{
- */
-
 
 /********************************************************************************
  * Defines
@@ -34,27 +25,15 @@
  ********************************************************************************/
 
 /********************************************************************************
- * Function Prototypes
- ********************************************************************************/
-
-/********************************************************************************
  * Local Vars
  ********************************************************************************/
 
 /********************************************************************************
- * Function Implementations
+ * API
  ********************************************************************************/
-void PltAssert_Assert(const char *file, uint32_t line) {
-    printf("ASSERT: In %s, line %lu\n", file, line);
-    // abort();
-    __disable_irq();
-    while (1) {
-        /* --No-op-- */
-    }
-}
+bool_t Serial_Init(void (*int_handler_fn)(void));
+bool_t Serial_StartReception(uint8_t *p_data, uint16_t size);
+void   Serial_StopReception(void);
 
-void PltAssert_WarningAssert(const char *file, uint32_t line) {
-    printf("WARNING: In %s, line %lu\n", file, line);
-}
 
-/** @} (end addtogroup PltAssert)  */
+#endif /* __SERIAL_H__       */

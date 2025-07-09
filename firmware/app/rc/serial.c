@@ -19,11 +19,7 @@
 
 
 #include "serial.h"
-
-#include "stm32f446xx.h"
-#include "stm32f4xx_ll_bus.h"
-#include "stm32f4xx_ll_gpio.h"
-#include "stm32f4xx_ll_usart.h"
+#include "target.h"
 
 
 /** @addtogroup HAL
@@ -39,13 +35,13 @@
 on the system configuration. */
 #define SERIAL_BLOCKING_TIMEOUT_MS (20U)
 
-#define SERIAL_APB1_PERIPH_CLOCK LL_APB1_GRP1_PERIPH_UART4
-#define SERIAL_AHB1_GPIO_CLOCK   LL_AHB1_GRP1_PERIPH_GPIOC
-#define SERIAL_INSTANCE          UART4
-#define SERIAL_INSTANCE_IRQ      UART4_IRQn
-#define SERIAL_TX_GPIO_PIN       LL_GPIO_PIN_10
-#define SERIAL_RX_GPIO_PIN       LL_GPIO_PIN_11
-#define SERIAL_GPIO_PORT         GPIOC
+#define SERIAL_APB1_PERIPH_CLOCK TARGET_RC_SERIAL_PERIPH_CLOCK
+#define SERIAL_AHB1_GPIO_CLOCK   TARGET_RC_SERIAL_GPIO_CLOCK
+#define SERIAL_INSTANCE          TARGET_RC_SERIAL_INSTANCE
+#define SERIAL_INSTANCE_IRQ      TARGET_RC_SERIAL_IRQ
+#define SERIAL_TX_GPIO_PIN       TARGET_RC_SERIAL_TX_PIN
+#define SERIAL_RX_GPIO_PIN       TARGET_RC_SERIAL_RX_PIN
+#define SERIAL_GPIO_PORT         TARGET_RC_SERIAL_PORT
 
 #define SERIAL_BAUDRATE (100000U) // Real: (100000U) Fake: (115200)
 
@@ -99,8 +95,8 @@ static volatile SERIAL_HANDLER_T Serial_Handler = {0};
  */
 bool_t Serial_Init(void (*int_handler_fn)(void)) {
     /* Enable peripheral clock */
-    LL_APB1_GRP1_EnableClock(LL_APB1_GRP1_PERIPH_UART4);
-    LL_AHB1_GRP1_EnableClock(LL_AHB1_GRP1_PERIPH_GPIOC);
+    LL_APB1_GRP1_EnableClock(SERIAL_APB1_PERIPH_CLOCK);
+    LL_AHB1_GRP1_EnableClock(SERIAL_AHB1_GPIO_CLOCK);
 
     /* Init GPIOs */
     LL_GPIO_InitTypeDef gpio_init_struct = {
@@ -190,23 +186,6 @@ void Serial_StopReception(void) {
     Serial_StopReceptionInternal(&Serial_Handler);
 }
 
-/**
- * @brief
- *
- * @param  inp
- *
- * @return DEF_TRUE if successful, DEF_FALSE otherwise.
- *
- * @note List of notes:
- *       1.
- */
-void Serial_IrqHandler(void) {
-    if (DEF_TRUE == SERIAL_IS_ERROR_FLAG_ENABLED(Serial_Handler.Instance_Ptr)) {
-        Serial_HandleError(&Serial_Handler);
-    } else if (DEF_TRUE == SERIAL_IS_RX_IRQ_ENABLED(Serial_Handler.Instance_Ptr)) {
-        Serial_HandleRx(&Serial_Handler);
-    }
-}
 
 /******************************************
  * Internal functions
@@ -272,6 +251,21 @@ static void Serial_HandleRx(volatile SERIAL_HANDLER_T *p_handler) {
         }
     }
     // LL_USART_ClearFlag_RXNE(Serial_Handler.Instance_Ptr);
+}
+
+/******************************************
+ * IRQ handler
+ ******************************************/
+
+/**
+ * @brief  System IRQ callback for the RC serial.
+ */
+void TARGET_RC_SERIAL_IRQ_HANDLER(void) {
+    if (DEF_TRUE == SERIAL_IS_ERROR_FLAG_ENABLED(Serial_Handler.Instance_Ptr)) {
+        Serial_HandleError(&Serial_Handler);
+    } else if (DEF_TRUE == SERIAL_IS_RX_IRQ_ENABLED(Serial_Handler.Instance_Ptr)) {
+        Serial_HandleRx(&Serial_Handler);
+    }
 }
 
 /** @} (end addtogroup HAL)   */

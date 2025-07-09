@@ -41,7 +41,7 @@ plugins:
             doxy-cfg:
               FILE_PATTERNS: "*.c *.h*"
               RECURSIVE: True
-              EXCLUDE_PATTERNS: "*/docs/* */firmware/make/build/* */mcu/* */firmware/make/bin/*"
+              EXCLUDE_PATTERNS: "*/docs/* */firmware/make/build/* */external_libs/* */firmware/make/bin/*"
               EXTRACT_STATIC: "YES"
 
 nav:

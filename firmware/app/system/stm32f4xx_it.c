@@ -18,9 +18,7 @@
 
 /* Includes ------------------------------------------------------------------*/
 #include "stm32f4xx_it.h"
-#include "main.h"
 #include "portmacro.h"
-#include "serial.h"
 
 #include "plt_assert.h"
 
@@ -117,17 +115,3 @@ void SVC_Handler(void) {
     PLT_UNREACHABLE;
 }
 #endif
-
-/******************************************************************************/
-/* STM32F4xx Peripheral Interrupt Handlers                                    */
-/* Add here the Interrupt Handlers for the used peripherals.                  */
-/* For the available peripheral interrupt handler names,                      */
-/* please refer to the startup file (startup_stm32f4xx.s).                    */
-/******************************************************************************/
-
-/**
- * @brief This function handles UART4 global interrupt.
- */
-void UART4_IRQHandler(void) {
-    Serial_IrqHandler();
-}

@@ -1,6 +1,6 @@
 /**
- * @file     serial.h
- * @brief    Generic Serial implementation.
+ * @file      rx.h
+ * @brief     Radio Control module - Rx from the radio.
  *
  * @ingroup   Main
  * @version   V0.0
@@ -11,8 +11,8 @@
  * This project is licensed under the GNU General Public License v3.0 license.
  */
 
-#ifndef __SERIAL_H__
-#define __SERIAL_H__
+#ifndef __RC_H__
+#define __RC_H__
 
 #include "plt_types.h"
 
@@ -31,10 +31,6 @@
 /********************************************************************************
  * API
  ********************************************************************************/
-bool_t Serial_Init(void (*int_handler_fn)(void));
-bool_t Serial_StartReception(uint8_t *p_data, uint16_t size);
-void   Serial_StopReception(void);
-void   Serial_IrqHandler(void);
+bool_t Rc_Init(void);
 
-
-#endif /* __SERIAL_H__       */
+#endif /* __RC_H__      */

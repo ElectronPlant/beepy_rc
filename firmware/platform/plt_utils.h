@@ -16,6 +16,7 @@
 #ifndef __PLT_UTILS_H__
 #define __PLT_UTILS_H__
 
+#include "FreeRTOS.h"
 #include "plt_types.h"
 
 
@@ -54,12 +55,28 @@
  * CONVERSION
  ********************************************************************************/
 /**
- * @brief Converts a uint32_t value in seconds to MS.
+ * @brief  Converts a uint32_t value in seconds to MS.
+ *
+ * @param  X Value in seconds to convert.
+ *
+ * @return X param in ms.
  *
  * @note  This macro does not perform any overflow check.
  */
 #define PLT_UTILS_SECS_TO_MS(X) ((X) * 1000u)
 
+
+/********************************************************************************
+ * FREERTOS
+ ********************************************************************************/
+/**
+ * @brief  Converts Basetype pdPASS/pdFAIL to DEF_TRUE/DEF_FALSE.
+ *
+ * @param  X FreeRTOS pass fail value.
+ *
+ * @return DEF_TRUE if pdPASS, DEF_FALSE otherwise.
+ */
+#define PLT_UTILS_RTOS_TO_PLT_PASS_FAIL(X) (pdTRUE == X ? DEF_TRUE : DEF_FALSE)
 
 /** @} (end addtogroup PltUtils)  */
 #endif /* __PLT_UTILS_H__       */

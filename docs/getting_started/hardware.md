@@ -4,6 +4,13 @@
 The connection to the radio, which in my case is my old [FrSky Taranis Q x7](https://www.frsky-rc.com/product/taranis-q-x7-2/) radio, is done
 Through the [XM+ FrSky receiver](https://www.frsky-rc.com/wp-content/uploads/2017/07/Manual/Manual-XM%2B.pdf)
 
+Check [SBUS](../info/sbus.md) for more information on the radio receiver.
+
+## Motor Driver
+
+* [MX1616](https://datasheet.lcsc.com/lcsc/2207251030_Mixic-MX1616H_C5119044.pdf)
+* [Tutorial](https://www.instructables.com/Tutorial-for-Dual-Channel-DC-Motor-Driver-Board-PW/)
+
 ## MCU
 The development of the RC-Rover is done on a STM32 nucleo board:
 
