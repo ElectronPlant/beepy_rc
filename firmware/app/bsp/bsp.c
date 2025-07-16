@@ -27,6 +27,8 @@
 #include "FreeRTOSConfig.h"
 #include "timers.h"
 
+#include "bsp_config.h"
+
 #include "target.h"
 
 
@@ -244,10 +246,15 @@ void Bsp_InitSystemClock(void) {
     while (LL_RCC_GetSysClkSource() != LL_RCC_SYS_CLKSOURCE_STATUS_PLL) {}
     LL_SetSystemCoreClock(84000000);
 
-    /* Update the time base */
-    if (HAL_InitTick(TICK_INT_PRIORITY) != HAL_OK) { // TODO avoid the use of high-level HAL here.
-        PLT_UNREACHABLE;
-    }
+    /* Setup the systick interrupt */
+    uint32_t ticks = configCPU_CLOCK_HZ / configTICK_RATE_HZ; /* # of ticks between interrupts */
+    SysTick_Config(ticks);
+    NVIC_SetPriority(
+        SysTick_IRQn,
+        NVIC_EncodePriority(NVIC_GetPriorityGrouping(), BSP_CONFIG_SYSTICK_PRIORITY, 0)
+    );
+    NVIC_EnableIRQ(SysTick_IRQn);
+
     LL_RCC_SetTIMPrescaler(LL_RCC_TIM_PRESCALER_TWICE);
 }
 
@@ -261,7 +268,8 @@ void Bsp_InitSystemClock(void) {
  * @return DEF_TRUE if successful, DEF_FALSE otherwise.
  *
  * @note List of notes:
- *       1.
+ *       1. System interrupt init needs to be set to group 4, see:
+ *          https://www.freertos.org/Documentation/02-Kernel/03-Supported-devices/04-Demos/ARM-Cortex/RTOS-Cortex-M3-M4
  */
 bool_t BSP_Init(void) {
     bool_t ok = DEF_TRUE;
@@ -271,10 +279,7 @@ bool_t BSP_Init(void) {
     LL_APB2_GRP1_EnableClock(LL_APB2_GRP1_PERIPH_SYSCFG);
     LL_APB1_GRP1_EnableClock(LL_APB1_GRP1_PERIPH_PWR);
 
-    /* System interrupt init
-     * https://www.freertos.org/Documentation/02-Kernel/03-Supported-devices/04-Demos/ARM-Cortex/RTOS-Cortex-M3-M4
-     */
-    NVIC_SetPriorityGrouping(NVIC_PRIORITYGROUP_4);
+    NVIC_SetPriorityGrouping(NVIC_PRIORITYGROUP_4); /* See note 1 */
 
     /* Setup system clock */
     Bsp_InitSystemClock();

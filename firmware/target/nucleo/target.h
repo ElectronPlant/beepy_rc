@@ -15,8 +15,7 @@
 #define __TARGET_H__
 
 /* Includes for the HAL */
-#include "stm32f4xx_hal.h"
-
+#include "stm32f4xx_hal_cortex.h"
 #include "stm32f4xx_ll_bus.h"
 #include "stm32f4xx_ll_cortex.h"
 #include "stm32f4xx_ll_dma.h"

@@ -360,6 +360,7 @@ help:
 	@echo ""
 	@echo "    View SWD logs:"
 	@echo "         make monitor"
+	@echo ""
 	@echo "    All actions:"
 	@echo "         make clean && make all -j4 && make flash && make monitor"
 	@echo ""
