@@ -54,11 +54,11 @@ BOARD := nucleo
 BUILD_DIR  := build
 OUTPUT_DIR := bin
 
-# Toolchain paths
+# Toolchain paths - <USER> This needs to be adjusted
 #  1. Need to end in "/".
 #  2. It can be left empty if the toolchain is in the path environment variable.
-ARM_TOOLCHAIN_PATH    := # In <path>.
-STLINK_TOOLCHAIN_PATH := # In <path>.
+ARM_TOOLCHAIN_PATH    := $(HOME)/.setup/arm/
+STLINK_TOOLCHAIN_PATH := $(HOME)/.setup/stm/cube_programmer/
 
 # Final path definition
 OBJ_DIR := $(BUILD_DIR)
@@ -339,7 +339,7 @@ erase_flash:
 
 # Monitor SWD debug prints
 monitor:
-	STM32_Programmer_CLI.exe -c port=swd -startswv freq=84 portnumber=0 $(BUILD_DIR)/$(PROJECTNAME).log
+	$(STLINK_TOOL) -c port=swd -startswv freq=84 portnumber=0 $(BUILD_DIR)/$(PROJECTNAME).log
 
 
 
