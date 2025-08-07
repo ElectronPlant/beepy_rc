@@ -65,6 +65,25 @@
  */
 #define PLT_UTILS_SECS_TO_MS(X) ((X) * 1000u)
 
+/**
+ * @brief  Rounds a float32_t value to the closest integer value.
+ *         Note that it does not change for ranges.
+ *
+ * @param  X Float value to convert.
+ *
+ * @return Rounded X as integer.
+ */
+#define PLT_UTILS_ROUND_FLOAT(X) ((int32_t)(X >= 0.0f ? X + 0.5f : X - 0.5f))
+
+/**
+ * @brief  Rounds a positive float32_t value to the closest unsigned integer value.
+ *         Note that it does not change for ranges.
+ *
+ * @param  X Float value to convert.
+ *
+ * @return Rounded X as unsigned integer.
+ */
+#define PLT_UTILS_ROUND_FLOAT_TO_UINT(X) ((uint32_t)(X >= 0.0f ? X + 0.5f : X - 0.5f))
 
 /********************************************************************************
  * FREERTOS
@@ -77,6 +96,18 @@
  * @return DEF_TRUE if pdPASS, DEF_FALSE otherwise.
  */
 #define PLT_UTILS_RTOS_TO_PLT_PASS_FAIL(X) (pdTRUE == X ? DEF_TRUE : DEF_FALSE)
+
+/********************************************************************************
+ * STM_LL
+ ********************************************************************************/
+/**
+ * @brief  Converts STM LL HAL ErrorStatus to DEF_TRUE/DEF_FALSE.
+ *
+ * @param  X STM LL HAL ErrorStatus.
+ *
+ * @return DEF_TRUE if SUCCESS, DEF_FALSE otherwise.
+ */
+#define PLT_UTILS_STM_ERR_STATUS_TO_PLT(X) (SUCCESS == X ? DEF_TRUE : DEF_FALSE)
 
 /** @} (end addtogroup PltUtils)  */
 #endif /* __PLT_UTILS_H__       */
