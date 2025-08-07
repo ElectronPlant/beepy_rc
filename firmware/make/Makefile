@@ -226,11 +226,14 @@ C_APP_SOURCE := \
 ../app/rc/rc.c \
 ../app/rc/sbus.c \
 ../app/rc/serial.c \
-../app/bsp/bsp.c
+../app/bsp/bsp.c \
+../app/motion/motion.c \
+../app/motion/drive_pwm.c \
 
 H_APP_SOURCE := \
 -I../app/rc \
 -I../app/bsp \
+-I../app/motion \
 -I../configs
 
 # Platform
