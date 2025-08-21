@@ -7,12 +7,13 @@
 
 AccessModifierOffset: -2
 AlignAfterOpenBracket: BlockIndent    # New in v14. For earlier clang-format versions, use AlwaysBreak instead.
-AlignConsecutiveMacros: false
+AlignConsecutiveMacros: true # CHANGE -> from false
 AlignConsecutiveAssignments: false
-AlignConsecutiveDeclarations: false
+AlignConsecutiveDeclarations: true # CHANGE -> from false
 AlignEscapedNewlines: DontAlign
 AlignOperands: false
-AlignTrailingComments: false
+AlignTrailingComments: Always # CHANGE -> from false
+AlignConsecutiveComments: true # CHANGE -> added
 AllowAllArgumentsOnNextLine: false
 AllowAllConstructorInitializersOnNextLine: false
 AllowAllParametersOfDeclarationOnNextLine: false
@@ -64,7 +65,7 @@ IndentCaseLabels: true
 IndentPPDirectives: BeforeHash
 IndentWidth: 4
 IndentWrappedFunctionNames: false
-KeepEmptyLinesAtTheStartOfBlocks: true # CHANGE from false
+KeepEmptyLinesAtTheStartOfBlocks: true # CHANGE -> from false
 MaxEmptyLinesToKeep: 2 # CHANGE -> from 1
 NamespaceIndentation: Inner
 PointerAlignment: Left
@@ -93,3 +94,4 @@ Standard: Cpp11
 TabWidth: 4
 UseTab: Never
 BitFieldColonSpacingStyle: BFCS_Before # CHANGE -> added
+PenaltyReturnTypeOnItsOwnLine: 1000 # CHANGE -> added
