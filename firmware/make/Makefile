@@ -235,10 +235,12 @@ H_APP_SOURCE := \
 
 # Platform
 C_PLATFORM := \
-../platform/plt_assert.c
+../platform/plt_assert.c \
+../platform/mem/circular_alloc.c
 
 H_PLATFORM := \
--I../platform
+-I../platform \
+-I../platform/mem
 
 # ASM sources
 ASM_SOURCES := \
