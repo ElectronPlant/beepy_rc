@@ -191,37 +191,11 @@ bool_t Rc_Init(void) {
 /******************************************
  * Task Main
  ******************************************/
-// static bool_t Rc_UpdateStatusOnRxFrame(void) {
-//     bool_t process_frame = DEF_FALSE;
-//     switch (Rc_Status) {
-//         case RC_STATUS_MISALIGNED:
-//             Rc_UpdateStatus(RC_STATUS_RUNNING);
-//             process_frame = DEF_TRUE;
-//             break;
-//         case RC_STATUS_RUNNING:
-//             process_frame = DEF_TRUE;
-//             break;
-//         case RC_STATUS_ERROR:
-//             /* - No-op - */
-//             break;
-//         default:
-//             PLT_UNREACHABLE;
-//             break;
-//     }
-//     return process_frame;
-// }
-
-// static void Rc_RunRxFrameProcess(RXINT_RX_BUFFER_INFO_T* p_buffer_info) {
-
-// #if RC_DEBUG_RAW_FRAME == 1
-//     if (NULL != ComRxInt_Interface.RxInt_DebugFrame) {
-//         ComRxInt_Interface.RxInt_DebugFrame(p_buffer_info);
-//     }
-// #endif
-
-//     ComRxInt_Interface.RxInt_ProcessFrame(p_buffer_info);
-// }
-
+/**
+ * @brief  Handles a Rx Complete action request.
+ *
+ * @param  p_buffer_info: Pointer to the buffer information.
+ */
 static void Rc_ActionRxComplete(RXINT_RX_BUFFER_INFO_T* p_buffer_info) {
     STD_FRAME_T processed_frame;
 
@@ -242,6 +216,10 @@ static void Rc_ActionRxComplete(RXINT_RX_BUFFER_INFO_T* p_buffer_info) {
     PltMemCA_FreeCritical(&Rc_RxBufferAllocator, p_buffer_info->RxBufferPtr);
 }
 
+/**
+ * @brief  Handles a RX timeout action request.
+ *         No RX has been received, handles the failsafe.
+ */
 static void Rc_ActionRxTimeout(void) {
     STD_FRAME_T error_frame = {
         .State = STD_FRAME_STATE_DROPPED,
@@ -250,6 +228,11 @@ static void Rc_ActionRxTimeout(void) {
     (void)error_frame; //TODO need to implement this part.
 }
 
+/**
+ * @brief  Handles a Rx error action request.
+ *
+ * @param  error: Type of the error that has taken place.
+ */
 static void Rc_ActionNotifyError(RC_ERROR_TYPES_T error) {
     printf("RC - Error %u\n", error);
     Rc_UpdateStatus(RC_STATUS_ERROR);
@@ -320,6 +303,12 @@ static void Rc_UpdateStatus(RC_STATUS_T new_status) {
 /******************************************
  * Queue
  ******************************************/
+/**
+ * @brief  Generic function to add action request to the RC task queue.
+ *         Warning: This function must be called from within an ISR.
+ *
+ * @param  p_msg: Pointer to the message to be enqueued.
+ */
 static void Rc_NotifyFromIsr(RC_QUEUE_MSG_T* p_msg) {
     BaseType_t higher_priority_task_awoken = pdFALSE;
 
@@ -333,13 +322,25 @@ static void Rc_NotifyFromIsr(RC_QUEUE_MSG_T* p_msg) {
 /******************************************
  * Rx ISR
  ******************************************/
-
+/**
+ * @brief  Stores the received byte in the RX buffer.
+ *
+ * @param  p_data: Pointer to the RX ISR data stuct with the buffer where the byte will be stored.
+ * @param  rx_byte: Received Byte.
+ *
+ * @return DEF_TRUE if the RX buffer is full, DEF_FALSE otherwise.
+ */
 static bool_t Rc_StoreRxByte(RC_ISR_DATA_T* p_data, uint8_t rx_byte) {
     p_data->RxInfo.RxBufferInfo.RxBufferPtr[p_data->RxInfo.Count.RxCount++] = rx_byte;
     return p_data->RxInfo.RxBufferInfo.RxBufferSize == p_data->RxInfo.Count.RxCount ? DEF_TRUE
                                                                                     : DEF_FALSE;
 }
 
+/**
+ * @brief  Resets the ISR data struct when misalignment has been detected.
+ *
+ * @param  p_data: Pointer to the RX ISR data struct to be updated.
+ */
 static void Rc_FailAlignment(RC_ISR_DATA_T* p_data) {
     p_data->RxInfo.Count.HeaderCount = 0;
     p_data->AlignmentRetries++;
@@ -354,11 +355,10 @@ static void Rc_FailAlignment(RC_ISR_DATA_T* p_data) {
 }
 
 /**
- * @brief  
+ * @brief  Runs the RX alignment mechanism for the received Byte.
  *
- * @param  inp 
- *
- * @return DEF_TRUE if successful, DEF_FALSE otherwise.
+ * @param  p_data: Pointer to the RX ISR data struct.
+ * @param  rx_byte: Received Byte.
  *
  * @note List of notes:
  *       1. The buffer cannot be full if the alignment process is yet to be completed.
@@ -378,12 +378,21 @@ static void Rc_PerformAlignment(RC_ISR_DATA_T* p_data, uint8_t rx_byte) {
         case RXINT_ALIGNMENT_STATUS_FAILED:
             Rc_FailAlignment(p_data);
             break;
+        case RXINT_ALIGNMENT_STATUS_WAITING_FOR_HEADER:
+        case RXINT_ALIGNMENT_STATUS_WAITING_FOR_FRAME:
+            /* - No-op - */
+            break;
         default:
             PLT_UNREACHABLE;
             break;
     }
 }
 
+/**
+ * @brief  Completes the RX after a full buffer is received.
+ *
+ * @param  p_data: Pointer to the RX ISR data struct.
+ */
 static void Rc_RxComplete(RC_ISR_DATA_T* p_data) {
     RC_QUEUE_MSG_T msg = {
         .Action = RC_ACTION_RX_COMPLETE,
@@ -392,6 +401,12 @@ static void Rc_RxComplete(RC_ISR_DATA_T* p_data) {
     Rc_NotifyFromIsr(&msg);
 }
 
+/**
+ * @brief  Reads a Byte from the RX interface.
+ *
+ * @param  p_data: Pointer to the RX ISR data struct.
+ * @param  rx_byte: Received Byte.
+ */
 static void Rc_HandleRxByte(RC_ISR_DATA_T* p_data, uint8_t rx_byte) {
     bool_t done = Rc_StoreRxByte(p_data, rx_byte);
     if (DEF_TRUE == done) {
@@ -399,6 +414,11 @@ static void Rc_HandleRxByte(RC_ISR_DATA_T* p_data, uint8_t rx_byte) {
     }
 }
 
+/**
+ * @brief  Resets the RX ISR data struct.
+ *
+ * @param  p_data: Pointer to the RX ISR data struct to be reset.
+ */
 static void Rx_ResetRxIsrData(RC_ISR_DATA_T* p_data) {
     p_data->Status = RC_ISR_STATUS_ALIGNMENT_ONGOING;
     p_data->RxInfo.Count.HeaderCount = 0;
