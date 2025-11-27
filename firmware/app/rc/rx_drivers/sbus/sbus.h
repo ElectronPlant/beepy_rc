@@ -1,6 +1,6 @@
 /**
- * @file     serial.h
- * @brief    Generic Serial implementation.
+ * @file     sbus.h
+ * @brief    SBUS driver.
  *
  * @ingroup   Main
  * @version   V0.0
@@ -11,29 +11,31 @@
  * This project is licensed under the GNU General Public License v3.0 license.
  */
 
-#ifndef __SERIAL_H__
-#define __SERIAL_H__
+#ifndef __SBUS_H__
+#define __SBUS_H__
 
+#include "plt_assert.h"
 #include "plt_types.h"
+#include "plt_utils.h"
+
+#include "rx_interface.h"
 
 /********************************************************************************
  * Defines
  ********************************************************************************/
+#define SBUS_NUM_SERVO_CHANNELS  (16U)
+#define SBUS_NUM_SWITCH_CHANNELS (2U)
+#define SBUS_NUM_CHANNELS        (SBUS_NUM_SERVO_CHANNELS + SBUS_NUM_SWITCH_CHANNELS)
+#define SBUS_FRAME_SIZE_BYTES    (25U)
 
 /********************************************************************************
  * Typedefs
  ********************************************************************************/
 
 /********************************************************************************
- * Local Vars
+ * Interface
  ********************************************************************************/
-
-/********************************************************************************
- * API
- ********************************************************************************/
-bool_t Serial_Init(void (*int_handler_fn)(void));
-bool_t Serial_StartReception(uint8_t *p_data, uint16_t size);
-void   Serial_StopReception(void);
+extern const RXINT_INTERFACE_T Sbus_Interface;
 
 
-#endif /* __SERIAL_H__       */
+#endif /* __SBUS_H__    */

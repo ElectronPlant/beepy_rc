@@ -14,45 +14,129 @@
  *
  */
 
+#include "circular_alloc.h"
 #include "plt_assert.h"
 #include "plt_types.h"
 #include "plt_utils.h"
 
 #include "FreeRTOS.h"
+#include "queue.h"
 #include "task.h"
 
-#include "target.h"
+#include "common_rx_driver.h"
+#include "std_frame.h"
 
-#include "sbus.h"
+#include "rx_interface.h"
+#include "target.h"
+#include "task.h"
 
 /** @addtogroup Rc
  *   @{
  */
 
-
 /********************************************************************************
  * Defines
  ********************************************************************************/
+/* --- Task --- */
 #define RC_TASK_NAME       ("Rc")
 #define RC_TASK_STACK_SIZE (configMINIMAL_STACK_SIZE * 2)
 #define RC_TASK_PRIORITY   (configMAX_PRIORITIES - 2U)
 
+/* --- Rx --- */
+#define RC_RX_TIMEOUT_MS        (300u) /* Time between two frames before the failsafe is triggered */
+#define RC_RX_TIMEOUT_TICKS     ((RC_RX_TIMEOUT_MS * configTICK_RATE_HZ) / PLT_UTILS_SECS_TO_MS_FACTOR)
+#define RC_RX_ALIGNMENT_RETRIES (5)
+
+/* --- Debug --- */
+#define RC_DEBUG_RAW_FRAME (1) /* Set to 1 to enable RX raw frame debugging */
+
+
 /********************************************************************************
  * Typedefs
  ********************************************************************************/
+typedef enum {
+    RC_STATUS_UNINITIALIZED = 0,
+    RC_STATUS_STOPPED,
+    RC_STATUS_MISALIGNED,
+    RC_STATUS_WAITING_FOR_ALIGNMENT,
+    RC_STATUS_RUNNING,
+    RC_STATUS_ERROR,
+} RC_STATUS_T;
+
+typedef enum {
+    RC_ISR_STATUS_UNINITIALIZED = 0,
+    RC_ISR_STATUS_ALIGNMENT_ONGOING,
+    RC_ISR_STATUS_RUNNING,
+    RC_ISR_STATUS_ERROR,
+} RC_ISR_STATUS_T;
+
+typedef enum {
+    RC_ERROR_TYPES_UNKNOWN = 0,
+    RC_ERROR_TYPES_RX_ERROR,
+    RC_ERROR_TYPES_TIMEOUT,
+    RC_ERROR_TYPES_ALIGNMENT_ERROR,
+} RC_ERROR_TYPES_T;
+
+typedef enum {
+    RC_ACTION_STOP = 0,
+    RC_ACTION_RX_COMPLETE,
+    RC_ACTION_NOTIFY_ERROR,
+    RC_ACTION_MAX,
+} RC_ACTIONS_T;
+
+typedef struct {
+    RC_ACTIONS_T Action;
+    union {
+        RXINT_RX_BUFFER_INFO_T RxBufferInfo;
+        RC_ERROR_TYPES_T       ErrorType;
+    } Payload;
+} RC_QUEUE_MSG_T;
+
+typedef struct {
+    RXINT_RX_BUFFER_INFO_T RxBufferInfo;
+    uint16_t               RxCount; /**< Number of bytes in the Rx buffer */
+} RC_RX_INFO_T;
+
+typedef struct {
+    RXINT_RX_INFO_T RxInfo;
+    uint8_t         AlignmentRetries;
+    RC_ISR_STATUS_T Status;
+} RC_ISR_DATA_T;
+
 
 /********************************************************************************
  * Function Prototypes
  ********************************************************************************/
 static void Rc_TaskLoop(void);
-static void Rc_TaskMain(PLT_UTILS_UNUSED void *parameters);
+static void Rc_TaskMain(PLT_UTILS_UNUSED void* parameters);
 
+static void Rc_UpdateStatus(RC_STATUS_T new_status);
+static void Rc_RxComplete(RC_ISR_DATA_T* p_data);
+
+static void Rc_RxHandler(uint8_t rx_byte);
+static void Rc_RxErrorHandler(void);
 
 /********************************************************************************
  * Local Vars
  ********************************************************************************/
-TaskHandle_t         Rc_TaskHandle = NULL;
-static SBUS_STATUS_T Rc_SbusState;
+static TaskHandle_t  Rc_TaskHandle = NULL;
+static QueueHandle_t Rc_RxQueueHandle = NULL;
+
+static const RXINT_INTERFACE_T* Rc_RxDriverInterface_Ptr = &COMRXD_INTERFACE;
+static const uint16_t           Rc_RxBufferSize = COMRXD_BUFFER_SIZE;
+static const uint16_t           Rc_RxBuffersNum = RXINT_MAX_PARALLEL_RAW_BUFFERS;
+static uint8_t     Rc_RxBuffersPool[RXINT_MAX_PARALLEL_RAW_BUFFERS][COMRXD_BUFFER_SIZE];
+static RC_STATUS_T Rc_Status = RC_STATUS_UNINITIALIZED;
+
+/**
+ * @note Access model: The buffer must only be allocated by the ISR, deallocation only be the Task.
+ */
+PLTMEMCA_INSTANCE_T Rc_RxBufferAllocator; /* See note. */
+
+/**
+ * @note Access model: The Reset flag must only be modified after stopping the ISR.
+ */
+volatile bool_t Rc_ResetIsr = DEF_TRUE; /* See note. */
 
 /********************************************************************************
  * Function Implementations
@@ -62,22 +146,44 @@ static SBUS_STATUS_T Rc_SbusState;
  * @brief  Initialize the Rc module.
  *
  * @return DEF_TRUE if successful, DEF_FALSE otherwise.
- *
- * @note List of notes:
- *       1.
  */
 bool_t Rc_Init(void) {
     bool_t ok;
 
-    /* Initialize SBUS */
-    ok = Sbus_Init();
+    PLT_ASSERT(RC_STATUS_UNINITIALIZED == Rc_Status); /* Guard double initialization */
 
-    /* Start Task */
+    /* Init Queue */
+    Rc_RxQueueHandle = xQueueCreate(RXINT_MAX_PARALLEL_RAW_BUFFERS, sizeof(RC_QUEUE_MSG_T));
+    if (NULL == Rc_RxQueueHandle) {
+        ok = DEF_FALSE;
+    }
+
+    /* Init Rx Driver */
+    ComRxD_CheckInterface();
+    if (DEF_TRUE == ok) {
+        ok = Rc_RxDriverInterface_Ptr->RxInt_Init(Rc_RxHandler, Rc_RxErrorHandler);
+    }
+
+    /* Init Buffer handler */
+    if (DEF_TRUE == ok) {
+        PltMemCA_Init(&Rc_RxBufferAllocator, Rc_RxBuffersPool, Rc_RxBufferSize, Rc_RxBuffersNum);
+    }
+
+    /* Create Task */
     if (DEF_TRUE == ok) {
         BaseType_t task_ok = xTaskCreate(
-            Rc_TaskMain, RC_TASK_NAME, RC_TASK_STACK_SIZE, NULL, RC_TASK_PRIORITY, &Rc_TaskHandle
+            Rc_TaskMain,
+            RC_TASK_NAME,
+            RC_TASK_STACK_SIZE,
+            NULL,
+            RC_TASK_PRIORITY,
+            &Rc_TaskHandle
         );
         ok = PLT_UTILS_RTOS_TO_PLT_PASS_FAIL(task_ok);
+    }
+
+    if (DEF_TRUE == ok) {
+        Rc_Status = RC_STATUS_STOPPED; // TODO update states centralized way.
     }
 
     return ok;
@@ -86,33 +192,267 @@ bool_t Rc_Init(void) {
 /******************************************
  * Task Main
  ******************************************/
+// static bool_t Rc_UpdateStatusOnRxFrame(void) {
+//     bool_t process_frame = DEF_FALSE;
+//     switch (Rc_Status) {
+//         case RC_STATUS_MISALIGNED:
+//             Rc_UpdateStatus(RC_STATUS_RUNNING);
+//             process_frame = DEF_TRUE;
+//             break;
+//         case RC_STATUS_RUNNING:
+//             process_frame = DEF_TRUE;
+//             break;
+//         case RC_STATUS_ERROR:
+//             /* - No-op - */
+//             break;
+//         default:
+//             PLT_UNREACHABLE;
+//             break;
+//     }
+//     return process_frame;
+// }
+
+// static void Rc_RunRxFrameProcess(RXINT_RX_BUFFER_INFO_T* p_buffer_info) {
+
+// #if RC_DEBUG_RAW_FRAME == 1
+//     if (NULL != Rc_RxDriverInterface_Ptr->RxInt_DebugFrame) {
+//         Rc_RxDriverInterface_Ptr->RxInt_DebugFrame(p_buffer_info);
+//     }
+// #endif
+
+//     Rc_RxDriverInterface_Ptr->RxInt_ProcessFrame(p_buffer_info);
+// }
+
+static void Rc_ActionRxComplete(RXINT_RX_BUFFER_INFO_T* p_buffer_info) {
+    STD_FRAME_T processed_frame;
+
+    if (RC_STATUS_MISALIGNED == Rc_Status) {
+        Rc_UpdateStatus(RC_STATUS_RUNNING);
+    }
+
+#if RC_DEBUG_RAW_FRAME == 1
+    if (NULL != Rc_RxDriverInterface_Ptr->RxInt_DebugFrame) {
+        Rc_RxDriverInterface_Ptr->RxInt_DebugFrame(p_buffer_info);
+    }
+#endif
+
+    Rc_RxDriverInterface_Ptr->RxInt_ProcessFrame(p_buffer_info, &processed_frame);
+    //TODO is probably a good thing to do here to check if the frame is valid, to remove the error state.
+    (void)processed_frame; //TODO need to be implement this part.
+
+    PltMemCA_FreeCritical(&Rc_RxBufferAllocator, p_buffer_info->RxBufferPtr);
+}
+
+static void Rc_ActionRxTimeout(void) {
+    STD_FRAME_T error_frame = {
+        .State = STD_FRAME_STATE_DROPPED,
+    };
+    printf("RC - Frame dropped\n");
+    (void)error_frame; //TODO need to implement this part.
+}
+
+static void Rc_ActionNotifyError(RC_ERROR_TYPES_T error) {
+    printf("RC - Error %u\n", error);
+    Rc_UpdateStatus(RC_STATUS_ERROR);
+    Rc_RxDriverInterface_Ptr->RxInt_Stop();
+    //TODO handle error.
+}
+
+/**
+  * @brief  Loop function for the RC task.
+  */
 static void Rc_TaskLoop(void) {
-    printf("--------------\n");
-    printf("Start reception\n");
-    bool_t ok = Sbus_StartRx();
-    PLT_ASSERT(DEF_TRUE == ok);
-
-    vTaskDelay(300); /* delay 300 ticks */
-
-    Sbus_GetFrame(&Rc_SbusState);
-    printf("SBUS State: %u\n", Rc_SbusState.State);
-    if (SBUS_STATE_OK == Rc_SbusState.State || SBUS_STATE_FRAME_LOST == Rc_SbusState.State
-        || SBUS_STATE_FAILSAFE == Rc_SbusState.State) {
-        Sbus_DebugFrame(Rc_SbusState.FramePtr);
+    RC_QUEUE_MSG_T msg;
+    if (pdPASS == xQueueReceive(Rc_RxQueueHandle, &msg, RC_RX_TIMEOUT_TICKS)) {
+        switch (msg.Action) {
+            case RC_ACTION_RX_COMPLETE:
+                Rc_ActionRxComplete(&msg.Payload.RxBufferInfo);
+                break;
+            case RC_ACTION_NOTIFY_ERROR:
+                Rc_ActionNotifyError(msg.Payload.ErrorType);
+                break;
+            default:
+                PLT_UNREACHABLE;
+                break;
+        }
     } else {
-        printf("Frame reception failed\n");
-        printf("-----------------\n");
+        Rc_ActionRxTimeout();
     }
 }
 
-static void Rc_TaskMain(PLT_UTILS_UNUSED void *parameters) {
+/**
+ * @brief  Start function for the RC task.
+ */
+static void Rc_TaskStart() {
+    PLT_ASSERT(RC_STATUS_STOPPED == Rc_Status);
+
+    bool_t ok = Rc_RxDriverInterface_Ptr->RxInt_Start();
+    PLT_ASSERT(DEF_TRUE == ok);
+    Rc_Status = RC_STATUS_MISALIGNED;
+}
+
+/**
+ * @brief  RC task main function
+ *
+ * @param  parameters (unused)
+ */
+static void Rc_TaskMain(PLT_UTILS_UNUSED void* parameters) {
     /* Setup */
-    /* --No-op-- */
+    Rc_TaskStart();
 
     /* Loop */
     while (DEF_TRUE) {
         Rc_TaskLoop();
     }
+}
+
+/******************************************
+ * State Handling
+ ******************************************/
+/**
+ * @brief  Updates the RC status.
+ *
+ * @param  new_status Status value to set.
+ */
+static void Rc_UpdateStatus(RC_STATUS_T new_status) {
+    Rc_Status = new_status;
+}
+
+/******************************************
+ * Queue
+ ******************************************/
+static void Rc_NotifyFromIsr(RC_QUEUE_MSG_T* p_msg) {
+    BaseType_t higher_priority_task_awoken = pdFALSE;
+
+    /* Send Rx frame to the queue */
+    BaseType_t queue_ok = xQueueSendFromISR(Rc_RxQueueHandle, p_msg, &higher_priority_task_awoken);
+    PLT_ASSERT(pdPASS == queue_ok);
+
+    portYIELD_FROM_ISR(higher_priority_task_awoken);
+}
+
+/******************************************
+ * Rx ISR
+ ******************************************/
+
+static bool_t Rc_StoreRxByte(RC_ISR_DATA_T* p_data, uint8_t rx_byte) {
+    p_data->RxInfo.RxBufferInfo.RxBufferPtr[p_data->RxInfo.Count.RxCount++] = rx_byte;
+    return p_data->RxInfo.RxBufferInfo.RxBufferSize == p_data->RxInfo.Count.RxCount ? DEF_TRUE
+                                                                                    : DEF_FALSE;
+}
+
+static void Rc_FailAlignment(RC_ISR_DATA_T* p_data) {
+    p_data->RxInfo.Count.HeaderCount = 0;
+    p_data->AlignmentRetries++;
+    p_data->RxInfo.AlignmentStatus = RXINT_ALIGNMENT_STATUS_WAITING_FOR_HEADER;
+    if (RC_RX_ALIGNMENT_RETRIES >= p_data->AlignmentRetries) {
+        RC_QUEUE_MSG_T msg = {
+            .Action = RC_ACTION_NOTIFY_ERROR,
+            .Payload.ErrorType = RC_ERROR_TYPES_ALIGNMENT_ERROR,
+        };
+        Rc_NotifyFromIsr(&msg);
+    }
+}
+
+/**
+ * @brief  
+ *
+ * @param  inp 
+ *
+ * @return DEF_TRUE if successful, DEF_FALSE otherwise.
+ *
+ * @note List of notes:
+ *       1. The buffer cannot be full if the alignment process is yet to be completed.
+ *       2. The alignment process can only be completed when a complete frame is generated.
+ */
+static void Rc_PerformAlignment(RC_ISR_DATA_T* p_data, uint8_t rx_byte) {
+
+    Rc_RxDriverInterface_Ptr->RxInt_PerformAlignment(&p_data->RxInfo, rx_byte);
+
+    switch (p_data->RxInfo.AlignmentStatus) {
+        case RXINT_ALIGNMENT_STATUS_COMPLETED:
+            bool_t is_done = Rc_StoreRxByte(p_data, rx_byte);
+            PLT_ASSERT(DEF_TRUE == is_done); /* See note 2 */
+            p_data->Status = RC_ISR_STATUS_RUNNING;
+            Rc_RxComplete(p_data);
+            break;
+        case RXINT_ALIGNMENT_STATUS_FAILED:
+            Rc_FailAlignment(p_data);
+            break;
+        default:
+            PLT_UNREACHABLE;
+            break;
+    }
+}
+
+static void Rc_RxComplete(RC_ISR_DATA_T* p_data) {
+    RC_QUEUE_MSG_T msg = {
+        .Action = RC_ACTION_RX_COMPLETE,
+        .Payload.RxBufferInfo = p_data->RxInfo.RxBufferInfo
+    };
+    Rc_NotifyFromIsr(&msg);
+}
+
+static void Rc_HandleRxByte(RC_ISR_DATA_T* p_data, uint8_t rx_byte) {
+    bool_t done = Rc_StoreRxByte(p_data, rx_byte);
+    if (DEF_TRUE == done) {
+        Rc_RxComplete(p_data);
+    }
+}
+
+static void Rx_ResetRxIsrData(RC_ISR_DATA_T* p_data) {
+    p_data->Status = RC_ISR_STATUS_ALIGNMENT_ONGOING;
+    p_data->RxInfo.Count.HeaderCount = 0;
+    p_data->RxInfo.RxBufferInfo.RxBufferSize = Rc_RxBufferSize;
+    p_data->RxInfo.AlignmentStatus = RXINT_ALIGNMENT_STATUS_WAITING_FOR_HEADER;
+    p_data->AlignmentRetries = 0;
+    Rc_ResetIsr = DEF_FALSE;
+}
+
+/**
+ * @brief  Interrupt callback for the Rx.
+ *
+ * @param  rx_byte  Received byte.
+ *
+ */
+static void Rc_RxHandler(uint8_t rx_byte) {
+    static RC_ISR_DATA_T data = {.RxInfo.RxBufferInfo.RxBufferPtr = NULL};
+
+    if (DEF_TRUE == Rc_ResetIsr) {
+        Rx_ResetRxIsrData(&data);
+    }
+
+    if (NULL == data.RxInfo.RxBufferInfo.RxBufferPtr) {
+        data.RxInfo.RxBufferInfo.RxBufferPtr =
+            PltMemCA_AllocateCriticalFromIsr(&Rc_RxBufferAllocator);
+    }
+
+    switch (data.Status) {
+        case RC_ISR_STATUS_ALIGNMENT_ONGOING:
+            Rc_PerformAlignment(&data, rx_byte);
+            break;
+        case RC_ISR_STATUS_RUNNING:
+            Rc_HandleRxByte(&data, rx_byte);
+            break;
+        default:
+            /* - No-op - */
+            break;
+    }
+}
+
+
+/**
+ * @brief  Rx Error Callback.
+ *
+ * @param  rx_byte  Received byte.
+ *
+ */
+static void Rc_RxErrorHandler(void) {
+    RC_QUEUE_MSG_T msg = {
+        .Action = RC_ACTION_NOTIFY_ERROR,
+        .Payload.ErrorType = RC_ERROR_TYPES_RX_ERROR,
+    };
+    Rc_NotifyFromIsr(&msg);
 }
 
 /** @} (end addtogroup Rc)   */

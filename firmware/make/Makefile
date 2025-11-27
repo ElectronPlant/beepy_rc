@@ -224,12 +224,14 @@ endif
 C_APP_SOURCE := \
 ../app/main.c \
 ../app/rc/rc.c \
-../app/rc/sbus.c \
+../app/rc/rx_drivers/sbus/sbus.c \
 ../app/rc/serial.c \
 ../app/bsp/bsp.c
 
 H_APP_SOURCE := \
 -I../app/rc \
+-I../app/rc/rx_drivers \
+-I../app/rc/rx_drivers/sbus \
 -I../app/bsp \
 -I../configs
 
