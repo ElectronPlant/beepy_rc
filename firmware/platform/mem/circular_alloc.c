@@ -1,13 +1,8 @@
 /**
  * @file  circular_alloc.c
  * @brief Circular memory allocator library.
- *        This is used to allocate memory that will by deallocated in the same order they where
- *        deallocated.
- *        The main use is to pass long structs to queues and avoid the deep copy.RXINT_ERRORS_T.
  *
- * @note  This library is not reentrant, any protection needs to be done externally.
- *
- * @ingroup   CIRCULAR_ALLOCATOR
+ * @ingroup   CircularAllocator
  * @version   V0.0
  * @author    David Arnaiz
  * @copyright 2025 David Arnaiz
@@ -19,6 +14,7 @@
  */
 
 #include "plt_assert.h"
+#include "plt_defines.h"
 #include "plt_types.h"
 
 #include "circular_alloc.h"
@@ -40,31 +36,16 @@
 /********************************************************************************
  * Defines
  ********************************************************************************/
-#define PLTMEMCA_VALIDATE_DEALLOCATED_BUFFER 0
 
 /********************************************************************************
  * Typedefs
  ********************************************************************************/
-/**
- * @note List of notes:
- *       1. See note 1 from PltMemCAlloc_Init.
- *       2. The header and tail indexes will look the same if all the memory is free or empty. Thus,
- *          this flag is used to distinguish between the two.
- */
-typedef struct {
-    void*    MemPool;   /* Pointer to the memory region to manage, see note 1. */
-    uint16_t ChunkSize; /* Size of the memory in bytes. */
-    uint16_t NumChunks; /* Number of chunks available in the pool. */
-    uint16_t HeadIndex; /* Index of the next free chunk. */
-    uint16_t TailIndex; /* Index of the first used chunk. */
-    bool_t   IsFree;    /* Flag to state if the buffer is empty, see note 2. */
-} PLT_MEMCA_HANDLER_T;
 
 /********************************************************************************
  * Function Prototypes
  ********************************************************************************/
-bool_t PltMemCA_AreChunksAvailable(PLT_MEMCA_HANDLER_T* p_handler);
-void   PltMemCA_VerifyDeallocatedChunkAddress(PLT_MEMCA_HANDLER_T* p_handler, void* p_chunk);
+bool_t PltMemCA_AreChunksAvailable(PLTMEMCA_INSTANCE_T* p_instance);
+void   PltMemCA_VerifyDeallocatedChunkAddress(PLTMEMCA_INSTANCE_T* p_instance, void* p_chunk);
 
 
 /********************************************************************************
@@ -78,12 +59,12 @@ void   PltMemCA_VerifyDeallocatedChunkAddress(PLT_MEMCA_HANDLER_T* p_handler, vo
 /**
  * @brief  Checks if there are chunks available.
  *
- * @param  p_handler: Pointer to the circular buffer allocator handler.
+ * @param  p_instance: Pointer to the circular buffer allocator instance.
  *
  * @return DEF_TRUE if there are chunks available, DEF_FALSE otherwise.
  */
-bool_t PltMemCA_AreChunksAvailable(PLT_MEMCA_HANDLER_T* p_handler) {
-    return (p_handler->HeadIndex != p_handler->TailIndex || DEF_TRUE == p_handler->IsFree)
+bool_t PltMemCA_AreChunksAvailable(PLTMEMCA_INSTANCE_T* p_instance) {
+    return (p_instance->HeadIndex != p_instance->TailIndex || DEF_TRUE == p_instance->IsFree)
         ? DEF_TRUE
         : DEF_FALSE;
 }
@@ -91,12 +72,12 @@ bool_t PltMemCA_AreChunksAvailable(PLT_MEMCA_HANDLER_T* p_handler) {
 /**
  * @brief  Ensures that the deallocated chunk is correct.
  *
- * @param  p_handler: Pointer to the circular allocator handler.
+ * @param  p_instance: Pointer to the circular allocator instance.
  * @param  p_chunk: Pointer to the chunk that will be deallocated.
  */
-void PltMemCA_VerifyDeallocatedChunkAddress(PLT_MEMCA_HANDLER_T* p_handler, void* p_chunk) {
-    uint16_t offset = p_handler->ChunkSize * p_handler->TailIndex;
-    void*    p_expected = (void*)((uint8_t*)p_handler->MemPool + offset);
+void PltMemCA_VerifyDeallocatedChunkAddress(PLTMEMCA_INSTANCE_T* p_instance, void* p_chunk) {
+    uint16_t offset = p_instance->ChunkSize * p_instance->TailIndex;
+    void*    p_expected = (void*)((uint8_t*)p_instance->MemPool + offset);
     PLT_ASSERT(p_expected == p_chunk);
 }
 
@@ -106,37 +87,72 @@ void PltMemCA_VerifyDeallocatedChunkAddress(PLT_MEMCA_HANDLER_T* p_handler, void
  ******************************************/
 
 void PltMemCA_Init(
-    PLT_MEMCA_HANDLER_T* p_handler,
+    PLTMEMCA_INSTANCE_T* p_instance,
     void*                mempool,
     uint16_t             chunk_size,
     uint16_t             n_chunks
 ) {
-    p_handler->MemPool = mempool;
-    p_handler->ChunkSize = chunk_size;
-    p_handler->NumChunks = n_chunks;
-    p_handler->HeadIndex = 0;
-    p_handler->TailIndex = 0;
-    p_handler->IsFree = DEF_TRUE;
+    p_instance->MemPool = mempool;
+    p_instance->ChunkSize = chunk_size;
+    p_instance->NumChunks = n_chunks;
+    p_instance->HeadIndex = 0;
+    p_instance->TailIndex = 0;
+    p_instance->IsFree = DEF_TRUE;
 }
 
-void* PltMemCA_Allocate(PLT_MEMCA_HANDLER_T* p_handler) {
+void* PltMemCA_Allocate(PLTMEMCA_INSTANCE_T* p_instance) {
     void* ret = NULL;
 
-    if (DEF_TRUE == PltMemCA_AreChunksAvailable(p_handler)) {
-        uint16_t offset = p_handler->ChunkSize * p_handler->HeadIndex;
-        ret = (void*)((uint8_t*)p_handler->MemPool + offset);
-        p_handler->HeadIndex = (p_handler->HeadIndex + 1U) % p_handler->NumChunks;
-        p_handler->IsFree = DEF_FALSE;
+    if (DEF_TRUE == PltMemCA_AreChunksAvailable(p_instance)) {
+        uint16_t offset = p_instance->ChunkSize * p_instance->HeadIndex;
+        ret = (void*)((uint8_t*)p_instance->MemPool + offset);
+        p_instance->HeadIndex = (p_instance->HeadIndex + 1U) % p_instance->NumChunks;
+        p_instance->IsFree = DEF_FALSE;
     }
 
     return ret;
 }
 
-void PltMemCA_Free(PLT_MEMCA_HANDLER_T* p_handler, void* p_chunk) {
-    PltMemCA_VerifyDeallocatedChunkAddress(p_handler, p_chunk);
-    p_handler->TailIndex = (p_handler->TailIndex + 1U) % p_handler->NumChunks;
-    p_handler->IsFree = p_handler->TailIndex == p_handler->HeadIndex ? DEF_TRUE : DEF_FALSE;
+void PltMemCA_Free(PLTMEMCA_INSTANCE_T* p_instance, void* p_chunk) {
+    PltMemCA_VerifyDeallocatedChunkAddress(p_instance, p_chunk);
+    p_instance->TailIndex = (p_instance->TailIndex + 1U) % p_instance->NumChunks;
+    p_instance->IsFree = p_instance->TailIndex == p_instance->HeadIndex ? DEF_TRUE : DEF_FALSE;
 }
+
+#if PLT_DEFINES_USE_FREE_RTOS == 1
+    #include "FreeRTOS.h"
+    #include "task.h"
+
+void* PltMemCA_AllocateCritical(PLTMEMCA_INSTANCE_T* p_instance) {
+    taskENTER_CRITICAL();
+    void* p_buffer = PltMemCA_Allocate(p_instance);
+    taskEXIT_CRITICAL();
+    return p_buffer;
+}
+
+void PltMemCA_FreeCritical(PLTMEMCA_INSTANCE_T* p_instance, void* p_chunk) {
+    taskENTER_CRITICAL();
+    PltMemCA_Free(p_instance, p_chunk);
+    taskEXIT_CRITICAL();
+}
+
+void* PltMemCA_AllocateCriticalFromIsr(PLTMEMCA_INSTANCE_T* p_instance) {
+    UBaseType_t interrupt_status;
+
+    interrupt_status = taskENTER_CRITICAL_FROM_ISR();
+    void* p_buffer = PltMemCA_Allocate(p_instance);
+    taskEXIT_CRITICAL_FROM_ISR(interrupt_status);
+    return p_buffer;
+}
+
+void PltMemCA_FreeCriticalFromIsr(PLTMEMCA_INSTANCE_T* p_instance, void* p_chunk) {
+    UBaseType_t interrupt_status;
+
+    interrupt_status = taskENTER_CRITICAL_FROM_ISR();
+    PltMemCA_Free(p_instance, p_chunk);
+    taskEXIT_CRITICAL_FROM_ISR(interrupt_status);
+}
+#endif /* USE_FREE_RTOS == 1 */
 
 /** @} (end addtogroup Platform)            */
 /** @} (end addtogroup Mem)                 */
