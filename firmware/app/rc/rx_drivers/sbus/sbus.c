@@ -100,24 +100,9 @@ static bool_t           Sbus_IsFrameValid(SBUS_FRAME_T* p_frame);
 static inline float32_t Sbus_Chn2Std(uint16_t v);
 static void             Sbus_GetStdFrame(SBUS_FRAME_T* p_frame, STD_FRAME_T* p_std);
 
-static bool_t Sbus_Init(RxInt_RxHandler rx_handler_func, RxInt_RxErrorHandler rx_error_func);
-static bool_t Sbus_Start(void);
-static void   Sbus_Stop(void);
-static void   Sbus_PerformAlignment(RXINT_RX_INFO_T* p_rx_info, uint8_t rx_byte);
-static void   Sbus_ProcessFrame(RXINT_RX_BUFFER_INFO_T* p_buffer_info, STD_FRAME_T* p_std_frame);
-static void   Sbus_DebugFrame(RXINT_RX_BUFFER_INFO_T* p_buffer_info);
-
 /********************************************************************************
  * Local Vars
  ********************************************************************************/
-const RXINT_INTERFACE_T Sbus_Interface = {
-    .RxInt_Init = Sbus_Init,
-    .RxInt_Start = Sbus_Start,
-    .RxInt_Stop = Sbus_Stop,
-    .RxInt_PerformAlignment = Sbus_PerformAlignment,
-    .RxInt_ProcessFrame = Sbus_ProcessFrame,
-    .RxInt_DebugFrame = Sbus_DebugFrame,
-};
 
 /********************************************************************************
  * Function Implementations
@@ -349,7 +334,7 @@ static void Sbus_GetStdFrame(SBUS_FRAME_T* p_frame, STD_FRAME_T* p_std) {
  *      2. The SBUS protocol is and inverted UART. This module assumes that the bus inversion is
  *         done at the hardware level. For the moment the UART peripheral is hardcoded.
  */
-static bool_t Sbus_Init(RxInt_RxHandler rx_handler_func, RxInt_RxErrorHandler rx_error_func) {
+bool_t Sbus_Init(RxInt_RxHandler rx_handler_func, RxInt_RxErrorHandler rx_error_func) {
     PLT_BUILD_ASSERT(sizeof(SBUS_FRAME_T) == SBUS_FRAME_SIZE_BYTES); /* Note 1 */
 
     bool_t init_ok;
@@ -362,21 +347,21 @@ static bool_t Sbus_Init(RxInt_RxHandler rx_handler_func, RxInt_RxErrorHandler rx
 /**
  * @brief   SBUS implementation of the RxInt_Start interface.
  */
-static bool_t Sbus_Start(void) {
+bool_t Sbus_Start(void) {
     return Serial_StartReception();
 }
 
 /**
  * @brief   SBUS implementation of the RxInt_Stop interface.
  */
-static void Sbus_Stop(void) {
+void Sbus_Stop(void) {
     Serial_StopReception();
 }
 
 /**
  * @brief   SBUS implementation of the RxInt_PerformAlignment interface.
  */
-static void Sbus_PerformAlignment(RXINT_RX_INFO_T* p_rx_info, uint8_t rx_byte) {
+void Sbus_PerformAlignment(RXINT_RX_INFO_T* p_rx_info, uint8_t rx_byte) {
     switch (p_rx_info->AlignmentStatus) {
         case RXINT_ALIGNMENT_STATUS_WAITING_FOR_HEADER:
             Sbus_AlignmentWaitForHeader(p_rx_info, rx_byte);
@@ -393,7 +378,7 @@ static void Sbus_PerformAlignment(RXINT_RX_INFO_T* p_rx_info, uint8_t rx_byte) {
 /**
  * @brief   SBUS implementation of the RxInt_ProcessFrame interface.
  */
-static void Sbus_ProcessFrame(RXINT_RX_BUFFER_INFO_T* p_buffer_info, STD_FRAME_T* p_std_frame) {
+void Sbus_ProcessFrame(RXINT_RX_BUFFER_INFO_T* p_buffer_info, STD_FRAME_T* p_std_frame) {
     /* Sanitize the input */
     PLT_ASSERT(SBUS_FRAME_SIZE_BYTES <= p_buffer_info->RxBufferSize);
     PLT_ASSERT(NULL != p_buffer_info->RxBufferPtr);
@@ -413,7 +398,7 @@ static void Sbus_ProcessFrame(RXINT_RX_BUFFER_INFO_T* p_buffer_info, STD_FRAME_T
  * @brief   SBUS implementation of the RxInt_DebugFrame interface.
  *          This implementation just prints the frame through the debug interface.
  */
-static void Sbus_DebugFrame(RXINT_RX_BUFFER_INFO_T* p_buffer_info) {
+void Sbus_DebugFrame(RXINT_RX_BUFFER_INFO_T* p_buffer_info) {
     /* Sanitize the input */
     PLT_ASSERT(SBUS_FRAME_SIZE_BYTES <= p_buffer_info->RxBufferSize);
     PLT_ASSERT(NULL != p_buffer_info->RxBufferPtr);

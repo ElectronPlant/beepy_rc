@@ -16,11 +16,14 @@
 #ifndef __STD_FRAME_H__
 #define __STD_FRAME_H__
 
+#include "plt_types.h"
+
+#include "common_rx_sizes.h"
 
 /********************************************************************************
  * Defines
  ********************************************************************************/
-#define STD_FRAME_NUM_CHANNELS (16U)
+#define STD_FRAME_NUM_CHANNELS (COMRXS_NUM_CHANNELS)
 #define STD_FRAME_LOW_LIMIT    (-100.0f)
 #define STD_FRAME_HIGH_LIMIT   (100.0f)
 

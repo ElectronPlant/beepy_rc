@@ -23,7 +23,8 @@
 #include "queue.h"
 #include "task.h"
 
-#include "common_rx_driver.h"
+#include "common_rx_interface.h"
+#include "common_rx_sizes.h"
 #include "std_frame.h"
 
 #include "rx_interface.h"
@@ -122,11 +123,9 @@ static void Rc_RxErrorHandler(void);
 static TaskHandle_t  Rc_TaskHandle = NULL;
 static QueueHandle_t Rc_RxQueueHandle = NULL;
 
-static const RXINT_INTERFACE_T* Rc_RxDriverInterface_Ptr = &COMRXD_INTERFACE;
-static const uint16_t           Rc_RxBufferSize = COMRXD_BUFFER_SIZE;
-static const uint16_t           Rc_RxBuffersNum = RXINT_MAX_PARALLEL_RAW_BUFFERS;
-static uint8_t     Rc_RxBuffersPool[RXINT_MAX_PARALLEL_RAW_BUFFERS][COMRXD_BUFFER_SIZE];
-static RC_STATUS_T Rc_Status = RC_STATUS_UNINITIALIZED;
+static const uint16_t Rc_RxBuffersNum = RXINT_MAX_PARALLEL_RAW_BUFFERS;
+static uint8_t        Rc_RxBuffersPool[RXINT_MAX_PARALLEL_RAW_BUFFERS][COMRXS_BUFFER_SIZE];
+static RC_STATUS_T    Rc_Status = RC_STATUS_UNINITIALIZED;
 
 /**
  * @note Access model: The buffer must only be allocated by the ISR, deallocation only be the Task.
@@ -159,14 +158,14 @@ bool_t Rc_Init(void) {
     }
 
     /* Init Rx Driver */
-    ComRxD_CheckInterface();
+    ComRxInt_CheckInterface();
     if (DEF_TRUE == ok) {
-        ok = Rc_RxDriverInterface_Ptr->RxInt_Init(Rc_RxHandler, Rc_RxErrorHandler);
+        ok = ComRxInt_Interface.RxInt_Init(Rc_RxHandler, Rc_RxErrorHandler);
     }
 
     /* Init Buffer handler */
     if (DEF_TRUE == ok) {
-        PltMemCA_Init(&Rc_RxBufferAllocator, Rc_RxBuffersPool, Rc_RxBufferSize, Rc_RxBuffersNum);
+        PltMemCA_Init(&Rc_RxBufferAllocator, Rc_RxBuffersPool, COMRXS_BUFFER_SIZE, Rc_RxBuffersNum);
     }
 
     /* Create Task */
@@ -215,12 +214,12 @@ bool_t Rc_Init(void) {
 // static void Rc_RunRxFrameProcess(RXINT_RX_BUFFER_INFO_T* p_buffer_info) {
 
 // #if RC_DEBUG_RAW_FRAME == 1
-//     if (NULL != Rc_RxDriverInterface_Ptr->RxInt_DebugFrame) {
-//         Rc_RxDriverInterface_Ptr->RxInt_DebugFrame(p_buffer_info);
+//     if (NULL != ComRxInt_Interface.RxInt_DebugFrame) {
+//         ComRxInt_Interface.RxInt_DebugFrame(p_buffer_info);
 //     }
 // #endif
 
-//     Rc_RxDriverInterface_Ptr->RxInt_ProcessFrame(p_buffer_info);
+//     ComRxInt_Interface.RxInt_ProcessFrame(p_buffer_info);
 // }
 
 static void Rc_ActionRxComplete(RXINT_RX_BUFFER_INFO_T* p_buffer_info) {
@@ -231,12 +230,12 @@ static void Rc_ActionRxComplete(RXINT_RX_BUFFER_INFO_T* p_buffer_info) {
     }
 
 #if RC_DEBUG_RAW_FRAME == 1
-    if (NULL != Rc_RxDriverInterface_Ptr->RxInt_DebugFrame) {
-        Rc_RxDriverInterface_Ptr->RxInt_DebugFrame(p_buffer_info);
+    if (NULL != ComRxInt_Interface.RxInt_DebugFrame) {
+        ComRxInt_Interface.RxInt_DebugFrame(p_buffer_info);
     }
 #endif
 
-    Rc_RxDriverInterface_Ptr->RxInt_ProcessFrame(p_buffer_info, &processed_frame);
+    ComRxInt_Interface.RxInt_ProcessFrame(p_buffer_info, &processed_frame);
     //TODO is probably a good thing to do here to check if the frame is valid, to remove the error state.
     (void)processed_frame; //TODO need to be implement this part.
 
@@ -254,7 +253,7 @@ static void Rc_ActionRxTimeout(void) {
 static void Rc_ActionNotifyError(RC_ERROR_TYPES_T error) {
     printf("RC - Error %u\n", error);
     Rc_UpdateStatus(RC_STATUS_ERROR);
-    Rc_RxDriverInterface_Ptr->RxInt_Stop();
+    ComRxInt_Interface.RxInt_Stop();
     //TODO handle error.
 }
 
@@ -286,7 +285,7 @@ static void Rc_TaskLoop(void) {
 static void Rc_TaskStart() {
     PLT_ASSERT(RC_STATUS_STOPPED == Rc_Status);
 
-    bool_t ok = Rc_RxDriverInterface_Ptr->RxInt_Start();
+    bool_t ok = ComRxInt_Interface.RxInt_Start();
     PLT_ASSERT(DEF_TRUE == ok);
     Rc_Status = RC_STATUS_MISALIGNED;
 }
@@ -367,7 +366,7 @@ static void Rc_FailAlignment(RC_ISR_DATA_T* p_data) {
  */
 static void Rc_PerformAlignment(RC_ISR_DATA_T* p_data, uint8_t rx_byte) {
 
-    Rc_RxDriverInterface_Ptr->RxInt_PerformAlignment(&p_data->RxInfo, rx_byte);
+    ComRxInt_Interface.RxInt_PerformAlignment(&p_data->RxInfo, rx_byte);
 
     switch (p_data->RxInfo.AlignmentStatus) {
         case RXINT_ALIGNMENT_STATUS_COMPLETED:
@@ -403,7 +402,7 @@ static void Rc_HandleRxByte(RC_ISR_DATA_T* p_data, uint8_t rx_byte) {
 static void Rx_ResetRxIsrData(RC_ISR_DATA_T* p_data) {
     p_data->Status = RC_ISR_STATUS_ALIGNMENT_ONGOING;
     p_data->RxInfo.Count.HeaderCount = 0;
-    p_data->RxInfo.RxBufferInfo.RxBufferSize = Rc_RxBufferSize;
+    p_data->RxInfo.RxBufferInfo.RxBufferSize = COMRXS_BUFFER_SIZE;
     p_data->RxInfo.AlignmentStatus = RXINT_ALIGNMENT_STATUS_WAITING_FOR_HEADER;
     p_data->AlignmentRetries = 0;
     Rc_ResetIsr = DEF_FALSE;
