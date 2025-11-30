@@ -1,6 +1,6 @@
 /**
  * @file     serial.c
- * @brief    Generic implementation of the serial interface.
+ * @brief    Generic implementation of Rx the serial interface.
  *
  * @ingroup   Main
  * @version   V0.0
@@ -18,6 +18,7 @@
 #include "plt_types.h"
 
 
+#include "priorities_cfg.h"
 #include "serial.h"
 #include "target.h"
 
@@ -60,40 +61,43 @@ on the system configuration. */
  * Typedefs
  ********************************************************************************/
 typedef struct {
-    USART_TypeDef *Instance_Ptr;
-    uint8_t       *RxBuffer_Ptr;
-    uint16_t       RxBufferSize;
-    uint16_t       RxByteCnt;
-    void (*IntHandlerFunct_Ptr)(void);
+    USART_TypeDef* Instance_Ptr; /* Serial instance, the type is already volatile. */
+    void (*RxHandlerFunct_Ptr)(uint8_t);
+    void (*ErrorHandlerFunct_Ptr)(void);
 } SERIAL_HANDLER_T;
+
+
 /********************************************************************************
  * Function Prototypes
  ********************************************************************************/
-static void Serial_HandleError(volatile SERIAL_HANDLER_T *p_handler);
-static void Serial_NotifyRxComplete(volatile SERIAL_HANDLER_T *p_handler);
-static void Serial_StopReceptionInternal(volatile SERIAL_HANDLER_T *p_handler);
-static void Serial_HandleRx(volatile SERIAL_HANDLER_T *p_handler);
-
+static void Serial_StopReceptionInternal(void);
+static void Serial_HandleRx(void);
+static void Serial_HandleError(void);
 
 /********************************************************************************
  * Local Vars
  ********************************************************************************/
-static volatile SERIAL_HANDLER_T Serial_Handler = {0};
+static SERIAL_HANDLER_T Serial_Handler = {.Instance_Ptr = NULL};
 
 /********************************************************************************
  * Function Implementations
  ********************************************************************************/
 /**
- * @brief
+ * @brief  Initializes the serial interface.
  *
- * @param  inp
+ * @param  rx_handler_func: Pointer to the function that will be executed everytime a new byte is
+ *                          received. Note that it is executed as part of the serial ISR.
+ * @param  error_handler_func: Pointer to the function that will be executed when ever there has
+ *                             been an Rx error. Note that it is executed as part of the serial ISR.
+ *                             When no error external error handling is required it may be set to
+ *                             NULL.
  *
  * @return DEF_TRUE if successful, DEF_FALSE otherwise.
  *
  * @note List of notes:
- *       1.
+ *       1. Ensure that the serial driver has not been already been initialized.
  */
-bool_t Serial_Init(void (*int_handler_fn)(void)) {
+bool_t Serial_Init(void (*rx_handler_func)(uint8_t), void (*error_handler_func)(void)) {
     /* Enable peripheral clock */
     LL_APB1_GRP1_EnableClock(SERIAL_APB1_PERIPH_CLOCK);
     LL_AHB1_GRP1_EnableClock(SERIAL_AHB1_GPIO_CLOCK);
@@ -110,7 +114,10 @@ bool_t Serial_Init(void (*int_handler_fn)(void)) {
     LL_GPIO_Init(SERIAL_GPIO_PORT, &gpio_init_struct);
 
     /* Enable Interrupt */
-    NVIC_SetPriority(SERIAL_INSTANCE_IRQ, NVIC_EncodePriority(NVIC_GetPriorityGrouping(), 0, 0));
+    NVIC_SetPriority(
+        SERIAL_INSTANCE_IRQ,
+        NVIC_EncodePriority(NVIC_GetPriorityGrouping(), PRIORITIES_CFG_IRQ_MAX_PRIORITY, 0)
+    );
     NVIC_EnableIRQ(SERIAL_INSTANCE_IRQ);
 
     /* Init USART */
@@ -128,19 +135,18 @@ bool_t Serial_Init(void (*int_handler_fn)(void)) {
     LL_USART_Enable(SERIAL_INSTANCE);
 
     /* Init Serial handler */
+    PLT_ASSERT(NULL == Serial_Handler.Instance_Ptr); /* See note 1 */
     Serial_Handler.Instance_Ptr = SERIAL_INSTANCE;
-    Serial_Handler.RxByteCnt = 0;
-    Serial_Handler.RxBufferSize = 0;
-    Serial_Handler.RxBuffer_Ptr = NULL;
-    Serial_Handler.IntHandlerFunct_Ptr = int_handler_fn;
+    Serial_Handler.RxHandlerFunct_Ptr = rx_handler_func;
+    Serial_Handler.ErrorHandlerFunct_Ptr = error_handler_func;
 
     return DEF_TRUE;
 }
 
 /**
- * @brief
- *
- * @param  inp
+ * @brief  Starts the serial reception.
+ *         Once the serial interface is enabled, it will continuously listen for any incoming byte
+ *         to call the interrupt. This will continue until the stop is executed.
  *
  * @return DEF_TRUE if successful, DEF_FALSE otherwise.
  *
@@ -151,39 +157,29 @@ bool_t Serial_Init(void (*int_handler_fn)(void)) {
  *          https://community.st.com/t5/stm32cubemx-mcus/how-to-handle-hal-uart-error-ore/td-p/481259
  *          The issue is fixed by clearing the ORE flag before starting the interrupt reception.
  */
-bool_t Serial_StartReception(uint8_t *p_data, uint16_t size) {
-    /* Checks */
-    PLT_ASSERT(NULL != p_data);
-    PLT_ASSERT(0 != size);
-    PLT_ASSERT(NULL != Serial_Handler.Instance_Ptr);
-    if (DEF_TRUE == SERIAL_IS_RX_IRQ_ENABLED(Serial_Handler.Instance_Ptr)) {
+bool_t Serial_StartReception(void) {
+
+    /* Check that it has been initialized correctly and is not already started */
+    if (NULL == Serial_Handler.Instance_Ptr || NULL == Serial_Handler.RxHandlerFunct_Ptr
+        || DEF_TRUE == SERIAL_IS_RX_IRQ_ENABLED(Serial_Handler.Instance_Ptr)) {
         return DEF_FALSE;
     }
 
-    /* Update Handler */
-    Serial_Handler.RxBuffer_Ptr = p_data;
-    Serial_Handler.RxBufferSize = size;
-    Serial_Handler.RxByteCnt = 0;
-
     /* Start reception */
-    LL_USART_ClearFlag_ORE(Serial_Handler.Instance_Ptr); /* See note 1 */ // TODO: Check if needed.
+    LL_USART_ClearFlag_ORE(Serial_Handler.Instance_Ptr); /* See note 1 */
     LL_USART_EnableIT_RXNE(Serial_Handler.Instance_Ptr);
 
     return DEF_TRUE;
 }
 
 /**
- * @brief
- *
- * @param  inp
- *
- * @return DEF_TRUE if successful, DEF_FALSE otherwise.
- *
- * @note List of notes:
- *       1.
+ * @brief  Stops the serial reception.
  */
 void Serial_StopReception(void) {
-    Serial_StopReceptionInternal(&Serial_Handler);
+    if (NULL != Serial_Handler.Instance_Ptr
+        || DEF_FALSE == SERIAL_IS_RX_IRQ_ENABLED(Serial_Handler.Instance_Ptr)) {
+        Serial_StopReceptionInternal();
+    }
 }
 
 
@@ -192,66 +188,41 @@ void Serial_StopReception(void) {
  *******************************************/
 
 /**
+ * @brief  Stops the RX interrupt.
+ */
+static void Serial_StopReceptionInternal(void) {
+    LL_USART_DisableIT_RXNE(Serial_Handler.Instance_Ptr);
+}
+
+/**
+ * @brief  Handles the incoming byte.
+ */
+static void Serial_HandleRx(void) {
+    uint8_t rx_byte = SERIAL_READ_DATA(Serial_Handler.Instance_Ptr);
+    // LL_USART_ClearFlag_RXNE(Serial_Handler.Instance_Ptr);
+
+    if (NULL != Serial_Handler.RxHandlerFunct_Ptr) {
+        Serial_Handler.RxHandlerFunct_Ptr(rx_byte);
+    }
+}
+
+/**
  * @brief Handles error encountered while receiving data.
  *
  * @note List of notes:
  *      1. The process the handle the errors is just to clear the flag and flush the data.
  */
-static void Serial_HandleError(volatile SERIAL_HANDLER_T *p_handler) {
-    SERIAL_CLEAR_ERROR_FLAGS(p_handler->Instance_Ptr);
-    (void)p_handler->Instance_Ptr->DR;
-}
+static void Serial_HandleError(void) {
+    /* See note 1. */
+    (void)SERIAL_READ_DATA(Serial_Handler.Instance_Ptr);
+    SERIAL_CLEAR_ERROR_FLAGS(Serial_Handler.Instance_Ptr);
 
-/**
- * @brief
- *
- * @param  inp
- *
- * @return DEF_TRUE if successful, DEF_FALSE otherwise.
- *
- * @note List of notes:
- *       1.
- */
-static void Serial_NotifyRxComplete(volatile SERIAL_HANDLER_T *p_handler) {
-    if (NULL != p_handler->IntHandlerFunct_Ptr) {
-        p_handler->IntHandlerFunct_Ptr();
+    /* Notify the error */
+    if (NULL != Serial_Handler.ErrorHandlerFunct_Ptr) {
+        Serial_Handler.ErrorHandlerFunct_Ptr();
     }
 }
 
-/**
- * @brief
- *
- * @param  inp
- *
- * @return DEF_TRUE if successful, DEF_FALSE otherwise.
- *
- * @note List of notes:
- *       1.
- */
-static void Serial_StopReceptionInternal(volatile SERIAL_HANDLER_T *p_handler) {
-    LL_USART_DisableIT_RXNE(Serial_Handler.Instance_Ptr);
-}
-
-/**
- * @brief
- *
- * @param  inp
- *
- * @return DEF_TRUE if successful, DEF_FALSE otherwise.
- *
- * @note List of notes:
- *       1.
- */
-static void Serial_HandleRx(volatile SERIAL_HANDLER_T *p_handler) {
-    if (p_handler->RxByteCnt < p_handler->RxBufferSize) {
-        p_handler->RxBuffer_Ptr[p_handler->RxByteCnt++] = SERIAL_READ_DATA(p_handler->Instance_Ptr);
-        if (p_handler->RxByteCnt >= p_handler->RxBufferSize) {
-            Serial_StopReceptionInternal(p_handler);
-            Serial_NotifyRxComplete(p_handler);
-        }
-    }
-    // LL_USART_ClearFlag_RXNE(Serial_Handler.Instance_Ptr);
-}
 
 /******************************************
  * IRQ handler
@@ -262,9 +233,9 @@ static void Serial_HandleRx(volatile SERIAL_HANDLER_T *p_handler) {
  */
 void TARGET_RC_SERIAL_IRQ_HANDLER(void) {
     if (DEF_TRUE == SERIAL_IS_ERROR_FLAG_ENABLED(Serial_Handler.Instance_Ptr)) {
-        Serial_HandleError(&Serial_Handler);
+        Serial_HandleError();
     } else if (DEF_TRUE == SERIAL_IS_RX_IRQ_ENABLED(Serial_Handler.Instance_Ptr)) {
-        Serial_HandleRx(&Serial_Handler);
+        Serial_HandleRx();
     }
 }
 

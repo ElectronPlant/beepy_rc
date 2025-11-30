@@ -224,7 +224,7 @@ endif
 C_APP_SOURCE := \
 ../app/main.c \
 ../app/rc/rc.c \
-../app/rc/sbus.c \
+../app/rc/rx_drivers/sbus/sbus.c \
 ../app/rc/serial.c \
 ../app/bsp/bsp.c \
 ../app/motion/motion.c \
@@ -232,16 +232,21 @@ C_APP_SOURCE := \
 
 H_APP_SOURCE := \
 -I../app/rc \
+-I../app/rc/rx_drivers \
+-I../app/rc/rx_drivers/sbus \
 -I../app/bsp \
 -I../app/motion \
 -I../configs
 
 # Platform
 C_PLATFORM := \
-../platform/plt_assert.c
+../platform/plt_assert.c \
+../platform/mem/circular_alloc.c \
+../platform/plt_utils.c
 
 H_PLATFORM := \
--I../platform
+-I../platform \
+-I../platform/mem
 
 # ASM sources
 ASM_SOURCES := \

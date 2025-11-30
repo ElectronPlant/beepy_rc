@@ -34,6 +34,14 @@ or
 python -m pip install mkdoxy
 ```
 
+### Install Doxygen
+The installation procedure depends on the operating system, see: [Doxygen docs](https://www.doxygen.nl/manual/install.html)
+
+For ubuntu:
+```
+sudo apt-get install doxygen
+```
+
 ### Deploy docs
 ```
 mkdocs serve

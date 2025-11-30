@@ -1,6 +1,6 @@
 /**
- * @file      bsp_config.h
- * @brief     Configurations for the Board Support Package (BSP)
+ * @file     serial.h
+ * @brief    Generic Serial implementation.
  *
  * @ingroup   Main
  * @version   V0.0
@@ -11,16 +11,14 @@
  * This project is licensed under the GNU General Public License v3.0 license.
  */
 
-#ifndef __BSP_CONFIG_H__
-#define __BSP_CONFIG_H__
+#ifndef __SERIAL_H__
+#define __SERIAL_H__
 
 #include "plt_types.h"
 
 /********************************************************************************
  * Defines
  ********************************************************************************/
-#define BSP_CONFIG_SYSTICK_PRIORITY (0U) /* Set the lowest priority possible */
-
 
 /********************************************************************************
  * Typedefs
@@ -33,6 +31,9 @@
 /********************************************************************************
  * API
  ********************************************************************************/
+bool_t Serial_Init(void (*rx_handler_func)(uint8_t), void (*error_handler_func)(void));
+bool_t Serial_StartReception(void);
+void   Serial_StopReception(void);
 
 
-#endif /* __BSP_CONFIG_H__       */
+#endif /* __SERIAL_H__       */

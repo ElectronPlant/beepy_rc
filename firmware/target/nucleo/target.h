@@ -28,6 +28,9 @@
 #include "stm32f4xx_ll_usart.h"
 #include "stm32f4xx_ll_utils.h"
 
+/* BSP */
+#include "bsp.h"
+
 /********************************************************************************
  * Defines
  ********************************************************************************/
@@ -57,22 +60,26 @@
 
 /* --- */ // TODO things I'm not sure I need
 #if 0
-#define USART_TX_Pin       LL_GPIO_PIN_2
-#define USART_TX_GPIO_Port GPIOA
-#define USART_RX_Pin       LL_GPIO_PIN_3
-#define USART_RX_GPIO_Port GPIOA
-#define TMS_Pin            LL_GPIO_PIN_13
-#define TMS_GPIO_Port      GPIOA
-#define TCK_Pin            LL_GPIO_PIN_14
-#define TCK_GPIO_Port      GPIOA
-#define SWO_Pin            LL_GPIO_PIN_3
-#define SWO_GPIO_Port      GPIOB
+    #define USART_TX_Pin       LL_GPIO_PIN_2
+    #define USART_TX_GPIO_Port GPIOA
+    #define USART_RX_Pin       LL_GPIO_PIN_3
+    #define USART_RX_GPIO_Port GPIOA
+    #define TMS_Pin            LL_GPIO_PIN_13
+    #define TMS_GPIO_Port      GPIOA
+    #define TCK_Pin            LL_GPIO_PIN_14
+    #define TCK_GPIO_Port      GPIOA
+    #define SWO_Pin            LL_GPIO_PIN_3
+    #define SWO_GPIO_Port      GPIOB
 #endif
 
 /******************************************
- * External Components
+ * Rc
  ******************************************/
-/* UART port used for RC */
+/* RC Input */
+#define TARGET_RC_DRIVER       SBUS
+#define TARGET_RC_NUM_CHANNELS (16U)
+
+/* UART port used for SBUS */
 #define TARGET_RC_SERIAL_PERIPH_CLOCK LL_APB1_GRP1_PERIPH_UART4
 #define TARGET_RC_SERIAL_GPIO_CLOCK   LL_AHB1_GRP1_PERIPH_GPIOC
 #define TARGET_RC_SERIAL_INSTANCE     UART4
@@ -82,6 +89,10 @@
 #define TARGET_RC_SERIAL_RX_PIN       LL_GPIO_PIN_11
 #define TARGET_RC_SERIAL_PORT         GPIOC
 
+
+/******************************************
+ * Drive
+ ******************************************/
 /** Drive PWM timer
  *
  * @note List of notes:
@@ -116,6 +127,7 @@
 #define TARGET_DRIVE_PWM_PORT       GPIOB
 #define TARGET_DRIVE_PWM_GPIO_CLOCK LL_AHB1_GRP1_PERIPH_GPIOB
 #define TARGET_DRIVE_PWM_GPIO_AF    LL_GPIO_AF_1
+
 
 /********************************************************************************
  * Typedefs

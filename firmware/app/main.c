@@ -92,9 +92,10 @@ void vApplicationIdleHook(void) {}
 /**
  * @brief  Stack overflow hook // TODO: implement
  */
-void vApplicationStackOverflowHook(TaskHandle_t xTask, char *pcTaskName) {
+void vApplicationStackOverflowHook(TaskHandle_t xTask, char* pcTaskName) {
     /* Check pcTaskName for the name of the offending task,
      * or pxCurrentTCB if pcTaskName has itself been corrupted. */
     (void)xTask;
     (void)pcTaskName;
+    PLT_UNREACHABLE;
 }

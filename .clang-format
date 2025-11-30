@@ -1,21 +1,22 @@
-# License: Not specified, see below.
-# Credits: This Clang format config is adapted from the original version created by YodaEmbedding:
-#         https://gist.github.com/YodaEmbedding/c2c77dc693d11f3734d78489f9a6eea4
-#
-# Modifications of the original style are marked with # CHANGE -> ...
-#
+# # License: Not specified, see below.
+# # Credits: This Clang format config is adapted from the original version created by YodaEmbedding:
+# #         https://gist.github.com/YodaEmbedding/c2c77dc693d11f3734d78489f9a6eea4
+# #
+# # Modifications of the original style are marked with # CHANGE -> ...
+# #
 
 AccessModifierOffset: -2
 AlignAfterOpenBracket: BlockIndent    # New in v14. For earlier clang-format versions, use AlwaysBreak instead.
 AlignConsecutiveMacros: true # CHANGE -> from false
 AlignConsecutiveAssignments: false
-AlignConsecutiveDeclarations: true # CHANGE -> This used to be false
-AlignEscapedNewlines: Left # CHANGE -> This used to be DontAlign
-AlignOperands: true # CHANGE -> This used to be false
-AlignTrailingComments: true # CHANGE  -> this used to be false
-AllowAllArgumentsOnNextLine: true # CHANGE -> This used to be false
-AllowAllConstructorInitializersOnNextLine: true # CHANGE -> This used to be false
-AllowAllParametersOfDeclarationOnNextLine: true # CHANGE -> This used to be false
+AlignConsecutiveDeclarations: true # CHANGE -> from false
+AlignEscapedNewlines: DontAlign
+AlignOperands: false
+AlignTrailingComments: Always # CHANGE -> from false
+AlignConsecutiveComments: true # CHANGE -> added
+AllowAllArgumentsOnNextLine: false
+AllowAllConstructorInitializersOnNextLine: false
+AllowAllParametersOfDeclarationOnNextLine: false
 AllowShortBlocksOnASingleLine: Empty
 AllowShortCaseLabelsOnASingleLine: false
 AllowShortFunctionsOnASingleLine: Empty
@@ -32,8 +33,8 @@ BreakBeforeBraces: Attach
 BreakBeforeTernaryOperators: true
 BreakConstructorInitializers: AfterColon
 BreakInheritanceList: AfterColon
-BreakStringLiterals: true # CHANGE -> from false
-ColumnLimit: 100 # CHANGE -> This used to be 80
+BreakStringLiterals: false
+ColumnLimit: 100 # CHANGE -> from 80
 CompactNamespaces: false
 ConstructorInitializerAllOnOneLineOrOnePerLine: true
 ConstructorInitializerIndentWidth: 4
@@ -41,32 +42,36 @@ ContinuationIndentWidth: 4
 Cpp11BracedListStyle: true
 DerivePointerAlignment: false
 FixNamespaceComments: true
-IncludeBlocks: Preserve # CHANGE -> This used to be Regroup
+IncludeBlocks: Preserve
 IncludeCategories:
   - Regex:           '^<ext/.*\.h>'
     Priority:        2
     SortPriority:    0
+    CaseSensitive:   false
   - Regex:           '^<.*\.h>'
     Priority:        1
     SortPriority:    0
+    CaseSensitive:   false
   - Regex:           '^<.*'
     Priority:        2
     SortPriority:    0
+    CaseSensitive:   false
   - Regex:           '.*'
     Priority:        3
     SortPriority:    0
+    CaseSensitive:   false
 IncludeIsMainRegex: '([-_](test|unittest))?$'
 IndentCaseLabels: true
-IndentPPDirectives: None # CHANGE -> This used to be BeforeHash
+IndentPPDirectives: BeforeHash
 IndentWidth: 4
 IndentWrappedFunctionNames: false
-KeepEmptyLinesAtTheStartOfBlocks: false
-MaxEmptyLinesToKeep: 2 # CHANGE -> This used to be 1
+KeepEmptyLinesAtTheStartOfBlocks: true # CHANGE -> from false
+MaxEmptyLinesToKeep: 2 # CHANGE -> from 1
 NamespaceIndentation: Inner
-PointerAlignment: Right
-ReferenceAlignment: Right # Change -> From Left
-ReflowComments: true # CHANGE -> This used to be false
-#SeparateDefinitionBlocks: Always # Change -> remove
+PointerAlignment: Left
+ReferenceAlignment: Left              # New in v13. int &name  ==>  int& name
+ReflowComments: false
+SeparateDefinitionBlocks: Leave # CHANGE -> from Always
 SortIncludes: true
 SortUsingDeclarations: true
 SpaceAfterCStyleCast: false
@@ -88,3 +93,5 @@ SpacesInSquareBrackets: false
 Standard: Cpp11
 TabWidth: 4
 UseTab: Never
+BitFieldColonSpacingStyle: BFCS_Before # CHANGE -> added
+PenaltyReturnTypeOnItsOwnLine: 1000 # CHANGE -> added

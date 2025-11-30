@@ -27,7 +27,7 @@
 #include "FreeRTOSConfig.h"
 #include "timers.h"
 
-#include "bsp_config.h"
+#include "priorities_cfg.h"
 
 #include "target.h"
 
@@ -137,7 +137,11 @@ bool_t BSP_SetupHeartbeat(void) {
     TickType_t period_ticks = BSP_HEARTBEAT_TIMER_PERIOD_MS / BSP_TICK_PERIOD_MS;
 
     BSP_HbeatTimerHandler = xTimerCreate(
-        BSP_HEARTBEAT_TIMER_NAME, period_ticks, pdTRUE, NULL, BSP_HeartbeatCallback
+        BSP_HEARTBEAT_TIMER_NAME,
+        period_ticks,
+        pdTRUE,
+        NULL,
+        BSP_HeartbeatCallback
 
     );
     bool_t ok = NULL == BSP_HbeatTimerHandler ? DEF_FALSE : DEF_TRUE;
@@ -185,7 +189,8 @@ bool_t BSP_SetupButton(void) {
 
     /* See note 1 */
     NVIC_SetPriority(
-        TARGET_BUTTON_EXTI_IRQ, NVIC_EncodePriority(NVIC_GetPriorityGrouping(), 1u, 0)
+        TARGET_BUTTON_EXTI_IRQ,
+        NVIC_EncodePriority(NVIC_GetPriorityGrouping(), 1u, 0)
     );
     NVIC_EnableIRQ(TARGET_BUTTON_EXTI_IRQ);
 
@@ -251,7 +256,7 @@ void Bsp_InitSystemClock(void) {
     SysTick_Config(ticks);
     NVIC_SetPriority(
         SysTick_IRQn,
-        NVIC_EncodePriority(NVIC_GetPriorityGrouping(), BSP_CONFIG_SYSTICK_PRIORITY, 0)
+        NVIC_EncodePriority(NVIC_GetPriorityGrouping(), PRIORITIES_CFG_SYSTICK_PRIORITY, 0)
     );
     NVIC_EnableIRQ(SysTick_IRQn);
 
@@ -299,11 +304,11 @@ bool_t BSP_Init(void) {
         ok = BSP_SetupButton();
     }
     if (DEF_TRUE == ok) {
-#ifdef TARGET_USE_LED
+    #ifdef TARGET_USE_LED
         BSP_RegisterButtonCallback(BSP_ToggleLed);
-#else
+    #else
         BSP_ResetButtonCallback();
-#endif /* ifdef TARGET_USE_LED */
+    #endif /* ifdef TARGET_USE_LED */
     }
 #endif /* ifdef TARGET_USE_BUTTON */
 
@@ -316,7 +321,7 @@ bool_t BSP_Init(void) {
 /**
  * @brief sends the printf strings through the SWD interface.
  */
-int _write(int file, char *ptr, int len) {
+int _write(int file, char* ptr, int len) {
     int DataIdx;
     for (DataIdx = 0; DataIdx < len; DataIdx++) {
         ITM_SendChar(*ptr++);
