@@ -238,7 +238,8 @@ H_APP_SOURCE := \
 # Platform
 C_PLATFORM := \
 ../platform/plt_assert.c \
-../platform/mem/circular_alloc.c
+../platform/mem/circular_alloc.c \
+../platform/plt_utils.c
 
 H_PLATFORM := \
 -I../platform \

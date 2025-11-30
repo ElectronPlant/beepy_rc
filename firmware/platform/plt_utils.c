@@ -56,8 +56,12 @@
 /**
  * See header file.
  */
-float32_t PltUtils_Map(
-    float32_t v, float32_t in_min, float32_t in_max, float32_t out_min, float32_t out_max
+float32_t PltUtils_MapF32(
+    float32_t v,
+    float32_t in_min,
+    float32_t in_max,
+    float32_t out_min,
+    float32_t out_max
 ) {
     return (((v - in_min) * (out_max - out_min)) / (in_max - in_min)) + out_min;
 }

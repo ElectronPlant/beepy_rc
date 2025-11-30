@@ -147,7 +147,7 @@ volatile bool_t Rc_ResetIsr = DEF_TRUE; /* See note. */
  * @return DEF_TRUE if successful, DEF_FALSE otherwise.
  */
 bool_t Rc_Init(void) {
-    bool_t ok;
+    bool_t ok = DEF_TRUE;
 
     PLT_ASSERT(RC_STATUS_UNINITIALIZED == Rc_Status); /* Guard double initialization */
 
@@ -332,7 +332,7 @@ static void Rc_NotifyFromIsr(RC_QUEUE_MSG_T* p_msg) {
  */
 static bool_t Rc_StoreRxByte(RC_ISR_DATA_T* p_data, uint8_t rx_byte) {
     p_data->RxInfo.RxBufferInfo.RxBufferPtr[p_data->RxInfo.Count.RxCount++] = rx_byte;
-    return p_data->RxInfo.RxBufferInfo.RxBufferSize == p_data->RxInfo.Count.RxCount ? DEF_TRUE
+    return p_data->RxInfo.RxBufferInfo.RxBufferSize <= p_data->RxInfo.Count.RxCount ? DEF_TRUE
                                                                                     : DEF_FALSE;
 }
 
@@ -345,7 +345,7 @@ static void Rc_FailAlignment(RC_ISR_DATA_T* p_data) {
     p_data->RxInfo.Count.HeaderCount = 0;
     p_data->AlignmentRetries++;
     p_data->RxInfo.AlignmentStatus = RXINT_ALIGNMENT_STATUS_WAITING_FOR_HEADER;
-    if (RC_RX_ALIGNMENT_RETRIES >= p_data->AlignmentRetries) {
+    if (RC_RX_ALIGNMENT_RETRIES <= p_data->AlignmentRetries) {
         RC_QUEUE_MSG_T msg = {
             .Action = RC_ACTION_NOTIFY_ERROR,
             .Payload.ErrorType = RC_ERROR_TYPES_ALIGNMENT_ERROR,
@@ -370,9 +370,11 @@ static void Rc_PerformAlignment(RC_ISR_DATA_T* p_data, uint8_t rx_byte) {
 
     switch (p_data->RxInfo.AlignmentStatus) {
         case RXINT_ALIGNMENT_STATUS_COMPLETED:
-            bool_t is_done = Rc_StoreRxByte(p_data, rx_byte);
-            PLT_ASSERT(DEF_TRUE == is_done); /* See note 2 */
+            /* See note 2 */
+            PLT_ASSERT(p_data->RxInfo.RxBufferInfo.RxBufferSize <= p_data->RxInfo.Count.RxCount);
+
             p_data->Status = RC_ISR_STATUS_RUNNING;
+            p_data->AlignmentRetries = 0;
             Rc_RxComplete(p_data);
             break;
         case RXINT_ALIGNMENT_STATUS_FAILED:
@@ -399,6 +401,8 @@ static void Rc_RxComplete(RC_ISR_DATA_T* p_data) {
         .Payload.RxBufferInfo = p_data->RxInfo.RxBufferInfo
     };
     Rc_NotifyFromIsr(&msg);
+    p_data->RxInfo.RxBufferInfo.RxBufferPtr = NULL;
+    p_data->RxInfo.Count.RxCount = 0;
 }
 
 /**

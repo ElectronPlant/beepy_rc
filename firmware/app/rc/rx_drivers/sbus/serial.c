@@ -18,6 +18,7 @@
 #include "plt_types.h"
 
 
+#include "priorities_cfg.h"
 #include "serial.h"
 #include "target.h"
 
@@ -113,7 +114,10 @@ bool_t Serial_Init(void (*rx_handler_func)(uint8_t), void (*error_handler_func)(
     LL_GPIO_Init(SERIAL_GPIO_PORT, &gpio_init_struct);
 
     /* Enable Interrupt */
-    NVIC_SetPriority(SERIAL_INSTANCE_IRQ, NVIC_EncodePriority(NVIC_GetPriorityGrouping(), 0, 0));
+    NVIC_SetPriority(
+        SERIAL_INSTANCE_IRQ,
+        NVIC_EncodePriority(NVIC_GetPriorityGrouping(), PRIORITIES_CFG_IRQ_MAX_PRIORITY, 0)
+    );
     NVIC_EnableIRQ(SERIAL_INSTANCE_IRQ);
 
     /* Init USART */
@@ -162,7 +166,7 @@ bool_t Serial_StartReception(void) {
     }
 
     /* Start reception */
-    LL_USART_ClearFlag_ORE(Serial_Handler.Instance_Ptr); /* See note 1 */ // TODO: Check if needed.
+    LL_USART_ClearFlag_ORE(Serial_Handler.Instance_Ptr); /* See note 1 */
     LL_USART_EnableIT_RXNE(Serial_Handler.Instance_Ptr);
 
     return DEF_TRUE;
@@ -194,10 +198,12 @@ static void Serial_StopReceptionInternal(void) {
  * @brief  Handles the incoming byte.
  */
 static void Serial_HandleRx(void) {
+    uint8_t rx_byte = SERIAL_READ_DATA(Serial_Handler.Instance_Ptr);
+    // LL_USART_ClearFlag_RXNE(Serial_Handler.Instance_Ptr);
+
     if (NULL != Serial_Handler.RxHandlerFunct_Ptr) {
-        Serial_Handler.RxHandlerFunct_Ptr(SERIAL_READ_DATA(Serial_Handler.Instance_Ptr));
+        Serial_Handler.RxHandlerFunct_Ptr(rx_byte);
     }
-    LL_USART_ClearFlag_RXNE(Serial_Handler.Instance_Ptr); // TODO: Check if needed.
 }
 
 /**
@@ -208,8 +214,8 @@ static void Serial_HandleRx(void) {
  */
 static void Serial_HandleError(void) {
     /* See note 1. */
+    (void)SERIAL_READ_DATA(Serial_Handler.Instance_Ptr);
     SERIAL_CLEAR_ERROR_FLAGS(Serial_Handler.Instance_Ptr);
-    (void)Serial_Handler.Instance_Ptr->DR;
 
     /* Notify the error */
     if (NULL != Serial_Handler.ErrorHandlerFunct_Ptr) {

@@ -1,8 +1,8 @@
 /**
- * @file      bsp_config.h
- * @brief     Configurations for the Board Support Package (BSP)
+ * @file      priorities_cfg.h
+ * @brief     Config File for the system priorities.
  *
- * @ingroup   Main
+ * @ingroup   Configs
  * @version   V0.0
  * @author    David Arnaiz
  * @copyright 2025 David Arnaiz
@@ -11,15 +11,25 @@
  * This project is licensed under the GNU General Public License v3.0 license.
  */
 
-#ifndef __BSP_CONFIG_H__
-#define __BSP_CONFIG_H__
+#ifndef __PRIORITIES_CFG_H__
+#define __PRIORITIES_CFG_H__
 
+#include "FreeRTOSConfig.h"
 #include "plt_types.h"
 
 /********************************************************************************
- * Defines
+ * IRQ priorities
  ********************************************************************************/
-#define BSP_CONFIG_SYSTICK_PRIORITY (0U) /* Set the lowest priority possible */
+/** SysTick
+ * @note The SysTick needs to have the lowest priority, so as not to delay the hardware IRQs.
+ *       For more info about this: https://www.programmersought.com/article/169111516206/
+ */
+#define PRIORITIES_CFG_SYSTICK_PRIORITY (configLIBRARY_LOWEST_INTERRUPT_PRIORITY)
+
+/** IRQ priorities
+ *  @note To prevent FreeRTOS ConfigAsserts
+ */
+#define PRIORITIES_CFG_IRQ_MAX_PRIORITY (configLIBRARY_MAX_SYSCALL_INTERRUPT_PRIORITY)
 
 
 /********************************************************************************
@@ -35,4 +45,4 @@
  ********************************************************************************/
 
 
-#endif /* __BSP_CONFIG_H__       */
+#endif /* __PRIORITIES_CFG_H__       */

@@ -25,7 +25,7 @@
  ********************************************************************************/
 #define SBUS_NUM_SERVO_CHANNELS  (16U)
 #define SBUS_NUM_SWITCH_CHANNELS (2U)
-#define SBUS_NUM_CHANNELS        (SBUS_NUM_SERVO_CHANNELS + SBUS_NUM_SWITCH_CHANNELS)
+#define SBUS_NUM_CHANNELS        (SBUS_NUM_SERVO_CHANNELS)
 #define SBUS_FRAME_SIZE_BYTES    (25U)
 
 #endif /* __SBUS_H__    */

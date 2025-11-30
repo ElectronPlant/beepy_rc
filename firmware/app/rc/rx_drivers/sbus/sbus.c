@@ -126,7 +126,7 @@ static void Sbus_AlignmentWaitForHeader(RXINT_RX_INFO_T* p_rx_info, uint8_t rx_b
         p_rx_info->AlignmentStatus = RXINT_ALIGNMENT_STATUS_WAITING_FOR_FRAME;
     } else {
         p_rx_info->Count.HeaderCount++;
-        if (p_rx_info->RxBufferInfo.RxBufferSize >= p_rx_info->Count.HeaderCount) {
+        if (p_rx_info->RxBufferInfo.RxBufferSize <= p_rx_info->Count.HeaderCount) {
             /* See note 1. */
             p_rx_info->AlignmentStatus = RXINT_ALIGNMENT_STATUS_FAILED;
         }
@@ -144,10 +144,10 @@ static bool_t Sbus_SearchForNewHeader(RXINT_RX_INFO_T* p_rx_info) {
     bool_t   found = DEF_FALSE;
     uint16_t b = 1; /* Skip the current header */
     while (SBUS_HEADER_VALUE != p_rx_info->RxBufferInfo.RxBufferPtr[b]
-           && b < SBUS_FRAME_SIZE_BYTES) {
+           && SBUS_FRAME_SIZE_BYTES > b) {
         b++;
     };
-    if (SBUS_FRAME_SIZE_BYTES < b) {
+    if (SBUS_FRAME_SIZE_BYTES > b) {
         p_rx_info->Count.RxCount = SBUS_FRAME_SIZE_BYTES - b;
         memcpy(
             p_rx_info->RxBufferInfo.RxBufferPtr,
@@ -176,7 +176,7 @@ static bool_t Sbus_SearchForNewHeader(RXINT_RX_INFO_T* p_rx_info) {
 static void Sbus_AlignmentWaitForBuffer(RXINT_RX_INFO_T* p_rx_info, uint8_t rx_byte) {
     /* Store received frame */
     p_rx_info->RxBufferInfo.RxBufferPtr[p_rx_info->Count.RxCount++] = rx_byte;
-    if (SBUS_FRAME_SIZE_BYTES >= p_rx_info->Count.RxCount) {
+    if (SBUS_FRAME_SIZE_BYTES <= p_rx_info->Count.RxCount) {
         /* The frame reception is complete, see note 1. */
         bool_t valid = Sbus_IsFrameValid((SBUS_FRAME_T*)p_rx_info->RxBufferInfo.RxBufferPtr);
         if (DEF_TRUE == valid) {
@@ -306,7 +306,7 @@ static void Sbus_GetStdFrame(SBUS_FRAME_T* p_frame, STD_FRAME_T* p_std) {
     for (uint16_t chn = 0; chn < STD_FRAME_NUM_CHANNELS; chn++) {
         float32_t chn_value = 0.0f;
         if (chn < SBUS_NUM_CHANNELS) {
-            uint16_t v = Sbus_GetChannel(p_frame, chn);
+            uint16_t v = Sbus_GetChannel(p_frame, chn + 1U);
             chn_value = Sbus_Chn2Std(v);
         }
         p_std->Channels[chn] = chn_value;
