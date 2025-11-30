@@ -182,7 +182,7 @@ bool_t Rc_Init(void) {
     }
 
     if (DEF_TRUE == ok) {
-        Rc_Status = RC_STATUS_STOPPED; // TODO update states centralized way.
+        Rc_UpdateStatus(RC_STATUS_STOPPED);
     }
 
     return ok;
@@ -226,6 +226,7 @@ static void Rc_ActionRxTimeout(void) {
     };
     printf("RC - Frame dropped\n");
     (void)error_frame; //TODO need to implement this part.
+    // This will be reached if the RC module has not connected to the RX.
 }
 
 /**

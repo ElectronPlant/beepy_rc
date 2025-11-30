@@ -339,7 +339,7 @@ bool_t Sbus_Init(RxInt_RxHandler rx_handler_func, RxInt_RxErrorHandler rx_error_
 
     bool_t init_ok;
 
-    init_ok = Serial_Init(rx_handler_func, rx_error_func); /* See note 2 */ // TODO check notes.
+    init_ok = Serial_Init(rx_handler_func, rx_error_func); /* See note 2 */
 
     return init_ok;
 }
@@ -388,7 +388,7 @@ void Sbus_ProcessFrame(RXINT_RX_BUFFER_INFO_T* p_buffer_info, STD_FRAME_T* p_std
 
     bool_t valid = Sbus_IsFrameValid(p_frame);
     if (DEF_TRUE == valid) {
-        Sbus_GetStdFrame((SBUS_FRAME_T*)p_frame, p_std_frame); //TODO fix typing here.
+        Sbus_GetStdFrame((SBUS_FRAME_T*)p_frame, p_std_frame);
     } else {
         p_std_frame->State = STD_FRAME_STATE_INVALID;
     }
