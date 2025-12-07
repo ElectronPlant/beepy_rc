@@ -52,8 +52,9 @@ static void Main_InitModules(void) {
     bool_t ok;
 
     /* Rx module */
-    ok = Rc_Init();
-    PLT_ASSERT(DEF_TRUE == ok);
+    //TODO remove after drive test is completed
+    // ok = Rc_Init();
+    // PLT_ASSERT(DEF_TRUE == ok);
 
     /* Motion module */
     ok = Motion_Init();

@@ -24,6 +24,10 @@
 #include "drive_pwm.h"
 
 
+/** @addtogroup Motion
+ *   @{
+ */
+
 /** @addtogroup DrivePwm
  *   @{
  */
@@ -33,9 +37,9 @@
  * Defines
  ********************************************************************************/
 #if TARGET_DRIVE_PWM_TIMER_IS_32_BITS == 1U
-#define DRIVE_PWM_MAX_TIMER_COUNT (UINT32_MAX)
+    #define DRIVE_PWM_MAX_TIMER_COUNT (UINT32_MAX)
 #else
-#define DRIVE_PWM_MAX_TIMER_COUNT (UINT16_MAX)
+    #define DRIVE_PWM_MAX_TIMER_COUNT (UINT16_MAX)
 #endif
 
 /********************************************************************************
@@ -150,7 +154,7 @@ bool_t DrivePwm_Init(void) {
     LL_AHB1_GRP1_EnableClock(TARGET_DRIVE_PWM_GPIO_CLOCK);
     LL_GPIO_InitTypeDef gpio_cfg = {
         .Pin = TARGET_DRIVE_PWM_CHN_1_PIN | TARGET_DRIVE_PWM_CHN_2_PIN | TARGET_DRIVE_PWM_CHN_3_PIN
-               | TARGET_DRIVE_PWM_CHN_4_PIN,
+            | TARGET_DRIVE_PWM_CHN_4_PIN,
         .Mode = LL_GPIO_MODE_ALTERNATE,
         .Speed = LL_GPIO_SPEED_FREQ_LOW,
         .OutputType = LL_GPIO_OUTPUT_PUSHPULL,
@@ -232,3 +236,4 @@ void DrivePwm_SetDuty(DRIVE_PWM_CHANNELS_T chn, float32_t duty) {
 }
 
 /** @} (end addtogroup DrivePwm)   */
+/** @} (end addtogroup Motion)     */

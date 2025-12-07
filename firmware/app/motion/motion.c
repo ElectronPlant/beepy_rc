@@ -24,6 +24,7 @@
 #include "target.h"
 
 #include "drive_pwm.h"
+#include "encoder.h"
 #include "motion.h"
 
 
@@ -49,7 +50,7 @@
  * Function Prototypes
  ********************************************************************************/
 static void Motion_TaskLoop(void);
-static void Motion_TaskMain(PLT_UTILS_UNUSED void *parameters);
+static void Motion_TaskMain(PLT_UTILS_UNUSED void* parameters);
 
 
 /********************************************************************************
@@ -75,6 +76,14 @@ bool_t Motion_Init(void) {
     bool_t ok;
 
     ok = DrivePwm_Init();
+    if (DEF_FALSE == ok) {
+        return DEF_FALSE;
+    }
+
+    ok = Enc_Init();
+    if (DEF_FALSE == ok) {
+        return DEF_FALSE;
+    }
 
     /* Start Task */
     if (DEF_TRUE == ok) {
@@ -108,14 +117,17 @@ static void Motion_TaskLoop(void) {
         (uint16_t)Motion_TempPwm,
         (uint16_t)(Motion_TempPwm - (float32_t)(uint16_t)Motion_TempPwm) * 100
     );
+    printf("Encoder Count %u\n", Enc_GetCount());
     printf("--------------\n");
 
     vTaskDelay(MOTION_TASK_DELAY_MS); /* delay 300 ticks */
 }
 
-static void Motion_TaskMain(PLT_UTILS_UNUSED void *parameters) {
+static void Motion_TaskMain(PLT_UTILS_UNUSED void* parameters) {
     /* Setup */
     DrivePwm_Start();
+    Enc_StartEncoder();
+    //Test setup
     DrivePwm_SetDuty(DRIVE_PWM_CHANNELS_CH2, 50.0); // TODO tests.
 
     /* Loop */
