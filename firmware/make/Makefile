@@ -214,7 +214,7 @@ endif
 
 # BSP
 ifeq ($(BOARD), nucleo)
-	C_BSP :=
+	C_BSP := ../target/nucleo/target.c
 	H_BSP := -I../target/nucleo
 else
 	$(error BOART not supported, check targets)

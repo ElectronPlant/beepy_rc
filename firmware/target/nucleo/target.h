@@ -1,8 +1,8 @@
 /**
- * @file      target_nucleo.h
- * @brief     target definition for the nucleo-F446 board.
+ * @file      target.h
+ * @brief     Target definition for the nucleo-F446 board.
  *
- * @ingroup   target_nucleo
+ * @ingroup   Target
  * @version   V0.0
  * @author    David Arnaiz
  * @copyright 2025 David Arnaiz
@@ -14,19 +14,7 @@
 #ifndef __TARGET_H__
 #define __TARGET_H__
 
-/* Includes for the HAL */
-#include "stm32f4xx_hal_cortex.h"
-#include "stm32f4xx_ll_bus.h"
-#include "stm32f4xx_ll_cortex.h"
-#include "stm32f4xx_ll_dma.h"
-#include "stm32f4xx_ll_exti.h"
-#include "stm32f4xx_ll_gpio.h"
-#include "stm32f4xx_ll_pwr.h"
-#include "stm32f4xx_ll_rcc.h"
-#include "stm32f4xx_ll_system.h"
-#include "stm32f4xx_ll_tim.h"
-#include "stm32f4xx_ll_usart.h"
-#include "stm32f4xx_ll_utils.h"
+#include "hal_includes.h"
 
 /* BSP */
 #include "bsp.h"
@@ -128,6 +116,18 @@
 #define TARGET_DRIVE_PWM_GPIO_CLOCK LL_AHB1_GRP1_PERIPH_GPIOB
 #define TARGET_DRIVE_PWM_GPIO_AF    LL_GPIO_AF_1
 
+
+/** Encoder timers
+ *
+ * @note List of notes:
+ *      1. At the moment is not clear if 4 or 2 encoders will be used. In the
+ *         future it may be something adjustable from the target definition,
+ *         but for development speed, 4 encoders will be presumed for now.
+ */
+#include "encoder_port.h"
+#define TARGET_ENCODER_NUM (4U)
+/* Encoders are defined in the target.c file. */
+extern const ENC_PERIPHERAL_PORT_T TargetEnc1, TargetEnc2, TargetEnc3, TargetEnc4;
 
 /********************************************************************************
  * Typedefs

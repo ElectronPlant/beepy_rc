@@ -60,6 +60,25 @@ TaskHandle_t Motion_TaskHandle = NULL;
 
 float32_t Motion_TempPwm = 0;
 
+ENC_INSTANCE_T Motion_Encoders[TARGET_ENCODER_NUM] = {
+    {
+        .Status = ENC_STATUS_UNINITIALIZED,
+        .Peripheral = &TargetEnc1,
+    },
+    {
+        .Status = ENC_STATUS_UNINITIALIZED,
+        .Peripheral = &TargetEnc2,
+    },
+    {
+        .Status = ENC_STATUS_UNINITIALIZED,
+        .Peripheral = &TargetEnc3,
+    },
+    {
+        .Status = ENC_STATUS_UNINITIALIZED,
+        .Peripheral = &TargetEnc4,
+    },
+};
+
 /********************************************************************************
  * Function Implementations
  ********************************************************************************/
@@ -80,7 +99,7 @@ bool_t Motion_Init(void) {
         return DEF_FALSE;
     }
 
-    ok = Enc_Init();
+    ok = Enc_Init(&Motion_Encoders[0]);
     if (DEF_FALSE == ok) {
         return DEF_FALSE;
     }
@@ -117,7 +136,7 @@ static void Motion_TaskLoop(void) {
         (uint16_t)Motion_TempPwm,
         (uint16_t)(Motion_TempPwm - (float32_t)(uint16_t)Motion_TempPwm) * 100
     );
-    printf("Encoder Count %u\n", Enc_GetCount());
+    printf("Encoder Count %lu\n", Enc_GetCount(&Motion_Encoders[0]));
     printf("--------------\n");
 
     vTaskDelay(MOTION_TASK_DELAY_MS); /* delay 300 ticks */
@@ -126,7 +145,7 @@ static void Motion_TaskLoop(void) {
 static void Motion_TaskMain(PLT_UTILS_UNUSED void* parameters) {
     /* Setup */
     DrivePwm_Start();
-    Enc_StartEncoder();
+    Enc_StartEncoder(&Motion_Encoders[0]);
     //Test setup
     DrivePwm_SetDuty(DRIVE_PWM_CHANNELS_CH2, 50.0); // TODO tests.
 
