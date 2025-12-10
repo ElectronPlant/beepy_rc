@@ -58,8 +58,6 @@ static void Motion_TaskMain(PLT_UTILS_UNUSED void* parameters);
  ********************************************************************************/
 TaskHandle_t Motion_TaskHandle = NULL;
 
-float32_t Motion_TempPwm = 0;
-
 ENC_INSTANCE_T Motion_Encoders[TARGET_ENCODER_NUM] = {
     {
         .Status = ENC_STATUS_UNINITIALIZED,
@@ -124,30 +122,34 @@ bool_t Motion_Init(void) {
  * Task Main
  ******************************************/
 static void Motion_TaskLoop(void) {
+    static bool_t forward = DEF_TRUE;
     printf("--------------\n");
     printf("Start drive\n");
-    Motion_TempPwm += 10.0;
-    if (Motion_TempPwm > 100.0) {
-        Motion_TempPwm = 0.0f;
+    if (DEF_TRUE == forward) {
+        DrivePwm_SetDuty(DRIVE_PWM_CHANNELS_CH1, 0.0);
+        DrivePwm_SetDuty(DRIVE_PWM_CHANNELS_CH2, 70.0);
+        printf("going forward\n");
+    } else {
+        DrivePwm_SetDuty(DRIVE_PWM_CHANNELS_CH2, 0.0);
+        DrivePwm_SetDuty(DRIVE_PWM_CHANNELS_CH1, 70.0);
+        printf("Going backwards\n");
     }
-    DrivePwm_SetDuty(DRIVE_PWM_CHANNELS_CH1, Motion_TempPwm);
-    printf(
-        "PWM: %d.%d\n",
-        (uint16_t)Motion_TempPwm,
-        (uint16_t)(Motion_TempPwm - (float32_t)(uint16_t)Motion_TempPwm) * 100
-    );
+    forward = !forward;
+    // printf(
+    //     "PWM: %d.%d\n",
+    //     (uint16_t)Motion_TempPwm,
+    //     (uint16_t)(Motion_TempPwm - (float32_t)(uint16_t)Motion_TempPwm) * 100
+    // );
     printf("Encoder Count %lu\n", Enc_GetCount(&Motion_Encoders[0]));
     printf("--------------\n");
 
-    vTaskDelay(MOTION_TASK_DELAY_MS); /* delay 300 ticks */
+    vTaskDelay(3000); /* delay 300 ticks */
 }
 
 static void Motion_TaskMain(PLT_UTILS_UNUSED void* parameters) {
     /* Setup */
     DrivePwm_Start();
     Enc_StartEncoder(&Motion_Encoders[0]);
-    //Test setup
-    DrivePwm_SetDuty(DRIVE_PWM_CHANNELS_CH2, 50.0); // TODO tests.
 
     /* Loop */
     while (DEF_TRUE) {

@@ -177,9 +177,9 @@ void DrivePwm_Start(void) {
     TARGET_DRIVE_PWM_TIMER->CR1 |= TIM_CR1_CEN;
 
     /* Start all channels with duty cycle set to zero */
-    // for (uint8_t ch = DRIVE_PWM_CHANNELS_CH1; ch < DRIVE_PWM_CHANNELS_CH4; ch++) {
-    //     DrivePwm_SetDuty(ch, 0.0f);
-    // }
+    for (uint8_t ch = DRIVE_PWM_CHANNELS_CH1; ch < DRIVE_PWM_CHANNELS_CH4; ch++) {
+        DrivePwm_SetDuty(ch, 0.0f);
+    }
     TARGET_DRIVE_PWM_TIMER->CCER |= TIM_CCER_CC1E | TIM_CCER_CC2E | TIM_CCER_CC3E | TIM_CCER_CC4E;
 }
 

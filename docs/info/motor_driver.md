@@ -40,6 +40,9 @@ Test option 1 and option 2 with the following frequencies: 1kHz, 10kHz, 50kHz
 Following tests: running freely, apply some load
 Duty: 0, 25, 50, 75, 100
 
+### Test encoder
+MX1616h
+
 
 # Motor information
 
