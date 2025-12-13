@@ -23,9 +23,9 @@
 
 #include "target.h"
 
-#include "drive_pwm.h"
 #include "encoder.h"
 #include "motion.h"
+#include "pwm_timer.h"
 
 
 /** @addtogroup Motion
@@ -42,6 +42,8 @@
 
 #define MOTION_TASK_DELAY_MS (300U)
 
+#define MOTION_DEFAULT_MOTOR_PWM_FREQ_KHZ (20U)
+
 /********************************************************************************
  * Typedefs
  ********************************************************************************/
@@ -57,6 +59,21 @@ static void Motion_TaskMain(PLT_UTILS_UNUSED void* parameters);
  * Local Vars
  ********************************************************************************/
 TaskHandle_t Motion_TaskHandle = NULL;
+
+PWM_TIM_INSTANCE_T Motion_PwmTimers[TARGET_NUM_PWM_TIMERS] = {
+    {
+        .Status = PWM_TIM_STATUS_UNINITIALIZED,
+        .Peripheral = &TargetMotorTim1,
+    },
+    {
+        .Status = PWM_TIM_STATUS_UNINITIALIZED,
+        .Peripheral = &TargetMotorTim2,
+    },
+    {
+        .Status = PWM_TIM_STATUS_UNINITIALIZED,
+        .Peripheral = &TargetMotorTim3,
+    }
+};
 
 ENC_INSTANCE_T Motion_Encoders[TARGET_ENCODER_NUM] = {
     {
@@ -92,7 +109,7 @@ ENC_INSTANCE_T Motion_Encoders[TARGET_ENCODER_NUM] = {
 bool_t Motion_Init(void) {
     bool_t ok;
 
-    ok = DrivePwm_Init();
+    ok = PwmTim_InitAll(&Motion_PwmTimers[0], MOTION_DEFAULT_MOTOR_PWM_FREQ_KHZ);
     if (DEF_FALSE == ok) {
         return DEF_FALSE;
     }
@@ -126,12 +143,12 @@ static void Motion_TaskLoop(void) {
     printf("--------------\n");
     printf("Start drive\n");
     if (DEF_TRUE == forward) {
-        DrivePwm_SetDuty(DRIVE_PWM_CHANNELS_CH1, 0.0);
-        DrivePwm_SetDuty(DRIVE_PWM_CHANNELS_CH2, 70.0);
+        PwmTim_SetDuty(&Motion_PwmTimers[0], PWM_TIM_CHANNELS_CH1, 0.0);
+        PwmTim_SetDuty(&Motion_PwmTimers[0], PWM_TIM_CHANNELS_CH2, 70.0);
         printf("going forward\n");
     } else {
-        DrivePwm_SetDuty(DRIVE_PWM_CHANNELS_CH2, 0.0);
-        DrivePwm_SetDuty(DRIVE_PWM_CHANNELS_CH1, 70.0);
+        PwmTim_SetDuty(&Motion_PwmTimers[0], PWM_TIM_CHANNELS_CH2, 0.0);
+        PwmTim_SetDuty(&Motion_PwmTimers[0], PWM_TIM_CHANNELS_CH1, 70.0);
         printf("Going backwards\n");
     }
     forward = !forward;
@@ -148,7 +165,7 @@ static void Motion_TaskLoop(void) {
 
 static void Motion_TaskMain(PLT_UTILS_UNUSED void* parameters) {
     /* Setup */
-    DrivePwm_Start();
+    PwmTim_StartAll(&Motion_PwmTimers[0]);
     Enc_StartEncoder(&Motion_Encoders[0]);
 
     /* Loop */

@@ -38,13 +38,13 @@
  * or stop. This macro control if the state of the encoder is checked when the
  * other functions are called (when set to 1) or not (when set to 0).
  */
-#define ENABLE_ENC_RUNNING_ASSERT 1
+#define ENC_ENABLE_RUNNING_ASSERT 1
 
-#if ENABLE_ENC_RUNNING_ASSERT == 1
+#if ENC_ENABLE_RUNNING_ASSERT == 1
     #define ENC_RUNNING_ASSERT(p_enc) PLT_ASSERT(ENC_STATUS_RUNNING == p_enc->Status)
 #else
     #define ENC_RUNNING_ASSERT(p_enc)
-#endif /* ENABLE_ENC_RUNNING_ASSERT == 1 */
+#endif /* ENC_ENABLE_RUNNING_ASSERT == 1 */
 
 /********************************************************************************
  * Typedefs

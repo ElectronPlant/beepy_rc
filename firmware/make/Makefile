@@ -228,7 +228,7 @@ C_APP_SOURCE := \
 ../app/rc/serial.c \
 ../app/bsp/bsp.c \
 ../app/motion/motion.c \
-../app/motion/drive_pwm.c \
+../app/motion/pwm_timer.c \
 ../app/motion/encoder.c
 
 H_APP_SOURCE := \
