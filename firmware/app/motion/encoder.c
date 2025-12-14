@@ -75,6 +75,7 @@
 bool_t Enc_Init(ENC_INSTANCE_T* p_enc) {
     ErrorStatus err;
 
+    PLT_ASSERT(NULL != p_enc);
     PLT_ASSERT(ENC_STATUS_UNINITIALIZED == p_enc->Status);
 
     /* Initialize the encoder timer */
@@ -151,6 +152,7 @@ bool_t Enc_Init(ENC_INSTANCE_T* p_enc) {
  *       1. The encoder must be initialized to be started.
  */
 void Enc_StartEncoder(ENC_INSTANCE_T* p_enc) {
+    PLT_ASSERT(NULL != p_enc);
     PLT_ASSERT(ENC_STATUS_INITIALIZED == p_enc->Status);
 
     LL_TIM_CC_DisableChannel(
@@ -176,6 +178,7 @@ void Enc_StartEncoder(ENC_INSTANCE_T* p_enc) {
  *       1. The encoder must be running before it can be stopped.
  */
 void Enc_StopEncoder(ENC_INSTANCE_T* p_enc) {
+    PLT_ASSERT(NULL != p_enc);
     PLT_ASSERT(ENC_STATUS_RUNNING == p_enc->Status);
 
     LL_TIM_CC_DisableChannel(
@@ -198,6 +201,7 @@ void Enc_StopEncoder(ENC_INSTANCE_T* p_enc) {
  *       1. The encoder must be running to perform a correct count reading.
  */
 uint32_t Enc_GetCount(ENC_INSTANCE_T* p_enc) {
+    PLT_ASSERT(NULL != p_enc);
     ENC_RUNNING_ASSERT(p_enc);
     return LL_TIM_GetCounter(p_enc->Peripheral->Timer);
 }
