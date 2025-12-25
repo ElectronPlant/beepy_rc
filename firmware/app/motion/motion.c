@@ -25,6 +25,7 @@
 
 #include "encoder.h"
 #include "motion.h"
+#include "motor.h"
 #include "pwm_timer.h"
 
 
@@ -64,14 +65,20 @@ PWM_TIM_INSTANCE_T Motion_PwmTimers[TARGET_NUM_PWM_TIMERS] = {
     {
         .Status = PWM_TIM_STATUS_UNINITIALIZED,
         .Peripheral = &TargetMotorTim1,
+        .EnChannels = 0x00,
+        .InitChannels = 0x00,
     },
     {
         .Status = PWM_TIM_STATUS_UNINITIALIZED,
         .Peripheral = &TargetMotorTim2,
+        .EnChannels = 0x00,
+        .InitChannels = 0x00,
     },
     {
         .Status = PWM_TIM_STATUS_UNINITIALIZED,
         .Peripheral = &TargetMotorTim3,
+        .EnChannels = 0x00,
+        .InitChannels = 0x00,
     }
 };
 
@@ -94,6 +101,60 @@ ENC_INSTANCE_T Motion_Encoders[TARGET_ENCODER_NUM] = {
     },
 };
 
+MOTOR_T Motion_Motors[4u] = {
+    {
+        .Encoder = &Motion_Encoders[0],
+        .PwmChn[0] =
+            {
+                .Timer = &Motion_PwmTimers[0],
+                .Chn = PWM_TIM_CHANNELS_CH1,
+            },
+        .PwmChn[1] =
+            {
+                .Timer = &Motion_PwmTimers[0],
+                .Chn = PWM_TIM_CHANNELS_CH2,
+            },
+    },
+    {
+        .Encoder = &Motion_Encoders[1],
+        .PwmChn[0] =
+            {
+                .Timer = &Motion_PwmTimers[0],
+                .Chn = PWM_TIM_CHANNELS_CH4,
+            },
+        .PwmChn[1] =
+            {
+                .Timer = &Motion_PwmTimers[2],
+                .Chn = PWM_TIM_CHANNELS_CH1,
+            },
+    },
+    {
+        .Encoder = &Motion_Encoders[2],
+        .PwmChn[0] =
+            {
+                .Timer = &Motion_PwmTimers[1],
+                .Chn = PWM_TIM_CHANNELS_CH1,
+            },
+        .PwmChn[1] =
+            {
+                .Timer = &Motion_PwmTimers[1],
+                .Chn = PWM_TIM_CHANNELS_CH2,
+            },
+    },
+    {
+        .Encoder = &Motion_Encoders[3],
+        .PwmChn[0] =
+            {
+                .Timer = &Motion_PwmTimers[1],
+                .Chn = PWM_TIM_CHANNELS_CH3,
+            },
+        .PwmChn[1] = {
+            .Timer = &Motion_PwmTimers[1],
+            .Chn = PWM_TIM_CHANNELS_CH4,
+        },
+    },
+};
+
 /********************************************************************************
  * Function Implementations
  ********************************************************************************/
@@ -109,29 +170,21 @@ ENC_INSTANCE_T Motion_Encoders[TARGET_ENCODER_NUM] = {
 bool_t Motion_Init(void) {
     bool_t ok;
 
-    ok = PwmTim_InitAll(&Motion_PwmTimers[0], MOTION_DEFAULT_MOTOR_PWM_FREQ_KHZ);
-    if (DEF_FALSE == ok) {
-        return DEF_FALSE;
-    }
-
-    ok = Enc_Init(&Motion_Encoders[0]);
+    ok = Motor_Init((MOTOR_HANDLER_T)&Motion_Motors[0]);
     if (DEF_FALSE == ok) {
         return DEF_FALSE;
     }
 
     /* Start Task */
-    if (DEF_TRUE == ok) {
-        BaseType_t task_ok = xTaskCreate(
-            Motion_TaskMain,
-            MOTION_TASK_NAME,
-            MOTION_TASK_STACK_SIZE,
-            NULL,
-            MOTION_TASK_PRIORITY,
-            &Motion_TaskHandle
-        );
-        ok = PLT_UTILS_RTOS_TO_PLT_PASS_FAIL(task_ok);
-    }
-
+    BaseType_t task_ok = xTaskCreate(
+        Motion_TaskMain,
+        MOTION_TASK_NAME,
+        MOTION_TASK_STACK_SIZE,
+        NULL,
+        MOTION_TASK_PRIORITY,
+        &Motion_TaskHandle
+    );
+    ok = PLT_UTILS_RTOS_TO_PLT_PASS_FAIL(task_ok);
     return ok;
 }
 
@@ -139,25 +192,21 @@ bool_t Motion_Init(void) {
  * Task Main
  ******************************************/
 static void Motion_TaskLoop(void) {
-    static bool_t forward = DEF_TRUE;
+    static bool_t     forward = DEF_TRUE;
+    uint32_t          cnt;
+    MOTOR_DIRECTION_T dir;
     printf("--------------\n");
     printf("Start drive\n");
     if (DEF_TRUE == forward) {
-        PwmTim_SetDuty(&Motion_PwmTimers[0], PWM_TIM_CHANNELS_CH1, 0.0);
-        PwmTim_SetDuty(&Motion_PwmTimers[0], PWM_TIM_CHANNELS_CH2, 70.0);
+        Motor_SetSpeed((MOTOR_HANDLER_T)&Motion_Motors[0], 70.0);
         printf("going forward\n");
     } else {
-        PwmTim_SetDuty(&Motion_PwmTimers[0], PWM_TIM_CHANNELS_CH2, 0.0);
-        PwmTim_SetDuty(&Motion_PwmTimers[0], PWM_TIM_CHANNELS_CH1, 70.0);
+        Motor_SetSpeed((MOTOR_HANDLER_T)&Motion_Motors[0], -70.0);
         printf("Going backwards\n");
     }
     forward = !forward;
-    // printf(
-    //     "PWM: %d.%d\n",
-    //     (uint16_t)Motion_TempPwm,
-    //     (uint16_t)(Motion_TempPwm - (float32_t)(uint16_t)Motion_TempPwm) * 100
-    // );
-    printf("Encoder Count %lu\n", Enc_GetCount(&Motion_Encoders[0]));
+    Motor_GetEncoderCnt((MOTOR_HANDLER_T)&Motion_Motors[0], &cnt, &dir);
+    printf("Encoder Count %lu, %u\n", cnt, dir);
     printf("--------------\n");
 
     vTaskDelay(3000); /* delay 300 ticks */
@@ -165,8 +214,7 @@ static void Motion_TaskLoop(void) {
 
 static void Motion_TaskMain(PLT_UTILS_UNUSED void* parameters) {
     /* Setup */
-    PwmTim_StartAll(&Motion_PwmTimers[0]);
-    Enc_StartEncoder(&Motion_Encoders[0]);
+    Motor_Start((MOTOR_HANDLER_T)&Motion_Motors[0]);
 
     /* Loop */
     while (DEF_TRUE) {
