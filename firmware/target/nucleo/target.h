@@ -1,8 +1,8 @@
 /**
- * @file      target_nucleo.h
- * @brief     target definition for the nucleo-F446 board.
+ * @file      target.h
+ * @brief     Target definition for the nucleo-F446 board.
  *
- * @ingroup   target_nucleo
+ * @ingroup   Target
  * @version   V0.0
  * @author    David Arnaiz
  * @copyright 2025 David Arnaiz
@@ -14,19 +14,7 @@
 #ifndef __TARGET_H__
 #define __TARGET_H__
 
-/* Includes for the HAL */
-#include "stm32f4xx_hal_cortex.h"
-#include "stm32f4xx_ll_bus.h"
-#include "stm32f4xx_ll_cortex.h"
-#include "stm32f4xx_ll_dma.h"
-#include "stm32f4xx_ll_exti.h"
-#include "stm32f4xx_ll_gpio.h"
-#include "stm32f4xx_ll_pwr.h"
-#include "stm32f4xx_ll_rcc.h"
-#include "stm32f4xx_ll_system.h"
-#include "stm32f4xx_ll_tim.h"
-#include "stm32f4xx_ll_usart.h"
-#include "stm32f4xx_ll_utils.h"
+#include "hal_includes.h"
 
 /* BSP */
 #include "bsp.h"
@@ -75,6 +63,10 @@
 /******************************************
  * Rc
  ******************************************/
+/* RC Input */
+#define TARGET_RC_DRIVER       SBUS
+#define TARGET_RC_NUM_CHANNELS (16U)
+
 /* UART port used for SBUS */
 #define TARGET_RC_SERIAL_PERIPH_CLOCK LL_APB1_GRP1_PERIPH_UART4
 #define TARGET_RC_SERIAL_GPIO_CLOCK   LL_AHB1_GRP1_PERIPH_GPIOC
@@ -85,9 +77,30 @@
 #define TARGET_RC_SERIAL_RX_PIN       LL_GPIO_PIN_11
 #define TARGET_RC_SERIAL_PORT         GPIOC
 
-/* RC Input */
-#define TARGET_RC_DRIVER       SBUS
-#define TARGET_RC_NUM_CHANNELS (16U)
+
+/******************************************
+ * Drive
+ ******************************************/
+/** Motor PWM timers
+ * Each motor is driven by two PWM outputs.
+ */
+#include "pwm_timer_port.h"
+#define TARGET_NUM_PWM_TIMERS (3U)
+/* PWM timers are defined  in the target.c file. */
+extern const PWM_TIM_PORT_T TargetMotorTim1, TargetMotorTim2, TargetMotorTim3;
+
+
+/** Encoder timers
+ *
+ * @note List of notes:
+ *      1. At the moment is not clear if 4 or 2 encoders will be used. In the
+ *         future it may be something adjustable from the target definition,
+ *         but for development speed, 4 encoders will be presumed for now.
+ */
+#include "encoder_port.h"
+#define TARGET_ENCODER_NUM (4U)
+/* Encoders are defined in the target.c file. */
+extern const ENC_PERIPHERAL_PORT_T TargetEnc1, TargetEnc2, TargetEnc3, TargetEnc4;
 
 /********************************************************************************
  * Typedefs

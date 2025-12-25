@@ -55,6 +55,41 @@
 #define PLT_UTILS_PACKED __attribute__((__packed__))
 
 /********************************************************************************
+ * BASIC
+ ********************************************************************************/
+/**
+ * @brief  Returns the maximum between A and B.
+ *
+ * @param A: First value.
+ * @param B: Second value
+ *
+ * @return MAX(A, B).
+ */
+#define PLT_UTILS_MAX(A, B) ((A) > (B) ? (A) : (B))
+
+/**
+ * @brief  Returns the minimum between A and B.
+ *
+ * @param A: First value.
+ * @param B: Second value
+ *
+ * @return MIN(A, B).
+ */
+#define PLT_UTILS_MIN(A, B) ((A) < (B) ? (A) : (B))
+
+/**
+ * @brief  Saturates a value to the defined range.
+ *
+ * @param  A: Value to saturate.
+ * @param  L_MIN: Lower limit of the range.
+ * @param  L_MAX: Higher limit of the range.
+ *
+ * @return A saturated to the defined range.
+ */
+#define PLT_UTILS_SATURATE(A, L_MIN, L_MAX) (PLT_UTILS_MAX(PLT_UTILS_MIN((A), (L_MAX)), (L_MIN)))
+
+
+/********************************************************************************
  * CONVERSION
  ********************************************************************************/
 #define PLT_UTILS_SECS_TO_MS_FACTOR (1000u)

@@ -23,6 +23,7 @@
 #include "plt_assert.h"
 
 #include "bsp.h"
+#include "motion.h"
 #include "rc.h"
 
 
@@ -52,6 +53,10 @@ static void Main_InitModules(void) {
 
     /* Rx module */
     ok = Rc_Init();
+    PLT_ASSERT(DEF_TRUE == ok);
+
+    /* Motion module */
+    ok = Motion_Init();
     PLT_ASSERT(DEF_TRUE == ok);
 }
 

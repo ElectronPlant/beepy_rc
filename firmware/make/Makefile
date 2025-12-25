@@ -214,7 +214,7 @@ endif
 
 # BSP
 ifeq ($(BOARD), nucleo)
-	C_BSP :=
+	C_BSP := ../target/nucleo/target.c
 	H_BSP := -I../target/nucleo
 else
 	$(error BOART not supported, check targets)
@@ -226,13 +226,18 @@ C_APP_SOURCE := \
 ../app/rc/rc.c \
 ../app/rc/rx_drivers/sbus/sbus.c \
 ../app/rc/serial.c \
-../app/bsp/bsp.c
+../app/bsp/bsp.c \
+../app/motion/motion.c \
+../app/motion/pwm_timer.c \
+../app/motion/encoder.c \
+../app/motion/motor.c
 
 H_APP_SOURCE := \
 -I../app/rc \
 -I../app/rc/rx_drivers \
 -I../app/rc/rx_drivers/sbus \
 -I../app/bsp \
+-I../app/motion \
 -I../configs
 
 # Platform
