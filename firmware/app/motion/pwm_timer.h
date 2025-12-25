@@ -54,6 +54,9 @@ typedef struct PWM_TIM_INSTANCE_S {
     const PWM_TIM_PERIPHERAL_T     Peripheral;
 } PWM_TIM_INSTANCE_T;
 
+typedef PWM_TIM_INSTANCE_T* PWM_TIM_HANDLER_T;
+
+
 /********************************************************************************
  * Local Vars
  ********************************************************************************/
@@ -62,17 +65,17 @@ typedef struct PWM_TIM_INSTANCE_S {
  * API
  ********************************************************************************/
 /* By channel */
-bool_t PwmTim_InitChn(PWM_TIM_INSTANCE_T* p_pwm, PWM_TIM_CHANNELS_T chn, uint32_t freq_kzh);
-void   PwmTim_StartChn(PWM_TIM_INSTANCE_T* p_pwm, PWM_TIM_CHANNELS_T chn);
-void   PwmTim_StopChn(PWM_TIM_INSTANCE_T* p_pwm, PWM_TIM_CHANNELS_T chn);
+bool_t PwmTim_InitChn(PWM_TIM_HANDLER_T pwm, PWM_TIM_CHANNELS_T chn, uint32_t freq_kzh);
+void   PwmTim_StartChn(PWM_TIM_HANDLER_T pwm, PWM_TIM_CHANNELS_T chn);
+void   PwmTim_StopChn(PWM_TIM_HANDLER_T pwm, PWM_TIM_CHANNELS_T chn);
 
 /* By Timer */
-bool_t PwmTim_InitAll(PWM_TIM_INSTANCE_T* p_pwm, uint32_t freq_khz);
-void   PwmTim_StartAll(PWM_TIM_INSTANCE_T* p_pwm);
-void   PwmTim_StopAll(PWM_TIM_INSTANCE_T* p_pwm);
+bool_t PwmTim_InitAll(PWM_TIM_HANDLER_T pwm, uint32_t freq_khz);
+void   PwmTim_StartAll(PWM_TIM_HANDLER_T pwm);
+void   PwmTim_StopAll(PWM_TIM_HANDLER_T pwm);
 
 /* Common */
-void PwmTim_ChangeFreq(PWM_TIM_INSTANCE_T* p_pwm, uint16_t freq_khz);
-void PwmTim_SetDuty(PWM_TIM_INSTANCE_T* p_pwm, PWM_TIM_CHANNELS_T chn, float32_t duty);
+void PwmTim_ChangeFreq(PWM_TIM_HANDLER_T pwm, uint16_t freq_khz);
+void PwmTim_SetDuty(PWM_TIM_HANDLER_T pwm, PWM_TIM_CHANNELS_T chn, float32_t duty);
 
 #endif /* __PWM_TIM_H__       */

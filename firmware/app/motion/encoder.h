@@ -42,6 +42,9 @@ typedef struct ENC_INSTANCE_S {
     const ENC_PERIPHERAL_T Peripheral;
 } ENC_INSTANCE_T;
 
+typedef ENC_INSTANCE_T* ENC_HANDLER_T;
+
+
 /********************************************************************************
  * Local Vars
  ********************************************************************************/
@@ -49,10 +52,11 @@ typedef struct ENC_INSTANCE_S {
 /********************************************************************************
  * Function Prototypes
  ********************************************************************************/
-bool_t          Enc_Init(ENC_INSTANCE_T* p_enc);
-void            Enc_StartEncoder(ENC_INSTANCE_T* p_enc);
-void            Enc_ResetCount(ENC_INSTANCE_T* p_enc);
-uint32_t        Enc_GetCount(ENC_INSTANCE_T* p_enc);
-ENC_DIRECTION_T Enc_GetDirection(ENC_INSTANCE_T* p_enc);
+bool_t          Enc_Init(ENC_HANDLER_T enc);
+void            Enc_StartEncoder(ENC_HANDLER_T enc);
+void            Enc_StopEncoder(ENC_HANDLER_T enc);
+void            Enc_ResetCount(ENC_HANDLER_T enc);
+uint32_t        Enc_GetCount(ENC_HANDLER_T enc);
+ENC_DIRECTION_T Enc_GetDirection(ENC_HANDLER_T enc);
 
 #endif /* __ENCODER_H__       */
