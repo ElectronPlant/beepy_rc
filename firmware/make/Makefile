@@ -220,6 +220,19 @@ else
 	$(error BOART not supported, check targets)
 endif
 
+# PORT
+ifeq ($(BOARD), nucleo)
+	C_PORT := \
+		../port/stm32/encoder.c \
+		../port/stm32/pwm_timer.c
+
+	H_PORT := \
+		-I../port \
+		-I../port/stm32
+else
+	$(error BOART not supported, check targets)
+endif
+
 # Application files
 C_APP_SOURCE := \
 ../app/main.c \
@@ -228,8 +241,6 @@ C_APP_SOURCE := \
 ../app/rc/serial.c \
 ../app/bsp/bsp.c \
 ../app/motion/motion.c \
-../app/motion/pwm_timer.c \
-../app/motion/encoder.c \
 ../app/motion/motor.c
 
 H_APP_SOURCE := \
@@ -259,8 +270,8 @@ AS_INCLUDES :=
 ASMM_SOURCES  :=
 ASMM_INCLUDES :=
 
-C_SOURCES  := $(C_STM_DRIVERS) $(C_CMSIS_DRIVERS) $(C_STM_INTERMEDIATE) $(C_FREERTOS) $(C_BSP) $(C_APP_SOURCE) $(C_PLATFORM)
-C_INCLUDES := $(H_STM_DRIVERS) $(H_CMSIS_DRIVERS) $(H_STM_INTERMEDIATE) $(H_FREERTOS) $(H_BSP) $(H_APP_SOURCE) $(H_PLATFORM)
+C_SOURCES  := $(C_STM_DRIVERS) $(C_CMSIS_DRIVERS) $(C_STM_INTERMEDIATE) $(C_FREERTOS) $(C_BSP) $(C_PORT) $(C_APP_SOURCE) $(C_PLATFORM)
+C_INCLUDES := $(H_STM_DRIVERS) $(H_CMSIS_DRIVERS) $(H_STM_INTERMEDIATE) $(H_FREERTOS) $(H_BSP) $(H_PORT) $(H_APP_SOURCE) $(H_PLATFORM)
 
 # libraries
 LIBS	:= -lc -lm -lnosys

@@ -1,6 +1,6 @@
 /**
  * @file  encoder.h
- * @brief Driver for the motor encoders.
+ * @brief STM32 port of the motor encoder driver.
  *
  * @ingroup   MotionEncoder
  * @version   V0.0
@@ -21,7 +21,7 @@
 
 #include "encoder.h"
 
-/** @addtogroup Motion
+/** @addtogroup Ports
  *    @{
  */
 
@@ -63,15 +63,7 @@
  ********************************************************************************/
 
 /**
- * @brief  Initializes the encoder. See note 1.
- *         Encoders are composed from a timer and two GPIO inputs for the quadrature signal.
- *
- * @param  enc Encoder handler.
- *
- * @return DEF_TRUE if successful, DEF_FALSE otherwise.
- *
- * @note List of notes:
- *       1. The encoder instance must be uninitialized before being uninitialized.
+ * @brief  STM32 port for the encoder init function.
  */
 bool_t Enc_Init(ENC_HANDLER_T enc) {
     ErrorStatus err;
@@ -145,12 +137,7 @@ bool_t Enc_Init(ENC_HANDLER_T enc) {
 }
 
 /**
- * @brief  Starts the encoder count. See note 1.
- *
- * @param  enc Encoder handler.
- *
- * @note List of notes:
- *       1. The encoder must be initialized to be started.
+ * @brief  STM32 port of the encoder start function.
  */
 void Enc_StartEncoder(ENC_HANDLER_T enc) {
     PLT_ASSERT(NULL != enc);
@@ -171,12 +158,7 @@ void Enc_StartEncoder(ENC_HANDLER_T enc) {
 }
 
 /**
- * @brief  Stops the encoder count. See note 1.
- *
- * @param  enc Encoder handler.
- *
- * @note List of notes:
- *       1. The encoder must be running before it can be stopped.
+ * @brief  STM32 port of the stop encoder function.
  */
 void Enc_StopEncoder(ENC_HANDLER_T enc) {
     PLT_ASSERT(NULL != enc);
@@ -192,14 +174,7 @@ void Enc_StopEncoder(ENC_HANDLER_T enc) {
 }
 
 /**
- * @brief  Reads the encoder count. See note 1.
- *
- * @param  enc Encoder handler.
- *
- * @return Current encoder count.
- *
- * @note List of notes:
- *       1. The encoder must be running to perform a correct count reading.
+ * @brief  STM32 port for the get encoder count function.
  */
 uint32_t Enc_GetCount(ENC_HANDLER_T enc) {
     PLT_ASSERT(NULL != enc);
@@ -208,12 +183,7 @@ uint32_t Enc_GetCount(ENC_HANDLER_T enc) {
 }
 
 /**
- * @brief  Resets the encoder count to zero. See note 1.
- *
- * @param  enc Encoder handler.
- *
- *  @note List of notes:
- *       1. The encoder must be running to reset the count.
+ * @brief  STM32 port for the reset encoder count function.
  */
 void Enc_ResetCount(ENC_HANDLER_T enc) {
     ENC_RUNNING_ASSERT(enc);
@@ -221,14 +191,7 @@ void Enc_ResetCount(ENC_HANDLER_T enc) {
 }
 
 /**
- * @brief  Reads the count direction of the encoder. See note 1.
- *
- * @param  enc Encoder handler.
- *
- * @return ENC_DIRECTION_UP if the encoder direction is counting up, ENC_DIRECTION_DOWN otherwise.
- *
- * @note List of notes:
- *       1. The encoder must be running to get a valid direction reading.
+ * @brief  STM32 port for the get encoder direction function.
  */
 ENC_DIRECTION_T Enc_GetDirection(ENC_HANDLER_T enc) {
     ENC_RUNNING_ASSERT(enc);
@@ -238,4 +201,4 @@ ENC_DIRECTION_T Enc_GetDirection(ENC_HANDLER_T enc) {
 
 
 /** @} (end addtogroup Encoder)     */
-/** @} (end addtogroup Motion)      */
+/** @} (end addtogroup Ports)      */

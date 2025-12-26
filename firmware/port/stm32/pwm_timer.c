@@ -1,6 +1,6 @@
 /**
  * @file      pwm_timer.c
- * @brief     Drive Motor PWM implementation.
+ * @brief     STM32 port for the PWM timer driver.
  *
  * @ingroup   PwmTim
  * @version   V0.0
@@ -20,11 +20,10 @@
 
 #include "target.h"
 
-
 #include "pwm_timer.h"
 
 
-/** @addtogroup Motion
+/** @addtogroup PortsStm32
  *   @{
  */
 
@@ -281,19 +280,7 @@ static bool_t PwmTim_InitTimer(PWM_TIM_HANDLER_T pwm, uint32_t freq_khz) {
 }
 
 /**
- * @brief  Starts the specified PWM timer channel. See notes 1, 2.
- *
- * @param  pwm PWM timer handler.
- * @param  chn Channel to be initialized.
- * @param  freq_khz Timer frequency to set if the timer is initialized.
- *
- * @return DEF_TRUE if successful, DEF_FALSE otherwise. It will also return false if the
- *         requested freq_kzh value does not match the currently configured on for the already
- *         initialized timer.
- *
- * @note List of notes:
- *       1. The channel can only the initialized from the uninitialized state.
- *       2. If is the first channel to be initialized, it will also initialize the PWM timer peripheral.
+ * @brief  STM32 port of the init PWM timer channel function.
  */
 bool_t PwmTim_InitChn(PWM_TIM_HANDLER_T pwm, PWM_TIM_CHANNELS_T chn, uint32_t freq_khz) {
     PLT_ASSERT(NULL != pwm);
@@ -310,18 +297,7 @@ bool_t PwmTim_InitChn(PWM_TIM_HANDLER_T pwm, PWM_TIM_CHANNELS_T chn, uint32_t fr
 }
 
 /**
- * @brief  Initializes the PWM timer and all the timer channels. See note 1.
- *
- * @param  pwm PWM timer handler.
- * @param  freq_khz Timer frequency to set in kHz.
- *
- *  @return DEF_TRUE if successful, DEF_FALSE otherwise.
- *
- * @note List of notes:
- *      1. The timer must only be initialized from the uninitialized state.
- *      2. The repetition counter is used to generate interrupts after a given number
- *         of periods. This value is set to zero by default, since this functionality is not
- *         supported for the moment.
+ * @brief  STM32 port of the init PWM timer with all channels function.
  */
 bool_t PwmTim_InitAll(PWM_TIM_HANDLER_T pwm, uint32_t freq_khz) {
     PLT_ASSERT(PWM_TIM_STATUS_UNINITIALIZED == pwm->Status); /* See note 1 */
@@ -416,14 +392,7 @@ static void PwmTim_StopChnInternal(PWM_TIM_HANDLER_T pwm, PWM_TIM_CHANNELS_T chn
 }
 
 /**
- * @brief  Starts a PWM timer channel. See notes 1, 2.
- *
- * @param  pwm PWM timer handler.
- * @param  chn Channel to start.
- *
- * @note List of notes:
- *      1. The PWM timer channel must only be started if it is initialized and not already enabled.
- *      2. If this is the first channel to be started, the timer peripheral will be initialized.
+ * @brief  STM32 port of the start PWM timer channel function.
  */
 void PwmTim_StartChn(PWM_TIM_HANDLER_T pwm, PWM_TIM_CHANNELS_T chn) {
     PLT_ASSERT(NULL != pwm);
@@ -438,12 +407,7 @@ void PwmTim_StartChn(PWM_TIM_HANDLER_T pwm, PWM_TIM_CHANNELS_T chn) {
 }
 
 /**
- * @brief  Starts the PWM timer and all its channels. See note 1.
- *
- * @param  pwm PWM timer handler.
- *
- * @note List of notes:
- *      1. The PWM timer must only be started from the initialized state.
+ * @brief  STM32 port for the start PWM timer with all its channels function.
  */
 void PwmTim_StartAll(PWM_TIM_HANDLER_T pwm) {
     PLT_ASSERT(NULL != pwm); /* See note 1 */
@@ -463,14 +427,7 @@ void PwmTim_StartAll(PWM_TIM_HANDLER_T pwm) {
 }
 
 /**
- * @brief  Stops the PWM timer channel. See note 1 and 2.
- *
- * @param  pwm PWM timer handler.
- * @param  chn Channel to start.
- *
- * @note List of notes:
- *       1. The channel must only be enabled.
- *       2. If no other channel is enabled, the timer peripheral will be stopped.
+ * @brief  STM32 port for the stop PWM timer channel function.
  */
 void PwmTim_StopChn(PWM_TIM_HANDLER_T pwm, PWM_TIM_CHANNELS_T chn) {
     PLT_ASSERT(NULL == pwm);
@@ -485,12 +442,7 @@ void PwmTim_StopChn(PWM_TIM_HANDLER_T pwm, PWM_TIM_CHANNELS_T chn) {
 }
 
 /**
- * @brief  Stops the PWM timer and all its channels. See note 1.
- *
- * @param  pwm PWM timer handler.
- *
- * @note List of notes:
- *       1. The timer must only be stopped from the running state.
+ * @brief  STM32 port for the Stop PWM timer with all its channels function.
  */
 void PwmTim_Stop(PWM_TIM_HANDLER_T pwm) {
     PLT_ASSERT(NULL != pwm);
@@ -510,11 +462,7 @@ void PwmTim_Stop(PWM_TIM_HANDLER_T pwm) {
 }
 
 /**
- * @brief  Changes the timer frequency. Warning, this will change the frequency for all the timer
- *         channels.
- *
- * @param  pwm PWM timer handler.
- * @param  freq_khz New frequency to set in kHz.
+ * @brief  STM32 port for the change PWM timer frequency function.
  */
 void PwmTim_ChangeFreq(PWM_TIM_HANDLER_T pwm, uint16_t freq_khz) {
     PLT_ASSERT(NULL != pwm);
@@ -545,11 +493,7 @@ static uint32_t PwmTim_Duty2CompareValue(PWM_TIM_HANDLER_T pwm, float32_t duty_c
 }
 
 /**
- * @brief  Updates the PWM duty cycle of the selected channel.
- *
- * @param  pwm  PWM timer handler.
- * @param  chn  Channel to update.
- * @param  duty Duty cycle as a percentage [PWM_TIM_MIN_DUTY_CYCLE, PWM_TIM_MAX_DUTY_CYCLE].
+ * @brief  STM32 port for the set PWM duty cycle function.
  */
 void PwmTim_SetDuty(PWM_TIM_HANDLER_T pwm, PWM_TIM_CHANNELS_T chn, float32_t duty) {
     PLT_ASSERT(NULL != pwm);
@@ -576,4 +520,4 @@ void PwmTim_SetDuty(PWM_TIM_HANDLER_T pwm, PWM_TIM_CHANNELS_T chn, float32_t dut
 }
 
 /** @} (end addtogroup PwmTimer)   */
-/** @} (end addtogroup Motion)     */
+/** @} (end addtogroup PortsStm32)     */

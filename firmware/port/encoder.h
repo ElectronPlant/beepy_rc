@@ -52,11 +52,72 @@ typedef ENC_INSTANCE_T* ENC_HANDLER_T;
 /********************************************************************************
  * Function Prototypes
  ********************************************************************************/
-bool_t          Enc_Init(ENC_HANDLER_T enc);
-void            Enc_StartEncoder(ENC_HANDLER_T enc);
-void            Enc_StopEncoder(ENC_HANDLER_T enc);
-void            Enc_ResetCount(ENC_HANDLER_T enc);
-uint32_t        Enc_GetCount(ENC_HANDLER_T enc);
+/**
+ * @brief  Initializes the encoder. See note 1.
+ *         Encoders are composed from a timer and two GPIO inputs for the quadrature signal.
+ *
+ * @param  enc Encoder handler.
+ *
+ * @return DEF_TRUE if successful, DEF_FALSE otherwise.
+ *
+ * @note List of notes:
+ *       1. The encoder instance must be uninitialized before being uninitialized.
+ */
+bool_t Enc_Init(ENC_HANDLER_T enc);
+
+/**
+ * @brief  Starts the encoder count. See note 1.
+ *
+ * @param  enc Encoder handler.
+ *
+ * @note List of notes:
+ *       1. The encoder must be initialized to be started.
+ */
+void Enc_StartEncoder(ENC_HANDLER_T enc);
+
+/**
+ * @brief  Stops the encoder count. See note 1.
+ *
+ * @param  enc Encoder handler.
+ *
+ * @note List of notes:
+ *       1. The encoder must be running before it can be stopped.
+ */
+void Enc_StopEncoder(ENC_HANDLER_T enc);
+
+/**
+ * @brief  Reads the encoder count. See note 1.
+ *
+ * @param  enc Encoder handler.
+ *
+ * @return Current encoder count.
+ *
+ * @note List of notes:
+ *       1. The encoder must be running to perform a correct count reading.
+ */
+uint32_t Enc_GetCount(ENC_HANDLER_T enc);
+
+/**
+ * @brief  Resets the encoder count to zero. See note 1.
+ *
+ * @param  enc Encoder handler.
+ *
+ *  @note List of notes:
+ *       1. The encoder must be running to reset the count.
+ */
+void Enc_ResetCount(ENC_HANDLER_T enc);
+
+/**
+ * @brief  Reads the count direction of the encoder. See note 1.
+ *
+ * @param  enc Encoder handler.
+ *
+ * @return ENC_DIRECTION_UP if the encoder direction is counting up, ENC_DIRECTION_DOWN otherwise.
+ *
+ * @note List of notes:
+ *       1. The encoder must be running to get a valid direction reading.
+ */
 ENC_DIRECTION_T Enc_GetDirection(ENC_HANDLER_T enc);
+
 
 #endif /* __ENCODER_H__       */
