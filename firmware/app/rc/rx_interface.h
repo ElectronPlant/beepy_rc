@@ -18,6 +18,7 @@
 
 #include "plt_types.h"
 
+#include "common_rx_bus.h"
 #include "std_frame.h"
 
 
@@ -105,13 +106,18 @@ typedef struct {
      * @brief   Initialization function.
      *          Configures the peripherals required by the Rx protocol, initializes the driver
      *          handlers, and allocates the Rx buffers.
+     * @param  h_bus Rx bus handler.
      * @param  rx_handler_func Pointer to the Rx callback function, it will be called from an ISR.
      * @param  rx_error_func   Pointer to the Rx error callback function, it will be called from an
      *                         ISR.
      *
      * @return DEF_TRUE if successful, DEF_FALSE otherwise.
      */
-    bool_t (*RxInt_Init)(RxInt_RxHandler rx_handler_func, RxInt_RxErrorHandler rx_error_func);
+    bool_t (*RxInt_Init)(
+        COM_RX_BUS_HANDLER_T h_bus,
+        RxInt_RxHandler      rx_handler_func,
+        RxInt_RxErrorHandler rx_error_func
+    );
 
     /**
      * @brief  Starts the Rx interface.
@@ -119,14 +125,18 @@ typedef struct {
      *         DMA or pulling with SW timers). Once a complete frame is received the driver should
      *         call the callback function to notify the a new frame has been captured.
      *
+     * @param  h_bus Rx bus handler.
+     *
      * @return DEF_TRUE if successful, DEF_FALSE otherwise.
      */
-    bool_t (*RxInt_Start)(void);
+    bool_t (*RxInt_Start)(COM_RX_BUS_HANDLER_T h_bus);
 
     /**
      * @brief  Stops the Rx process.
+     *
+     * @param  h_bus Rx bus handler.
      */
-    void (*RxInt_Stop)(void);
+    void (*RxInt_Stop)(COM_RX_BUS_HANDLER_T h_bus);
 
     /**
      * @brief Perform alignment.

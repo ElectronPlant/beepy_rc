@@ -224,7 +224,8 @@ endif
 ifeq ($(BOARD), nucleo)
 	C_PORT := \
 		../port/stm32/encoder.c \
-		../port/stm32/pwm_timer.c
+		../port/stm32/pwm_timer.c \
+		../port/stm32/serial.c
 
 	H_PORT := \
 		-I../port \
@@ -238,7 +239,7 @@ C_APP_SOURCE := \
 ../app/main.c \
 ../app/rc/rc.c \
 ../app/rc/rx_drivers/sbus/sbus.c \
-../app/rc/serial.c \
+../app/rc/rx_drivers/common_rx_bus.c \
 ../app/bsp/bsp.c \
 ../app/motion/motion.c \
 ../app/motion/motor.c

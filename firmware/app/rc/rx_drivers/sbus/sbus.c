@@ -21,6 +21,7 @@
 #include "plt_types.h"
 #include "plt_utils.h"
 
+#include "common_rx_bus.h"
 #include "rx_interface.h"
 #include "sbus.h"
 #include "serial.h"
@@ -99,6 +100,7 @@ static void             Sbus_AlignmentWaitForBuffer(RXINT_RX_INFO_T* p_rx_info, 
 static bool_t           Sbus_IsFrameValid(SBUS_FRAME_T* p_frame);
 static inline float32_t Sbus_Chn2Std(uint16_t v);
 static void             Sbus_GetStdFrame(SBUS_FRAME_T* p_frame, STD_FRAME_T* p_std);
+
 
 /********************************************************************************
  * Local Vars
@@ -334,12 +336,19 @@ static void Sbus_GetStdFrame(SBUS_FRAME_T* p_frame, STD_FRAME_T* p_std) {
  *      2. The SBUS protocol is and inverted UART. This module assumes that the bus inversion is
  *         done at the hardware level. For the moment the UART peripheral is hardcoded.
  */
-bool_t Sbus_Init(RxInt_RxHandler rx_handler_func, RxInt_RxErrorHandler rx_error_func) {
+bool_t Sbus_Init(
+    COM_RX_BUS_HANDLER_T h_ser,
+    RxInt_RxHandler      rx_handler_func,
+    RxInt_RxErrorHandler rx_error_func
+) {
     PLT_BUILD_ASSERT(sizeof(SBUS_FRAME_T) == SBUS_FRAME_SIZE_BYTES); /* Note 1 */
 
     bool_t init_ok;
 
-    init_ok = Serial_Init(rx_handler_func, rx_error_func); /* See note 2 */
+    h_ser->BaudRate = SBUS_SERIAL_BAUDRATE;
+    h_ser->ErrorHandlerFunct_Ptr = rx_error_func;
+    h_ser->RxHandlerFunct_Ptr = rx_handler_func;
+    init_ok = Serial_Init(h_ser, rx_handler_func, rx_error_func); /* See note 2 */
 
     return init_ok;
 }
@@ -347,15 +356,15 @@ bool_t Sbus_Init(RxInt_RxHandler rx_handler_func, RxInt_RxErrorHandler rx_error_
 /**
  * @brief   SBUS implementation of the RxInt_Start interface.
  */
-bool_t Sbus_Start(void) {
-    return Serial_StartReception();
+bool_t Sbus_Start(COM_RX_BUS_HANDLER_T h_ser) {
+    return Serial_StartReception(h_ser);
 }
 
 /**
  * @brief   SBUS implementation of the RxInt_Stop interface.
  */
-void Sbus_Stop(void) {
-    Serial_StopReception();
+void Sbus_Stop(COM_RX_BUS_HANDLER_T h_ser) {
+    Serial_StopReception(h_ser);
 }
 
 /**
