@@ -45,6 +45,8 @@
 
 #define MOTION_DEFAULT_MOTOR_PWM_FREQ_KHZ (20U)
 
+#define MOTION_NUM_MOTORS (4U)
+
 /********************************************************************************
  * Typedefs
  ********************************************************************************/
@@ -101,7 +103,7 @@ ENC_INSTANCE_T Motion_Encoders[TARGET_ENCODER_NUM] = {
     },
 };
 
-MOTOR_T Motion_Motors[4u] = {
+MOTOR_T Motion_Motors[MOTION_NUM_MOTORS] = {
     {
         .Encoder = &Motion_Encoders[0],
         .PwmChn[0] =
@@ -170,9 +172,11 @@ MOTOR_T Motion_Motors[4u] = {
 bool_t Motion_Init(void) {
     bool_t ok;
 
-    ok = Motor_Init((MOTOR_HANDLER_T)&Motion_Motors[0]);
-    if (DEF_FALSE == ok) {
-        return DEF_FALSE;
+    for (uint8_t m = 0; m < MOTION_NUM_MOTORS; m++) {
+        ok = Motor_Init((MOTOR_HANDLER_T)&Motion_Motors[m]);
+        if (DEF_FALSE == ok) {
+            return DEF_FALSE;
+        }
     }
 
     /* Start Task */
@@ -195,18 +199,22 @@ static void Motion_TaskLoop(void) {
     static bool_t     forward = DEF_TRUE;
     uint32_t          cnt;
     MOTOR_DIRECTION_T dir;
+
     printf("--------------\n");
-    printf("Start drive\n");
-    if (DEF_TRUE == forward) {
-        Motor_SetSpeed((MOTOR_HANDLER_T)&Motion_Motors[0], 70.0);
-        printf("going forward\n");
-    } else {
-        Motor_SetSpeed((MOTOR_HANDLER_T)&Motion_Motors[0], -70.0);
-        printf("Going backwards\n");
+    for (uint8_t m = 0; m < MOTION_NUM_MOTORS; m++) {
+        printf("--- MOTOR %u ---\n", m);
+        printf("Start drive\n");
+        if (DEF_TRUE == forward) {
+            Motor_SetSpeed((MOTOR_HANDLER_T)&Motion_Motors[m], 70.0);
+            printf("going forward\n");
+        } else {
+            Motor_SetSpeed((MOTOR_HANDLER_T)&Motion_Motors[m], -70.0);
+            printf("Going backwards\n");
+        }
+        forward = !forward;
+        Motor_GetEncoderCnt((MOTOR_HANDLER_T)&Motion_Motors[m], &cnt, &dir);
+        printf("Encoder Count %lu, %u\n", cnt, dir);
     }
-    forward = !forward;
-    Motor_GetEncoderCnt((MOTOR_HANDLER_T)&Motion_Motors[0], &cnt, &dir);
-    printf("Encoder Count %lu, %u\n", cnt, dir);
     printf("--------------\n");
 
     vTaskDelay(3000); /* delay 300 ticks */
@@ -214,7 +222,9 @@ static void Motion_TaskLoop(void) {
 
 static void Motion_TaskMain(PLT_UTILS_UNUSED void* parameters) {
     /* Setup */
-    Motor_Start((MOTOR_HANDLER_T)&Motion_Motors[0]);
+    for (uint8_t m = 0; m < MOTION_NUM_MOTORS; m++) {
+        Motor_Start((MOTOR_HANDLER_T)&Motion_Motors[m]);
+    }
 
     /* Loop */
     while (DEF_TRUE) {
