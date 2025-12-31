@@ -25,11 +25,8 @@
 
 #include "common_rx_interface.h"
 #include "common_rx_sizes.h"
-#include "std_frame.h"
-
 #include "rx_interface.h"
-#include "target.h"
-#include "task.h"
+#include "std_frame.h"
 
 /** @addtogroup Rc
  *   @{
@@ -160,7 +157,7 @@ bool_t Rc_Init(void) {
     /* Init Rx Driver */
     ComRxInt_CheckInterface();
     if (DEF_TRUE == ok) {
-        ok = ComRxInt_Interface.RxInt_Init(Rc_RxHandler, Rc_RxErrorHandler);
+        ok = ComRxInt_Interface.RxInt_Init(ComRxBus_BusHandler, Rc_RxHandler, Rc_RxErrorHandler);
     }
 
     /* Init Buffer handler */
@@ -237,7 +234,7 @@ static void Rc_ActionRxTimeout(void) {
 static void Rc_ActionNotifyError(RC_ERROR_TYPES_T error) {
     printf("RC - Error %u\n", error);
     Rc_UpdateStatus(RC_STATUS_ERROR);
-    ComRxInt_Interface.RxInt_Stop();
+    ComRxInt_Interface.RxInt_Stop(ComRxBus_BusHandler);
     //TODO handle error.
 }
 
@@ -269,7 +266,7 @@ static void Rc_TaskLoop(void) {
 static void Rc_TaskStart() {
     PLT_ASSERT(RC_STATUS_STOPPED == Rc_Status);
 
-    bool_t ok = ComRxInt_Interface.RxInt_Start();
+    bool_t ok = ComRxInt_Interface.RxInt_Start(ComRxBus_BusHandler);
     PLT_ASSERT(DEF_TRUE == ok);
     Rc_Status = RC_STATUS_MISALIGNED;
 }

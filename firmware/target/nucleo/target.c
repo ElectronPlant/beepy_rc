@@ -22,6 +22,40 @@
 /** @addtogroup Target
  *    @{
  */
+
+/******************************************
+ * Rx Serial
+ ******************************************/
+#include "serial_port.h"
+
+/** Rx Serial interface.
+ *  The serial interface can be used by the SBUS (only Rx with external inverter).
+ *  Alternatively it can be used for debug interface.
+ *
+ *  The Rx serial is mapped to UART4.
+ */
+const SERIAL_PERIPHERAL_PORT_T TargetRcSerial = {
+    .Serial = UART4,
+    .Clk = LL_APB1_GRP1_PERIPH_UART4,
+    .ClkEnFn_Ptr = LL_APB1_GRP1_EnableClock,
+
+    .IrqType = UART4_IRQn,
+
+    .TxAvailable = DEF_TRUE,
+    .TxPin = LL_GPIO_PIN_10,
+    .TxPort = GPIOC,
+    .TxAlternateFunc = LL_GPIO_AF_8,
+    .TxClk = LL_AHB1_GRP1_PERIPH_GPIOC,
+    .TxClkEnFn_Ptr = LL_AHB1_GRP1_EnableClock,
+
+    .RxAvailable = DEF_TRUE,
+    .RxPin = LL_GPIO_PIN_11,
+    .RxPort = GPIOC,
+    .RxAlternateFunc = LL_GPIO_AF_8,
+    .RxClk = LL_AHB1_GRP1_PERIPH_GPIOC,
+    .RxClkEnFn_Ptr = LL_AHB1_GRP1_EnableClock,
+};
+
 /******************************************
  * Motor PWM
  ******************************************/

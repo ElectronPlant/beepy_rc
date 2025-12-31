@@ -64,18 +64,12 @@
  * Rc
  ******************************************/
 /* RC Input */
-#define TARGET_RC_DRIVER       SBUS
-#define TARGET_RC_NUM_CHANNELS (16U)
+#define TARGET_RC_DRIVER SBUS
 
 /* UART port used for SBUS */
-#define TARGET_RC_SERIAL_PERIPH_CLOCK LL_APB1_GRP1_PERIPH_UART4
-#define TARGET_RC_SERIAL_GPIO_CLOCK   LL_AHB1_GRP1_PERIPH_GPIOC
-#define TARGET_RC_SERIAL_INSTANCE     UART4
-#define TARGET_RC_SERIAL_IRQ          UART4_IRQn
-#define TARGET_RC_SERIAL_IRQ_HANDLER  UART4_IRQHandler
-#define TARGET_RC_SERIAL_TX_PIN       LL_GPIO_PIN_10
-#define TARGET_RC_SERIAL_RX_PIN       LL_GPIO_PIN_11
-#define TARGET_RC_SERIAL_PORT         GPIOC
+#include "serial_port.h"
+#define TARGET_RC_SERIAL_IRQ_HANDLER UART4_IRQHandler
+extern const SERIAL_PERIPHERAL_PORT_T TargetRcSerial;
 
 
 /******************************************

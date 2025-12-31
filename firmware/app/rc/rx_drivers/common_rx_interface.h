@@ -25,9 +25,15 @@
  ********************************************************************************/
 #if TARGET_RC_DRIVER == SBUS
 
-bool_t Sbus_Init(RxInt_RxHandler rx_handler_func, RxInt_RxErrorHandler rx_error_func);
-bool_t Sbus_Start(void);
-void   Sbus_Stop(void);
+    #define RXINT_BUS SERIAL
+
+bool_t Sbus_Init(
+    COM_RX_BUS_HANDLER_T h_ser,
+    RxInt_RxHandler      rx_handler_func,
+    RxInt_RxErrorHandler rx_error_func
+);
+bool_t Sbus_Start(COM_RX_BUS_HANDLER_T h_ser);
+void   Sbus_Stop(COM_RX_BUS_HANDLER_T h_ser);
 void   Sbus_PerformAlignment(RXINT_RX_INFO_T* p_rx_info, uint8_t rx_byte);
 void   Sbus_ProcessFrame(RXINT_RX_BUFFER_INFO_T* p_buffer_info, STD_FRAME_T* p_std_frame);
 void   Sbus_DebugFrame(RXINT_RX_BUFFER_INFO_T* p_buffer_info);
@@ -40,9 +46,11 @@ const RXINT_INTERFACE_T ComRxInt_Interface = {
     .RxInt_ProcessFrame = Sbus_ProcessFrame,
     .RxInt_DebugFrame = Sbus_DebugFrame
 };
+
 #else
     #error "Invalid RX Driver, review the TARGET_RX_DRIVER definition"
 #endif
+
 
 /********************************************************************************
  * Driver checks

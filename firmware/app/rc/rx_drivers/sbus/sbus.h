@@ -28,4 +28,6 @@
 #define SBUS_NUM_CHANNELS        (SBUS_NUM_SERVO_CHANNELS)
 #define SBUS_FRAME_SIZE_BYTES    (25U)
 
+#define SBUS_SERIAL_BAUDRATE (100000U) // Real: (100000U) Fake: (115200)
+
 #endif /* __SBUS_H__    */
