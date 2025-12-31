@@ -1,6 +1,6 @@
 /**
  * @file  common_rx_bus.c
- * @brief Abstraction for the Rx bus.
+ * @brief Abstraction layer for the Rx bus.
  *
  * @ingroup   Main
  * @version   V0.0
