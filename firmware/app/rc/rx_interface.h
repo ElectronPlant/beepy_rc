@@ -106,6 +106,7 @@ typedef struct {
      * @brief   Initialization function.
      *          Configures the peripherals required by the Rx protocol, initializes the driver
      *          handlers, and allocates the Rx buffers.
+     *
      * @param  h_bus Rx bus handler.
      * @param  rx_handler_func Pointer to the Rx callback function, it will be called from an ISR.
      * @param  rx_error_func   Pointer to the Rx error callback function, it will be called from an
