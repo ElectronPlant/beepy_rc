@@ -13,4 +13,6 @@ todo.md
 media/*
 
 # Hardware
-hardware/*
+hardware/beepyRcBrd/*~*
+hardware/beepyRcBrd/beepyRCBrd-backups/*
+hardware/beepyRcBrd/*-bak
