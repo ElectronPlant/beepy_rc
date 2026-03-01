@@ -39,7 +39,7 @@
 /********************************************************************************
  * Defines
  ********************************************************************************/
-#define MOTOR_PWM_FREQUENCY_KHZ (10U)
+#define MOTOR_PWM_FREQUENCY_KHZ (10.0f)
 
 /**
  * @brief Critical sections. When adjusting the motor speed it is critical that both channels
@@ -130,7 +130,7 @@ void Motor_Stop(MOTOR_HANDLER_T mot) {
  * @brief  Set speed for a motor.
  *
  * @param  mot Motor handler.
- * @param  speed: Speed value to set. See notes 1, 2, 3.
+ * @param  speed Speed value to set. See notes 1, 2, 3.
  *
  * @return DEF_TRUE if successful, DEF_FALSE otherwise.
  *
@@ -158,7 +158,7 @@ void Motor_SetSpeed(MOTOR_HANDLER_T mot, float32_t speed) {
         PwmTim_SetDuty(mot->PwmChn[1].Timer, mot->PwmChn[1].Chn, -1.0 * speed_sat);
         MOTOR_EXIT_CRITICAL_SEC;
     } else {
-        /* Tim motor backwards */
+        /* Turn motor backwards */
         MOTOR_START_CRITICAL_SEC;
         PwmTim_SetDuty(mot->PwmChn[1].Timer, mot->PwmChn[1].Chn, 0.0f); /* See note 4*/
         PwmTim_SetDuty(mot->PwmChn[0].Timer, mot->PwmChn[0].Chn, speed_sat);

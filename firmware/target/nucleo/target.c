@@ -193,11 +193,11 @@ const PWM_TIM_PORT_T TargetMotorTim2 = {
 };
 
 /** Motor timer 3
- *  Is mapped to timer 13.
+ *  Is mapped to timer 14.
  *  This timer only has one channel.
  *
  * @note List of notes:
- *      1. TIM13 is connected the APB1 clock, which is set to 84MHz, and it is a 16-bit timer.
+ *      1. TIM14 is connected the APB1 clock, which is set to 84MHz, and it is a 16-bit timer.
  *         The PWM signal will be between 1kHz to 100kHz. To have the maximum resolution possible,
  *         the prescaller needs to be set so the count required to achieve the minimum frequency
  *         just fits the maximum count value. In this case CEIL(84MHz / (F_MIN * 2^16)) - 1 = X.
@@ -210,7 +210,7 @@ const PWM_TIM_PORT_T TargetMotorTim2 = {
 #define TARGET_MOTOR_TIM3_CLK_FREQUENCY (84000 / (1 + TARGET_MOTOR_TIM3_PRESCALLER))
 
 const PWM_TIM_PORT_CHN_T TargetMotorTim3Ch1 = {
-    .GpioPin = LL_GPIO_PIN_6,
+    .GpioPin = LL_GPIO_PIN_7,
     .GpioPort = GPIOA,
     .GpioAlternateFunc = LL_GPIO_AF_9,
     .GpioClk = LL_AHB1_GRP1_PERIPH_GPIOA,
@@ -220,8 +220,8 @@ const PWM_TIM_PORT_CHN_T TargetMotorTim3Ch1 = {
 };
 
 const PWM_TIM_PORT_T TargetMotorTim3 = {
-    .Timer = TIM13,
-    .TimerClk = LL_APB1_GRP1_PERIPH_TIM13,
+    .Timer = TIM14,
+    .TimerClk = LL_APB1_GRP1_PERIPH_TIM14,
     .TimerClkEnFn_Ptr = LL_APB1_GRP1_EnableClock,
     .TimerPrescaller = TARGET_MOTOR_TIM3_PRESCALLER,
     .TimerClkDivision = LL_TIM_CLOCKDIVISION_DIV1,
@@ -316,4 +316,96 @@ const ENC_PERIPHERAL_PORT_T TargetEnc4 = {
 };
 
 
-/** @} (end addtogroup Target)  */
+/******************************************
+ * SERVOS
+ ******************************************/
+#include "pwm_timer_port.h"
+/** Servo timer 1
+ *  Is mapped to timer 12.
+ *  Both channels of the timer are used as servo outputs.
+ *
+ * @note List of notes:
+ *      1. TIM12 is connected the APB1 clock, which is set to 84MHz, and it is a 16-bit timer.
+ *         The PWM signal will be 50Hz. To have the maximum resolution possible,
+ *         the prescaller needs to be set so the count required to achieve the minimum frequency
+ *         just fits the maximum count value. In this case CEIL(84MHz / (F * 2^16)) - 1 = X.
+ *         With X being the prescaller, and the -1 is a correction since 0 is the identity
+ *         prescaller instead of 1. In this case solves to X = 0.
+ *         Note that this is for the edge aligned mode in center mode the frequency is halved.
+ *         In this case the prescaller is set to 25.
+ */
+#define TARGET_SERVO_TIM1_N_CHANNELS    (2U)
+#define TARGET_SERVO_TIM1_PRESCALLER    (25U) /* See note 1 */
+#define TARGET_SERVO_TIM1_CLK_FREQUENCY (84000 / (1 + TARGET_SERVO_TIM1_PRESCALLER))
+
+const PWM_TIM_PORT_CHN_T TargetServoTim1Ch1 = {
+    .GpioPin = LL_GPIO_PIN_14,
+    .GpioPort = GPIOB,
+    .GpioAlternateFunc = LL_GPIO_AF_9,
+    .GpioClk = LL_AHB1_GRP1_PERIPH_GPIOB,
+    .GpioClkEnFn_Ptr = LL_AHB1_GRP1_EnableClock,
+    .OutputPolarity = LL_TIM_OCPOLARITY_HIGH,
+    .OutputIdleState = LL_TIM_OCIDLESTATE_LOW,
+};
+
+const PWM_TIM_PORT_CHN_T TargetServoTim1Ch2 = {
+    .GpioPin = LL_GPIO_PIN_15,
+    .GpioPort = GPIOB,
+    .GpioAlternateFunc = LL_GPIO_AF_9,
+    .GpioClk = LL_AHB1_GRP1_PERIPH_GPIOB,
+    .GpioClkEnFn_Ptr = LL_AHB1_GRP1_EnableClock,
+    .OutputPolarity = LL_TIM_OCPOLARITY_HIGH,
+    .OutputIdleState = LL_TIM_OCIDLESTATE_LOW,
+};
+
+const PWM_TIM_PORT_T TargetServoTim1 = {
+    .Timer = TIM12,
+    .TimerClk = LL_APB1_GRP1_PERIPH_TIM12,
+    .TimerClkEnFn_Ptr = LL_APB1_GRP1_EnableClock,
+    .TimerPrescaller = TARGET_SERVO_TIM1_PRESCALLER,
+    .TimerClkDivision = LL_TIM_CLOCKDIVISION_DIV1,
+    .TimerClkFreqKhz = TARGET_SERVO_TIM1_CLK_FREQUENCY,
+    .TimerIs32bits = DEF_FALSE,
+    .NumChannels = TARGET_SERVO_TIM1_N_CHANNELS,
+    .Channels = {&TargetServoTim1Ch1, &TargetServoTim1Ch2, NULL, NULL}
+};
+
+/** Servo timer 2
+ *  Is mapped to timer 13.
+ *  This timer only has one channel.
+ *
+ * @note List of notes:
+ *      1. TIM13 is connected the APB1 clock, which is set to 84MHz, and it is a 16-bit timer.
+ *         The PWM signal will be 50Hz. To have the maximum resolution possible,
+ *         the prescaller needs to be set so the count required to achieve the minimum frequency
+ *         just fits the maximum count value. In this case CEIL(84MHz / (F * 2^16)) - 1 = X.
+ *         With X being the prescaller, and the -1 is a correction since 0 is the identity
+ *         prescaller instead of 1. In this case solves to X = 0.
+ *         Note that this is for the edge aligned mode in center mode the frequency is halved.
+ *         In this case the prescaller is set to 25.
+ */
+#define TARGET_SERVO_TIM2_N_CHANNELS    (1U)
+#define TARGET_SERVO_TIM2_PRESCALLER    (25U) /* See note 1 */
+#define TARGET_SERVO_TIM2_CLK_FREQUENCY (84000 / (1 + TARGET_SERVO_TIM1_PRESCALLER))
+
+const PWM_TIM_PORT_CHN_T TargetServoTim2Ch1 = {
+    .GpioPin = LL_GPIO_PIN_6,
+    .GpioPort = GPIOA,
+    .GpioAlternateFunc = LL_GPIO_AF_9,
+    .GpioClk = LL_AHB1_GRP1_PERIPH_GPIOA,
+    .GpioClkEnFn_Ptr = LL_AHB1_GRP1_EnableClock,
+    .OutputPolarity = LL_TIM_OCPOLARITY_HIGH,
+    .OutputIdleState = LL_TIM_OCIDLESTATE_LOW,
+};
+
+const PWM_TIM_PORT_T TargetServoTim2 = {
+    .Timer = TIM13,
+    .TimerClk = LL_APB1_GRP1_PERIPH_TIM13,
+    .TimerClkEnFn_Ptr = LL_APB1_GRP1_EnableClock,
+    .TimerPrescaller = TARGET_SERVO_TIM2_PRESCALLER,
+    .TimerClkDivision = LL_TIM_CLOCKDIVISION_DIV1,
+    .TimerClkFreqKhz = TARGET_SERVO_TIM2_CLK_FREQUENCY,
+    .TimerIs32bits = DEF_FALSE,
+    .NumChannels = TARGET_SERVO_TIM2_N_CHANNELS,
+    .Channels = {&TargetServoTim1Ch1, NULL, NULL, NULL}
+};

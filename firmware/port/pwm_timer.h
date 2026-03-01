@@ -95,7 +95,7 @@ typedef PWM_TIM_INSTANCE_T* PWM_TIM_HANDLER_T;
  *       1. The channel can only the initialized from the uninitialized state.
  *       2. If is the first channel to be initialized, it will also initialize the PWM timer peripheral.
  */
-bool_t PwmTim_InitChn(PWM_TIM_HANDLER_T pwm, PWM_TIM_CHANNELS_T chn, uint32_t freq_kzh);
+bool_t PwmTim_InitChn(PWM_TIM_HANDLER_T pwm, PWM_TIM_CHANNELS_T chn, float32_t freq_kzh);
 
 /**
  * @brief  Starts a PWM timer channel. See notes 1, 2.
@@ -140,7 +140,7 @@ void PwmTim_StopChn(PWM_TIM_HANDLER_T pwm, PWM_TIM_CHANNELS_T chn);
  *         of periods. This value is set to zero by default, since this functionality is not
  *         supported for the moment.
  */
-bool_t PwmTim_InitAll(PWM_TIM_HANDLER_T pwm, uint32_t freq_khz);
+bool_t PwmTim_InitAll(PWM_TIM_HANDLER_T pwm, float32_t freq_khz);
 
 /**
  * @brief  Starts the PWM timer and all its channels. See note 1.

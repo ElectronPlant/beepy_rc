@@ -62,7 +62,7 @@ static inline uint32_t PwmTim_GetMaxTimerCnt(PWM_TIM_HANDLER_T pwm);
 static inline bool_t   PwmTim_IsAnyChnEnabled(PWM_TIM_HANDLER_T pwm);
 static inline bool_t   PwmTim_IsChnEnabled(PWM_TIM_HANDLER_T pwm, PWM_TIM_CHANNELS_T chn);
 
-static uint32_t PwmTim_GetAutoReload(PWM_TIM_HANDLER_T pwm, uint32_t freq_khz);
+static uint32_t PwmTim_GetAutoReload(PWM_TIM_HANDLER_T pwm, float32_t freq_khz);
 static uint32_t PwmTim_Duty2CompareValue(PWM_TIM_HANDLER_T pwm, float32_t duty_cycle);
 
 static void PwmTim_StartTimer(PWM_TIM_HANDLER_T pwm);
@@ -161,9 +161,9 @@ static inline bool_t PwmTim_IsChnEnabled(PWM_TIM_HANDLER_T pwm, PWM_TIM_CHANNELS
  *         frequency. Otherwise, if the prescaller is to high, there may not be enough resolution
  *         to set the required frequency.
  */
-static uint32_t PwmTim_GetAutoReload(PWM_TIM_HANDLER_T pwm, uint32_t freq_khz) {
+static uint32_t PwmTim_GetAutoReload(PWM_TIM_HANDLER_T pwm, float32_t freq_khz) {
     float32_t clk_freq = pwm->Peripheral->TimerClkFreqKhz;
-    float32_t reload_f = (clk_freq / (float32_t)freq_khz);
+    float32_t reload_f = (clk_freq / freq_khz);
 
     /* See note 1 */
     PLT_ASSERT((float32_t)PwmTim_GetMaxTimerCnt(pwm) >= reload_f && 0.0f <= reload_f);
@@ -244,7 +244,7 @@ static bool_t PwmTim_InitChnInternal(PWM_TIM_HANDLER_T pwm, PWM_TIM_CHANNELS_T c
  *         of periods. This value is set to zero by default, since this functionality is not
  *         supported for the moment.
  */
-static bool_t PwmTim_InitTimer(PWM_TIM_HANDLER_T pwm, uint32_t freq_khz) {
+static bool_t PwmTim_InitTimer(PWM_TIM_HANDLER_T pwm, float32_t freq_khz) {
     ErrorStatus err;
     uint32_t    autoreload;
 
@@ -282,7 +282,7 @@ static bool_t PwmTim_InitTimer(PWM_TIM_HANDLER_T pwm, uint32_t freq_khz) {
 /**
  * @brief  STM32 port of the init PWM timer channel function.
  */
-bool_t PwmTim_InitChn(PWM_TIM_HANDLER_T pwm, PWM_TIM_CHANNELS_T chn, uint32_t freq_khz) {
+bool_t PwmTim_InitChn(PWM_TIM_HANDLER_T pwm, PWM_TIM_CHANNELS_T chn, float32_t freq_khz) {
     PLT_ASSERT(NULL != pwm);
 
     /* Initialized the timer if needed, see note 2 */
@@ -299,7 +299,7 @@ bool_t PwmTim_InitChn(PWM_TIM_HANDLER_T pwm, PWM_TIM_CHANNELS_T chn, uint32_t fr
 /**
  * @brief  STM32 port of the init PWM timer with all channels function.
  */
-bool_t PwmTim_InitAll(PWM_TIM_HANDLER_T pwm, uint32_t freq_khz) {
+bool_t PwmTim_InitAll(PWM_TIM_HANDLER_T pwm, float32_t freq_khz) {
     PLT_ASSERT(PWM_TIM_STATUS_UNINITIALIZED == pwm->Status); /* See note 1 */
 
     bool_t ok = PwmTim_InitTimer(pwm, freq_khz);

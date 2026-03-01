@@ -79,8 +79,8 @@ extern const SERIAL_PERIPHERAL_PORT_T TargetRcSerial;
  * Each motor is driven by two PWM outputs.
  */
 #include "pwm_timer_port.h"
-#define TARGET_NUM_PWM_TIMERS (3U)
-/* PWM timers are defined  in the target.c file. */
+#define TARGET_NUM_MOTOR_PWM_TIMERS (3U)
+/* Motor PWM timers are defined  in the target.c file. */
 extern const PWM_TIM_PORT_T TargetMotorTim1, TargetMotorTim2, TargetMotorTim3;
 
 
@@ -95,6 +95,15 @@ extern const PWM_TIM_PORT_T TargetMotorTim1, TargetMotorTim2, TargetMotorTim3;
 #define TARGET_ENCODER_NUM (4U)
 /* Encoders are defined in the target.c file. */
 extern const ENC_PERIPHERAL_PORT_T TargetEnc1, TargetEnc2, TargetEnc3, TargetEnc4;
+
+/** Servo motor PWM timers
+ * Each servo motor is driven by a single PWM output.
+ */
+#include "pwm_timer_port.h"
+#define TARGET_NUM_SERVO_PWM_TIMERS   (2U)
+#define TARGET_NUM_SERVO_PWM_CHANNELS (3U)
+/* Servo PWM timers are defined  in the target.c file. */
+extern const PWM_TIM_PORT_T TargetServoTim1, TargetServoTim2;
 
 /********************************************************************************
  * Typedefs
