@@ -1375,7 +1375,7 @@
 	)
 	(wire
 		(pts
-			(xy 181.61 54.61) (xy 195.58 54.61)
+			(xy 181.61 60.96) (xy 195.58 60.96)
 		)
 		(stroke
 			(width 0)
@@ -1405,7 +1405,7 @@
 	)
 	(wire
 		(pts
-			(xy 181.61 66.04) (xy 195.58 66.04)
+			(xy 181.61 71.12) (xy 195.58 71.12)
 		)
 		(stroke
 			(width 0)
@@ -1415,7 +1415,7 @@
 	)
 	(wire
 		(pts
-			(xy 181.61 68.58) (xy 195.58 68.58)
+			(xy 181.61 73.66) (xy 195.58 73.66)
 		)
 		(stroke
 			(width 0)
@@ -1765,6 +1765,16 @@
 	)
 	(wire
 		(pts
+			(xy 43.18 91.44) (xy 59.69 91.44)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "8acb3dae-1dbc-48d5-babb-f64a75422890")
+	)
+	(wire
+		(pts
 			(xy 168.91 138.43) (xy 168.91 152.4)
 		)
 		(stroke
@@ -1815,7 +1825,7 @@
 	)
 	(wire
 		(pts
-			(xy 181.61 57.15) (xy 195.58 57.15)
+			(xy 181.61 63.5) (xy 195.58 63.5)
 		)
 		(stroke
 			(width 0)
@@ -2165,7 +2175,7 @@
 	)
 	(wire
 		(pts
-			(xy 181.61 59.69) (xy 195.58 59.69)
+			(xy 181.61 66.04) (xy 195.58 66.04)
 		)
 		(stroke
 			(width 0)
@@ -2262,6 +2272,16 @@
 			(type default)
 		)
 		(uuid "dfbe9736-d1a5-4220-86fd-267791a8e17d")
+	)
+	(wire
+		(pts
+			(xy 181.61 52.07) (xy 195.58 52.07)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "e012848f-4eba-4e09-89fe-faa5d45d8a1e")
 	)
 	(wire
 		(pts
@@ -2728,6 +2748,16 @@
 		)
 		(uuid "3bbde789-d831-45ca-9310-378733139524")
 	)
+	(label "M2_PWM_B"
+		(at 110.49 97.79 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left bottom)
+		)
+		(uuid "3d51dbaa-38f2-4342-b2f6-7bcb23c49d33")
+	)
 	(label "GNSS_PPS"
 		(at 43.18 81.28 0)
 		(effects
@@ -2789,7 +2819,7 @@
 		(uuid "4994f8a9-10b0-41aa-b990-910eeea4ba09")
 	)
 	(label "GNSS_TX"
-		(at 186.69 54.61 0)
+		(at 186.69 60.96 0)
 		(effects
 			(font
 				(size 1.27 1.27)
@@ -2829,7 +2859,7 @@
 		(uuid "5532be92-a2c0-4dee-8753-442ae7cbc111")
 	)
 	(label "GNSS_RX"
-		(at 186.69 57.15 0)
+		(at 186.69 63.5 0)
 		(effects
 			(font
 				(size 1.27 1.27)
@@ -2868,16 +2898,6 @@
 		)
 		(uuid "5b902f48-4440-445b-9aca-b4612ceacb7f")
 	)
-	(label "M2_ENC_B"
-		(at 217.17 54.61 0)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify left bottom)
-		)
-		(uuid "5ddf1888-1b20-452b-9077-b4cc6a004beb")
-	)
 	(label "SPI_MOSI"
 		(at 186.69 44.45 0)
 		(effects
@@ -2909,7 +2929,7 @@
 		(uuid "6392c7bb-1185-4921-9e79-5562ee2c0c44")
 	)
 	(label "GNSS_PPS"
-		(at 185.42 59.69 0)
+		(at 185.42 66.04 0)
 		(effects
 			(font
 				(size 1.27 1.27)
@@ -2979,7 +2999,7 @@
 		(uuid "759038fc-8957-492e-995c-0638ccfc2ddb")
 	)
 	(label "I2C_SCL"
-		(at 187.96 66.04 0)
+		(at 187.96 71.12 0)
 		(effects
 			(font
 				(size 1.27 1.27)
@@ -3098,15 +3118,15 @@
 		)
 		(uuid "9dc79b05-49fd-45f5-a40e-15d173ba87c5")
 	)
-	(label "M2_ENC_B"
-		(at 110.49 97.79 0)
+	(label "ACC_INT"
+		(at 187.96 52.07 0)
 		(effects
 			(font
 				(size 1.27 1.27)
 			)
 			(justify left bottom)
 		)
-		(uuid "a2a7f4eb-07b7-44cf-add9-189d59c3f0e3")
+		(uuid "a12aa4e8-6104-4eff-926d-30a07ea16824")
 	)
 	(label "GNSS_TX"
 		(at 43.18 58.42 0)
@@ -3119,7 +3139,7 @@
 		(uuid "a94403be-2ce3-4a19-89fa-31de9ee854bf")
 	)
 	(label "I2C_SDA"
-		(at 187.96 68.58 0)
+		(at 187.96 73.66 0)
 		(effects
 			(font
 				(size 1.27 1.27)
@@ -3127,6 +3147,16 @@
 			(justify left bottom)
 		)
 		(uuid "acd2f980-d11c-4158-99b8-d51f3bd3504f")
+	)
+	(label "ACC_INT"
+		(at 43.18 91.44 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left bottom)
+		)
+		(uuid "b317b6b0-e252-48b9-86db-96611124e4ea")
 	)
 	(label "ACC_NCS"
 		(at 43.18 83.82 0)
@@ -3367,6 +3397,16 @@
 			(justify left bottom)
 		)
 		(uuid "f76ddc36-4aee-41c5-a2bf-be95025ad514")
+	)
+	(label "M2_PWM_B"
+		(at 217.17 54.61 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left bottom)
+		)
+		(uuid "f8bbf9b1-103c-46e5-80e4-913e7f2e6efd")
 	)
 	(label "VTX_CS"
 		(at 43.18 86.36 0)
@@ -5459,7 +5499,7 @@
 	)
 	(sheet
 		(at 149.86 36.83)
-		(size 31.75 34.29)
+		(size 31.75 39.37)
 		(exclude_from_sim no)
 		(in_bom yes)
 		(on_board yes)
@@ -5483,7 +5523,7 @@
 			)
 		)
 		(property "Sheetfile" "io.kicad_sch"
-			(at 149.86 71.7046 0)
+			(at 149.86 76.7846 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -5562,7 +5602,7 @@
 			)
 		)
 		(pin "GNSS_PPS" output
-			(at 181.61 59.69 0)
+			(at 181.61 66.04 0)
 			(uuid "f0789889-d5b5-4450-915b-9ba1088bdb6f")
 			(effects
 				(font
@@ -5592,7 +5632,7 @@
 			)
 		)
 		(pin "GNSS_RX" output
-			(at 181.61 57.15 0)
+			(at 181.61 63.5 0)
 			(uuid "f24d34e1-e3b3-4b6f-b8e5-1e2f4b8f9fd6")
 			(effects
 				(font
@@ -5622,7 +5662,7 @@
 			)
 		)
 		(pin "GNSS_TX" input
-			(at 181.61 54.61 0)
+			(at 181.61 60.96 0)
 			(uuid "8a0b8886-6154-4350-a543-17f513ac34d6")
 			(effects
 				(font
@@ -5632,7 +5672,7 @@
 			)
 		)
 		(pin "I2C_SDA" bidirectional
-			(at 181.61 68.58 0)
+			(at 181.61 73.66 0)
 			(uuid "c13b3046-92d2-4e31-a1f0-26e78c8e79ae")
 			(effects
 				(font
@@ -5642,8 +5682,18 @@
 			)
 		)
 		(pin "I2C_SCL" input
-			(at 181.61 66.04 0)
+			(at 181.61 71.12 0)
 			(uuid "3dd69b2b-5480-4e30-9a78-8c1678a00b84")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify right)
+			)
+		)
+		(pin "ACC_INT" output
+			(at 181.61 52.07 0)
+			(uuid "ebaf31c1-27e3-41df-baab-f556b71f2b0a")
 			(effects
 				(font
 					(size 1.27 1.27)
