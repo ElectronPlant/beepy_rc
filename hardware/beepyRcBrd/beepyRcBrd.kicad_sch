@@ -11,6 +11,131 @@
 		(company "ElectronPlant")
 	)
 	(lib_symbols
+		(symbol "+5V_1"
+			(power)
+			(pin_numbers
+				(hide yes)
+			)
+			(pin_names
+				(offset 0)
+				(hide yes)
+			)
+			(exclude_from_sim no)
+			(in_bom yes)
+			(on_board yes)
+			(property "Reference" "#PWR099"
+				(at 0 -3.81 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(hide yes)
+				)
+			)
+			(property "Value" "V_VTX"
+				(at 0 3.81 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "Footprint" ""
+				(at 0 0 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(hide yes)
+				)
+			)
+			(property "Datasheet" ""
+				(at 0 0 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(hide yes)
+				)
+			)
+			(property "Description" "Power symbol creates a global label with name \"V_VTX\""
+				(at 0 0 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(hide yes)
+				)
+			)
+			(property "ki_keywords" "global power"
+				(at 0 0 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(hide yes)
+				)
+			)
+			(symbol "+5V_1_0_1"
+				(polyline
+					(pts
+						(xy -0.762 1.27) (xy 0 2.54)
+					)
+					(stroke
+						(width 0)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(polyline
+					(pts
+						(xy 0 2.54) (xy 0.762 1.27)
+					)
+					(stroke
+						(width 0)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(polyline
+					(pts
+						(xy 0 0) (xy 0 2.54)
+					)
+					(stroke
+						(width 0)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+			)
+			(symbol "+5V_1_1_1"
+				(pin power_in line
+					(at 0 0 90)
+					(length 0)
+					(name "~"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "1"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+			)
+			(embedded_fonts no)
+		)
 		(symbol "beepyRc_symbols:+12V"
 			(power)
 			(pin_numbers
@@ -733,6 +858,107 @@
 			)
 			(embedded_fonts no)
 		)
+		(symbol "beepyRc_symbols:PWR_FLAG"
+			(power)
+			(pin_numbers
+				(hide yes)
+			)
+			(pin_names
+				(offset 0)
+				(hide yes)
+			)
+			(exclude_from_sim no)
+			(in_bom yes)
+			(on_board yes)
+			(property "Reference" "#FLG"
+				(at 0 1.905 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(hide yes)
+				)
+			)
+			(property "Value" "PWR_FLAG"
+				(at 0 3.81 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "Footprint" ""
+				(at 0 0 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(hide yes)
+				)
+			)
+			(property "Datasheet" "~"
+				(at 0 0 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(hide yes)
+				)
+			)
+			(property "Description" "Special symbol for telling ERC where power comes from"
+				(at 0 0 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(hide yes)
+				)
+			)
+			(property "ki_keywords" "flag power"
+				(at 0 0 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(hide yes)
+				)
+			)
+			(symbol "PWR_FLAG_0_0"
+				(pin power_out line
+					(at 0 0 90)
+					(length 0)
+					(name "~"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "1"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+			)
+			(symbol "PWR_FLAG_0_1"
+				(polyline
+					(pts
+						(xy 0 0) (xy 0 1.27) (xy -1.016 1.905) (xy 0 2.54) (xy 1.016 1.905) (xy 0 1.27)
+					)
+					(stroke
+						(width 0)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+			)
+			(embedded_fonts no)
+		)
 		(symbol "beepyRc_symbols:TestPoint"
 			(pin_numbers
 				(hide yes)
@@ -823,6 +1049,131 @@
 					(at 0 0 90)
 					(length 2.54)
 					(name "1"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "1"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+			)
+			(embedded_fonts no)
+		)
+		(symbol "beepyRc_symbols:V_3V3_EXT"
+			(power)
+			(pin_numbers
+				(hide yes)
+			)
+			(pin_names
+				(offset 0)
+				(hide yes)
+			)
+			(exclude_from_sim no)
+			(in_bom yes)
+			(on_board yes)
+			(property "Reference" "#PWR0136"
+				(at 0 -3.81 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(hide yes)
+				)
+			)
+			(property "Value" "V_3V3_EXT"
+				(at 0 3.81 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "Footprint" ""
+				(at 0 0 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(hide yes)
+				)
+			)
+			(property "Datasheet" ""
+				(at 0 0 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(hide yes)
+				)
+			)
+			(property "Description" "Power symbol creates a global label with name \"V_3V3_EXT\""
+				(at 0 0 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(hide yes)
+				)
+			)
+			(property "ki_keywords" "global power"
+				(at 0 0 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(hide yes)
+				)
+			)
+			(symbol "V_3V3_EXT_0_1"
+				(polyline
+					(pts
+						(xy -0.762 1.27) (xy 0 2.54)
+					)
+					(stroke
+						(width 0)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(polyline
+					(pts
+						(xy 0 2.54) (xy 0.762 1.27)
+					)
+					(stroke
+						(width 0)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(polyline
+					(pts
+						(xy 0 0) (xy 0 2.54)
+					)
+					(stroke
+						(width 0)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+			)
+			(symbol "V_3V3_EXT_1_1"
+				(pin power_in line
+					(at 0 0 90)
+					(length 0)
+					(name "~"
 						(effects
 							(font
 								(size 1.27 1.27)
@@ -1090,10 +1441,135 @@
 			)
 			(embedded_fonts no)
 		)
+		(symbol "beepyRc_symbols:V_SERVO"
+			(power)
+			(pin_numbers
+				(hide yes)
+			)
+			(pin_names
+				(offset 0)
+				(hide yes)
+			)
+			(exclude_from_sim no)
+			(in_bom yes)
+			(on_board yes)
+			(property "Reference" "#PWR052"
+				(at 0 -3.81 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(hide yes)
+				)
+			)
+			(property "Value" "V_SERVO"
+				(at 0 3.556 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "Footprint" ""
+				(at 0 0 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(hide yes)
+				)
+			)
+			(property "Datasheet" ""
+				(at 0 0 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(hide yes)
+				)
+			)
+			(property "Description" "Power symbol creates a global label with name \"V_SERVO\""
+				(at 0 0 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(hide yes)
+				)
+			)
+			(property "ki_keywords" "global power"
+				(at 0 0 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(hide yes)
+				)
+			)
+			(symbol "V_SERVO_0_1"
+				(polyline
+					(pts
+						(xy -0.762 1.27) (xy 0 2.54)
+					)
+					(stroke
+						(width 0)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(polyline
+					(pts
+						(xy 0 2.54) (xy 0.762 1.27)
+					)
+					(stroke
+						(width 0)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(polyline
+					(pts
+						(xy 0 0) (xy 0 2.54)
+					)
+					(stroke
+						(width 0)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+			)
+			(symbol "V_SERVO_1_1"
+				(pin power_in line
+					(at 0 0 90)
+					(length 0)
+					(name "~"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "1"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+			)
+			(embedded_fonts no)
+		)
 	)
 	(text "Battery connector"
 		(exclude_from_sim no)
-		(at 45.72 170.434 0)
+		(at 45.72 161.544 0)
 		(effects
 			(font
 				(size 2.54 2.54)
@@ -1103,7 +1579,7 @@
 	)
 	(text "2S Lithium Battery\n(6 - 12V)"
 		(exclude_from_sim no)
-		(at 44.704 176.276 0)
+		(at 44.704 167.386 0)
 		(effects
 			(font
 				(size 1.778 1.778)
@@ -1132,20 +1608,20 @@
 		(uuid "65eafa3b-1e27-40db-9985-8406c005f1a4")
 	)
 	(junction
-		(at 63.5 148.59)
+		(at 63.5 139.7)
 		(diameter 0)
 		(color 0 0 0 0)
 		(uuid "006d531c-a03f-4573-92d0-775bfef9bed7")
 	)
 	(junction
-		(at 63.5 158.75)
+		(at 63.5 149.86)
 		(diameter 0)
 		(color 0 0 0 0)
 		(uuid "32ee73dd-5b8d-4f79-993a-e8aa3bce4a49")
 	)
 	(wire
 		(pts
-			(xy 80.01 144.78) (xy 86.36 144.78)
+			(xy 80.01 135.89) (xy 86.36 135.89)
 		)
 		(stroke
 			(width 0)
@@ -1175,7 +1651,7 @@
 	)
 	(wire
 		(pts
-			(xy 63.5 152.4) (xy 63.5 148.59)
+			(xy 63.5 143.51) (xy 63.5 139.7)
 		)
 		(stroke
 			(width 0)
@@ -1195,7 +1671,7 @@
 	)
 	(wire
 		(pts
-			(xy 63.5 142.24) (xy 63.5 148.59)
+			(xy 63.5 133.35) (xy 63.5 139.7)
 		)
 		(stroke
 			(width 0)
@@ -1215,7 +1691,7 @@
 	)
 	(wire
 		(pts
-			(xy 160.02 149.86) (xy 160.02 138.43)
+			(xy 160.02 140.97) (xy 160.02 129.54)
 		)
 		(stroke
 			(width 0)
@@ -1235,7 +1711,7 @@
 	)
 	(wire
 		(pts
-			(xy 168.91 152.4) (xy 130.81 152.4)
+			(xy 168.91 143.51) (xy 130.81 143.51)
 		)
 		(stroke
 			(width 0)
@@ -1245,7 +1721,7 @@
 	)
 	(wire
 		(pts
-			(xy 142.24 144.78) (xy 130.81 144.78)
+			(xy 142.24 135.89) (xy 130.81 135.89)
 		)
 		(stroke
 			(width 0)
@@ -1295,7 +1771,7 @@
 	)
 	(wire
 		(pts
-			(xy 63.5 148.59) (xy 86.36 148.59)
+			(xy 63.5 139.7) (xy 86.36 139.7)
 		)
 		(stroke
 			(width 0)
@@ -1305,7 +1781,7 @@
 	)
 	(wire
 		(pts
-			(xy 80.01 134.62) (xy 80.01 144.78)
+			(xy 80.01 125.73) (xy 80.01 135.89)
 		)
 		(stroke
 			(width 0)
@@ -1325,7 +1801,7 @@
 	)
 	(wire
 		(pts
-			(xy 74.93 166.37) (xy 86.36 166.37)
+			(xy 74.93 157.48) (xy 86.36 157.48)
 		)
 		(stroke
 			(width 0)
@@ -1425,7 +1901,7 @@
 	)
 	(wire
 		(pts
-			(xy 151.13 147.32) (xy 130.81 147.32)
+			(xy 151.13 138.43) (xy 130.81 138.43)
 		)
 		(stroke
 			(width 0)
@@ -1445,17 +1921,7 @@
 	)
 	(wire
 		(pts
-			(xy 130.81 154.94) (xy 177.8 154.94)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "4cc36598-9846-4e39-ac06-b4e1da3ac3e2")
-	)
-	(wire
-		(pts
-			(xy 130.81 149.86) (xy 160.02 149.86)
+			(xy 130.81 140.97) (xy 160.02 140.97)
 		)
 		(stroke
 			(width 0)
@@ -1505,7 +1971,7 @@
 	)
 	(wire
 		(pts
-			(xy 59.69 154.94) (xy 63.5 154.94)
+			(xy 59.69 146.05) (xy 63.5 146.05)
 		)
 		(stroke
 			(width 0)
@@ -1545,7 +2011,7 @@
 	)
 	(wire
 		(pts
-			(xy 59.69 152.4) (xy 63.5 152.4)
+			(xy 59.69 143.51) (xy 63.5 143.51)
 		)
 		(stroke
 			(width 0)
@@ -1645,7 +2111,7 @@
 	)
 	(wire
 		(pts
-			(xy 49.53 158.75) (xy 63.5 158.75)
+			(xy 49.53 149.86) (xy 63.5 149.86)
 		)
 		(stroke
 			(width 0)
@@ -1655,7 +2121,7 @@
 	)
 	(wire
 		(pts
-			(xy 133.35 138.43) (xy 133.35 142.24)
+			(xy 133.35 129.54) (xy 133.35 133.35)
 		)
 		(stroke
 			(width 0)
@@ -1775,7 +2241,7 @@
 	)
 	(wire
 		(pts
-			(xy 168.91 138.43) (xy 168.91 152.4)
+			(xy 168.91 129.54) (xy 168.91 143.51)
 		)
 		(stroke
 			(width 0)
@@ -1812,6 +2278,16 @@
 			(type default)
 		)
 		(uuid "9541814a-2df9-4cd6-ab6a-58af241e2fb0")
+	)
+	(wire
+		(pts
+			(xy 130.81 157.48) (xy 149.86 157.48)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "98331912-0e4c-4d8b-b1ce-6d722dc0b0a7")
 	)
 	(wire
 		(pts
@@ -1865,17 +2341,7 @@
 	)
 	(wire
 		(pts
-			(xy 177.8 138.43) (xy 177.8 154.94)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "ac066bfa-7527-482d-b4cf-47193faf7ae9")
-	)
-	(wire
-		(pts
-			(xy 41.91 152.4) (xy 49.53 152.4)
+			(xy 41.91 143.51) (xy 49.53 143.51)
 		)
 		(stroke
 			(width 0)
@@ -1915,7 +2381,7 @@
 	)
 	(wire
 		(pts
-			(xy 130.81 163.83) (xy 149.86 163.83)
+			(xy 130.81 154.94) (xy 149.86 154.94)
 		)
 		(stroke
 			(width 0)
@@ -2035,7 +2501,7 @@
 	)
 	(wire
 		(pts
-			(xy 63.5 158.75) (xy 63.5 161.29)
+			(xy 63.5 149.86) (xy 63.5 152.4)
 		)
 		(stroke
 			(width 0)
@@ -2045,7 +2511,7 @@
 	)
 	(wire
 		(pts
-			(xy 133.35 142.24) (xy 130.81 142.24)
+			(xy 133.35 133.35) (xy 130.81 133.35)
 		)
 		(stroke
 			(width 0)
@@ -2065,7 +2531,7 @@
 	)
 	(wire
 		(pts
-			(xy 63.5 154.94) (xy 63.5 158.75)
+			(xy 63.5 146.05) (xy 63.5 149.86)
 		)
 		(stroke
 			(width 0)
@@ -2205,7 +2671,7 @@
 	)
 	(wire
 		(pts
-			(xy 49.53 154.94) (xy 49.53 158.75)
+			(xy 49.53 146.05) (xy 49.53 149.86)
 		)
 		(stroke
 			(width 0)
@@ -2235,16 +2701,6 @@
 	)
 	(wire
 		(pts
-			(xy 130.81 166.37) (xy 149.86 166.37)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "d7e0902c-fc4e-4620-888a-f688665bf057")
-	)
-	(wire
-		(pts
 			(xy 101.6 88.9) (xy 120.65 88.9)
 		)
 		(stroke
@@ -2265,7 +2721,7 @@
 	)
 	(wire
 		(pts
-			(xy 130.81 157.48) (xy 186.69 157.48)
+			(xy 130.81 146.05) (xy 177.8 146.05)
 		)
 		(stroke
 			(width 0)
@@ -2295,7 +2751,7 @@
 	)
 	(wire
 		(pts
-			(xy 49.53 148.59) (xy 63.5 148.59)
+			(xy 49.53 139.7) (xy 63.5 139.7)
 		)
 		(stroke
 			(width 0)
@@ -2305,7 +2761,7 @@
 	)
 	(wire
 		(pts
-			(xy 186.69 138.43) (xy 186.69 157.48)
+			(xy 177.8 129.54) (xy 177.8 146.05)
 		)
 		(stroke
 			(width 0)
@@ -2345,7 +2801,7 @@
 	)
 	(wire
 		(pts
-			(xy 41.91 154.94) (xy 49.53 154.94)
+			(xy 41.91 146.05) (xy 49.53 146.05)
 		)
 		(stroke
 			(width 0)
@@ -2355,7 +2811,7 @@
 	)
 	(wire
 		(pts
-			(xy 49.53 148.59) (xy 49.53 152.4)
+			(xy 49.53 139.7) (xy 49.53 143.51)
 		)
 		(stroke
 			(width 0)
@@ -2385,7 +2841,7 @@
 	)
 	(wire
 		(pts
-			(xy 142.24 138.43) (xy 142.24 144.78)
+			(xy 142.24 129.54) (xy 142.24 135.89)
 		)
 		(stroke
 			(width 0)
@@ -2405,7 +2861,7 @@
 	)
 	(wire
 		(pts
-			(xy 151.13 138.43) (xy 151.13 147.32)
+			(xy 151.13 129.54) (xy 151.13 138.43)
 		)
 		(stroke
 			(width 0)
@@ -2564,7 +3020,7 @@
 		(cells
 			(table_cell "BAT +"
 				(exclude_from_sim no)
-				(at 22.86 149.86 0)
+				(at 22.86 140.97 0)
 				(size 10.16 3.81)
 				(margins 0.9525 0.9525 0.9525 0.9525)
 				(span 1 1)
@@ -2581,7 +3037,7 @@
 			)
 			(table_cell "BAT -"
 				(exclude_from_sim no)
-				(at 22.86 153.67 0)
+				(at 22.86 144.78 0)
 				(size 10.16 3.81)
 				(margins 0.9525 0.9525 0.9525 0.9525)
 				(span 1 1)
@@ -2679,7 +3135,7 @@
 		(uuid "224e643a-c4de-44f5-a7d1-8d37508ca730")
 	)
 	(label "V_BAT_MEAS"
-		(at 138.43 166.37 0)
+		(at 138.43 157.48 0)
 		(effects
 			(font
 				(size 1.27 1.27)
@@ -3259,7 +3715,7 @@
 		(uuid "d58a1072-515e-48ed-b304-c708ab43833c")
 	)
 	(label "EN_BAT"
-		(at 74.93 166.37 0)
+		(at 74.93 157.48 0)
 		(effects
 			(font
 				(size 1.27 1.27)
@@ -3449,7 +3905,7 @@
 		(uuid "fb970825-4131-48e1-9d5d-7f77210d7b3f")
 	)
 	(label "V_I_SENSE"
-		(at 139.7 163.83 0)
+		(at 139.7 154.94 0)
 		(effects
 			(font
 				(size 1.27 1.27)
@@ -3470,15 +3926,15 @@
 	)
 	(symbol
 		(lib_id "beepyRc_symbols:+5V")
-		(at 80.01 26.67 0)
+		(at 76.2 187.96 0)
 		(unit 1)
 		(exclude_from_sim no)
 		(in_bom yes)
 		(on_board yes)
 		(dnp no)
-		(uuid "001b441b-4640-41c4-af9d-7c392df133ce")
-		(property "Reference" "#PWR077"
-			(at 80.01 30.48 0)
+		(uuid "096badcb-07b3-49d4-a224-0c016ec389a9")
+		(property "Reference" "#PWR0134"
+			(at 76.2 191.77 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -3487,7 +3943,7 @@
 			)
 		)
 		(property "Value" "V_USB"
-			(at 80.264 22.86 0)
+			(at 76.454 184.15 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -3495,7 +3951,7 @@
 			)
 		)
 		(property "Footprint" ""
-			(at 80.01 26.67 0)
+			(at 76.2 187.96 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -3504,7 +3960,7 @@
 			)
 		)
 		(property "Datasheet" ""
-			(at 80.01 26.67 0)
+			(at 76.2 187.96 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -3513,7 +3969,7 @@
 			)
 		)
 		(property "Description" "Power symbol creates a global label with name \"+5V\""
-			(at 80.01 26.67 0)
+			(at 76.2 187.96 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -3522,12 +3978,12 @@
 			)
 		)
 		(pin "1"
-			(uuid "e5bd8b71-3c5e-4cb9-8b79-d6107285a592")
+			(uuid "8ed42352-ae37-48b2-8e2a-d0a6ceec76e7")
 		)
 		(instances
-			(project ""
+			(project "beepyRcBrd"
 				(path "/c17d25e0-24c9-466a-aee2-e4b5dcf71363"
-					(reference "#PWR077")
+					(reference "#PWR0134")
 					(unit 1)
 				)
 			)
@@ -3535,7 +3991,7 @@
 	)
 	(symbol
 		(lib_id "beepyRc_symbols:Conn_01x02")
-		(at 36.83 154.94 180)
+		(at 36.83 146.05 180)
 		(unit 1)
 		(exclude_from_sim no)
 		(in_bom yes)
@@ -3544,7 +4000,7 @@
 		(fields_autoplaced yes)
 		(uuid "0e47507f-c75d-4fa7-88b6-9434221c2d5e")
 		(property "Reference" "J7"
-			(at 36.83 146.05 0)
+			(at 36.83 137.16 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -3552,7 +4008,7 @@
 			)
 		)
 		(property "Value" "Conn_01x02"
-			(at 36.83 148.59 0)
+			(at 36.83 139.7 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -3561,7 +4017,7 @@
 			)
 		)
 		(property "Footprint" "lscs:CONN-TH_P5.00_KF301-5.0-2P"
-			(at 36.83 154.94 0)
+			(at 36.83 146.05 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -3570,7 +4026,7 @@
 			)
 		)
 		(property "Datasheet" "~"
-			(at 36.83 154.94 0)
+			(at 36.83 146.05 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -3579,7 +4035,7 @@
 			)
 		)
 		(property "Description" "Generic connector, single row, 01x02, script generated (kicad-library-utils/schlib/autogen/connector/)"
-			(at 36.83 154.94 0)
+			(at 36.83 146.05 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -3588,7 +4044,7 @@
 			)
 		)
 		(property "Sim.Device" ""
-			(at 36.83 154.94 0)
+			(at 36.83 146.05 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -3597,7 +4053,7 @@
 			)
 		)
 		(property "Sim.Type" ""
-			(at 36.83 154.94 0)
+			(at 36.83 146.05 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -3621,16 +4077,17 @@
 		)
 	)
 	(symbol
-		(lib_id "beepyRc_symbols:V_MOT")
-		(at 160.02 138.43 0)
+		(lib_id "beepyRc_symbols:PWR_FLAG")
+		(at 101.6 187.96 180)
 		(unit 1)
 		(exclude_from_sim no)
 		(in_bom yes)
 		(on_board yes)
 		(dnp no)
-		(uuid "23764c2c-ea6a-4136-806c-3422be3c0fac")
-		(property "Reference" "#PWR084"
-			(at 160.02 142.24 0)
+		(fields_autoplaced yes)
+		(uuid "11e44231-e8f1-4c3e-a9f1-e62023591720")
+		(property "Reference" "#FLG05"
+			(at 101.6 189.865 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -3638,8 +4095,8 @@
 				(hide yes)
 			)
 		)
-		(property "Value" "V_SERVO"
-			(at 160.02 134.62 0)
+		(property "Value" "PWR_FLAG"
+			(at 101.6 193.04 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -3647,7 +4104,7 @@
 			)
 		)
 		(property "Footprint" ""
-			(at 160.02 138.43 0)
+			(at 101.6 187.96 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -3655,8 +4112,8 @@
 				(hide yes)
 			)
 		)
-		(property "Datasheet" ""
-			(at 160.02 138.43 0)
+		(property "Datasheet" "~"
+			(at 101.6 187.96 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -3664,8 +4121,8 @@
 				(hide yes)
 			)
 		)
-		(property "Description" "Power symbol creates a global label with name \"VAA\""
-			(at 160.02 138.43 0)
+		(property "Description" "Special symbol for telling ERC where power comes from"
+			(at 101.6 187.96 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -3674,28 +4131,29 @@
 			)
 		)
 		(pin "1"
-			(uuid "5723e7c7-e696-4611-992e-5e17e92cb158")
+			(uuid "b875cc56-d800-424c-aae2-6c9b595e60bf")
 		)
 		(instances
-			(project ""
+			(project "beepyRcBrd"
 				(path "/c17d25e0-24c9-466a-aee2-e4b5dcf71363"
-					(reference "#PWR084")
+					(reference "#FLG05")
 					(unit 1)
 				)
 			)
 		)
 	)
 	(symbol
-		(lib_id "beepyRc_symbols:V_MOT")
-		(at 168.91 138.43 0)
+		(lib_id "beepyRc_symbols:GND")
+		(at 152.4 187.96 0)
 		(unit 1)
 		(exclude_from_sim no)
 		(in_bom yes)
 		(on_board yes)
 		(dnp no)
-		(uuid "36f44cf8-4098-4b91-9b44-1652e363c729")
-		(property "Reference" "#PWR085"
-			(at 168.91 142.24 0)
+		(fields_autoplaced yes)
+		(uuid "29497ff9-7fa2-40a7-877a-bce837c63981")
+		(property "Reference" "#PWR0138"
+			(at 152.4 194.31 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -3703,8 +4161,8 @@
 				(hide yes)
 			)
 		)
-		(property "Value" "V_MOT"
-			(at 168.91 134.874 0)
+		(property "Value" "GND"
+			(at 152.4 193.04 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -3712,7 +4170,7 @@
 			)
 		)
 		(property "Footprint" ""
-			(at 168.91 138.43 0)
+			(at 152.4 187.96 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -3721,7 +4179,72 @@
 			)
 		)
 		(property "Datasheet" ""
-			(at 168.91 138.43 0)
+			(at 152.4 187.96 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" "Power symbol creates a global label with name \"GND\" , ground"
+			(at 152.4 187.96 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "1"
+			(uuid "b6719f5d-12e0-46ea-87ce-ea353c182e31")
+		)
+		(instances
+			(project ""
+				(path "/c17d25e0-24c9-466a-aee2-e4b5dcf71363"
+					(reference "#PWR0138")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "beepyRc_symbols:V_MOT")
+		(at 168.91 129.54 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(uuid "36f44cf8-4098-4b91-9b44-1652e363c729")
+		(property "Reference" "#PWR085"
+			(at 168.91 133.35 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Value" "V_MOT"
+			(at 168.91 125.984 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" ""
+			(at 168.91 129.54 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" ""
+			(at 168.91 129.54 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -3730,7 +4253,7 @@
 			)
 		)
 		(property "Description" "Power symbol creates a global label with name \"VAA\""
-			(at 168.91 138.43 0)
+			(at 168.91 129.54 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -3745,6 +4268,72 @@
 			(project ""
 				(path "/c17d25e0-24c9-466a-aee2-e4b5dcf71363"
 					(reference "#PWR085")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "beepyRc_symbols:PWR_FLAG")
+		(at 114.3 187.96 180)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(fields_autoplaced yes)
+		(uuid "3a9856ac-8975-493e-8b90-93edaf3b08d3")
+		(property "Reference" "#FLG07"
+			(at 114.3 189.865 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Value" "PWR_FLAG"
+			(at 114.3 193.04 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" ""
+			(at 114.3 187.96 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" "~"
+			(at 114.3 187.96 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" "Special symbol for telling ERC where power comes from"
+			(at 114.3 187.96 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "1"
+			(uuid "6e99c64b-f0d7-4adf-9f4e-19fe9e8df296")
+		)
+		(instances
+			(project "beepyRcBrd"
+				(path "/c17d25e0-24c9-466a-aee2-e4b5dcf71363"
+					(reference "#FLG07")
 					(unit 1)
 				)
 			)
@@ -3848,6 +4437,72 @@
 		)
 	)
 	(symbol
+		(lib_id "beepyRc_symbols:V_3V3_EXT")
+		(at 238.76 139.7 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(fields_autoplaced yes)
+		(uuid "448aa43c-ddbd-4cf5-b1a8-435fb68c6bc5")
+		(property "Reference" "#PWR0101"
+			(at 238.76 143.51 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Value" "V_3V3_EXT"
+			(at 238.76 135.89 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" ""
+			(at 238.76 139.7 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" ""
+			(at 238.76 139.7 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" "Power symbol creates a global label with name \"V_3V3_EXT\""
+			(at 238.76 139.7 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "1"
+			(uuid "6f754320-4e83-454a-a113-bbe9404a95c6")
+		)
+		(instances
+			(project "beepyRcBrd"
+				(path "/c17d25e0-24c9-466a-aee2-e4b5dcf71363"
+					(reference "#PWR0101")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
 		(lib_id "beepyRc_symbols:V_MOT")
 		(at 213.36 139.7 0)
 		(unit 1)
@@ -3913,8 +4568,73 @@
 		)
 	)
 	(symbol
+		(lib_id "beepyRc_symbols:PWR_FLAG")
+		(at 152.4 187.96 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(uuid "6028270d-a6a2-4d28-99cc-eefe3c1f2089")
+		(property "Reference" "#FLG08"
+			(at 152.4 186.055 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Value" "PWR_FLAG"
+			(at 152.654 184.15 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" ""
+			(at 152.4 187.96 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" "~"
+			(at 152.4 187.96 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" "Special symbol for telling ERC where power comes from"
+			(at 152.4 187.96 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "1"
+			(uuid "486fa8d3-0731-491f-b01b-e0b38bdbfc35")
+		)
+		(instances
+			(project "beepyRcBrd"
+				(path "/c17d25e0-24c9-466a-aee2-e4b5dcf71363"
+					(reference "#FLG08")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
 		(lib_id "beepyRc_symbols:V_MCU")
-		(at 133.35 138.43 0)
+		(at 133.35 129.54 0)
 		(unit 1)
 		(exclude_from_sim no)
 		(in_bom yes)
@@ -3922,7 +4642,7 @@
 		(dnp no)
 		(uuid "651e49d9-bbfe-4953-bb1d-a5ccee783d6d")
 		(property "Reference" "#PWR081"
-			(at 133.35 142.24 0)
+			(at 133.35 133.35 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -3931,7 +4651,7 @@
 			)
 		)
 		(property "Value" "V_MCU"
-			(at 133.35 134.366 0)
+			(at 133.35 125.476 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -3939,7 +4659,7 @@
 			)
 		)
 		(property "Footprint" ""
-			(at 133.35 138.43 0)
+			(at 133.35 129.54 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -3948,7 +4668,7 @@
 			)
 		)
 		(property "Datasheet" ""
-			(at 133.35 138.43 0)
+			(at 133.35 129.54 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -3957,7 +4677,7 @@
 			)
 		)
 		(property "Description" "Power symbol creates a global label with name \"V_MCU\""
-			(at 133.35 138.43 0)
+			(at 133.35 129.54 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -3978,8 +4698,139 @@
 		)
 	)
 	(symbol
+		(lib_id "beepyRc_symbols:PWR_FLAG")
+		(at 88.9 187.96 180)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(fields_autoplaced yes)
+		(uuid "65819fa3-056c-4f57-bb40-dfa563563949")
+		(property "Reference" "#FLG03"
+			(at 88.9 189.865 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Value" "PWR_FLAG"
+			(at 88.9 193.04 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" ""
+			(at 88.9 187.96 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" "~"
+			(at 88.9 187.96 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" "Special symbol for telling ERC where power comes from"
+			(at 88.9 187.96 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "1"
+			(uuid "ee62a34c-512f-4306-9a9e-7ee88c266809")
+		)
+		(instances
+			(project "beepyRcBrd"
+				(path "/c17d25e0-24c9-466a-aee2-e4b5dcf71363"
+					(reference "#FLG03")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "beepyRc_symbols:V_MCU")
+		(at 88.9 187.96 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(uuid "6ca608b0-6651-4642-a8dd-52023076d89d")
+		(property "Reference" "#PWR0135"
+			(at 88.9 191.77 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Value" "V_MCU"
+			(at 88.9 183.896 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" ""
+			(at 88.9 187.96 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" ""
+			(at 88.9 187.96 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" "Power symbol creates a global label with name \"V_MCU\""
+			(at 88.9 187.96 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "1"
+			(uuid "72ac81e1-4c03-44cd-bd95-a10638f1e5e6")
+		)
+		(instances
+			(project "beepyRcBrd"
+				(path "/c17d25e0-24c9-466a-aee2-e4b5dcf71363"
+					(reference "#PWR0135")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
 		(lib_id "beepyRc_symbols:TestPoint")
-		(at 59.69 152.4 90)
+		(at 59.69 143.51 90)
 		(unit 1)
 		(exclude_from_sim no)
 		(in_bom yes)
@@ -3987,7 +4838,7 @@
 		(dnp no)
 		(uuid "6cd43a70-a9f7-4776-a05c-20872229049c")
 		(property "Reference" "TP1"
-			(at 55.372 152.4 90)
+			(at 55.372 143.51 90)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -3996,7 +4847,7 @@
 			)
 		)
 		(property "Value" "TestPoint"
-			(at 54.61 151.1301 90)
+			(at 54.61 142.2401 90)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -4006,7 +4857,7 @@
 			)
 		)
 		(property "Footprint" "TestPoint:TestPoint_Pad_D2.5mm"
-			(at 59.69 147.32 0)
+			(at 59.69 138.43 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -4015,7 +4866,7 @@
 			)
 		)
 		(property "Datasheet" "~"
-			(at 59.69 147.32 0)
+			(at 59.69 138.43 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -4024,7 +4875,7 @@
 			)
 		)
 		(property "Description" "test point"
-			(at 59.69 152.4 0)
+			(at 59.69 143.51 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -4033,7 +4884,7 @@
 			)
 		)
 		(property "Sim.Device" ""
-			(at 59.69 152.4 90)
+			(at 59.69 143.51 90)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -4042,7 +4893,7 @@
 			)
 		)
 		(property "Sim.Type" ""
-			(at 59.69 152.4 90)
+			(at 59.69 143.51 90)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -4063,16 +4914,17 @@
 		)
 	)
 	(symbol
-		(lib_id "beepyRc_symbols:V_MCU")
-		(at 238.76 139.7 0)
+		(lib_id "beepyRc_symbols:PWR_FLAG")
+		(at 127 187.96 180)
 		(unit 1)
 		(exclude_from_sim no)
 		(in_bom yes)
 		(on_board yes)
 		(dnp no)
-		(uuid "74d98331-f7fc-4891-a096-ad8527c0067d")
-		(property "Reference" "#PWR0101"
-			(at 238.76 143.51 0)
+		(fields_autoplaced yes)
+		(uuid "6f45f710-a83a-414f-9cfa-8e384698760c")
+		(property "Reference" "#FLG09"
+			(at 127 189.865 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -4080,8 +4932,8 @@
 				(hide yes)
 			)
 		)
-		(property "Value" "3V3_EXT"
-			(at 238.76 135.636 0)
+		(property "Value" "PWR_FLAG"
+			(at 127 193.04 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -4089,7 +4941,7 @@
 			)
 		)
 		(property "Footprint" ""
-			(at 238.76 139.7 0)
+			(at 127 187.96 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -4097,8 +4949,8 @@
 				(hide yes)
 			)
 		)
-		(property "Datasheet" ""
-			(at 238.76 139.7 0)
+		(property "Datasheet" "~"
+			(at 127 187.96 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -4106,8 +4958,8 @@
 				(hide yes)
 			)
 		)
-		(property "Description" "Power symbol creates a global label with name \"V_MCU\""
-			(at 238.76 139.7 0)
+		(property "Description" "Special symbol for telling ERC where power comes from"
+			(at 127 187.96 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -4116,28 +4968,28 @@
 			)
 		)
 		(pin "1"
-			(uuid "c43f0a39-8096-4b73-aee8-1a51644a3611")
+			(uuid "498356e1-8d6d-4f5a-ada6-2f3fbc0b7bd4")
 		)
 		(instances
-			(project "beepyRc"
+			(project "beepyRcBrd"
 				(path "/c17d25e0-24c9-466a-aee2-e4b5dcf71363"
-					(reference "#PWR0101")
+					(reference "#FLG09")
 					(unit 1)
 				)
 			)
 		)
 	)
 	(symbol
-		(lib_id "beepyRc_symbols:+5V")
-		(at 80.01 134.62 0)
+		(lib_id "beepyRc_symbols:V_SERVO")
+		(at 160.02 129.54 0)
 		(unit 1)
 		(exclude_from_sim no)
 		(in_bom yes)
 		(on_board yes)
 		(dnp no)
-		(uuid "7c6ce836-4224-4bc6-9da9-f3e0cf8bc28d")
-		(property "Reference" "#PWR078"
-			(at 80.01 138.43 0)
+		(uuid "7ae73f1f-6a47-4ff8-971e-342062ca4598")
+		(property "Reference" "#PWR0140"
+			(at 160.02 133.35 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -4145,8 +4997,8 @@
 				(hide yes)
 			)
 		)
-		(property "Value" "V_USB"
-			(at 80.264 130.81 0)
+		(property "Value" "V_SERVO"
+			(at 160.02 125.73 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -4154,7 +5006,7 @@
 			)
 		)
 		(property "Footprint" ""
-			(at 80.01 134.62 0)
+			(at 160.02 129.54 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -4163,7 +5015,72 @@
 			)
 		)
 		(property "Datasheet" ""
-			(at 80.01 134.62 0)
+			(at 160.02 129.54 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" "Power symbol creates a global label with name \"V_SERVO\""
+			(at 160.02 129.54 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "1"
+			(uuid "6c13d09f-3993-4102-9e6d-4fb7d10452bb")
+		)
+		(instances
+			(project "beepyRcBrd"
+				(path "/c17d25e0-24c9-466a-aee2-e4b5dcf71363"
+					(reference "#PWR0140")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "beepyRc_symbols:+5V")
+		(at 80.01 125.73 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(uuid "7c6ce836-4224-4bc6-9da9-f3e0cf8bc28d")
+		(property "Reference" "#PWR078"
+			(at 80.01 129.54 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Value" "V_USB"
+			(at 80.264 121.92 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" ""
+			(at 80.01 125.73 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" ""
+			(at 80.01 125.73 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -4172,7 +5089,7 @@
 			)
 		)
 		(property "Description" "Power symbol creates a global label with name \"+5V\""
-			(at 80.01 134.62 0)
+			(at 80.01 125.73 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -4258,16 +5175,17 @@
 		)
 	)
 	(symbol
-		(lib_id "beepyRc_symbols:+5V")
-		(at 186.69 138.43 0)
+		(lib_id "beepyRc_symbols:PWR_FLAG")
+		(at 139.7 187.96 180)
 		(unit 1)
 		(exclude_from_sim no)
 		(in_bom yes)
 		(on_board yes)
 		(dnp no)
-		(uuid "8ff8a937-58e7-4838-aa5b-039e3e3ca2c1")
-		(property "Reference" "#PWR099"
-			(at 186.69 142.24 0)
+		(fields_autoplaced yes)
+		(uuid "81ab4e13-ddee-437b-a127-771986dde097")
+		(property "Reference" "#FLG011"
+			(at 139.7 189.865 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -4275,8 +5193,8 @@
 				(hide yes)
 			)
 		)
-		(property "Value" "V_VTX"
-			(at 186.69 134.62 0)
+		(property "Value" "PWR_FLAG"
+			(at 139.7 193.04 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -4284,7 +5202,72 @@
 			)
 		)
 		(property "Footprint" ""
-			(at 186.69 138.43 0)
+			(at 139.7 187.96 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" "~"
+			(at 139.7 187.96 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" "Special symbol for telling ERC where power comes from"
+			(at 139.7 187.96 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "1"
+			(uuid "a450a2dc-ac76-4d9b-8433-8fcb91ef19a9")
+		)
+		(instances
+			(project "beepyRcBrd"
+				(path "/c17d25e0-24c9-466a-aee2-e4b5dcf71363"
+					(reference "#FLG011")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "beepyRc_symbols:+5V")
+		(at 80.01 26.67 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(uuid "8205542a-7c46-434b-90f7-b2edf0ccdea8")
+		(property "Reference" "#PWR077"
+			(at 80.01 30.48 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Value" "V_USB"
+			(at 80.264 22.86 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" ""
+			(at 80.01 26.67 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -4293,7 +5276,7 @@
 			)
 		)
 		(property "Datasheet" ""
-			(at 186.69 138.43 0)
+			(at 80.01 26.67 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -4302,7 +5285,73 @@
 			)
 		)
 		(property "Description" "Power symbol creates a global label with name \"+5V\""
-			(at 186.69 138.43 0)
+			(at 80.01 26.67 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "1"
+			(uuid "5ceabfe5-0205-4048-b3ab-297ddd16547b")
+		)
+		(instances
+			(project "beepyRcBrd"
+				(path "/c17d25e0-24c9-466a-aee2-e4b5dcf71363"
+					(reference "#PWR077")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_name "+5V_1")
+		(lib_id "beepyRc_symbols:+5V_1")
+		(at 177.8 129.54 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(uuid "8ff8a937-58e7-4838-aa5b-039e3e3ca2c1")
+		(property "Reference" "#PWR099"
+			(at 177.8 133.35 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Value" "V_VTX"
+			(at 177.8 125.73 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" ""
+			(at 177.8 129.54 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" ""
+			(at 177.8 129.54 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" "Power symbol creates a global label with name \"V_VTX\""
+			(at 177.8 129.54 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -4323,8 +5372,73 @@
 		)
 	)
 	(symbol
+		(lib_id "beepyRc_symbols:+5V")
+		(at 127 187.96 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(uuid "901bf2a5-99e1-4521-87e7-03ab3942d370")
+		(property "Reference" "#PWR0141"
+			(at 127 191.77 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Value" "V_VTX"
+			(at 127 184.15 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" ""
+			(at 127 187.96 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" ""
+			(at 127 187.96 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" "Power symbol creates a global label with name \"+5V\""
+			(at 127 187.96 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "1"
+			(uuid "105ec58d-e727-4f5c-a799-ab95e9a9d32d")
+		)
+		(instances
+			(project "beepyRcBrd"
+				(path "/c17d25e0-24c9-466a-aee2-e4b5dcf71363"
+					(reference "#PWR0141")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
 		(lib_id "beepyRc_symbols:TestPoint")
-		(at 59.69 154.94 90)
+		(at 59.69 146.05 90)
 		(unit 1)
 		(exclude_from_sim no)
 		(in_bom yes)
@@ -4332,7 +5446,7 @@
 		(dnp no)
 		(uuid "90e91d10-d715-4807-abf6-9e09021cca40")
 		(property "Reference" "TP6"
-			(at 55.372 154.94 90)
+			(at 55.372 146.05 90)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -4341,7 +5455,7 @@
 			)
 		)
 		(property "Value" "TestPoint"
-			(at 54.61 153.6701 90)
+			(at 54.61 144.7801 90)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -4351,7 +5465,7 @@
 			)
 		)
 		(property "Footprint" "TestPoint:TestPoint_Pad_D2.5mm"
-			(at 59.69 149.86 0)
+			(at 59.69 140.97 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -4360,7 +5474,7 @@
 			)
 		)
 		(property "Datasheet" "~"
-			(at 59.69 149.86 0)
+			(at 59.69 140.97 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -4369,7 +5483,7 @@
 			)
 		)
 		(property "Description" "test point"
-			(at 59.69 154.94 0)
+			(at 59.69 146.05 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -4378,7 +5492,7 @@
 			)
 		)
 		(property "Sim.Device" ""
-			(at 59.69 154.94 90)
+			(at 59.69 146.05 90)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -4387,7 +5501,7 @@
 			)
 		)
 		(property "Sim.Type" ""
-			(at 59.69 154.94 90)
+			(at 59.69 146.05 90)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -4402,6 +5516,268 @@
 			(project "beepyRc"
 				(path "/c17d25e0-24c9-466a-aee2-e4b5dcf71363"
 					(reference "TP6")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "beepyRc_symbols:PWR_FLAG")
+		(at 76.2 187.96 180)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(fields_autoplaced yes)
+		(uuid "9ad7b258-14f3-4da3-becc-246da5c4c765")
+		(property "Reference" "#FLG02"
+			(at 76.2 189.865 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Value" "PWR_FLAG"
+			(at 76.2 193.04 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" ""
+			(at 76.2 187.96 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" "~"
+			(at 76.2 187.96 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" "Special symbol for telling ERC where power comes from"
+			(at 76.2 187.96 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "1"
+			(uuid "13908c33-6889-49de-af42-4014c164d792")
+		)
+		(instances
+			(project "beepyRcBrd"
+				(path "/c17d25e0-24c9-466a-aee2-e4b5dcf71363"
+					(reference "#FLG02")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "beepyRc_symbols:V_SERVO")
+		(at 139.7 187.96 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(uuid "a6184124-d3ee-4eb5-a0ae-c91f36079773")
+		(property "Reference" "#PWR084"
+			(at 139.7 191.77 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Value" "V_SERVO"
+			(at 139.7 184.15 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" ""
+			(at 139.7 187.96 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" ""
+			(at 139.7 187.96 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" "Power symbol creates a global label with name \"V_SERVO\""
+			(at 139.7 187.96 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "1"
+			(uuid "a644f712-26b9-4216-929e-e011fff55835")
+		)
+		(instances
+			(project "beepyRcBrd"
+				(path "/c17d25e0-24c9-466a-aee2-e4b5dcf71363"
+					(reference "#PWR084")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "beepyRc_symbols:+12V")
+		(at 63.5 187.96 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(uuid "a8b9d77d-1c86-47f2-91c4-a10d409fb0a3")
+		(property "Reference" "#PWR0133"
+			(at 63.5 191.77 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Value" "V_BAT"
+			(at 63.5 184.15 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" ""
+			(at 63.5 187.96 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" ""
+			(at 63.5 187.96 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" "Power symbol creates a global label with name \"+12V\""
+			(at 63.5 187.96 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "1"
+			(uuid "cd8d4101-5ff9-4f19-a76f-b4daa745900d")
+		)
+		(instances
+			(project "beepyRcBrd"
+				(path "/c17d25e0-24c9-466a-aee2-e4b5dcf71363"
+					(reference "#PWR0133")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "beepyRc_symbols:PWR_FLAG")
+		(at 63.5 187.96 180)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(fields_autoplaced yes)
+		(uuid "b0752a1c-ae4c-4965-b919-8fd7ff23ca28")
+		(property "Reference" "#FLG01"
+			(at 63.5 189.865 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Value" "PWR_FLAG"
+			(at 63.5 193.04 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" ""
+			(at 63.5 187.96 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" "~"
+			(at 63.5 187.96 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" "Special symbol for telling ERC where power comes from"
+			(at 63.5 187.96 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "1"
+			(uuid "098eaac9-61c5-429a-bca6-781df594a0d0")
+		)
+		(instances
+			(project ""
+				(path "/c17d25e0-24c9-466a-aee2-e4b5dcf71363"
+					(reference "#FLG01")
 					(unit 1)
 				)
 			)
@@ -4473,16 +5849,16 @@
 		)
 	)
 	(symbol
-		(lib_id "beepyRc_symbols:V_MOT")
-		(at 177.8 138.43 0)
+		(lib_id "beepyRc_symbols:+5V")
+		(at 101.6 187.96 0)
 		(unit 1)
 		(exclude_from_sim no)
 		(in_bom yes)
 		(on_board yes)
 		(dnp no)
-		(uuid "cf50c6ad-75be-4004-a99b-63afb2096ef1")
-		(property "Reference" "#PWR0103"
-			(at 177.8 142.24 0)
+		(uuid "b9c55594-f983-4f1a-9996-d4f15436ae88")
+		(property "Reference" "#PWR0137"
+			(at 101.6 191.77 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -4490,8 +5866,8 @@
 				(hide yes)
 			)
 		)
-		(property "Value" "V_LIGHTS"
-			(at 177.8 134.874 0)
+		(property "Value" "+5V"
+			(at 101.6 184.15 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -4499,7 +5875,7 @@
 			)
 		)
 		(property "Footprint" ""
-			(at 177.8 138.43 0)
+			(at 101.6 187.96 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -4508,7 +5884,7 @@
 			)
 		)
 		(property "Datasheet" ""
-			(at 177.8 138.43 0)
+			(at 101.6 187.96 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -4516,8 +5892,8 @@
 				(hide yes)
 			)
 		)
-		(property "Description" "Power symbol creates a global label with name \"VAA\""
-			(at 177.8 138.43 0)
+		(property "Description" "Power symbol creates a global label with name \"+5V\""
+			(at 101.6 187.96 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -4526,28 +5902,28 @@
 			)
 		)
 		(pin "1"
-			(uuid "23483f62-d254-44eb-9ef6-a7a540fa9222")
+			(uuid "66e561f1-2bde-4eac-82a3-042ced057698")
 		)
 		(instances
 			(project "beepyRcBrd"
 				(path "/c17d25e0-24c9-466a-aee2-e4b5dcf71363"
-					(reference "#PWR0103")
+					(reference "#PWR0137")
 					(unit 1)
 				)
 			)
 		)
 	)
 	(symbol
-		(lib_id "beepyRc_symbols:+12V")
-		(at 63.5 142.24 0)
+		(lib_id "beepyRc_symbols:V_MOT")
+		(at 114.3 187.96 0)
 		(unit 1)
 		(exclude_from_sim no)
 		(in_bom yes)
 		(on_board yes)
 		(dnp no)
-		(uuid "e502b7cf-fd33-4936-8201-d1612f076847")
-		(property "Reference" "#PWR080"
-			(at 63.5 146.05 0)
+		(uuid "d8635d72-46f5-43ec-9fbc-0ea238cef4dc")
+		(property "Reference" "#PWR0139"
+			(at 114.3 191.77 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -4555,8 +5931,8 @@
 				(hide yes)
 			)
 		)
-		(property "Value" "V_BAT"
-			(at 63.5 138.43 0)
+		(property "Value" "V_MOT"
+			(at 114.3 184.404 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -4564,7 +5940,7 @@
 			)
 		)
 		(property "Footprint" ""
-			(at 63.5 142.24 0)
+			(at 114.3 187.96 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -4573,7 +5949,72 @@
 			)
 		)
 		(property "Datasheet" ""
-			(at 63.5 142.24 0)
+			(at 114.3 187.96 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" "Power symbol creates a global label with name \"VAA\""
+			(at 114.3 187.96 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "1"
+			(uuid "3c8595d9-68a2-41c1-98a2-4aa1b7c5a404")
+		)
+		(instances
+			(project "beepyRcBrd"
+				(path "/c17d25e0-24c9-466a-aee2-e4b5dcf71363"
+					(reference "#PWR0139")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "beepyRc_symbols:+12V")
+		(at 63.5 133.35 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(uuid "e502b7cf-fd33-4936-8201-d1612f076847")
+		(property "Reference" "#PWR080"
+			(at 63.5 137.16 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Value" "V_BAT"
+			(at 63.5 129.54 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" ""
+			(at 63.5 133.35 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" ""
+			(at 63.5 133.35 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -4582,7 +6023,7 @@
 			)
 		)
 		(property "Description" "Power symbol creates a global label with name \"+12V\""
-			(at 63.5 142.24 0)
+			(at 63.5 133.35 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -4597,71 +6038,6 @@
 			(project ""
 				(path "/c17d25e0-24c9-466a-aee2-e4b5dcf71363"
 					(reference "#PWR080")
-					(unit 1)
-				)
-			)
-		)
-	)
-	(symbol
-		(lib_id "beepyRc_symbols:V_MCU")
-		(at 142.24 138.43 0)
-		(unit 1)
-		(exclude_from_sim no)
-		(in_bom yes)
-		(on_board yes)
-		(dnp no)
-		(uuid "eac21939-70d4-48e4-9f55-0963004049e4")
-		(property "Reference" "#PWR082"
-			(at 142.24 142.24 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Value" "3V3_EXT"
-			(at 142.24 134.366 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Footprint" ""
-			(at 142.24 138.43 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Datasheet" ""
-			(at 142.24 138.43 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Description" "Power symbol creates a global label with name \"V_MCU\""
-			(at 142.24 138.43 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(pin "1"
-			(uuid "828a0043-f23e-472c-a913-2be325f4b811")
-		)
-		(instances
-			(project "beepyRc"
-				(path "/c17d25e0-24c9-466a-aee2-e4b5dcf71363"
-					(reference "#PWR082")
 					(unit 1)
 				)
 			)
@@ -4735,7 +6111,7 @@
 	)
 	(symbol
 		(lib_id "beepyRc_symbols:+5V")
-		(at 151.13 138.43 0)
+		(at 151.13 129.54 0)
 		(unit 1)
 		(exclude_from_sim no)
 		(in_bom yes)
@@ -4743,7 +6119,7 @@
 		(dnp no)
 		(uuid "efd90286-0ab8-4ab5-bc68-db2550a5445a")
 		(property "Reference" "#PWR083"
-			(at 151.13 142.24 0)
+			(at 151.13 133.35 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -4752,7 +6128,7 @@
 			)
 		)
 		(property "Value" "+5V"
-			(at 151.13 134.62 0)
+			(at 151.13 125.73 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -4760,7 +6136,7 @@
 			)
 		)
 		(property "Footprint" ""
-			(at 151.13 138.43 0)
+			(at 151.13 129.54 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -4769,7 +6145,7 @@
 			)
 		)
 		(property "Datasheet" ""
-			(at 151.13 138.43 0)
+			(at 151.13 129.54 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -4778,7 +6154,7 @@
 			)
 		)
 		(property "Description" "Power symbol creates a global label with name \"+5V\""
-			(at 151.13 138.43 0)
+			(at 151.13 129.54 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -4800,7 +6176,7 @@
 	)
 	(symbol
 		(lib_id "beepyRc_symbols:GND")
-		(at 63.5 161.29 0)
+		(at 63.5 152.4 0)
 		(unit 1)
 		(exclude_from_sim no)
 		(in_bom yes)
@@ -4808,7 +6184,7 @@
 		(dnp no)
 		(uuid "ffa566c4-fa96-4b1e-8a7e-6f03e760295f")
 		(property "Reference" "#PWR059"
-			(at 63.5 167.64 0)
+			(at 63.5 158.75 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -4817,7 +6193,7 @@
 			)
 		)
 		(property "Value" "GND"
-			(at 63.5 165.1 0)
+			(at 63.5 156.21 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -4825,7 +6201,7 @@
 			)
 		)
 		(property "Footprint" ""
-			(at 63.5 161.29 0)
+			(at 63.5 152.4 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -4834,7 +6210,7 @@
 			)
 		)
 		(property "Datasheet" ""
-			(at 63.5 161.29 0)
+			(at 63.5 152.4 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -4843,7 +6219,7 @@
 			)
 		)
 		(property "Description" "Power symbol creates a global label with name \"GND\" , ground"
-			(at 63.5 161.29 0)
+			(at 63.5 152.4 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -4858,6 +6234,72 @@
 			(project "beepyRc"
 				(path "/c17d25e0-24c9-466a-aee2-e4b5dcf71363"
 					(reference "#PWR059")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "beepyRc_symbols:V_3V3_EXT")
+		(at 142.24 129.54 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(fields_autoplaced yes)
+		(uuid "ffede297-d1ea-44d2-bbda-d908ae936388")
+		(property "Reference" "#PWR082"
+			(at 142.24 133.35 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Value" "V_3V3_EXT"
+			(at 142.24 125.73 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" ""
+			(at 142.24 129.54 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" ""
+			(at 142.24 129.54 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" "Power symbol creates a global label with name \"V_3V3_EXT\""
+			(at 142.24 129.54 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "1"
+			(uuid "14799413-2bf3-4aab-b474-b8d1088ea30a")
+		)
+		(instances
+			(project "beepyRcBrd"
+				(path "/c17d25e0-24c9-466a-aee2-e4b5dcf71363"
+					(reference "#PWR082")
 					(unit 1)
 				)
 			)
@@ -5336,7 +6778,7 @@
 		)
 	)
 	(sheet
-		(at 86.36 139.7)
+		(at 86.36 130.81)
 		(size 44.45 29.21)
 		(exclude_from_sim no)
 		(in_bom yes)
@@ -5352,7 +6794,7 @@
 		)
 		(uuid "25416242-1327-4080-bdb9-7e497d324eea")
 		(property "Sheetname" "Power"
-			(at 86.36 138.9884 0)
+			(at 86.36 130.0984 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -5361,7 +6803,7 @@
 			)
 		)
 		(property "Sheetfile" "power.kicad_sch"
-			(at 86.36 169.4946 0)
+			(at 86.36 160.6046 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -5370,7 +6812,7 @@
 			)
 		)
 		(pin "3V3" output
-			(at 130.81 142.24 0)
+			(at 130.81 133.35 0)
 			(uuid "a7037e75-85c3-46a5-a807-79c7f7af3797")
 			(effects
 				(font
@@ -5380,7 +6822,7 @@
 			)
 		)
 		(pin "3V3_EXT" output
-			(at 130.81 144.78 0)
+			(at 130.81 135.89 0)
 			(uuid "1fc2bdd7-663a-429b-bf84-019c2a223bf4")
 			(effects
 				(font
@@ -5390,7 +6832,7 @@
 			)
 		)
 		(pin "5V" output
-			(at 130.81 147.32 0)
+			(at 130.81 138.43 0)
 			(uuid "74000649-02f4-445d-8932-ab1a98258f4d")
 			(effects
 				(font
@@ -5400,7 +6842,7 @@
 			)
 		)
 		(pin "5V_EN" input
-			(at 86.36 166.37 180)
+			(at 86.36 157.48 180)
 			(uuid "bf0ecdee-4506-4597-8312-480d083f6265")
 			(effects
 				(font
@@ -5410,7 +6852,7 @@
 			)
 		)
 		(pin "V_BAT" input
-			(at 86.36 148.59 180)
+			(at 86.36 139.7 180)
 			(uuid "e5491e08-5954-4517-b111-e79c6ae5709a")
 			(effects
 				(font
@@ -5420,7 +6862,7 @@
 			)
 		)
 		(pin "V_BAT_MEAS" output
-			(at 130.81 166.37 0)
+			(at 130.81 157.48 0)
 			(uuid "2a11ec72-d3ef-4b5e-9cb9-a57cc60393d3")
 			(effects
 				(font
@@ -5430,7 +6872,7 @@
 			)
 		)
 		(pin "V_I_SENSE" output
-			(at 130.81 163.83 0)
+			(at 130.81 154.94 0)
 			(uuid "038b87be-3da4-433a-9dc1-f31f2acf6a80")
 			(effects
 				(font
@@ -5440,7 +6882,7 @@
 			)
 		)
 		(pin "V_MOT" output
-			(at 130.81 152.4 0)
+			(at 130.81 143.51 0)
 			(uuid "1a1ce9a9-c6dc-4b42-ad87-bdb5ea20640d")
 			(effects
 				(font
@@ -5450,7 +6892,7 @@
 			)
 		)
 		(pin "V_SERVO" output
-			(at 130.81 149.86 0)
+			(at 130.81 140.97 0)
 			(uuid "60ffd589-af6c-4c6e-a3be-cd4468e132e1")
 			(effects
 				(font
@@ -5460,7 +6902,7 @@
 			)
 		)
 		(pin "V_USB" input
-			(at 86.36 144.78 180)
+			(at 86.36 135.89 180)
 			(uuid "c6e08f90-47ef-43bc-b777-75e104aeb160")
 			(effects
 				(font
@@ -5469,18 +6911,8 @@
 				(justify left)
 			)
 		)
-		(pin "V_LIGHTS" output
-			(at 130.81 154.94 0)
-			(uuid "7a3c2170-58f6-45b9-b345-caa6420d7aa4")
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify right)
-			)
-		)
 		(pin "V_VTX" output
-			(at 130.81 157.48 0)
+			(at 130.81 146.05 0)
 			(uuid "c216d0b8-28c0-434f-8132-adcdcb3f15ba")
 			(effects
 				(font

@@ -140,8 +140,8 @@
 			(exclude_from_sim no)
 			(in_bom yes)
 			(on_board yes)
-			(property "Reference" "U"
-				(at 0 17.78 0)
+			(property "Reference" "U12"
+				(at -1.27 22.86 0)
 				(effects
 					(font
 						(size 1.27 1.27)
@@ -149,7 +149,7 @@
 				)
 			)
 			(property "Value" "AT7456ELAH_C42388749"
-				(at 0 -15.24 0)
+				(at -1.27 20.32 0)
 				(effects
 					(font
 						(size 1.27 1.27)
@@ -244,42 +244,6 @@
 						)
 					)
 					(number "2"
-						(effects
-							(font
-								(size 1.27 1.27)
-							)
-						)
-					)
-				)
-				(pin unspecified line
-					(at -15.24 2.54 0)
-					(length 2.54)
-					(name "CLKIN"
-						(effects
-							(font
-								(size 1.27 1.27)
-							)
-						)
-					)
-					(number "3"
-						(effects
-							(font
-								(size 1.27 1.27)
-							)
-						)
-					)
-				)
-				(pin unspecified line
-					(at -15.24 0 0)
-					(length 2.54)
-					(name "XFB"
-						(effects
-							(font
-								(size 1.27 1.27)
-							)
-						)
-					)
-					(number "4"
 						(effects
 							(font
 								(size 1.27 1.27)
@@ -532,6 +496,44 @@
 						)
 					)
 					(number "9"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+			)
+			(symbol "AT7456ELAH_C42388749_1_1"
+				(pin output line
+					(at -15.24 2.54 0)
+					(length 2.54)
+					(name "CLKIN"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "3"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin output line
+					(at -15.24 0 0)
+					(length 2.54)
+					(name "XFB"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "4"
 						(effects
 							(font
 								(size 1.27 1.27)
@@ -2164,6 +2166,10 @@
 		(color 0 0 0 0)
 		(uuid "e91897e8-1429-46db-b865-dbccced4be59")
 	)
+	(no_connect
+		(at 158.75 96.52)
+		(uuid "58124c4d-a736-4660-8b0d-c77545ca9d4e")
+	)
 	(wire
 		(pts
 			(xy 35.56 165.1) (xy 53.34 165.1)
@@ -2466,6 +2472,16 @@
 	)
 	(wire
 		(pts
+			(xy 198.12 156.21) (xy 198.12 151.13)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "5fe81455-22cf-46be-8834-57b4cb3487d1")
+	)
+	(wire
+		(pts
 			(xy 85.09 152.4) (xy 85.09 167.64)
 		)
 		(stroke
@@ -2613,6 +2629,16 @@
 			(type default)
 		)
 		(uuid "83961dff-da92-49e3-9492-4d764e997bf5")
+	)
+	(wire
+		(pts
+			(xy 198.12 137.16) (xy 198.12 140.97)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "8ae3be26-e944-4507-a220-a0d1f8f7fba8")
 	)
 	(wire
 		(pts
@@ -2786,7 +2812,7 @@
 	)
 	(wire
 		(pts
-			(xy 198.12 151.13) (xy 213.36 151.13)
+			(xy 198.12 156.21) (xy 213.36 156.21)
 		)
 		(stroke
 			(width 0)
@@ -2816,7 +2842,7 @@
 	)
 	(wire
 		(pts
-			(xy 198.12 140.97) (xy 213.36 140.97)
+			(xy 198.12 137.16) (xy 213.36 137.16)
 		)
 		(stroke
 			(width 0)
@@ -3190,7 +3216,7 @@
 		(uuid "004270d3-4e73-4584-89d5-5a3952426295")
 	)
 	(label "CLK_IN"
-		(at 207.01 140.97 0)
+		(at 207.01 137.16 0)
 		(effects
 			(font
 				(size 1.27 1.27)
@@ -3240,7 +3266,7 @@
 		(uuid "acb97a29-f7a0-4d59-9415-3dcca9e1f3d2")
 	)
 	(label "CLK_OUT"
-		(at 205.74 151.13 0)
+		(at 205.74 156.21 0)
 		(effects
 			(font
 				(size 1.27 1.27)

@@ -1521,6 +1521,107 @@
 			)
 			(embedded_fonts no)
 		)
+		(symbol "beepyRc_symbols:PWR_FLAG"
+			(power)
+			(pin_numbers
+				(hide yes)
+			)
+			(pin_names
+				(offset 0)
+				(hide yes)
+			)
+			(exclude_from_sim no)
+			(in_bom yes)
+			(on_board yes)
+			(property "Reference" "#FLG"
+				(at 0 1.905 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(hide yes)
+				)
+			)
+			(property "Value" "PWR_FLAG"
+				(at 0 3.81 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "Footprint" ""
+				(at 0 0 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(hide yes)
+				)
+			)
+			(property "Datasheet" "~"
+				(at 0 0 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(hide yes)
+				)
+			)
+			(property "Description" "Special symbol for telling ERC where power comes from"
+				(at 0 0 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(hide yes)
+				)
+			)
+			(property "ki_keywords" "flag power"
+				(at 0 0 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(hide yes)
+				)
+			)
+			(symbol "PWR_FLAG_0_0"
+				(pin power_out line
+					(at 0 0 90)
+					(length 0)
+					(name "~"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "1"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+			)
+			(symbol "PWR_FLAG_0_1"
+				(polyline
+					(pts
+						(xy 0 0) (xy 0 1.27) (xy -1.016 1.905) (xy 0 2.54) (xy 1.016 1.905) (xy 0 1.27)
+					)
+					(stroke
+						(width 0)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+			)
+			(embedded_fonts no)
+		)
 		(symbol "beepyRc_symbols:R"
 			(pin_numbers
 				(hide yes)
@@ -3681,6 +3782,16 @@
 		)
 		(uuid "7b687c35-b550-4141-9dc1-41a3e73ea612")
 	)
+	(text "ESR <1Ω"
+		(exclude_from_sim no)
+		(at 95.758 124.714 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+		)
+		(uuid "8087bd8f-2598-4f8e-af8c-6829b459d761")
+	)
 	(text "- 10uF ceramic cap for the package.\n- 100nF ceramic between pins 18-19, 31-32, 47-48 and 63-64.\n- Vbat on pin 1 is connected to VDD with a 100nF decoupling cap.\n- VDDA is connected to VDD through a ferrite bead.\n- VDDA is decoupled with a 1uF and a 100nF cap between pins 12-13.\n- GNDA is directly connected to the GND ground plane."
 		(exclude_from_sim no)
 		(at 195.326 71.628 0)
@@ -5802,7 +5913,7 @@
 		)
 		(uuid "4431c0ea-c4c1-4b5f-b7bc-69614020645d")
 	)
-	(label "SPI_MISO"
+	(label "SPI2_MISO"
 		(at 55.88 175.26 0)
 		(effects
 			(font
@@ -5921,16 +6032,6 @@
 			(justify left bottom)
 		)
 		(uuid "d74864e1-dfaf-40cd-a317-c8ca31dd1f32")
-	)
-	(label "ESR <1Ω"
-		(at 91.44 125.73 0)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify left bottom)
-		)
-		(uuid "e31cedd3-ac2a-4804-9b31-99b8b9216737")
 	)
 	(label "SWDIO"
 		(at 251.46 149.86 0)
@@ -7165,6 +7266,71 @@
 		)
 	)
 	(symbol
+		(lib_id "beepyRc_symbols:VDDA")
+		(at 270.51 20.32 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(uuid "30b0ae51-5cd0-4400-aba2-0c41e6c35628")
+		(property "Reference" "#PWR0136"
+			(at 270.51 24.13 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Value" "VDDA"
+			(at 270.51 16.51 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" ""
+			(at 270.51 20.32 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" ""
+			(at 270.51 20.32 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" "Power symbol creates a global label with name \"VDDA\""
+			(at 270.51 20.32 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "1"
+			(uuid "aabe2f77-bd13-4dbb-abd6-64857eb5db6c")
+		)
+		(instances
+			(project "beepyRcBrd"
+				(path "/c17d25e0-24c9-466a-aee2-e4b5dcf71363/12039923-f6f3-42f8-83b6-663c3bf7be39"
+					(reference "#PWR0136")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
 		(lib_id "beepyRc_symbols:C")
 		(at 224.79 39.37 0)
 		(unit 1)
@@ -7611,6 +7777,73 @@
 			(project "beepyRc"
 				(path "/c17d25e0-24c9-466a-aee2-e4b5dcf71363/12039923-f6f3-42f8-83b6-663c3bf7be39"
 					(reference "R22")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "beepyRc_symbols:PWR_FLAG")
+		(at 270.51 20.32 180)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(fields_autoplaced yes)
+		(uuid "592b8b00-068d-4da1-9feb-d26cf1cef23c")
+		(property "Reference" "#FLG04"
+			(at 270.51 22.225 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Value" "PWR_FLAG"
+			(at 273.05 21.5899 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify right)
+			)
+		)
+		(property "Footprint" ""
+			(at 270.51 20.32 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" "~"
+			(at 270.51 20.32 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" "Special symbol for telling ERC where power comes from"
+			(at 270.51 20.32 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "1"
+			(uuid "a31c2ba9-9db1-4b33-bb99-f191b576dc9b")
+		)
+		(instances
+			(project "beepyRcBrd"
+				(path "/c17d25e0-24c9-466a-aee2-e4b5dcf71363/12039923-f6f3-42f8-83b6-663c3bf7be39"
+					(reference "#FLG04")
 					(unit 1)
 				)
 			)

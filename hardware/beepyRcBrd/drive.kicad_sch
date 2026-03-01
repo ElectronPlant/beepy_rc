@@ -11,131 +11,6 @@
 		(company "ElectronPlant")
 	)
 	(lib_symbols
-		(symbol "beepyRc_symbols:+5V"
-			(power)
-			(pin_numbers
-				(hide yes)
-			)
-			(pin_names
-				(offset 0)
-				(hide yes)
-			)
-			(exclude_from_sim no)
-			(in_bom yes)
-			(on_board yes)
-			(property "Reference" "#PWR"
-				(at 0 -3.81 0)
-				(effects
-					(font
-						(size 1.27 1.27)
-					)
-					(hide yes)
-				)
-			)
-			(property "Value" "+5V"
-				(at 0 3.556 0)
-				(effects
-					(font
-						(size 1.27 1.27)
-					)
-				)
-			)
-			(property "Footprint" ""
-				(at 0 0 0)
-				(effects
-					(font
-						(size 1.27 1.27)
-					)
-					(hide yes)
-				)
-			)
-			(property "Datasheet" ""
-				(at 0 0 0)
-				(effects
-					(font
-						(size 1.27 1.27)
-					)
-					(hide yes)
-				)
-			)
-			(property "Description" "Power symbol creates a global label with name \"+5V\""
-				(at 0 0 0)
-				(effects
-					(font
-						(size 1.27 1.27)
-					)
-					(hide yes)
-				)
-			)
-			(property "ki_keywords" "global power"
-				(at 0 0 0)
-				(effects
-					(font
-						(size 1.27 1.27)
-					)
-					(hide yes)
-				)
-			)
-			(symbol "+5V_0_1"
-				(polyline
-					(pts
-						(xy -0.762 1.27) (xy 0 2.54)
-					)
-					(stroke
-						(width 0)
-						(type default)
-					)
-					(fill
-						(type none)
-					)
-				)
-				(polyline
-					(pts
-						(xy 0 2.54) (xy 0.762 1.27)
-					)
-					(stroke
-						(width 0)
-						(type default)
-					)
-					(fill
-						(type none)
-					)
-				)
-				(polyline
-					(pts
-						(xy 0 0) (xy 0 2.54)
-					)
-					(stroke
-						(width 0)
-						(type default)
-					)
-					(fill
-						(type none)
-					)
-				)
-			)
-			(symbol "+5V_1_1"
-				(pin power_in line
-					(at 0 0 90)
-					(length 0)
-					(name "~"
-						(effects
-							(font
-								(size 1.27 1.27)
-							)
-						)
-					)
-					(number "1"
-						(effects
-							(font
-								(size 1.27 1.27)
-							)
-						)
-					)
-				)
-			)
-			(embedded_fonts no)
-		)
 		(symbol "beepyRc_symbols:Conn_01x03"
 			(pin_names
 				(offset 1.016)
@@ -949,6 +824,26 @@
 					)
 				)
 				(pin unspecified line
+					(at 12.7 -3.81 180)
+					(length 5.08)
+					(name "OUTB"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "5"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+			)
+			(symbol "TC118S_1_1"
+				(pin unspecified line
 					(at 12.7 1.27 180)
 					(length 5.08)
 					(name "PGND"
@@ -977,24 +872,6 @@
 						)
 					)
 					(number "6"
-						(effects
-							(font
-								(size 1.27 1.27)
-							)
-						)
-					)
-				)
-				(pin unspecified line
-					(at 12.7 -3.81 180)
-					(length 5.08)
-					(name "OUTB"
-						(effects
-							(font
-								(size 1.27 1.27)
-							)
-						)
-					)
-					(number "5"
 						(effects
 							(font
 								(size 1.27 1.27)
@@ -1452,6 +1329,131 @@
 			)
 			(embedded_fonts no)
 		)
+		(symbol "beepyRc_symbols:V_SERVO"
+			(power)
+			(pin_numbers
+				(hide yes)
+			)
+			(pin_names
+				(offset 0)
+				(hide yes)
+			)
+			(exclude_from_sim no)
+			(in_bom yes)
+			(on_board yes)
+			(property "Reference" "#PWR052"
+				(at 0 -3.81 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(hide yes)
+				)
+			)
+			(property "Value" "V_SERVO"
+				(at 0 3.556 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "Footprint" ""
+				(at 0 0 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(hide yes)
+				)
+			)
+			(property "Datasheet" ""
+				(at 0 0 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(hide yes)
+				)
+			)
+			(property "Description" "Power symbol creates a global label with name \"V_SERVO\""
+				(at 0 0 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(hide yes)
+				)
+			)
+			(property "ki_keywords" "global power"
+				(at 0 0 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(hide yes)
+				)
+			)
+			(symbol "V_SERVO_0_1"
+				(polyline
+					(pts
+						(xy -0.762 1.27) (xy 0 2.54)
+					)
+					(stroke
+						(width 0)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(polyline
+					(pts
+						(xy 0 2.54) (xy 0.762 1.27)
+					)
+					(stroke
+						(width 0)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(polyline
+					(pts
+						(xy 0 0) (xy 0 2.54)
+					)
+					(stroke
+						(width 0)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+			)
+			(symbol "V_SERVO_1_1"
+				(pin power_in line
+					(at 0 0 90)
+					(length 0)
+					(name "~"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "1"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+			)
+			(embedded_fonts no)
+		)
 	)
 	(text "MOTOR 3"
 		(exclude_from_sim no)
@@ -1495,7 +1497,7 @@
 	)
 	(text "Servos"
 		(exclude_from_sim no)
-		(at 223.52 34.798 0)
+		(at 217.17 23.368 0)
 		(effects
 			(font
 				(size 3.175 3.175)
@@ -1520,7 +1522,7 @@
 		(uuid "1bfe9638-846c-45e2-9911-8d4527883bd9")
 	)
 	(junction
-		(at 243.84 134.62)
+		(at 237.49 123.19)
 		(diameter 0)
 		(color 0 0 0 0)
 		(uuid "1cb8d88c-de4e-43f2-816f-0c5e52f35e29")
@@ -1550,7 +1552,7 @@
 		(uuid "28514f4d-551f-418b-b109-3fbaab057dcb")
 	)
 	(junction
-		(at 222.25 53.34)
+		(at 215.9 41.91)
 		(diameter 0)
 		(color 0 0 0 0)
 		(uuid "317335ac-2b3a-4352-9325-b5b4bace3119")
@@ -1598,7 +1600,7 @@
 		(uuid "78cb8536-2782-4a2c-a7c4-11d8610ac035")
 	)
 	(junction
-		(at 227.33 92.71)
+		(at 220.98 81.28)
 		(diameter 0)
 		(color 0 0 0 0)
 		(uuid "86d08b74-0cff-414b-8486-a113cbd25bab")
@@ -1684,7 +1686,7 @@
 		(uuid "4e6b4e94-3fdf-4cc7-9a31-3ca04407fa10")
 	)
 	(no_connect
-		(at 248.92 142.24)
+		(at 242.57 130.81)
 		(uuid "869e836d-b7f5-4c48-ac8c-48ce303fb06a")
 	)
 	(no_connect
@@ -1717,16 +1719,6 @@
 	)
 	(wire
 		(pts
-			(xy 265.43 127) (xy 265.43 137.16)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "05161de6-1e0c-4927-9c9f-ca1997410765")
-	)
-	(wire
-		(pts
 			(xy 134.62 85.09) (xy 154.94 85.09)
 		)
 		(stroke
@@ -1747,7 +1739,7 @@
 	)
 	(wire
 		(pts
-			(xy 266.7 85.09) (xy 266.7 95.25)
+			(xy 260.35 73.66) (xy 260.35 83.82)
 		)
 		(stroke
 			(width 0)
@@ -1767,7 +1759,7 @@
 	)
 	(wire
 		(pts
-			(xy 222.25 53.34) (xy 222.25 142.24)
+			(xy 215.9 41.91) (xy 215.9 130.81)
 		)
 		(stroke
 			(width 0)
@@ -1787,7 +1779,7 @@
 	)
 	(wire
 		(pts
-			(xy 269.24 97.79) (xy 266.7 97.79)
+			(xy 262.89 86.36) (xy 260.35 86.36)
 		)
 		(stroke
 			(width 0)
@@ -1807,7 +1799,7 @@
 	)
 	(wire
 		(pts
-			(xy 266.7 97.79) (xy 266.7 102.87)
+			(xy 260.35 86.36) (xy 260.35 91.44)
 		)
 		(stroke
 			(width 0)
@@ -1827,7 +1819,7 @@
 	)
 	(wire
 		(pts
-			(xy 269.24 95.25) (xy 266.7 95.25)
+			(xy 262.89 83.82) (xy 260.35 83.82)
 		)
 		(stroke
 			(width 0)
@@ -1927,7 +1919,7 @@
 	)
 	(wire
 		(pts
-			(xy 214.63 134.62) (xy 243.84 134.62)
+			(xy 208.28 123.19) (xy 237.49 123.19)
 		)
 		(stroke
 			(width 0)
@@ -1957,7 +1949,7 @@
 	)
 	(wire
 		(pts
-			(xy 269.24 58.42) (xy 266.7 58.42)
+			(xy 262.89 46.99) (xy 260.35 46.99)
 		)
 		(stroke
 			(width 0)
@@ -2137,6 +2129,16 @@
 	)
 	(wire
 		(pts
+			(xy 237.49 123.19) (xy 261.62 123.19)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "50d475a1-8a6c-44b5-9c6e-1576eebde745")
+	)
+	(wire
+		(pts
 			(xy 154.94 38.1) (xy 149.86 38.1)
 		)
 		(stroke
@@ -2247,7 +2249,7 @@
 	)
 	(wire
 		(pts
-			(xy 269.24 55.88) (xy 266.7 55.88)
+			(xy 262.89 44.45) (xy 260.35 44.45)
 		)
 		(stroke
 			(width 0)
@@ -2277,7 +2279,7 @@
 	)
 	(wire
 		(pts
-			(xy 215.9 92.71) (xy 227.33 92.71)
+			(xy 209.55 81.28) (xy 220.98 81.28)
 		)
 		(stroke
 			(width 0)
@@ -2377,7 +2379,7 @@
 	)
 	(wire
 		(pts
-			(xy 227.33 92.71) (xy 227.33 142.24)
+			(xy 220.98 81.28) (xy 220.98 130.81)
 		)
 		(stroke
 			(width 0)
@@ -2457,7 +2459,7 @@
 	)
 	(wire
 		(pts
-			(xy 227.33 92.71) (xy 269.24 92.71)
+			(xy 220.98 81.28) (xy 262.89 81.28)
 		)
 		(stroke
 			(width 0)
@@ -2477,7 +2479,7 @@
 	)
 	(wire
 		(pts
-			(xy 267.97 139.7) (xy 265.43 139.7)
+			(xy 261.62 128.27) (xy 259.08 128.27)
 		)
 		(stroke
 			(width 0)
@@ -2547,23 +2549,13 @@
 	)
 	(wire
 		(pts
-			(xy 267.97 137.16) (xy 265.43 137.16)
+			(xy 261.62 125.73) (xy 259.08 125.73)
 		)
 		(stroke
 			(width 0)
 			(type default)
 		)
 		(uuid "8a650000-7bc4-4496-9b96-0563e6841a8a")
-	)
-	(wire
-		(pts
-			(xy 243.84 134.62) (xy 267.97 134.62)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "8cfbf7d3-423c-4fab-9e92-e6614d879087")
 	)
 	(wire
 		(pts
@@ -2637,7 +2629,7 @@
 	)
 	(wire
 		(pts
-			(xy 243.84 134.62) (xy 243.84 142.24)
+			(xy 237.49 123.19) (xy 237.49 130.81)
 		)
 		(stroke
 			(width 0)
@@ -2707,7 +2699,7 @@
 	)
 	(wire
 		(pts
-			(xy 224.79 152.4) (xy 224.79 154.94)
+			(xy 218.44 140.97) (xy 218.44 143.51)
 		)
 		(stroke
 			(width 0)
@@ -2727,7 +2719,7 @@
 	)
 	(wire
 		(pts
-			(xy 215.9 53.34) (xy 222.25 53.34)
+			(xy 209.55 41.91) (xy 215.9 41.91)
 		)
 		(stroke
 			(width 0)
@@ -2744,6 +2736,16 @@
 			(type default)
 		)
 		(uuid "ae88d72c-15d1-40a7-980b-e99295865ddb")
+	)
+	(wire
+		(pts
+			(xy 259.08 115.57) (xy 259.08 125.73)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "af2571b4-4694-4515-97ea-2a34f1c7df48")
 	)
 	(wire
 		(pts
@@ -2787,7 +2789,7 @@
 	)
 	(wire
 		(pts
-			(xy 246.38 152.4) (xy 246.38 154.94)
+			(xy 240.03 140.97) (xy 240.03 143.51)
 		)
 		(stroke
 			(width 0)
@@ -2817,7 +2819,7 @@
 	)
 	(wire
 		(pts
-			(xy 266.7 45.72) (xy 266.7 55.88)
+			(xy 260.35 34.29) (xy 260.35 44.45)
 		)
 		(stroke
 			(width 0)
@@ -3057,7 +3059,7 @@
 	)
 	(wire
 		(pts
-			(xy 222.25 53.34) (xy 269.24 53.34)
+			(xy 215.9 41.91) (xy 262.89 41.91)
 		)
 		(stroke
 			(width 0)
@@ -3097,7 +3099,7 @@
 	)
 	(wire
 		(pts
-			(xy 266.7 58.42) (xy 266.7 63.5)
+			(xy 260.35 46.99) (xy 260.35 52.07)
 		)
 		(stroke
 			(width 0)
@@ -3177,7 +3179,7 @@
 	)
 	(wire
 		(pts
-			(xy 265.43 139.7) (xy 265.43 144.78)
+			(xy 259.08 128.27) (xy 259.08 133.35)
 		)
 		(stroke
 			(width 0)
@@ -3476,7 +3478,7 @@
 	)
 	(hierarchical_label "S1_PWM"
 		(shape input)
-		(at 215.9 92.71 180)
+		(at 209.55 81.28 180)
 		(effects
 			(font
 				(size 1.27 1.27)
@@ -3531,7 +3533,7 @@
 	)
 	(hierarchical_label "S3_PWM"
 		(shape input)
-		(at 214.63 134.62 180)
+		(at 208.28 123.19 180)
 		(effects
 			(font
 				(size 1.27 1.27)
@@ -3553,7 +3555,7 @@
 	)
 	(hierarchical_label "S2_PWM"
 		(shape input)
-		(at 215.9 53.34 180)
+		(at 209.55 41.91 180)
 		(effects
 			(font
 				(size 1.27 1.27)
@@ -3586,7 +3588,7 @@
 	)
 	(symbol
 		(lib_id "beepyRc_symbols:Conn_01x03")
-		(at 274.32 55.88 0)
+		(at 267.97 44.45 0)
 		(unit 1)
 		(exclude_from_sim no)
 		(in_bom yes)
@@ -3594,7 +3596,7 @@
 		(dnp no)
 		(uuid "038facc9-3404-4026-babd-ec752328f586")
 		(property "Reference" "J11"
-			(at 273.304 50.546 0)
+			(at 266.954 39.116 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -3603,7 +3605,7 @@
 			)
 		)
 		(property "Value" "Conn_01x03"
-			(at 276.86 57.1499 0)
+			(at 270.51 45.7199 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -3613,7 +3615,7 @@
 			)
 		)
 		(property "Footprint" "TestPoint:TestPoint_Bridge_Pitch2.54mm_Drill1.0mm"
-			(at 274.32 55.88 0)
+			(at 267.97 44.45 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -3622,7 +3624,7 @@
 			)
 		)
 		(property "Datasheet" "~"
-			(at 274.32 55.88 0)
+			(at 267.97 44.45 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -3631,7 +3633,7 @@
 			)
 		)
 		(property "Description" "Generic connector, single row, 01x03, script generated (kicad-library-utils/schlib/autogen/connector/)"
-			(at 274.32 55.88 0)
+			(at 267.97 44.45 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -3640,7 +3642,7 @@
 			)
 		)
 		(property "Sim.Device" ""
-			(at 274.32 55.88 0)
+			(at 267.97 44.45 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -3649,7 +3651,7 @@
 			)
 		)
 		(property "Sim.Type" ""
-			(at 274.32 55.88 0)
+			(at 267.97 44.45 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -3841,8 +3843,103 @@
 		)
 	)
 	(symbol
+		(lib_id "beepyRc_symbols:TC118S")
+		(at 57.15 35.56 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(fields_autoplaced yes)
+		(uuid "121d4ec2-abfa-43ae-8568-f64273a533de")
+		(property "Reference" "U1"
+			(at 57.15 24.13 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Value" "TC118S"
+			(at 57.15 26.67 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" "lscs:SOP-8_L4.9-W3.9-P1.27-LS6.0-BL"
+			(at 57.15 46.99 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" "https://lcsc.com/product-detail/Motor-Drivers_TC118S_C88308.html"
+			(at 57.15 49.53 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" ""
+			(at 57.15 35.56 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "LCSC Part" "C88308"
+			(at 57.15 52.07 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "3"
+			(uuid "e3181f69-9d56-4227-9306-6ef2bdd7a5c0")
+		)
+		(pin "4"
+			(uuid "3ef3c4cf-ea00-4ade-bec8-2c1684b90489")
+		)
+		(pin "6"
+			(uuid "bde16007-6425-443c-8a37-642c264060fc")
+		)
+		(pin "7"
+			(uuid "a7e8b83d-f8f2-4de9-a756-c6b5ae23a0ce")
+		)
+		(pin "2"
+			(uuid "c9bf2844-a9f2-4ce5-af9d-d716eacd9e85")
+		)
+		(pin "1"
+			(uuid "264cf54d-10ab-47bc-9798-93583f62818b")
+		)
+		(pin "8"
+			(uuid "2e9afb4b-6db3-4b0d-9ec9-6644487ce721")
+		)
+		(pin "5"
+			(uuid "84a45c88-ad12-49b4-b31a-bb8367cef7f5")
+		)
+		(instances
+			(project ""
+				(path "/c17d25e0-24c9-466a-aee2-e4b5dcf71363/aa19a70b-6aa2-4bf0-b563-651abe9f0469"
+					(reference "U1")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
 		(lib_id "beepyRc_symbols:GND")
-		(at 224.79 154.94 0)
+		(at 218.44 143.51 0)
 		(unit 1)
 		(exclude_from_sim no)
 		(in_bom yes)
@@ -3850,7 +3947,7 @@
 		(dnp no)
 		(uuid "1441761b-b7e2-4ba7-8be1-c213f75be5de")
 		(property "Reference" "#PWR0118"
-			(at 224.79 161.29 0)
+			(at 218.44 149.86 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -3859,7 +3956,7 @@
 			)
 		)
 		(property "Value" "GND"
-			(at 224.79 158.75 0)
+			(at 218.44 147.32 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -3867,7 +3964,7 @@
 			)
 		)
 		(property "Footprint" ""
-			(at 224.79 154.94 0)
+			(at 218.44 143.51 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -3876,7 +3973,7 @@
 			)
 		)
 		(property "Datasheet" ""
-			(at 224.79 154.94 0)
+			(at 218.44 143.51 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -3885,7 +3982,7 @@
 			)
 		)
 		(property "Description" "Power symbol creates a global label with name \"GND\" , ground"
-			(at 224.79 154.94 0)
+			(at 218.44 143.51 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -3900,118 +3997,6 @@
 			(project "beepyRc"
 				(path "/c17d25e0-24c9-466a-aee2-e4b5dcf71363/aa19a70b-6aa2-4bf0-b563-651abe9f0469"
 					(reference "#PWR0118")
-					(unit 1)
-				)
-			)
-		)
-	)
-	(symbol
-		(lib_id "beepyRc_symbols:TC118S")
-		(at 57.15 168.91 0)
-		(unit 1)
-		(exclude_from_sim no)
-		(in_bom yes)
-		(on_board yes)
-		(dnp no)
-		(uuid "159c7bd3-66ca-4ec5-b1cc-6cbfd0f58190")
-		(property "Reference" "U8"
-			(at 57.15 158.75 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Value" "TC118S"
-			(at 57.15 161.29 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Footprint" "lscs:SOP-8_L4.9-W3.9-P1.27-LS6.0-BL"
-			(at 57.15 180.34 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Datasheet" "https://lcsc.com/product-detail/Motor-Drivers_TC118S_C88308.html"
-			(at 57.15 182.88 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Description" ""
-			(at 57.15 168.91 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "LCSC Part" "C88308"
-			(at 57.15 185.42 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Sim.Device" ""
-			(at 57.15 168.91 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Sim.Type" ""
-			(at 57.15 168.91 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(pin "5"
-			(uuid "9347d03b-335c-4e60-aeb3-82e7d097f395")
-		)
-		(pin "3"
-			(uuid "4aaf8370-fc41-46e5-bfa8-daaef915807c")
-		)
-		(pin "2"
-			(uuid "a61ab755-a8b2-4696-8987-91c3bf28d613")
-		)
-		(pin "1"
-			(uuid "9d57ebe0-c68e-404d-8a94-dff08af1ef59")
-		)
-		(pin "4"
-			(uuid "68897d32-ffd6-4e92-a58a-98234490ec21")
-		)
-		(pin "6"
-			(uuid "eaf94d54-faad-4a94-9cd2-2b5a2a035776")
-		)
-		(pin "7"
-			(uuid "36214039-c040-43a1-9449-2b29a4bb9f1b")
-		)
-		(pin "8"
-			(uuid "18a1bda7-d874-4373-ae31-a2f3f271e89e")
-		)
-		(instances
-			(project "beepyRc"
-				(path "/c17d25e0-24c9-466a-aee2-e4b5dcf71363/aa19a70b-6aa2-4bf0-b563-651abe9f0469"
-					(reference "U8")
 					(unit 1)
 				)
 			)
@@ -4366,97 +4351,6 @@
 		)
 	)
 	(symbol
-		(lib_id "beepyRc_symbols:Conn_01x03")
-		(at 273.05 137.16 0)
-		(unit 1)
-		(exclude_from_sim no)
-		(in_bom yes)
-		(on_board yes)
-		(dnp no)
-		(uuid "324f15a0-698b-470c-9a91-bb9ee42e5616")
-		(property "Reference" "J9"
-			(at 272.034 131.826 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify left)
-			)
-		)
-		(property "Value" "Conn_01x03"
-			(at 275.59 138.4299 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify left)
-				(hide yes)
-			)
-		)
-		(property "Footprint" "TestPoint:TestPoint_Bridge_Pitch2.54mm_Drill1.0mm"
-			(at 273.05 137.16 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Datasheet" "~"
-			(at 273.05 137.16 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Description" "Generic connector, single row, 01x03, script generated (kicad-library-utils/schlib/autogen/connector/)"
-			(at 273.05 137.16 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Sim.Device" ""
-			(at 273.05 137.16 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Sim.Type" ""
-			(at 273.05 137.16 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(pin "3"
-			(uuid "3f736165-36f2-4147-9a3b-c7d15d6542ad")
-		)
-		(pin "1"
-			(uuid "89e29ed2-635a-4d8d-b7c8-8c7f279c8fc4")
-		)
-		(pin "2"
-			(uuid "dbd407ec-42c3-4b5b-bd48-f85966440592")
-		)
-		(instances
-			(project ""
-				(path "/c17d25e0-24c9-466a-aee2-e4b5dcf71363/aa19a70b-6aa2-4bf0-b563-651abe9f0469"
-					(reference "J9")
-					(unit 1)
-				)
-			)
-		)
-	)
-	(symbol
 		(lib_id "beepyRc_symbols:GND")
 		(at 72.39 135.89 0)
 		(unit 1)
@@ -4523,7 +4417,7 @@
 	)
 	(symbol
 		(lib_id "beepyRc_symbols:GND")
-		(at 266.7 102.87 0)
+		(at 260.35 91.44 0)
 		(unit 1)
 		(exclude_from_sim no)
 		(in_bom yes)
@@ -4531,7 +4425,7 @@
 		(dnp no)
 		(uuid "3a8456ec-8069-4ae0-9d1d-897bebcd8ec7")
 		(property "Reference" "#PWR051"
-			(at 266.7 109.22 0)
+			(at 260.35 97.79 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -4540,7 +4434,7 @@
 			)
 		)
 		(property "Value" "GND"
-			(at 266.7 106.68 0)
+			(at 260.35 95.25 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -4548,7 +4442,7 @@
 			)
 		)
 		(property "Footprint" ""
-			(at 266.7 102.87 0)
+			(at 260.35 91.44 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -4557,7 +4451,7 @@
 			)
 		)
 		(property "Datasheet" ""
-			(at 266.7 102.87 0)
+			(at 260.35 91.44 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -4566,7 +4460,7 @@
 			)
 		)
 		(property "Description" "Power symbol creates a global label with name \"GND\" , ground"
-			(at 266.7 102.87 0)
+			(at 260.35 91.44 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -4817,97 +4711,6 @@
 		)
 	)
 	(symbol
-		(lib_id "beepyRc_symbols:Conn_01x03")
-		(at 274.32 95.25 0)
-		(unit 1)
-		(exclude_from_sim no)
-		(in_bom yes)
-		(on_board yes)
-		(dnp no)
-		(uuid "578f1e3e-3108-4f21-857e-2ca5bcf8769e")
-		(property "Reference" "J10"
-			(at 273.304 89.916 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify left)
-			)
-		)
-		(property "Value" "Conn_01x03"
-			(at 276.86 96.5199 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify left)
-				(hide yes)
-			)
-		)
-		(property "Footprint" "TestPoint:TestPoint_Bridge_Pitch2.54mm_Drill1.0mm"
-			(at 274.32 95.25 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Datasheet" "~"
-			(at 274.32 95.25 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Description" "Generic connector, single row, 01x03, script generated (kicad-library-utils/schlib/autogen/connector/)"
-			(at 274.32 95.25 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Sim.Device" ""
-			(at 274.32 95.25 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Sim.Type" ""
-			(at 274.32 95.25 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(pin "3"
-			(uuid "cf461167-f0d2-4515-ab83-629866417282")
-		)
-		(pin "1"
-			(uuid "f3887ed3-0b50-44c5-a630-dde6973fe0ac")
-		)
-		(pin "2"
-			(uuid "3b76e81f-9174-43a3-93fc-3a488e11adb9")
-		)
-		(instances
-			(project "beepyRc"
-				(path "/c17d25e0-24c9-466a-aee2-e4b5dcf71363/aa19a70b-6aa2-4bf0-b563-651abe9f0469"
-					(reference "J10")
-					(unit 1)
-				)
-			)
-		)
-	)
-	(symbol
 		(lib_id "beepyRc_symbols:GND")
 		(at 72.39 91.44 0)
 		(unit 1)
@@ -5038,128 +4841,16 @@
 		)
 	)
 	(symbol
-		(lib_id "beepyRc_symbols:TC118S")
-		(at 57.15 80.01 0)
+		(lib_id "beepyRc_symbols:V_SERVO")
+		(at 259.08 115.57 0)
 		(unit 1)
 		(exclude_from_sim no)
 		(in_bom yes)
 		(on_board yes)
 		(dnp no)
-		(uuid "630dceb5-c51b-4a12-9fd4-aa13756d78ba")
-		(property "Reference" "U6"
-			(at 57.15 69.85 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Value" "TC118S"
-			(at 57.15 72.39 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Footprint" "lscs:SOP-8_L4.9-W3.9-P1.27-LS6.0-BL"
-			(at 57.15 91.44 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Datasheet" "https://lcsc.com/product-detail/Motor-Drivers_TC118S_C88308.html"
-			(at 57.15 93.98 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Description" ""
-			(at 57.15 80.01 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "LCSC Part" "C88308"
-			(at 57.15 96.52 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Sim.Device" ""
-			(at 57.15 80.01 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Sim.Type" ""
-			(at 57.15 80.01 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(pin "5"
-			(uuid "25880895-d424-491c-a8fe-9b2a20dc9533")
-		)
-		(pin "3"
-			(uuid "f48f9c18-6a92-4e6f-98f0-7f95a222dd3d")
-		)
-		(pin "2"
-			(uuid "65d989c5-28d4-4818-b6ca-a8b435494425")
-		)
-		(pin "1"
-			(uuid "d2e37609-2460-4258-abec-88c7cf3d9d3d")
-		)
-		(pin "4"
-			(uuid "70dd02b6-fd43-46fb-9f04-f0eb1340acc7")
-		)
-		(pin "6"
-			(uuid "2e336527-fe58-4762-a271-b4129b54e381")
-		)
-		(pin "7"
-			(uuid "c67348f2-498c-4bff-86cb-290c563c6ea5")
-		)
-		(pin "8"
-			(uuid "473bc1fc-8d84-493d-bc9d-a801374c4cb4")
-		)
-		(instances
-			(project "beepyRc"
-				(path "/c17d25e0-24c9-466a-aee2-e4b5dcf71363/aa19a70b-6aa2-4bf0-b563-651abe9f0469"
-					(reference "U6")
-					(unit 1)
-				)
-			)
-		)
-	)
-	(symbol
-		(lib_id "beepyRc_symbols:+5V")
-		(at 266.7 85.09 0)
-		(unit 1)
-		(exclude_from_sim no)
-		(in_bom yes)
-		(on_board yes)
-		(dnp no)
-		(uuid "68be98a0-51a6-4375-92db-bb77d5f78306")
+		(uuid "68a41e07-bf6f-4961-9446-99d48b150368")
 		(property "Reference" "#PWR050"
-			(at 266.7 88.9 0)
+			(at 259.08 119.38 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -5168,7 +4859,7 @@
 			)
 		)
 		(property "Value" "V_SERVO"
-			(at 266.7 81.026 0)
+			(at 259.08 111.76 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -5176,7 +4867,7 @@
 			)
 		)
 		(property "Footprint" ""
-			(at 266.7 85.09 0)
+			(at 259.08 115.57 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -5185,7 +4876,7 @@
 			)
 		)
 		(property "Datasheet" ""
-			(at 266.7 85.09 0)
+			(at 259.08 115.57 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -5193,8 +4884,8 @@
 				(hide yes)
 			)
 		)
-		(property "Description" "Power symbol creates a global label with name \"+5V\""
-			(at 266.7 85.09 0)
+		(property "Description" "Power symbol creates a global label with name \"V_SERVO\""
+			(at 259.08 115.57 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -5203,10 +4894,10 @@
 			)
 		)
 		(pin "1"
-			(uuid "af347337-d8e8-4690-993f-8784efedfb38")
+			(uuid "5c221595-9040-409c-851e-ab4a2850b74f")
 		)
 		(instances
-			(project "beepyRc"
+			(project ""
 				(path "/c17d25e0-24c9-466a-aee2-e4b5dcf71363/aa19a70b-6aa2-4bf0-b563-651abe9f0469"
 					(reference "#PWR050")
 					(unit 1)
@@ -5373,6 +5064,101 @@
 			(project "beepyRc"
 				(path "/c17d25e0-24c9-466a-aee2-e4b5dcf71363/aa19a70b-6aa2-4bf0-b563-651abe9f0469"
 					(reference "#PWR02")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "beepyRc_symbols:TC118S")
+		(at 57.15 80.01 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(fields_autoplaced yes)
+		(uuid "795ee18d-59cf-44d9-afcd-aec2ae4a1f00")
+		(property "Reference" "U6"
+			(at 57.15 68.58 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Value" "TC118S"
+			(at 57.15 71.12 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" "lscs:SOP-8_L4.9-W3.9-P1.27-LS6.0-BL"
+			(at 57.15 91.44 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" "https://lcsc.com/product-detail/Motor-Drivers_TC118S_C88308.html"
+			(at 57.15 93.98 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" ""
+			(at 57.15 80.01 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "LCSC Part" "C88308"
+			(at 57.15 96.52 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "3"
+			(uuid "31b94840-bc0e-4c81-ba26-82ca940b4ee6")
+		)
+		(pin "4"
+			(uuid "e6a90362-415c-4942-9c02-23b35cbe28d6")
+		)
+		(pin "6"
+			(uuid "d5a700e1-d930-4e49-b564-7ccf8190cc12")
+		)
+		(pin "7"
+			(uuid "595135a1-84d9-4efe-9470-698fafceaeb6")
+		)
+		(pin "2"
+			(uuid "9055ab4f-712d-44a2-a3e1-f7d39b107fae")
+		)
+		(pin "1"
+			(uuid "86faa216-711a-4364-8b93-cd13a898ec99")
+		)
+		(pin "8"
+			(uuid "b75a287e-46a2-4efb-85a8-c5f4db4077cc")
+		)
+		(pin "5"
+			(uuid "ff2cda84-eaec-4380-81f3-800f1cdf9c48")
+		)
+		(instances
+			(project "beepyRcBrd"
+				(path "/c17d25e0-24c9-466a-aee2-e4b5dcf71363/aa19a70b-6aa2-4bf0-b563-651abe9f0469"
+					(reference "U6")
 					(unit 1)
 				)
 			)
@@ -5971,7 +5757,7 @@
 	)
 	(symbol
 		(lib_id "beepyRc_symbols:GND")
-		(at 266.7 63.5 0)
+		(at 260.35 52.07 0)
 		(unit 1)
 		(exclude_from_sim no)
 		(in_bom yes)
@@ -5979,7 +5765,7 @@
 		(dnp no)
 		(uuid "9b4ce648-c35c-487d-b28f-a606c88b8e60")
 		(property "Reference" "#PWR053"
-			(at 266.7 69.85 0)
+			(at 260.35 58.42 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -5988,7 +5774,7 @@
 			)
 		)
 		(property "Value" "GND"
-			(at 266.7 67.31 0)
+			(at 260.35 55.88 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -5996,7 +5782,7 @@
 			)
 		)
 		(property "Footprint" ""
-			(at 266.7 63.5 0)
+			(at 260.35 52.07 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -6005,7 +5791,7 @@
 			)
 		)
 		(property "Datasheet" ""
-			(at 266.7 63.5 0)
+			(at 260.35 52.07 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -6014,7 +5800,7 @@
 			)
 		)
 		(property "Description" "Power symbol creates a global label with name \"GND\" , ground"
-			(at 266.7 63.5 0)
+			(at 260.35 52.07 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -6029,71 +5815,6 @@
 			(project "beepyRc"
 				(path "/c17d25e0-24c9-466a-aee2-e4b5dcf71363/aa19a70b-6aa2-4bf0-b563-651abe9f0469"
 					(reference "#PWR053")
-					(unit 1)
-				)
-			)
-		)
-	)
-	(symbol
-		(lib_id "beepyRc_symbols:+5V")
-		(at 266.7 45.72 0)
-		(unit 1)
-		(exclude_from_sim no)
-		(in_bom yes)
-		(on_board yes)
-		(dnp no)
-		(uuid "9b91a969-a2ab-4230-9519-951414c301c6")
-		(property "Reference" "#PWR052"
-			(at 266.7 49.53 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Value" "V_SERVO"
-			(at 266.7 41.656 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Footprint" ""
-			(at 266.7 45.72 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Datasheet" ""
-			(at 266.7 45.72 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Description" "Power symbol creates a global label with name \"+5V\""
-			(at 266.7 45.72 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(pin "1"
-			(uuid "f0a5b617-685e-4836-a409-ca05b56aac0a")
-		)
-		(instances
-			(project "beepyRc"
-				(path "/c17d25e0-24c9-466a-aee2-e4b5dcf71363/aa19a70b-6aa2-4bf0-b563-651abe9f0469"
-					(reference "#PWR052")
 					(unit 1)
 				)
 			)
@@ -6187,120 +5908,8 @@
 		)
 	)
 	(symbol
-		(lib_id "beepyRc_symbols:TC118S")
-		(at 57.15 35.56 0)
-		(unit 1)
-		(exclude_from_sim no)
-		(in_bom yes)
-		(on_board yes)
-		(dnp no)
-		(uuid "abfc8460-61ea-4c19-93be-8460bde633ba")
-		(property "Reference" "U1"
-			(at 57.15 25.4 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Value" "TC118S"
-			(at 57.15 27.94 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Footprint" "lscs:SOP-8_L4.9-W3.9-P1.27-LS6.0-BL"
-			(at 57.15 46.99 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Datasheet" "https://lcsc.com/product-detail/Motor-Drivers_TC118S_C88308.html"
-			(at 57.15 49.53 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Description" ""
-			(at 57.15 35.56 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "LCSC Part" "C88308"
-			(at 57.15 52.07 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Sim.Device" ""
-			(at 57.15 35.56 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Sim.Type" ""
-			(at 57.15 35.56 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(pin "5"
-			(uuid "5c37c389-6912-4380-8466-8aa199ee3494")
-		)
-		(pin "3"
-			(uuid "28c362de-5489-4031-b972-14e8b947f136")
-		)
-		(pin "2"
-			(uuid "d92aabac-0bed-4337-804d-867cdfc4fda1")
-		)
-		(pin "1"
-			(uuid "514fd74c-eb0e-410e-b315-18f64e1ad4d8")
-		)
-		(pin "4"
-			(uuid "780bea12-8dfe-4942-b426-8eec0780707f")
-		)
-		(pin "6"
-			(uuid "905fb85c-4bbb-4474-8574-2fa34a016a54")
-		)
-		(pin "7"
-			(uuid "2b69388f-d89e-4a50-ba7a-a87bc4b313df")
-		)
-		(pin "8"
-			(uuid "d905992e-5f7a-4d5e-b7b6-3b97269aa220")
-		)
-		(instances
-			(project "beepyRc"
-				(path "/c17d25e0-24c9-466a-aee2-e4b5dcf71363/aa19a70b-6aa2-4bf0-b563-651abe9f0469"
-					(reference "U1")
-					(unit 1)
-				)
-			)
-		)
-	)
-	(symbol
 		(lib_id "beepyRc_symbols:UESD3.3DT5G")
-		(at 224.79 147.32 180)
+		(at 218.44 135.89 180)
 		(unit 1)
 		(exclude_from_sim no)
 		(in_bom yes)
@@ -6308,7 +5917,7 @@
 		(dnp yes)
 		(uuid "b02bd91f-290d-471d-bcbd-aeb76fe41f9b")
 		(property "Reference" "D10"
-			(at 229.108 143.51 0)
+			(at 222.758 132.08 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -6317,7 +5926,7 @@
 			)
 		)
 		(property "Value" "UESD3.3DT5G"
-			(at 226.314 151.384 0)
+			(at 219.964 139.954 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -6326,7 +5935,7 @@
 			)
 		)
 		(property "Footprint" "lscs:SOT-723_L1.2-W0.8-P0.40-LS1.2-BR"
-			(at 224.79 134.62 0)
+			(at 218.44 123.19 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -6335,7 +5944,7 @@
 			)
 		)
 		(property "Datasheet" "https://lcsc.com/product-detail/Others_ON-Semicon_UESD3-3DT5G_ON-Semicon-ON-UESD3-3DT5G_C233435.html"
-			(at 224.79 132.08 0)
+			(at 218.44 120.65 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -6344,7 +5953,7 @@
 			)
 		)
 		(property "Description" ""
-			(at 224.79 147.32 0)
+			(at 218.44 135.89 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -6353,7 +5962,7 @@
 			)
 		)
 		(property "LCSC Part" "C233435"
-			(at 224.79 129.54 0)
+			(at 218.44 118.11 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -6362,7 +5971,7 @@
 			)
 		)
 		(property "Sim.Device" ""
-			(at 224.79 147.32 0)
+			(at 218.44 135.89 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -6371,7 +5980,7 @@
 			)
 		)
 		(property "Sim.Type" ""
-			(at 224.79 147.32 0)
+			(at 218.44 135.89 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -6497,6 +6106,101 @@
 		)
 	)
 	(symbol
+		(lib_id "beepyRc_symbols:TC118S")
+		(at 57.15 124.46 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(fields_autoplaced yes)
+		(uuid "b6e25497-e0e0-4b68-b4e4-e5befab119b4")
+		(property "Reference" "U7"
+			(at 57.15 113.03 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Value" "TC118S"
+			(at 57.15 115.57 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" "lscs:SOP-8_L4.9-W3.9-P1.27-LS6.0-BL"
+			(at 57.15 135.89 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" "https://lcsc.com/product-detail/Motor-Drivers_TC118S_C88308.html"
+			(at 57.15 138.43 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" ""
+			(at 57.15 124.46 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "LCSC Part" "C88308"
+			(at 57.15 140.97 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "3"
+			(uuid "44eb71b6-31af-4958-b458-2913c9f8fc19")
+		)
+		(pin "4"
+			(uuid "cc109a30-36b2-4d32-986e-b8edc04431d8")
+		)
+		(pin "6"
+			(uuid "25e76645-ed3a-4966-8404-9e331f408fd9")
+		)
+		(pin "7"
+			(uuid "f9ce1d88-857d-43da-b43a-661c9adfa91b")
+		)
+		(pin "2"
+			(uuid "24014428-2e4b-40cf-9cd1-42dec96bd157")
+		)
+		(pin "1"
+			(uuid "45b2dbce-a812-4c04-b214-56b2afb4e9dc")
+		)
+		(pin "8"
+			(uuid "861e396a-7ff3-4f8d-a248-eea2354670d0")
+		)
+		(pin "5"
+			(uuid "b8af29e9-31f5-4c24-8b77-0d7da6e455ba")
+		)
+		(instances
+			(project "beepyRcBrd"
+				(path "/c17d25e0-24c9-466a-aee2-e4b5dcf71363/aa19a70b-6aa2-4bf0-b563-651abe9f0469"
+					(reference "U7")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
 		(lib_id "beepyRc_symbols:UESD3.3DT5G")
 		(at 121.92 45.72 180)
 		(unit 1)
@@ -6597,7 +6301,7 @@
 	)
 	(symbol
 		(lib_id "beepyRc_symbols:GND")
-		(at 265.43 144.78 0)
+		(at 259.08 133.35 0)
 		(unit 1)
 		(exclude_from_sim no)
 		(in_bom yes)
@@ -6605,7 +6309,7 @@
 		(dnp no)
 		(uuid "b961475a-956c-4e6c-87e5-2bde738fd4f6")
 		(property "Reference" "#PWR055"
-			(at 265.43 151.13 0)
+			(at 259.08 139.7 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -6614,7 +6318,7 @@
 			)
 		)
 		(property "Value" "GND"
-			(at 265.43 148.59 0)
+			(at 259.08 137.16 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -6622,7 +6326,7 @@
 			)
 		)
 		(property "Footprint" ""
-			(at 265.43 144.78 0)
+			(at 259.08 133.35 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -6631,7 +6335,7 @@
 			)
 		)
 		(property "Datasheet" ""
-			(at 265.43 144.78 0)
+			(at 259.08 133.35 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -6640,7 +6344,7 @@
 			)
 		)
 		(property "Description" "Power symbol creates a global label with name \"GND\" , ground"
-			(at 265.43 144.78 0)
+			(at 259.08 133.35 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -6754,6 +6458,71 @@
 			(project "beepyRc"
 				(path "/c17d25e0-24c9-466a-aee2-e4b5dcf71363/aa19a70b-6aa2-4bf0-b563-651abe9f0469"
 					(reference "D15")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "beepyRc_symbols:V_SERVO")
+		(at 260.35 34.29 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(uuid "c1f0dee9-bda9-41c8-9dc6-e40ece99fea8")
+		(property "Reference" "#PWR054"
+			(at 260.35 38.1 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Value" "V_SERVO"
+			(at 260.35 30.48 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" ""
+			(at 260.35 34.29 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" ""
+			(at 260.35 34.29 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" "Power symbol creates a global label with name \"V_SERVO\""
+			(at 260.35 34.29 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "1"
+			(uuid "193f54d4-a9ce-4fd2-9227-d7fd8f3f922d")
+		)
+		(instances
+			(project "beepyRcBrd"
+				(path "/c17d25e0-24c9-466a-aee2-e4b5dcf71363/aa19a70b-6aa2-4bf0-b563-651abe9f0469"
+					(reference "#PWR054")
 					(unit 1)
 				)
 			)
@@ -7086,6 +6855,71 @@
 		)
 	)
 	(symbol
+		(lib_id "beepyRc_symbols:V_SERVO")
+		(at 260.35 73.66 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(uuid "dd6e8214-843a-4e90-a997-4952c31f2dd5")
+		(property "Reference" "#PWR052"
+			(at 260.35 77.47 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Value" "V_SERVO"
+			(at 260.35 69.85 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" ""
+			(at 260.35 73.66 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" ""
+			(at 260.35 73.66 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" "Power symbol creates a global label with name \"V_SERVO\""
+			(at 260.35 73.66 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "1"
+			(uuid "935d4a09-f4d5-477a-acc8-a9d44377440b")
+		)
+		(instances
+			(project "beepyRcBrd"
+				(path "/c17d25e0-24c9-466a-aee2-e4b5dcf71363/aa19a70b-6aa2-4bf0-b563-651abe9f0469"
+					(reference "#PWR052")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
 		(lib_id "beepyRc_symbols:R")
 		(at 27.94 180.34 0)
 		(unit 1)
@@ -7167,6 +7001,192 @@
 			(project "beepyRcBrd"
 				(path "/c17d25e0-24c9-466a-aee2-e4b5dcf71363/aa19a70b-6aa2-4bf0-b563-651abe9f0469"
 					(reference "R16")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "beepyRc_symbols:TC118S")
+		(at 57.15 168.91 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(fields_autoplaced yes)
+		(uuid "dff4fa88-1d97-43ad-bca0-591030ca5f12")
+		(property "Reference" "U8"
+			(at 57.15 157.48 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Value" "TC118S"
+			(at 57.15 160.02 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" "lscs:SOP-8_L4.9-W3.9-P1.27-LS6.0-BL"
+			(at 57.15 180.34 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" "https://lcsc.com/product-detail/Motor-Drivers_TC118S_C88308.html"
+			(at 57.15 182.88 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" ""
+			(at 57.15 168.91 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "LCSC Part" "C88308"
+			(at 57.15 185.42 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "3"
+			(uuid "4a886ec3-49d2-45b5-a5a8-7970ea10c151")
+		)
+		(pin "4"
+			(uuid "264940bc-65c6-4aaf-9695-a93bb2d20d6d")
+		)
+		(pin "6"
+			(uuid "4b12bded-96f1-4b42-9920-917f9bed59c1")
+		)
+		(pin "7"
+			(uuid "1af91fe7-c815-4a3e-bbd0-e8252164d534")
+		)
+		(pin "2"
+			(uuid "814153cb-c7fd-47c1-b9f8-b7a3a1540125")
+		)
+		(pin "1"
+			(uuid "80de3981-ad36-4d0c-a56c-f4ee730cbf40")
+		)
+		(pin "8"
+			(uuid "2e8b4e9d-7227-43a8-8a1b-a40074c56cb2")
+		)
+		(pin "5"
+			(uuid "297a6f0b-52e4-4e50-af6e-3c4fc17e94cc")
+		)
+		(instances
+			(project "beepyRcBrd"
+				(path "/c17d25e0-24c9-466a-aee2-e4b5dcf71363/aa19a70b-6aa2-4bf0-b563-651abe9f0469"
+					(reference "U8")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "beepyRc_symbols:Conn_01x03")
+		(at 266.7 125.73 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(uuid "e05315e5-401a-4778-8b1b-e4928de8adee")
+		(property "Reference" "J9"
+			(at 265.684 120.396 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Value" "Conn_01x03"
+			(at 269.24 126.9999 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+				(hide yes)
+			)
+		)
+		(property "Footprint" "TestPoint:TestPoint_Bridge_Pitch2.54mm_Drill1.0mm"
+			(at 266.7 125.73 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" "~"
+			(at 266.7 125.73 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" "Generic connector, single row, 01x03, script generated (kicad-library-utils/schlib/autogen/connector/)"
+			(at 266.7 125.73 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Sim.Device" ""
+			(at 266.7 125.73 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Sim.Type" ""
+			(at 266.7 125.73 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "3"
+			(uuid "e2be7498-e047-4218-9258-8c08998a1961")
+		)
+		(pin "1"
+			(uuid "1741a524-5192-4b23-867e-873daab8903d")
+		)
+		(pin "2"
+			(uuid "f77a2ff3-b804-4354-8c7a-0298c15b006f")
+		)
+		(instances
+			(project "beepyRcBrd"
+				(path "/c17d25e0-24c9-466a-aee2-e4b5dcf71363/aa19a70b-6aa2-4bf0-b563-651abe9f0469"
+					(reference "J9")
 					(unit 1)
 				)
 			)
@@ -7304,7 +7324,7 @@
 	)
 	(symbol
 		(lib_id "beepyRc_symbols:UESD3.3DT5G")
-		(at 246.38 147.32 180)
+		(at 240.03 135.89 180)
 		(unit 1)
 		(exclude_from_sim no)
 		(in_bom yes)
@@ -7312,7 +7332,7 @@
 		(dnp yes)
 		(uuid "ec9f8d35-a35f-4736-a8f0-4c740d44f17b")
 		(property "Reference" "D11"
-			(at 250.698 143.51 0)
+			(at 244.348 132.08 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -7321,7 +7341,7 @@
 			)
 		)
 		(property "Value" "UESD3.3DT5G"
-			(at 247.904 151.384 0)
+			(at 241.554 139.954 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -7330,7 +7350,7 @@
 			)
 		)
 		(property "Footprint" "lscs:SOT-723_L1.2-W0.8-P0.40-LS1.2-BR"
-			(at 246.38 134.62 0)
+			(at 240.03 123.19 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -7339,7 +7359,7 @@
 			)
 		)
 		(property "Datasheet" "https://lcsc.com/product-detail/Others_ON-Semicon_UESD3-3DT5G_ON-Semicon-ON-UESD3-3DT5G_C233435.html"
-			(at 246.38 132.08 0)
+			(at 240.03 120.65 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -7348,7 +7368,7 @@
 			)
 		)
 		(property "Description" ""
-			(at 246.38 147.32 0)
+			(at 240.03 135.89 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -7357,7 +7377,7 @@
 			)
 		)
 		(property "LCSC Part" "C233435"
-			(at 246.38 129.54 0)
+			(at 240.03 118.11 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -7366,7 +7386,7 @@
 			)
 		)
 		(property "Sim.Device" ""
-			(at 246.38 147.32 0)
+			(at 240.03 135.89 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -7375,7 +7395,7 @@
 			)
 		)
 		(property "Sim.Type" ""
-			(at 246.38 147.32 0)
+			(at 240.03 135.89 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -7490,7 +7510,7 @@
 	)
 	(symbol
 		(lib_id "beepyRc_symbols:GND")
-		(at 246.38 154.94 0)
+		(at 240.03 143.51 0)
 		(unit 1)
 		(exclude_from_sim no)
 		(in_bom yes)
@@ -7498,7 +7518,7 @@
 		(dnp no)
 		(uuid "f05ec9bc-15ed-4429-a52f-95d9619574ca")
 		(property "Reference" "#PWR0119"
-			(at 246.38 161.29 0)
+			(at 240.03 149.86 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -7507,7 +7527,7 @@
 			)
 		)
 		(property "Value" "GND"
-			(at 246.38 158.75 0)
+			(at 240.03 147.32 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -7515,7 +7535,7 @@
 			)
 		)
 		(property "Footprint" ""
-			(at 246.38 154.94 0)
+			(at 240.03 143.51 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -7524,7 +7544,7 @@
 			)
 		)
 		(property "Datasheet" ""
-			(at 246.38 154.94 0)
+			(at 240.03 143.51 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -7533,7 +7553,7 @@
 			)
 		)
 		(property "Description" "Power symbol creates a global label with name \"GND\" , ground"
-			(at 246.38 154.94 0)
+			(at 240.03 143.51 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -7837,6 +7857,97 @@
 		)
 	)
 	(symbol
+		(lib_id "beepyRc_symbols:Conn_01x03")
+		(at 267.97 83.82 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(uuid "fa6374b4-5c90-4b90-b2c3-85f77e568a04")
+		(property "Reference" "J10"
+			(at 266.954 78.486 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Value" "Conn_01x03"
+			(at 270.51 85.0899 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+				(hide yes)
+			)
+		)
+		(property "Footprint" "TestPoint:TestPoint_Bridge_Pitch2.54mm_Drill1.0mm"
+			(at 267.97 83.82 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" "~"
+			(at 267.97 83.82 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" "Generic connector, single row, 01x03, script generated (kicad-library-utils/schlib/autogen/connector/)"
+			(at 267.97 83.82 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Sim.Device" ""
+			(at 267.97 83.82 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Sim.Type" ""
+			(at 267.97 83.82 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "3"
+			(uuid "e6b8cd06-6deb-4223-bfb4-c917faada32d")
+		)
+		(pin "1"
+			(uuid "c7ff6a17-59be-43bc-935e-aabe1f430947")
+		)
+		(pin "2"
+			(uuid "d35f53e5-b395-405f-9939-6f593368a8d5")
+		)
+		(instances
+			(project "beepyRcBrd"
+				(path "/c17d25e0-24c9-466a-aee2-e4b5dcf71363/aa19a70b-6aa2-4bf0-b563-651abe9f0469"
+					(reference "J10")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
 		(lib_id "beepyRc_symbols:V_MOT")
 		(at 41.91 27.94 0)
 		(unit 1)
@@ -7897,183 +8008,6 @@
 			(project "beepyRc"
 				(path "/c17d25e0-24c9-466a-aee2-e4b5dcf71363/aa19a70b-6aa2-4bf0-b563-651abe9f0469"
 					(reference "#PWR01")
-					(unit 1)
-				)
-			)
-		)
-	)
-	(symbol
-		(lib_id "beepyRc_symbols:TC118S")
-		(at 57.15 124.46 0)
-		(unit 1)
-		(exclude_from_sim no)
-		(in_bom yes)
-		(on_board yes)
-		(dnp no)
-		(uuid "ff4ccf30-90f5-4d06-b234-f9c7b05e5c9d")
-		(property "Reference" "U7"
-			(at 57.15 114.3 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Value" "TC118S"
-			(at 57.15 116.84 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Footprint" "lscs:SOP-8_L4.9-W3.9-P1.27-LS6.0-BL"
-			(at 57.15 135.89 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Datasheet" "https://lcsc.com/product-detail/Motor-Drivers_TC118S_C88308.html"
-			(at 57.15 138.43 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Description" ""
-			(at 57.15 124.46 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "LCSC Part" "C88308"
-			(at 57.15 140.97 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Sim.Device" ""
-			(at 57.15 124.46 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Sim.Type" ""
-			(at 57.15 124.46 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(pin "5"
-			(uuid "6ab35718-1584-4868-b048-b18e5c098ee2")
-		)
-		(pin "3"
-			(uuid "93b1ac8a-c953-4a34-8348-d07cae868eab")
-		)
-		(pin "2"
-			(uuid "fcb7fe4b-16ac-430c-96bf-4d6191b269dc")
-		)
-		(pin "1"
-			(uuid "6ef9d399-36e3-43b5-9555-2779a88e17fe")
-		)
-		(pin "4"
-			(uuid "fc9c8b41-ac3a-4b8f-aa06-e6b46cbb5b0b")
-		)
-		(pin "6"
-			(uuid "fff5a01e-56c9-4606-82ad-b33cb6f7005c")
-		)
-		(pin "7"
-			(uuid "5297061c-9da4-417e-b9b9-36b1744e33ef")
-		)
-		(pin "8"
-			(uuid "101af75e-d992-4c5e-8fc5-427cea1c0029")
-		)
-		(instances
-			(project "beepyRc"
-				(path "/c17d25e0-24c9-466a-aee2-e4b5dcf71363/aa19a70b-6aa2-4bf0-b563-651abe9f0469"
-					(reference "U7")
-					(unit 1)
-				)
-			)
-		)
-	)
-	(symbol
-		(lib_id "beepyRc_symbols:+5V")
-		(at 265.43 127 0)
-		(unit 1)
-		(exclude_from_sim no)
-		(in_bom yes)
-		(on_board yes)
-		(dnp no)
-		(uuid "ffe7ae99-36c5-4af5-86d4-85b1c81edc09")
-		(property "Reference" "#PWR054"
-			(at 265.43 130.81 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Value" "V_SERVO"
-			(at 265.43 122.936 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Footprint" ""
-			(at 265.43 127 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Datasheet" ""
-			(at 265.43 127 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Description" "Power symbol creates a global label with name \"+5V\""
-			(at 265.43 127 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(pin "1"
-			(uuid "1f9c0074-cba8-4fb9-a3cd-548c3fd09556")
-		)
-		(instances
-			(project "beepyRc"
-				(path "/c17d25e0-24c9-466a-aee2-e4b5dcf71363/aa19a70b-6aa2-4bf0-b563-651abe9f0469"
-					(reference "#PWR054")
 					(unit 1)
 				)
 			)

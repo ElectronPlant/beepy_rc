@@ -1487,16 +1487,6 @@
 	)
 	(wire
 		(pts
-			(xy 173.99 54.61) (xy 173.99 50.8)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "775d7354-48f5-41c0-bc82-8ecfe176bcc5")
-	)
-	(wire
-		(pts
 			(xy 30.48 161.29) (xy 30.48 167.64)
 		)
 		(stroke
@@ -1604,16 +1594,6 @@
 			(type default)
 		)
 		(uuid "a5a7314c-9f0f-4964-81ce-20427fa2a2b6")
-	)
-	(wire
-		(pts
-			(xy 177.8 54.61) (xy 173.99 54.61)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "ac7843cb-148e-472a-84a0-82555a166f90")
 	)
 	(wire
 		(pts
@@ -1864,17 +1844,6 @@
 			(type default)
 		)
 		(uuid "fa9f0483-d815-4339-b920-f58b53c419c8")
-	)
-	(hierarchical_label "V_LIGHTS"
-		(shape output)
-		(at 177.8 54.61 0)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify left)
-		)
-		(uuid "00892eb8-18ae-4005-9db0-9b3d861ff6b4")
 	)
 	(hierarchical_label "V_I_SENSE"
 		(shape output)
