@@ -1,0 +1,54 @@
+/**
+ * @file  servo.h
+ * @brief Driver for analog servo motors.
+ *        Analog servos allow setting their angle based on the duty cycle of their PWM control
+ *        signal. The signal has a period of 20ms (50Hz) and the duration of 1ms (for 0deg) and
+ *        a duration of 2ms (for 180deg).
+ *
+ * @ingroup   MotionServo
+ * @version   V0.0
+ * @author    David Arnaiz
+ * @copyright 2026 David Arnaiz
+ *
+ * This file is part of BeepyRC <TODO: link to repo>.
+ * This project is licensed under the GNU General Public License v3.0 license.
+ */
+
+#ifndef __SERVO_H__
+#define __SERVO_H__
+
+#include "plt_types.h"
+
+#include "pwm_timer.h"
+
+
+/********************************************************************************
+ * Defines
+ ********************************************************************************/
+
+/********************************************************************************
+ * Typedefs
+ ********************************************************************************/
+
+typedef struct SERVO_S {
+    PWM_TIM_HANDLER_T  Timer;
+    PWM_TIM_CHANNELS_T Chn;
+} SERVO_T;
+
+typedef SERVO_T* SERVO_HANDLER_T;
+
+
+/********************************************************************************
+ * Local Vars
+ ********************************************************************************/
+
+/********************************************************************************
+ * Function Prototypes
+ ********************************************************************************/
+bool_t Servo_Init(SERVO_HANDLER_T servo);
+void   Servo_Start(SERVO_HANDLER_T Servo);
+void   Servo_Stop(SERVO_HANDLER_T Servo);
+
+void Servo_SetAngle(SERVO_HANDLER_T Servo, float32_t angle);
+
+#endif /* __SERVO_H__       */
