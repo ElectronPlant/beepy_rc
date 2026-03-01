@@ -19,6 +19,7 @@
 #include "plt_utils.h"
 
 #include "FreeRTOS.h"
+#include "queue.h"
 #include "task.h"
 
 #include "target.h"
@@ -47,9 +48,31 @@
 
 #define MOTION_NUM_MOTORS (4U)
 
+#define MOTION_NUM_PARALLEL_QUEUE_REQUESTS (5U)
+#define MOTION_TIMEOUT_MS                  (3000u) /* Time between motion updates */ //TODO update
+#define MOTION_TIMEOUT_TICKS \
+    ((MOTION_TIMEOUT_MS * configTICK_RATE_HZ) / PLT_UTILS_SECS_TO_MS_FACTOR)
+
 /********************************************************************************
  * Typedefs
  ********************************************************************************/
+typedef enum MOTION_ACTIONS_E {
+    MOTION_ACTION_ADJUST_MOVEMENT = 0,
+    MOTION_ACTION_STOP,
+    MOTION_ACTION_START,
+} MOTION_ACTIONS_T;
+
+typedef struct MOTION_SET_POINT_S {
+    float32_t VLin; /**< Linear velocity  */
+    float32_t VAng; /**< Angular velocity */
+} MOTION_SET_POINT_T;
+
+typedef struct MOTION_QUEUE_MSG_S {
+    MOTION_ACTIONS_T Action;
+    union {
+        MOTION_SET_POINT_T SetPoint;
+    } Payload;
+} MOTION_QUEUE_MSG_T;
 
 /********************************************************************************
  * Function Prototypes
@@ -61,7 +84,8 @@ static void Motion_TaskMain(PLT_UTILS_UNUSED void* parameters);
 /********************************************************************************
  * Local Vars
  ********************************************************************************/
-TaskHandle_t Motion_TaskHandle = NULL;
+TaskHandle_t         Motion_TaskHandle = NULL;
+static QueueHandle_t Motion_RxQueueHandle = NULL;
 
 PWM_TIM_INSTANCE_T Motion_PwmTimers[TARGET_NUM_PWM_TIMERS] = {
     {
@@ -179,6 +203,13 @@ bool_t Motion_Init(void) {
         }
     }
 
+    /* Init Queue */
+    Motion_RxQueueHandle =
+        xQueueCreate(MOTION_NUM_PARALLEL_QUEUE_REQUESTS, sizeof(MOTION_QUEUE_MSG_T));
+    if (NULL == Motion_RxQueueHandle) {
+        ok = DEF_FALSE;
+    }
+
     /* Start Task */
     BaseType_t task_ok = xTaskCreate(
         Motion_TaskMain,
@@ -195,6 +226,23 @@ bool_t Motion_Init(void) {
 /******************************************
  * Task Main
  ******************************************/
+static void Rc_WaitForSetPoint(void) {
+    MOTION_QUEUE_MSG_T msg;
+    if (pdPASS == xQueueReceive(Motion_RxQueueHandle, &msg, MOTION_TIMEOUT_TICKS)) {
+        switch (msg.Action) {
+            case MOTION_ACTION_ADJUST_MOVEMENT:
+                // TODO make something with the new setpoint.
+                (void)msg;
+                break;
+            default:
+                PLT_UNREACHABLE;
+                break;
+        }
+    } else {
+        /* - No-op - */
+    }
+}
+
 static void Motion_TaskLoop(void) {
     static bool_t     forward = DEF_TRUE;
     uint32_t          cnt;
@@ -217,7 +265,7 @@ static void Motion_TaskLoop(void) {
     }
     printf("--------------\n");
 
-    vTaskDelay(3000); /* delay 300 ticks */
+    Rc_WaitForSetPoint();
 }
 
 static void Motion_TaskMain(PLT_UTILS_UNUSED void* parameters) {
