@@ -9,6 +9,8 @@
 		(date "2026-02-25")
 		(rev "V0.0")
 		(company "ElectronPlant")
+		(comment 1 "© David Arnaiz 2026")
+		(comment 2 "Licensed under CERN-OHL-S v2")
 	)
 	(lib_symbols
 		(symbol "beepyRc_symbols:C"
@@ -401,6 +403,130 @@
 			)
 			(embedded_fonts no)
 		)
+		(symbol "beepyRc_symbols:R"
+			(pin_numbers
+				(hide yes)
+			)
+			(pin_names
+				(offset 0)
+			)
+			(exclude_from_sim no)
+			(in_bom yes)
+			(on_board yes)
+			(property "Reference" "R"
+				(at 2.032 0 90)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "Value" "R"
+				(at 0 0 90)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "Footprint" ""
+				(at -1.778 0 90)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(hide yes)
+				)
+			)
+			(property "Datasheet" "~"
+				(at 0 0 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(hide yes)
+				)
+			)
+			(property "Description" "Resistor"
+				(at 0 0 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(hide yes)
+				)
+			)
+			(property "ki_keywords" "R res resistor"
+				(at 0 0 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(hide yes)
+				)
+			)
+			(property "ki_fp_filters" "R_*"
+				(at 0 0 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(hide yes)
+				)
+			)
+			(symbol "R_0_1"
+				(rectangle
+					(start -1.016 -2.54)
+					(end 1.016 2.54)
+					(stroke
+						(width 0.254)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+			)
+			(symbol "R_1_1"
+				(pin passive line
+					(at 0 3.81 270)
+					(length 1.27)
+					(name "~"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "1"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin passive line
+					(at 0 -3.81 90)
+					(length 1.27)
+					(name "~"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "2"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+			)
+			(embedded_fonts no)
+		)
 		(symbol "beepyRc_symbols:TLV1117-33"
 			(pin_names
 				(offset 0.254)
@@ -408,8 +534,8 @@
 			(exclude_from_sim no)
 			(in_bom yes)
 			(on_board yes)
-			(property "Reference" "U"
-				(at -3.81 3.175 0)
+			(property "Reference" "U9"
+				(at 0 6.35 0)
 				(effects
 					(font
 						(size 1.27 1.27)
@@ -417,15 +543,14 @@
 				)
 			)
 			(property "Value" "TLV1117-33"
-				(at 0 3.175 0)
+				(at 0 3.81 0)
 				(effects
 					(font
 						(size 1.27 1.27)
 					)
-					(justify left)
 				)
 			)
-			(property "Footprint" ""
+			(property "Footprint" "lscs:SOT-223_L6.5-W3.5-P2.30-LS7.0-BR"
 				(at 0 0 0)
 				(effects
 					(font
@@ -444,6 +569,24 @@
 				)
 			)
 			(property "Description" "800mA Low-Dropout Linear Regulator, 3.3V fixed output, TO-220/TO-252/TO-263/SOT-223"
+				(at 0 0 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(hide yes)
+				)
+			)
+			(property "Sim.Device" ""
+				(at 0 0 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(hide yes)
+				)
+			)
+			(property "Sim.Type" ""
 				(at 0 0 0)
 				(effects
 					(font
@@ -472,8 +615,8 @@
 			)
 			(symbol "TLV1117-33_0_1"
 				(rectangle
-					(start -5.08 -5.08)
-					(end 5.08 1.905)
+					(start -5.08 1.905)
+					(end 5.08 -5.08)
 					(stroke
 						(width 0.254)
 						(type default)
@@ -538,6 +681,24 @@
 						)
 					)
 				)
+				(pin unspecified line
+					(at 7.62 -2.54 180)
+					(length 2.54)
+					(name "VO"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "4"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
 			)
 			(embedded_fonts no)
 		)
@@ -574,7 +735,7 @@
 	)
 	(text "BeepyRC"
 		(exclude_from_sim no)
-		(at 233.68 173.736 0)
+		(at 252.222 173.99 0)
 		(effects
 			(font
 				(size 7.62 7.62)
@@ -605,6 +766,12 @@
 		(uuid "94df8afd-1685-4259-95bd-baa124be4cc6")
 	)
 	(junction
+		(at 162.56 80.01)
+		(diameter 0)
+		(color 0 0 0 0)
+		(uuid "9d340da8-c502-406f-b091-2a869e0f4128")
+	)
+	(junction
 		(at 176.53 80.01)
 		(diameter 0)
 		(color 0 0 0 0)
@@ -629,6 +796,16 @@
 			(type default)
 		)
 		(uuid "19e17e57-5b3e-4a56-865d-4eba529f8a57")
+	)
+	(wire
+		(pts
+			(xy 162.56 80.01) (xy 176.53 80.01)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "1b556b6d-b4c9-471c-8d36-a193588d6b58")
 	)
 	(wire
 		(pts
@@ -662,6 +839,26 @@
 	)
 	(wire
 		(pts
+			(xy 162.56 82.55) (xy 162.56 80.01)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "751a1447-efeb-4cca-b008-aa5176dcc2af")
+	)
+	(wire
+		(pts
+			(xy 107.95 80.01) (xy 125.73 80.01)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "7574b14a-a2f6-42e1-b9e9-751173def97b")
+	)
+	(wire
+		(pts
 			(xy 176.53 92.71) (xy 176.53 95.25)
 		)
 		(stroke
@@ -682,23 +879,13 @@
 	)
 	(wire
 		(pts
-			(xy 158.75 80.01) (xy 176.53 80.01)
+			(xy 158.75 80.01) (xy 162.56 80.01)
 		)
 		(stroke
 			(width 0)
 			(type default)
 		)
 		(uuid "97bca754-cca7-4308-a449-132408619508")
-	)
-	(wire
-		(pts
-			(xy 88.9 80.01) (xy 125.73 80.01)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "a19f2ae4-a5ff-4846-a45c-6f4e76b815ad")
 	)
 	(wire
 		(pts
@@ -742,6 +929,16 @@
 	)
 	(wire
 		(pts
+			(xy 158.75 82.55) (xy 162.56 82.55)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "ca2493fc-5c56-4d83-be1e-91c025dfe0d9")
+	)
+	(wire
+		(pts
 			(xy 151.13 87.63) (xy 151.13 95.25)
 		)
 		(stroke
@@ -769,6 +966,16 @@
 			(type default)
 		)
 		(uuid "ed042e78-1bf9-4858-b51a-bb4e8746d1f8")
+	)
+	(wire
+		(pts
+			(xy 88.9 80.01) (xy 100.33 80.01)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "ff67b174-a675-41b1-8b92-e383047affd3")
 	)
 	(hierarchical_label "V_OUT"
 		(shape output)
@@ -820,7 +1027,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" "Capacitor_SMD:C_0603_1608Metric_Pad1.08x0.95mm_HandSolder"
+		(property "Footprint" "beepyRcBrd:C_0603_1608Metric_Pad1.08x0.95mm_HandSolder"
 			(at 126.6952 92.71 0)
 			(effects
 				(font
@@ -875,6 +1082,91 @@
 			(project "beepyRcBrd"
 				(path "/c17d25e0-24c9-466a-aee2-e4b5dcf71363/25416242-1327-4080-bdb9-7e497d324eea/def325ff-e16e-4cf4-9ff1-0efa69108464"
 					(reference "C5")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "beepyRc_symbols:R")
+		(at 104.14 80.01 90)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(uuid "7a5991e1-0102-438c-b046-528d4f1919d1")
+		(property "Reference" "R21"
+			(at 99.314 78.74 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Value" "0"
+			(at 107.696 78.74 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" "beepyRcBrd:R_0603_1608Metric_Pad0.98x0.95mm_HandSolder"
+			(at 104.14 81.788 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" "~"
+			(at 104.14 80.01 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" "Resistor"
+			(at 104.14 80.01 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Sim.Device" ""
+			(at 104.14 80.01 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Sim.Type" ""
+			(at 104.14 80.01 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "2"
+			(uuid "8429a565-df6a-4607-9256-2c430ddb4213")
+		)
+		(pin "1"
+			(uuid "0a409739-cc6a-453a-b3b5-9226b0b048c9")
+		)
+		(instances
+			(project "beepyRcBrd"
+				(path "/c17d25e0-24c9-466a-aee2-e4b5dcf71363/25416242-1327-4080-bdb9-7e497d324eea/def325ff-e16e-4cf4-9ff1-0efa69108464"
+					(reference "R21")
 					(unit 1)
 				)
 			)
@@ -973,7 +1265,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" "Capacitor_SMD:C_0603_1608Metric_Pad1.08x0.95mm_HandSolder"
+		(property "Footprint" "beepyRcBrd:C_0603_1608Metric_Pad1.08x0.95mm_HandSolder"
 			(at 177.4952 92.71 0)
 			(effects
 				(font
@@ -1059,7 +1351,7 @@
 				)
 			)
 		)
-		(property "Footprint" "lscs:SOT-223_L6.5-W3.5-P2.30-LS7.0-BR"
+		(property "Footprint" "beepyRcBrd:SOT-223_L6.5-W3.5-P2.30-LS7.0-BR"
 			(at 151.13 80.01 0)
 			(effects
 				(font
@@ -1113,6 +1405,9 @@
 		(pin "2"
 			(uuid "28fe5589-cad1-4ca8-9705-c7acedb6fbcc")
 		)
+		(pin "4"
+			(uuid "5a10ded3-220f-4946-90a5-40578b459ee6")
+		)
 		(instances
 			(project "beepyRcBrd"
 				(path "/c17d25e0-24c9-466a-aee2-e4b5dcf71363/25416242-1327-4080-bdb9-7e497d324eea/def325ff-e16e-4cf4-9ff1-0efa69108464"
@@ -1148,7 +1443,7 @@
 				)
 			)
 		)
-		(property "Footprint" "Diode_SMD:D_SOD-323"
+		(property "Footprint" "beepyRcBrd:D_SOD-323"
 			(at 151.13 64.77 0)
 			(effects
 				(font

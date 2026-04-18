@@ -9,6 +9,8 @@
 		(date "2026-02-25")
 		(rev "V0.0")
 		(company "ElectronPlant")
+		(comment 1 "© David Arnaiz 2026")
+		(comment 2 "Licensed under CERN-OHL-S v2")
 	)
 	(lib_symbols
 		(symbol "beepyRc_symbols:C"
@@ -408,7 +410,7 @@
 	)
 	(text "BeepyRC"
 		(exclude_from_sim no)
-		(at 230.632 173.99 0)
+		(at 252.476 173.736 0)
 		(effects
 			(font
 				(size 7.62 7.62)
@@ -710,7 +712,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" "Capacitor_SMD:C_0603_1608Metric_Pad1.08x0.95mm_HandSolder"
+		(property "Footprint" "beepyRcBrd:C_0603_1608Metric_Pad1.08x0.95mm_HandSolder"
 			(at 115.2652 99.06 0)
 			(effects
 				(font
@@ -861,7 +863,7 @@
 				)
 			)
 		)
-		(property "Footprint" "lscs:SOT-223_L6.5-W3.5-P2.30-LS7.0-BR"
+		(property "Footprint" "beepyRcBrd:SOT-223_L6.5-W3.5-P2.30-LS7.0-BR"
 			(at 140.97 95.25 0)
 			(effects
 				(font
@@ -964,7 +966,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" "Capacitor_SMD:C_0603_1608Metric_Pad1.08x0.95mm_HandSolder"
+		(property "Footprint" "beepyRcBrd:C_0603_1608Metric_Pad1.08x0.95mm_HandSolder"
 			(at 166.0652 99.06 0)
 			(effects
 				(font

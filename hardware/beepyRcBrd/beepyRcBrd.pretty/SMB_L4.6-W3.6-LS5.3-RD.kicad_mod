@@ -1,0 +1,185 @@
+(footprint "SMB_L4.6-W3.6-LS5.3-RD"
+	(version 20241229)
+	(generator "pcbnew")
+	(generator_version "9.0")
+	(layer "F.Cu")
+	(property "Reference" "REF**"
+		(at 2.5 2.6375 0)
+		(layer "F.SilkS")
+		(uuid "b4cfe34e-3437-4cce-af78-702744286de7")
+		(effects
+			(font
+				(size 1 1)
+				(thickness 0.15)
+			)
+		)
+	)
+	(property "Value" "SMBJ15A_C83846"
+		(at 0 4 180)
+		(layer "F.Fab")
+		(hide yes)
+		(uuid "e1f16774-d5f6-4d21-bf5b-7b7234f3f89b")
+		(effects
+			(font
+				(size 1 1)
+				(thickness 0.15)
+			)
+		)
+	)
+	(property "Datasheet" "https://lcsc.com/product-detail/Others_Littelfuse_SMBJ15A_Littelfuse-SMBJ15A_C83846.html"
+		(at 0 0 180)
+		(layer "F.Fab")
+		(hide yes)
+		(uuid "70665c0a-f1fe-4d75-8927-ec2e45fe3cc1")
+		(effects
+			(font
+				(size 1.27 1.27)
+				(thickness 0.15)
+			)
+		)
+	)
+	(property "Description" ""
+		(at 0 0 180)
+		(layer "F.Fab")
+		(hide yes)
+		(uuid "397e258f-4f71-43ac-826a-803a2b2a1f66")
+		(effects
+			(font
+				(size 1.27 1.27)
+				(thickness 0.15)
+			)
+		)
+	)
+	(property "LCSC Part" "C83846"
+		(at 0 0 0)
+		(unlocked yes)
+		(layer "F.Fab")
+		(hide yes)
+		(uuid "fa8ca081-baa1-4a64-9460-8dd58cd0b3db")
+		(effects
+			(font
+				(size 1 1)
+				(thickness 0.15)
+			)
+		)
+	)
+	(attr smd)
+	(fp_line
+		(start -2.74 -1.89)
+		(end 2.74 -1.89)
+		(stroke
+			(width 0.15)
+			(type solid)
+		)
+		(layer "F.SilkS")
+		(uuid "7e562d33-7c7e-4d1c-87fb-b9b4d3a54075")
+	)
+	(fp_line
+		(start -2.74 1.89)
+		(end 2.74 1.89)
+		(stroke
+			(width 0.15)
+			(type solid)
+		)
+		(layer "F.SilkS")
+		(uuid "387f70d0-8036-4a60-a82a-43672e8febe0")
+	)
+	(fp_line
+		(start -1.02 -1.89)
+		(end -1.02 1.89)
+		(stroke
+			(width 0.15)
+			(type solid)
+		)
+		(layer "F.SilkS")
+		(uuid "c3146db4-f6bc-45b1-b3e0-7b052f5db886")
+	)
+	(fp_line
+		(start 2.74 -1.89)
+		(end 2.74 -1.3)
+		(stroke
+			(width 0.15)
+			(type solid)
+		)
+		(layer "F.SilkS")
+		(uuid "4dfcb55f-b705-4d74-9e89-624516de043c")
+	)
+	(fp_line
+		(start 2.74 1.89)
+		(end 2.74 1.3)
+		(stroke
+			(width 0.15)
+			(type solid)
+		)
+		(layer "F.SilkS")
+		(uuid "dbf0974d-aaa8-4704-b217-bcec9121e35c")
+	)
+	(fp_circle
+		(center -2.65 1.8)
+		(end -2.62 1.8)
+		(stroke
+			(width 0.06)
+			(type solid)
+		)
+		(fill no)
+		(layer "F.Fab")
+		(uuid "3d80fc58-7b83-4326-945b-fb0fea9072af")
+	)
+	(fp_text user "${REFERENCE}"
+		(at 0 0 180)
+		(layer "F.Fab")
+		(uuid "d5961a3b-a5c1-460c-985d-619a72fea8d9")
+		(effects
+			(font
+				(size 1 1)
+				(thickness 0.15)
+			)
+		)
+	)
+	(pad "1" smd rect
+		(at -2.36 0)
+		(size 2.05 2.19)
+		(layers "F.Cu" "F.Mask" "F.Paste")
+		(teardrops
+			(best_length_ratio 0.5)
+			(max_length 1)
+			(best_width_ratio 1)
+			(max_width 2)
+			(curved_edges no)
+			(filter_ratio 0.9)
+			(enabled yes)
+			(allow_two_segments yes)
+			(prefer_zone_connections yes)
+		)
+		(uuid "0de2eaf6-fd9e-4dd3-b323-1eb25a9e1f59")
+	)
+	(pad "2" smd rect
+		(at 2.36 0)
+		(size 2.05 2.19)
+		(layers "F.Cu" "F.Mask" "F.Paste")
+		(teardrops
+			(best_length_ratio 0.5)
+			(max_length 1)
+			(best_width_ratio 1)
+			(max_width 2)
+			(curved_edges no)
+			(filter_ratio 0.9)
+			(enabled yes)
+			(allow_two_segments yes)
+			(prefer_zone_connections yes)
+		)
+		(uuid "0a34217c-9f63-4329-8bae-b130becd61b8")
+	)
+	(embedded_fonts no)
+	(model "/home/du555/code/06_hardware/lscs_components/lscs.3dshapes/SMB_L4.6-W3.6-LS5.3-RD.wrl"
+		(offset
+			(xyz 0 -0 -0)
+		)
+		(scale
+			(xyz 1 1 1)
+		)
+		(rotate
+			(xyz 0 0 0)
+		)
+	)
+)

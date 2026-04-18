@@ -8513,8 +8513,8 @@
 		(exclude_from_sim no)
 		(in_bom yes)
 		(on_board yes)
-		(property "Reference" "U"
-			(at -3.81 3.175 0)
+		(property "Reference" "U9"
+			(at 0 6.35 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -8522,15 +8522,14 @@
 			)
 		)
 		(property "Value" "TLV1117-33"
-			(at 0 3.175 0)
+			(at 0 3.81 0)
 			(effects
 				(font
 					(size 1.27 1.27)
 				)
-				(justify left)
 			)
 		)
-		(property "Footprint" ""
+		(property "Footprint" "lscs:SOT-223_L6.5-W3.5-P2.30-LS7.0-BR"
 			(at 0 0 0)
 			(effects
 				(font
@@ -8549,6 +8548,24 @@
 			)
 		)
 		(property "Description" "800mA Low-Dropout Linear Regulator, 3.3V fixed output, TO-220/TO-252/TO-263/SOT-223"
+			(at 0 0 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Sim.Device" ""
+			(at 0 0 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Sim.Type" ""
 			(at 0 0 0)
 			(effects
 				(font
@@ -8577,8 +8594,8 @@
 		)
 		(symbol "TLV1117-33_0_1"
 			(rectangle
-				(start -5.08 -5.08)
-				(end 5.08 1.905)
+				(start -5.08 1.905)
+				(end 5.08 -5.08)
 				(stroke
 					(width 0.254)
 					(type default)
@@ -8636,6 +8653,24 @@
 					)
 				)
 				(number "2"
+					(effects
+						(font
+							(size 1.27 1.27)
+						)
+					)
+				)
+			)
+			(pin unspecified line
+				(at 7.62 -2.54 180)
+				(length 2.54)
+				(name "VO"
+					(effects
+						(font
+							(size 1.27 1.27)
+						)
+					)
+				)
+				(number "4"
 					(effects
 						(font
 							(size 1.27 1.27)

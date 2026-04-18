@@ -9,6 +9,8 @@
 		(date "2025-12-28")
 		(rev "V0.0")
 		(company "ElectronPlant")
+		(comment 1 "© David Arnaiz 2026")
+		(comment 2 "Licensed under CERN-OHL-S v2")
 	)
 	(lib_symbols
 		(symbol "beepyRc_symbols:AT25SF161B-SSHB-T"
@@ -366,369 +368,6 @@
 						)
 					)
 					(number "2"
-						(effects
-							(font
-								(size 1.27 1.27)
-							)
-						)
-					)
-				)
-			)
-			(embedded_fonts no)
-		)
-		(symbol "beepyRc_symbols:Conn_01x02_Pin"
-			(pin_names
-				(offset 1.016)
-				(hide yes)
-			)
-			(exclude_from_sim no)
-			(in_bom yes)
-			(on_board yes)
-			(property "Reference" "J"
-				(at 0 2.54 0)
-				(effects
-					(font
-						(size 1.27 1.27)
-					)
-				)
-			)
-			(property "Value" "Conn_01x02_Pin"
-				(at 0 -5.08 0)
-				(effects
-					(font
-						(size 1.27 1.27)
-					)
-				)
-			)
-			(property "Footprint" ""
-				(at 0 0 0)
-				(effects
-					(font
-						(size 1.27 1.27)
-					)
-					(hide yes)
-				)
-			)
-			(property "Datasheet" "~"
-				(at 0 0 0)
-				(effects
-					(font
-						(size 1.27 1.27)
-					)
-					(hide yes)
-				)
-			)
-			(property "Description" "Generic connector, single row, 01x02, script generated"
-				(at 0 0 0)
-				(effects
-					(font
-						(size 1.27 1.27)
-					)
-					(hide yes)
-				)
-			)
-			(property "ki_locked" ""
-				(at 0 0 0)
-				(effects
-					(font
-						(size 1.27 1.27)
-					)
-				)
-			)
-			(property "ki_keywords" "connector"
-				(at 0 0 0)
-				(effects
-					(font
-						(size 1.27 1.27)
-					)
-					(hide yes)
-				)
-			)
-			(property "ki_fp_filters" "Connector*:*_1x??_*"
-				(at 0 0 0)
-				(effects
-					(font
-						(size 1.27 1.27)
-					)
-					(hide yes)
-				)
-			)
-			(symbol "Conn_01x02_Pin_1_1"
-				(rectangle
-					(start 0.8636 0.127)
-					(end 0 -0.127)
-					(stroke
-						(width 0.1524)
-						(type default)
-					)
-					(fill
-						(type outline)
-					)
-				)
-				(rectangle
-					(start 0.8636 -2.413)
-					(end 0 -2.667)
-					(stroke
-						(width 0.1524)
-						(type default)
-					)
-					(fill
-						(type outline)
-					)
-				)
-				(polyline
-					(pts
-						(xy 1.27 0) (xy 0.8636 0)
-					)
-					(stroke
-						(width 0.1524)
-						(type default)
-					)
-					(fill
-						(type none)
-					)
-				)
-				(polyline
-					(pts
-						(xy 1.27 -2.54) (xy 0.8636 -2.54)
-					)
-					(stroke
-						(width 0.1524)
-						(type default)
-					)
-					(fill
-						(type none)
-					)
-				)
-				(pin passive line
-					(at 5.08 0 180)
-					(length 3.81)
-					(name "Pin_1"
-						(effects
-							(font
-								(size 1.27 1.27)
-							)
-						)
-					)
-					(number "1"
-						(effects
-							(font
-								(size 1.27 1.27)
-							)
-						)
-					)
-				)
-				(pin passive line
-					(at 5.08 -2.54 180)
-					(length 3.81)
-					(name "Pin_2"
-						(effects
-							(font
-								(size 1.27 1.27)
-							)
-						)
-					)
-					(number "2"
-						(effects
-							(font
-								(size 1.27 1.27)
-							)
-						)
-					)
-				)
-			)
-			(embedded_fonts no)
-		)
-		(symbol "beepyRc_symbols:Conn_01x04"
-			(pin_names
-				(offset 1.016)
-				(hide yes)
-			)
-			(exclude_from_sim no)
-			(in_bom yes)
-			(on_board yes)
-			(property "Reference" "J"
-				(at 0 5.08 0)
-				(effects
-					(font
-						(size 1.27 1.27)
-					)
-				)
-			)
-			(property "Value" "Conn_01x04"
-				(at 0 -7.62 0)
-				(effects
-					(font
-						(size 1.27 1.27)
-					)
-				)
-			)
-			(property "Footprint" ""
-				(at 0 0 0)
-				(effects
-					(font
-						(size 1.27 1.27)
-					)
-					(hide yes)
-				)
-			)
-			(property "Datasheet" "~"
-				(at 0 0 0)
-				(effects
-					(font
-						(size 1.27 1.27)
-					)
-					(hide yes)
-				)
-			)
-			(property "Description" "Generic connector, single row, 01x04, script generated (kicad-library-utils/schlib/autogen/connector/)"
-				(at 0 0 0)
-				(effects
-					(font
-						(size 1.27 1.27)
-					)
-					(hide yes)
-				)
-			)
-			(property "ki_keywords" "connector"
-				(at 0 0 0)
-				(effects
-					(font
-						(size 1.27 1.27)
-					)
-					(hide yes)
-				)
-			)
-			(property "ki_fp_filters" "Connector*:*_1x??_*"
-				(at 0 0 0)
-				(effects
-					(font
-						(size 1.27 1.27)
-					)
-					(hide yes)
-				)
-			)
-			(symbol "Conn_01x04_1_1"
-				(rectangle
-					(start -1.27 3.81)
-					(end 1.27 -6.35)
-					(stroke
-						(width 0.254)
-						(type default)
-					)
-					(fill
-						(type background)
-					)
-				)
-				(rectangle
-					(start -1.27 2.667)
-					(end 0 2.413)
-					(stroke
-						(width 0.1524)
-						(type default)
-					)
-					(fill
-						(type none)
-					)
-				)
-				(rectangle
-					(start -1.27 0.127)
-					(end 0 -0.127)
-					(stroke
-						(width 0.1524)
-						(type default)
-					)
-					(fill
-						(type none)
-					)
-				)
-				(rectangle
-					(start -1.27 -2.413)
-					(end 0 -2.667)
-					(stroke
-						(width 0.1524)
-						(type default)
-					)
-					(fill
-						(type none)
-					)
-				)
-				(rectangle
-					(start -1.27 -4.953)
-					(end 0 -5.207)
-					(stroke
-						(width 0.1524)
-						(type default)
-					)
-					(fill
-						(type none)
-					)
-				)
-				(pin passive line
-					(at -5.08 2.54 0)
-					(length 3.81)
-					(name "Pin_1"
-						(effects
-							(font
-								(size 1.27 1.27)
-							)
-						)
-					)
-					(number "1"
-						(effects
-							(font
-								(size 1.27 1.27)
-							)
-						)
-					)
-				)
-				(pin passive line
-					(at -5.08 0 0)
-					(length 3.81)
-					(name "Pin_2"
-						(effects
-							(font
-								(size 1.27 1.27)
-							)
-						)
-					)
-					(number "2"
-						(effects
-							(font
-								(size 1.27 1.27)
-							)
-						)
-					)
-				)
-				(pin passive line
-					(at -5.08 -2.54 0)
-					(length 3.81)
-					(name "Pin_3"
-						(effects
-							(font
-								(size 1.27 1.27)
-							)
-						)
-					)
-					(number "3"
-						(effects
-							(font
-								(size 1.27 1.27)
-							)
-						)
-					)
-				)
-				(pin passive line
-					(at -5.08 -5.08 0)
-					(length 3.81)
-					(name "Pin_4"
-						(effects
-							(font
-								(size 1.27 1.27)
-							)
-						)
-					)
-					(number "4"
 						(effects
 							(font
 								(size 1.27 1.27)
@@ -3469,6 +3108,113 @@
 			)
 			(embedded_fonts no)
 		)
+		(symbol "beepyRc_symbols:TestPoint"
+			(pin_numbers
+				(hide yes)
+			)
+			(pin_names
+				(offset 0.762)
+				(hide yes)
+			)
+			(exclude_from_sim no)
+			(in_bom yes)
+			(on_board yes)
+			(property "Reference" "TP"
+				(at 0 6.858 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "Value" "TestPoint"
+				(at 0 5.08 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "Footprint" ""
+				(at 5.08 0 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(hide yes)
+				)
+			)
+			(property "Datasheet" "~"
+				(at 5.08 0 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(hide yes)
+				)
+			)
+			(property "Description" "test point"
+				(at 0 0 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(hide yes)
+				)
+			)
+			(property "ki_keywords" "test point tp"
+				(at 0 0 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(hide yes)
+				)
+			)
+			(property "ki_fp_filters" "Pin* Test*"
+				(at 0 0 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(hide yes)
+				)
+			)
+			(symbol "TestPoint_0_1"
+				(circle
+					(center 0 3.302)
+					(radius 0.762)
+					(stroke
+						(width 0)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+			)
+			(symbol "TestPoint_1_1"
+				(pin passive line
+					(at 0 0 90)
+					(length 2.54)
+					(name "1"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "1"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+			)
+			(embedded_fonts no)
+		)
 		(symbol "beepyRc_symbols:VDDA"
 			(power)
 			(pin_numbers
@@ -3720,16 +3466,6 @@
 			(embedded_fonts no)
 		)
 	)
-	(text "Debug Serial is shared"
-		(exclude_from_sim no)
-		(at 211.074 139.192 0)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-		)
-		(uuid "02066a7b-8c43-4e89-8cd0-5fdb4c70c565")
-	)
 	(text "LSE - 32.768kHz"
 		(exclude_from_sim no)
 		(at 22.098 99.06 0)
@@ -3774,7 +3510,7 @@
 	)
 	(text "BeepyRC"
 		(exclude_from_sim no)
-		(at 229.616 173.736 0)
+		(at 249.682 173.736 0)
 		(effects
 			(font
 				(size 7.62 7.62)
@@ -4065,7 +3801,7 @@
 	)
 	(wire
 		(pts
-			(xy 269.24 147.32) (xy 265.43 147.32)
+			(xy 241.3 148.59) (xy 237.49 148.59)
 		)
 		(stroke
 			(width 0)
@@ -4242,16 +3978,6 @@
 			(type default)
 		)
 		(uuid "1bf202a5-bbb8-4090-ac2b-1d79cf5d5e64")
-	)
-	(wire
-		(pts
-			(xy 215.9 147.32) (xy 227.33 147.32)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "1c4fd982-3703-40a9-b6e7-7678693f8c75")
 	)
 	(wire
 		(pts
@@ -4475,16 +4201,6 @@
 	)
 	(wire
 		(pts
-			(xy 215.9 144.78) (xy 227.33 144.78)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "4273db44-2438-4953-8bf0-dae3b5015ec4")
-	)
-	(wire
-		(pts
 			(xy 22.86 67.31) (xy 22.86 53.34)
 		)
 		(stroke
@@ -4595,7 +4311,7 @@
 	)
 	(wire
 		(pts
-			(xy 251.46 144.78) (xy 269.24 144.78)
+			(xy 223.52 146.05) (xy 241.3 146.05)
 		)
 		(stroke
 			(width 0)
@@ -4615,7 +4331,7 @@
 	)
 	(wire
 		(pts
-			(xy 265.43 147.32) (xy 265.43 157.48)
+			(xy 237.49 148.59) (xy 237.49 158.75)
 		)
 		(stroke
 			(width 0)
@@ -4785,7 +4501,7 @@
 	)
 	(wire
 		(pts
-			(xy 251.46 152.4) (xy 269.24 152.4)
+			(xy 223.52 153.67) (xy 241.3 153.67)
 		)
 		(stroke
 			(width 0)
@@ -4855,7 +4571,7 @@
 	)
 	(wire
 		(pts
-			(xy 251.46 154.94) (xy 269.24 154.94)
+			(xy 223.52 156.21) (xy 241.3 156.21)
 		)
 		(stroke
 			(width 0)
@@ -4975,16 +4691,6 @@
 	)
 	(wire
 		(pts
-			(xy 223.52 149.86) (xy 223.52 157.48)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "82334184-08ac-47c4-a082-bf8adc451c89")
-	)
-	(wire
-		(pts
 			(xy 92.71 78.74) (xy 104.14 78.74)
 		)
 		(stroke
@@ -5062,16 +4768,6 @@
 			(type default)
 		)
 		(uuid "8d1fd916-d824-4cbf-8cdb-0e9aefcd4a08")
-	)
-	(wire
-		(pts
-			(xy 227.33 149.86) (xy 223.52 149.86)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "8da2739e-3f9e-4a74-a65f-31b490b1385f")
 	)
 	(wire
 		(pts
@@ -5305,16 +5001,6 @@
 	)
 	(wire
 		(pts
-			(xy 203.2 144.78) (xy 208.28 144.78)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "ad1b9dff-604b-4d58-811d-4588fcee0511")
-	)
-	(wire
-		(pts
 			(xy 242.57 33.02) (xy 247.65 33.02)
 		)
 		(stroke
@@ -5345,7 +5031,7 @@
 	)
 	(wire
 		(pts
-			(xy 265.43 137.16) (xy 265.43 142.24)
+			(xy 237.49 138.43) (xy 237.49 143.51)
 		)
 		(stroke
 			(width 0)
@@ -5465,7 +5151,7 @@
 	)
 	(wire
 		(pts
-			(xy 251.46 149.86) (xy 269.24 149.86)
+			(xy 223.52 151.13) (xy 241.3 151.13)
 		)
 		(stroke
 			(width 0)
@@ -5555,16 +5241,6 @@
 	)
 	(wire
 		(pts
-			(xy 213.36 152.4) (xy 227.33 152.4)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "d5933cee-95f8-4949-b38b-7663498716fc")
-	)
-	(wire
-		(pts
 			(xy 229.87 52.07) (xy 243.84 52.07)
 		)
 		(stroke
@@ -5602,16 +5278,6 @@
 			(type default)
 		)
 		(uuid "d94c3068-86e4-46f9-8d5a-0f12340c5026")
-	)
-	(wire
-		(pts
-			(xy 203.2 147.32) (xy 208.28 147.32)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "d9da9640-6e90-4347-ab76-aaf7958a3cd2")
 	)
 	(wire
 		(pts
@@ -5735,7 +5401,7 @@
 	)
 	(wire
 		(pts
-			(xy 269.24 142.24) (xy 265.43 142.24)
+			(xy 241.3 143.51) (xy 237.49 143.51)
 		)
 		(stroke
 			(width 0)
@@ -5873,16 +5539,6 @@
 		)
 		(uuid "2154a6ee-9c4f-4bf8-8e5a-faf1c1151fa6")
 	)
-	(label "DBG_TX"
-		(at 218.44 147.32 0)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify left bottom)
-		)
-		(uuid "26606581-2bfb-4bad-b9b0-caf4ef85db8f")
-	)
 	(label "BOOT0"
 		(at 92.71 48.26 0)
 		(effects
@@ -5943,18 +5599,8 @@
 		)
 		(uuid "4da8778c-84d9-49c1-880d-02d2ca052a95")
 	)
-	(label "DBG_TX"
-		(at 148.59 48.26 0)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify left bottom)
-		)
-		(uuid "72c75a74-b18f-4683-9d2f-ed46ab7f358c")
-	)
 	(label "NRST"
-		(at 251.46 152.4 0)
+		(at 223.52 153.67 0)
 		(effects
 			(font
 				(size 1.27 1.27)
@@ -5964,7 +5610,7 @@
 		(uuid "752b8b8f-7890-4a53-828f-dc3070a0222b")
 	)
 	(label "SWCLK"
-		(at 251.46 144.78 0)
+		(at 223.52 146.05 0)
 		(effects
 			(font
 				(size 1.27 1.27)
@@ -5983,26 +5629,6 @@
 		)
 		(uuid "81a87b92-e9fb-436c-ba04-98e87b7a65bd")
 	)
-	(label "DBG_RX"
-		(at 218.44 144.78 0)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify left bottom)
-		)
-		(uuid "cc8b4456-bc67-4986-b184-754ea8b9f74c")
-	)
-	(label "DBG_RX"
-		(at 148.59 50.8 0)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify left bottom)
-		)
-		(uuid "cce29cc3-36ff-4eb6-874f-d5847044d7c4")
-	)
 	(label "SPI2_MOSI"
 		(at 68.58 68.58 0)
 		(effects
@@ -6014,7 +5640,7 @@
 		(uuid "d3a024e6-cd4e-4f05-8371-fad1f96f0feb")
 	)
 	(label "SWO"
-		(at 251.46 154.94 0)
+		(at 223.52 156.21 0)
 		(effects
 			(font
 				(size 1.27 1.27)
@@ -6034,7 +5660,7 @@
 		(uuid "d74864e1-dfaf-40cd-a317-c8ca31dd1f32")
 	)
 	(label "SWDIO"
-		(at 251.46 149.86 0)
+		(at 223.52 151.13 0)
 		(effects
 			(font
 				(size 1.27 1.27)
@@ -6139,17 +5765,6 @@
 		)
 		(uuid "1e3d21da-88c8-43c5-9def-eec8e2bcf3d5")
 	)
-	(hierarchical_label "UART2_TX"
-		(shape input)
-		(at 203.2 147.32 180)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify right)
-		)
-		(uuid "21165d58-c588-44ec-b8f6-d00d14f570c2")
-	)
 	(hierarchical_label "ENC5_B"
 		(shape input)
 		(at 156.21 45.72 0)
@@ -6248,17 +5863,6 @@
 			(justify left)
 		)
 		(uuid "5495f81e-4c47-40bf-afbf-de0a5c490c6d")
-	)
-	(hierarchical_label "V_USB"
-		(shape input)
-		(at 213.36 152.4 180)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify right)
-		)
-		(uuid "5739ce79-6ab3-4c2a-b1a3-4cef2284553d")
 	)
 	(hierarchical_label "ENC3_A"
 		(shape input)
@@ -6491,6 +6095,17 @@
 		)
 		(uuid "dcb6fa1d-e21d-47b3-beaf-408a6f2ebeab")
 	)
+	(hierarchical_label "UART2_RX"
+		(shape input)
+		(at 156.21 50.8 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left)
+		)
+		(uuid "df6fe251-ee68-4c03-aa57-398e45b71fb3")
+	)
 	(hierarchical_label "PWM2_1"
 		(shape output)
 		(at 156.21 55.88 0)
@@ -6513,17 +6128,6 @@
 		)
 		(uuid "e955dfca-08be-4419-bcec-f8d14d05a4c3")
 	)
-	(hierarchical_label "UART2_RX"
-		(shape input)
-		(at 203.2 144.78 180)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify right)
-		)
-		(uuid "ee572d44-c17e-49c8-88f7-289c569fd0c8")
-	)
 	(hierarchical_label "PWM8_1"
 		(shape output)
 		(at 92.71 81.28 180)
@@ -6534,6 +6138,17 @@
 			(justify right)
 		)
 		(uuid "eed3c91f-f001-44a3-9253-29c7e9af8112")
+	)
+	(hierarchical_label "UART2_TX"
+		(shape output)
+		(at 156.21 48.26 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left)
+		)
+		(uuid "f0fa8626-062e-4a8f-b8d3-fcd5743ba4f4")
 	)
 	(hierarchical_label "GPIO10"
 		(shape bidirectional)
@@ -6548,7 +6163,7 @@
 	)
 	(symbol
 		(lib_id "beepyRc_symbols:V_MCU")
-		(at 265.43 137.16 0)
+		(at 237.49 138.43 0)
 		(unit 1)
 		(exclude_from_sim no)
 		(in_bom yes)
@@ -6557,7 +6172,7 @@
 		(fields_autoplaced yes)
 		(uuid "02f81bc1-3a14-4ad5-be52-d98e283c2d1a")
 		(property "Reference" "#PWR013"
-			(at 265.43 140.97 0)
+			(at 237.49 142.24 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -6566,7 +6181,7 @@
 			)
 		)
 		(property "Value" "V_MCU"
-			(at 265.43 133.35 0)
+			(at 237.49 134.62 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -6574,7 +6189,7 @@
 			)
 		)
 		(property "Footprint" ""
-			(at 265.43 137.16 0)
+			(at 237.49 138.43 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -6583,7 +6198,7 @@
 			)
 		)
 		(property "Datasheet" ""
-			(at 265.43 137.16 0)
+			(at 237.49 138.43 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -6592,7 +6207,7 @@
 			)
 		)
 		(property "Description" "Power symbol creates a global label with name \"V_MCU\""
-			(at 265.43 137.16 0)
+			(at 237.49 138.43 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -6640,7 +6255,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" "Capacitor_SMD:C_0603_1608Metric_Pad1.08x0.95mm_HandSolder"
+		(property "Footprint" "beepyRcBrd:C_0603_1608Metric_Pad1.08x0.95mm_HandSolder"
 			(at 50.4952 124.46 0)
 			(effects
 				(font
@@ -6792,7 +6407,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" "Capacitor_SMD:C_0603_1608Metric_Pad1.08x0.95mm_HandSolder"
+		(property "Footprint" "beepyRcBrd:C_0603_1608Metric_Pad1.08x0.95mm_HandSolder"
 			(at 243.5352 43.18 0)
 			(effects
 				(font
@@ -6877,7 +6492,7 @@
 				)
 			)
 		)
-		(property "Footprint" "Resistor_SMD:R_0603_1608Metric_Pad0.98x0.95mm_HandSolder"
+		(property "Footprint" "beepyRcBrd:R_0603_1608Metric_Pad0.98x0.95mm_HandSolder"
 			(at 72.39 110.998 90)
 			(effects
 				(font
@@ -6965,7 +6580,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" "Capacitor_SMD:C_0603_1608Metric_Pad1.08x0.95mm_HandSolder"
+		(property "Footprint" "beepyRcBrd:C_0603_1608Metric_Pad1.08x0.95mm_HandSolder"
 			(at 49.2252 78.74 0)
 			(effects
 				(font
@@ -7052,7 +6667,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" "Capacitor_SMD:C_0603_1608Metric_Pad1.08x0.95mm_HandSolder"
+		(property "Footprint" "beepyRcBrd:C_0603_1608Metric_Pad1.08x0.95mm_HandSolder"
 			(at 261.3152 41.91 0)
 			(effects
 				(font
@@ -7205,7 +6820,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" "Capacitor_SMD:C_0603_1608Metric_Pad1.08x0.95mm_HandSolder"
+		(property "Footprint" "beepyRcBrd:C_0603_1608Metric_Pad1.08x0.95mm_HandSolder"
 			(at 219.4052 109.22 0)
 			(effects
 				(font
@@ -7357,7 +6972,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" "Capacitor_SMD:C_0603_1608Metric_Pad1.08x0.95mm_HandSolder"
+		(property "Footprint" "beepyRcBrd:C_0603_1608Metric_Pad1.08x0.95mm_HandSolder"
 			(at 225.7552 43.18 0)
 			(effects
 				(font
@@ -7548,6 +7163,73 @@
 		)
 	)
 	(symbol
+		(lib_id "beepyRc_symbols:TestPoint")
+		(at 266.7 100.33 270)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(uuid "47168571-d1cf-48d7-afde-103aa61a2d43")
+		(property "Reference" "TP3"
+			(at 271.272 100.33 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Value" "TestPoint"
+			(at 271.78 101.5999 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+				(hide yes)
+			)
+		)
+		(property "Footprint" "beepyRcBrd:TestPoint_Pad_D1.0mm"
+			(at 266.7 105.41 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" "~"
+			(at 266.7 105.41 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" "test point"
+			(at 266.7 100.33 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "1"
+			(uuid "25025589-3d87-4c69-9729-7205f3fc6305")
+		)
+		(instances
+			(project ""
+				(path "/c17d25e0-24c9-466a-aee2-e4b5dcf71363/12039923-f6f3-42f8-83b6-663c3bf7be39"
+					(reference "TP3")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
 		(lib_id "beepyRc_symbols:GND")
 		(at 213.36 114.3 0)
 		(unit 1)
@@ -7637,7 +7319,7 @@
 				)
 			)
 		)
-		(property "Footprint" "Resistor_SMD:R_0603_1608Metric_Pad0.98x0.95mm_HandSolder"
+		(property "Footprint" "beepyRcBrd:R_0603_1608Metric_Pad0.98x0.95mm_HandSolder"
 			(at 160.02 118.618 90)
 			(effects
 				(font
@@ -7692,91 +7374,6 @@
 			(project "beepyRc"
 				(path "/c17d25e0-24c9-466a-aee2-e4b5dcf71363/12039923-f6f3-42f8-83b6-663c3bf7be39"
 					(reference "R25")
-					(unit 1)
-				)
-			)
-		)
-	)
-	(symbol
-		(lib_id "beepyRc_symbols:R")
-		(at 212.09 147.32 90)
-		(unit 1)
-		(exclude_from_sim no)
-		(in_bom yes)
-		(on_board yes)
-		(dnp no)
-		(uuid "5554ef7e-cc3c-4593-8d92-7d577d9c17b9")
-		(property "Reference" "R22"
-			(at 206.756 146.304 90)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Value" "0"
-			(at 216.154 146.304 90)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Footprint" "Resistor_SMD:R_0603_1608Metric_Pad0.98x0.95mm_HandSolder"
-			(at 212.09 149.098 90)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Datasheet" "~"
-			(at 212.09 147.32 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Description" "Resistor"
-			(at 212.09 147.32 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Sim.Device" ""
-			(at 212.09 147.32 90)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Sim.Type" ""
-			(at 212.09 147.32 90)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(pin "2"
-			(uuid "2b829f9e-541d-4ba7-8985-6a834bfafd63")
-		)
-		(pin "1"
-			(uuid "86f54339-f787-413d-8742-05cd783d5cf1")
-		)
-		(instances
-			(project "beepyRc"
-				(path "/c17d25e0-24c9-466a-aee2-e4b5dcf71363/12039923-f6f3-42f8-83b6-663c3bf7be39"
-					(reference "R22")
 					(unit 1)
 				)
 			)
@@ -7844,71 +7441,6 @@
 			(project "beepyRcBrd"
 				(path "/c17d25e0-24c9-466a-aee2-e4b5dcf71363/12039923-f6f3-42f8-83b6-663c3bf7be39"
 					(reference "#FLG04")
-					(unit 1)
-				)
-			)
-		)
-	)
-	(symbol
-		(lib_id "beepyRc_symbols:GND")
-		(at 223.52 157.48 0)
-		(unit 1)
-		(exclude_from_sim no)
-		(in_bom yes)
-		(on_board yes)
-		(dnp no)
-		(uuid "6046c5ed-871d-4c66-8d4b-c7950cd8a6bc")
-		(property "Reference" "#PWR03"
-			(at 223.52 163.83 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Value" "GND"
-			(at 223.52 161.29 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Footprint" ""
-			(at 223.52 157.48 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Datasheet" ""
-			(at 223.52 157.48 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Description" "Power symbol creates a global label with name \"GND\" , ground"
-			(at 223.52 157.48 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(pin "1"
-			(uuid "2400c5cc-37f6-4780-951b-53906ce21e08")
-		)
-		(instances
-			(project "beepyRc"
-				(path "/c17d25e0-24c9-466a-aee2-e4b5dcf71363/12039923-f6f3-42f8-83b6-663c3bf7be39"
-					(reference "#PWR03")
 					(unit 1)
 				)
 			)
@@ -8006,7 +7538,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" "Package_QFP:LQFP-64_10x10mm_P0.5mm"
+		(property "Footprint" "beepyRcBrd:LQFP-64_10x10mm_P0.5mm"
 			(at 106.68 127 0)
 			(effects
 				(font
@@ -8278,7 +7810,7 @@
 				)
 			)
 		)
-		(property "Footprint" "Resistor_SMD:R_0603_1608Metric_Pad0.98x0.95mm_HandSolder"
+		(property "Footprint" "beepyRcBrd:R_0603_1608Metric_Pad0.98x0.95mm_HandSolder"
 			(at 55.88 110.998 90)
 			(effects
 				(font
@@ -8470,6 +8002,73 @@
 		)
 	)
 	(symbol
+		(lib_id "beepyRc_symbols:TestPoint")
+		(at 266.7 102.87 270)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(uuid "78c6c887-9e39-4ce3-8360-e73ec2f98937")
+		(property "Reference" "TP4"
+			(at 271.272 102.87 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Value" "TestPoint"
+			(at 271.78 104.1399 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+				(hide yes)
+			)
+		)
+		(property "Footprint" "beepyRcBrd:TestPoint_Pad_D1.0mm"
+			(at 266.7 107.95 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" "~"
+			(at 266.7 107.95 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" "test point"
+			(at 266.7 102.87 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "1"
+			(uuid "b7eda2fb-727f-457c-b5ae-bbfcd8e90174")
+		)
+		(instances
+			(project "beepyRcBrd"
+				(path "/c17d25e0-24c9-466a-aee2-e4b5dcf71363/12039923-f6f3-42f8-83b6-663c3bf7be39"
+					(reference "TP4")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
 		(lib_id "beepyRc_symbols:C")
 		(at 215.9 39.37 0)
 		(unit 1)
@@ -8496,7 +8095,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" "Capacitor_SMD:C_0603_1608Metric_Pad1.08x0.95mm_HandSolder"
+		(property "Footprint" "beepyRcBrd:C_0603_1608Metric_Pad1.08x0.95mm_HandSolder"
 			(at 216.8652 43.18 0)
 			(effects
 				(font
@@ -8581,7 +8180,7 @@
 				)
 			)
 		)
-		(property "Footprint" "Resistor_SMD:R_0603_1608Metric_Pad0.98x0.95mm_HandSolder"
+		(property "Footprint" "beepyRcBrd:R_0603_1608Metric_Pad0.98x0.95mm_HandSolder"
 			(at 78.74 177.038 90)
 			(effects
 				(font
@@ -8642,91 +8241,6 @@
 		)
 	)
 	(symbol
-		(lib_id "beepyRc_symbols:R")
-		(at 212.09 144.78 90)
-		(unit 1)
-		(exclude_from_sim no)
-		(in_bom yes)
-		(on_board yes)
-		(dnp no)
-		(uuid "81b736c0-5590-422e-8fa7-04b650a5f373")
-		(property "Reference" "R21"
-			(at 207.01 143.764 90)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Value" "0"
-			(at 216.154 143.764 90)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Footprint" "Resistor_SMD:R_0603_1608Metric_Pad0.98x0.95mm_HandSolder"
-			(at 212.09 146.558 90)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Datasheet" "~"
-			(at 212.09 144.78 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Description" "Resistor"
-			(at 212.09 144.78 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Sim.Device" ""
-			(at 212.09 144.78 90)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Sim.Type" ""
-			(at 212.09 144.78 90)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(pin "2"
-			(uuid "ab6f4cb6-15f7-4c0b-aaa8-cd87632ce820")
-		)
-		(pin "1"
-			(uuid "12901810-a843-44ec-acd3-028ee50f4cf4")
-		)
-		(instances
-			(project "beepyRc"
-				(path "/c17d25e0-24c9-466a-aee2-e4b5dcf71363/12039923-f6f3-42f8-83b6-663c3bf7be39"
-					(reference "R21")
-					(unit 1)
-				)
-			)
-		)
-	)
-	(symbol
 		(lib_id "beepyRc_symbols:C")
 		(at 24.13 120.65 0)
 		(unit 1)
@@ -8754,7 +8268,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" "Capacitor_SMD:C_0603_1608Metric_Pad1.08x0.95mm_HandSolder"
+		(property "Footprint" "beepyRcBrd:C_0603_1608Metric_Pad1.08x0.95mm_HandSolder"
 			(at 25.0952 124.46 0)
 			(effects
 				(font
@@ -8816,7 +8330,7 @@
 	)
 	(symbol
 		(lib_id "beepyRc_symbols:Conn_01x06")
-		(at 274.32 147.32 0)
+		(at 246.38 148.59 0)
 		(unit 1)
 		(exclude_from_sim no)
 		(in_bom yes)
@@ -8824,7 +8338,7 @@
 		(dnp no)
 		(uuid "8553d9ee-5f74-423a-bcc1-1680a5f8f392")
 		(property "Reference" "J3"
-			(at 276.86 147.3199 0)
+			(at 248.92 148.5899 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -8833,7 +8347,7 @@
 			)
 		)
 		(property "Value" "Conn_01x06"
-			(at 272.542 158.496 0)
+			(at 244.602 159.766 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -8842,8 +8356,8 @@
 				(hide yes)
 			)
 		)
-		(property "Footprint" "TestPoint:TestPoint_Bridge_Pitch2.54mm_Drill1.0mm"
-			(at 274.32 147.32 0)
+		(property "Footprint" "beepyRcBrd:PinHeader_1x06_P2.54mm_Vertical"
+			(at 246.38 148.59 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -8852,7 +8366,7 @@
 			)
 		)
 		(property "Datasheet" "~"
-			(at 274.32 147.32 0)
+			(at 246.38 148.59 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -8861,7 +8375,7 @@
 			)
 		)
 		(property "Description" "Generic connector, single row, 01x06, script generated (kicad-library-utils/schlib/autogen/connector/)"
-			(at 274.32 147.32 0)
+			(at 246.38 148.59 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -8870,7 +8384,7 @@
 			)
 		)
 		(property "Sim.Device" ""
-			(at 274.32 147.32 0)
+			(at 246.38 148.59 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -8879,7 +8393,7 @@
 			)
 		)
 		(property "Sim.Type" ""
-			(at 274.32 147.32 0)
+			(at 246.38 148.59 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -9177,100 +8691,6 @@
 		)
 	)
 	(symbol
-		(lib_id "beepyRc_symbols:Conn_01x04")
-		(at 232.41 147.32 0)
-		(unit 1)
-		(exclude_from_sim no)
-		(in_bom yes)
-		(on_board yes)
-		(dnp no)
-		(uuid "910edd71-b5b1-407f-b9b0-1658c7d83a2b")
-		(property "Reference" "J13"
-			(at 234.95 147.3199 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify left)
-			)
-		)
-		(property "Value" "Conn_01x04"
-			(at 231.14 155.956 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify left)
-				(hide yes)
-			)
-		)
-		(property "Footprint" "TestPoint:TestPoint_Bridge_Pitch2.54mm_Drill1.0mm"
-			(at 232.41 147.32 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Datasheet" "~"
-			(at 232.41 147.32 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Description" "Generic connector, single row, 01x04, script generated (kicad-library-utils/schlib/autogen/connector/)"
-			(at 232.41 147.32 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Sim.Device" ""
-			(at 232.41 147.32 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Sim.Type" ""
-			(at 232.41 147.32 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(pin "2"
-			(uuid "d3843028-1864-4768-a31b-d4506de41a30")
-		)
-		(pin "4"
-			(uuid "b2474463-94b8-4b44-8e1e-df462eff2e3b")
-		)
-		(pin "1"
-			(uuid "a9c1b1c1-cfed-4b06-82bb-47fcc1fe04ab")
-		)
-		(pin "3"
-			(uuid "3197ef84-affa-4cf7-94b5-62e2440a4bf6")
-		)
-		(instances
-			(project "beepyRc"
-				(path "/c17d25e0-24c9-466a-aee2-e4b5dcf71363/12039923-f6f3-42f8-83b6-663c3bf7be39"
-					(reference "J13")
-					(unit 1)
-				)
-			)
-		)
-	)
-	(symbol
 		(lib_id "beepyRc_symbols:Crystal")
 		(at 36.83 115.57 0)
 		(unit 1)
@@ -9295,7 +8715,7 @@
 				)
 			)
 		)
-		(property "Footprint" "lscs:OSC-SMD_2P-L7.4-W3.1-LS8.0"
+		(property "Footprint" "beepyRcBrd:OSC-SMD_2P-L7.4-W3.1-LS8.0"
 			(at 36.83 115.57 0)
 			(effects
 				(font
@@ -9382,7 +8802,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" "Capacitor_SMD:C_0603_1608Metric_Pad1.08x0.95mm_HandSolder"
+		(property "Footprint" "beepyRcBrd:C_0603_1608Metric_Pad1.08x0.95mm_HandSolder"
 			(at 234.6452 43.18 0)
 			(effects
 				(font
@@ -9470,7 +8890,7 @@
 				(justify right)
 			)
 		)
-		(property "Footprint" "Resistor_SMD:R_0603_1608Metric_Pad0.98x0.95mm_HandSolder"
+		(property "Footprint" "beepyRcBrd:R_0603_1608Metric_Pad0.98x0.95mm_HandSolder"
 			(at 260.858 107.95 90)
 			(effects
 				(font
@@ -9532,7 +8952,7 @@
 	)
 	(symbol
 		(lib_id "beepyRc_symbols:GND")
-		(at 265.43 157.48 0)
+		(at 237.49 158.75 0)
 		(unit 1)
 		(exclude_from_sim no)
 		(in_bom yes)
@@ -9540,7 +8960,7 @@
 		(dnp no)
 		(uuid "a5731e6f-94bf-4671-81c0-f95ff23111a0")
 		(property "Reference" "#PWR036"
-			(at 265.43 163.83 0)
+			(at 237.49 165.1 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -9549,7 +8969,7 @@
 			)
 		)
 		(property "Value" "GND"
-			(at 265.43 161.29 0)
+			(at 237.49 162.56 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -9557,7 +8977,7 @@
 			)
 		)
 		(property "Footprint" ""
-			(at 265.43 157.48 0)
+			(at 237.49 158.75 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -9566,7 +8986,7 @@
 			)
 		)
 		(property "Datasheet" ""
-			(at 265.43 157.48 0)
+			(at 237.49 158.75 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -9575,7 +8995,7 @@
 			)
 		)
 		(property "Description" "Power symbol creates a global label with name \"GND\" , ground"
-			(at 265.43 157.48 0)
+			(at 237.49 158.75 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -9688,7 +9108,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" "Resistor_SMD:R_0603_1608Metric_Pad0.98x0.95mm_HandSolder"
+		(property "Footprint" "beepyRcBrd:R_0603_1608Metric_Pad0.98x0.95mm_HandSolder"
 			(at 76.962 166.37 90)
 			(effects
 				(font
@@ -9774,7 +9194,7 @@
 				(hide yes)
 			)
 		)
-		(property "Footprint" "Resistor_SMD:R_0603_1608Metric_Pad0.98x0.95mm_HandSolder"
+		(property "Footprint" "beepyRcBrd:R_0603_1608Metric_Pad0.98x0.95mm_HandSolder"
 			(at 251.46 34.798 90)
 			(effects
 				(font
@@ -10058,7 +9478,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" "Capacitor_SMD:C_0603_1608Metric_Pad1.08x0.95mm_HandSolder"
+		(property "Footprint" "beepyRcBrd:C_0603_1608Metric_Pad1.08x0.95mm_HandSolder"
 			(at 23.8252 78.74 0)
 			(effects
 				(font
@@ -10184,96 +9604,6 @@
 		)
 	)
 	(symbol
-		(lib_id "beepyRc_symbols:Conn_01x02_Pin")
-		(at 271.78 100.33 0)
-		(mirror y)
-		(unit 1)
-		(exclude_from_sim no)
-		(in_bom yes)
-		(on_board yes)
-		(dnp no)
-		(fields_autoplaced yes)
-		(uuid "d330779d-b5ad-48a9-a522-14f440e761e8")
-		(property "Reference" "J4"
-			(at 273.05 100.3299 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify right)
-			)
-		)
-		(property "Value" "Conn_01x02_Pin"
-			(at 273.05 102.8699 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify right)
-				(hide yes)
-			)
-		)
-		(property "Footprint" "TestPoint:TestPoint_Bridge_Pitch2.54mm_Drill1.0mm"
-			(at 271.78 100.33 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Datasheet" "~"
-			(at 271.78 100.33 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Description" "Generic connector, single row, 01x02, script generated"
-			(at 271.78 100.33 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Sim.Device" ""
-			(at 271.78 100.33 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Sim.Type" ""
-			(at 271.78 100.33 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(pin "2"
-			(uuid "edd4989b-83c5-4cb1-aa61-3e59e151918e")
-		)
-		(pin "1"
-			(uuid "39853782-3551-493a-9891-2bcf7006c758")
-		)
-		(instances
-			(project "beepyRc"
-				(path "/c17d25e0-24c9-466a-aee2-e4b5dcf71363/12039923-f6f3-42f8-83b6-663c3bf7be39"
-					(reference "J4")
-					(unit 1)
-				)
-			)
-		)
-	)
-	(symbol
 		(lib_id "beepyRc_symbols:SW_Push")
 		(at 208.28 105.41 90)
 		(unit 1)
@@ -10301,7 +9631,7 @@
 				(hide yes)
 			)
 		)
-		(property "Footprint" "lscs:SW-SMD_L3.9-W3.0-P4.45"
+		(property "Footprint" "beepyRcBrd:SW-SMD_L3.9-W3.0-P4.45"
 			(at 203.2 105.41 0)
 			(effects
 				(font
@@ -10388,7 +9718,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" "Capacitor_SMD:C_0603_1608Metric_Pad1.08x0.95mm_HandSolder"
+		(property "Footprint" "beepyRcBrd:C_0603_1608Metric_Pad1.08x0.95mm_HandSolder"
 			(at 270.2052 41.91 0)
 			(effects
 				(font
@@ -10607,7 +9937,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" "Resistor_SMD:R_0603_1608Metric_Pad0.98x0.95mm_HandSolder"
+		(property "Footprint" "beepyRcBrd:R_0603_1608Metric_Pad0.98x0.95mm_HandSolder"
 			(at 46.482 62.23 90)
 			(effects
 				(font
@@ -10759,7 +10089,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" "Capacitor_SMD:C_0603_1608Metric_Pad1.08x0.95mm_HandSolder"
+		(property "Footprint" "beepyRcBrd:C_0603_1608Metric_Pad1.08x0.95mm_HandSolder"
 			(at 207.9752 43.18 0)
 			(effects
 				(font
@@ -10844,7 +10174,7 @@
 				)
 			)
 		)
-		(property "Footprint" "Resistor_SMD:R_0603_1608Metric_Pad0.98x0.95mm_HandSolder"
+		(property "Footprint" "beepyRcBrd:R_0603_1608Metric_Pad0.98x0.95mm_HandSolder"
 			(at 88.9 70.358 90)
 			(effects
 				(font
@@ -10931,7 +10261,7 @@
 				(justify left top)
 			)
 		)
-		(property "Footprint" "Capacitor_SMD:C_0603_1608Metric_Pad1.08x0.95mm_HandSolder"
+		(property "Footprint" "beepyRcBrd:C_0603_1608Metric_Pad1.08x0.95mm_HandSolder"
 			(at 197.8152 43.18 0)
 			(effects
 				(font
@@ -11017,7 +10347,7 @@
 				)
 			)
 		)
-		(property "Footprint" "lscs:SOP-8_L4.9-W3.9-P1.27-LS6.0-BL"
+		(property "Footprint" "beepyRcBrd:SOP-8_L4.9-W3.9-P1.27-LS6.0-BL"
 			(at 106.68 187.96 0)
 			(effects
 				(font
@@ -11195,7 +10525,7 @@
 				)
 			)
 		)
-		(property "Footprint" "lscs:CRYSTAL-SMD_L11.4-W4.7-LS12.7"
+		(property "Footprint" "beepyRcBrd:CRYSTAL-SMD_L11.4-W4.7-LS12.7"
 			(at 35.56 67.31 0)
 			(effects
 				(font
@@ -11282,7 +10612,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" "Capacitor_SMD:C_0603_1608Metric_Pad1.08x0.95mm_HandSolder"
+		(property "Footprint" "beepyRcBrd:C_0603_1608Metric_Pad1.08x0.95mm_HandSolder"
 			(at 88.5952 124.46 0)
 			(effects
 				(font

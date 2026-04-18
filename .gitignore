@@ -14,6 +14,10 @@ media/*
 
 # Hardware
 *~*
-hardware/beepyRcBrd/beepyRCBrd-backups/*
+fp-info-cache
+*.kicad_prl
+hardware/beepyRcBrd/beepyRCBrd-backups
 hardware/beepyRcBrd/*bak
+hardware/beepyRcBrd/fp-info-cache
+hardware/beepyRcBrd/docs/models
 hardware/docs/.

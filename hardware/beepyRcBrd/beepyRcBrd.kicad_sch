@@ -9,6 +9,8 @@
 		(date "2025-12-16")
 		(rev "V0.0")
 		(company "ElectronPlant")
+		(comment 1 "© David Arnaiz 2026")
+		(comment 2 "Licensed under CERN-OHL-S v2")
 	)
 	(lib_symbols
 		(symbol "+5V_1"
@@ -858,6 +860,113 @@
 			)
 			(embedded_fonts no)
 		)
+		(symbol "beepyRc_symbols:MountingHole_Pad"
+			(pin_numbers
+				(hide yes)
+			)
+			(pin_names
+				(offset 1.016)
+				(hide yes)
+			)
+			(exclude_from_sim no)
+			(in_bom no)
+			(on_board yes)
+			(property "Reference" "H"
+				(at 0 6.35 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "Value" "MountingHole_Pad"
+				(at 0 4.445 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "Footprint" ""
+				(at 0 0 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(hide yes)
+				)
+			)
+			(property "Datasheet" "~"
+				(at 0 0 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(hide yes)
+				)
+			)
+			(property "Description" "Mounting Hole with connection"
+				(at 0 0 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(hide yes)
+				)
+			)
+			(property "ki_keywords" "mounting hole"
+				(at 0 0 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(hide yes)
+				)
+			)
+			(property "ki_fp_filters" "MountingHole*Pad*"
+				(at 0 0 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(hide yes)
+				)
+			)
+			(symbol "MountingHole_Pad_0_1"
+				(circle
+					(center 0 1.27)
+					(radius 1.27)
+					(stroke
+						(width 1.27)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+			)
+			(symbol "MountingHole_Pad_1_1"
+				(pin input line
+					(at 0 -2.54 90)
+					(length 2.54)
+					(name "1"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "1"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+			)
+			(embedded_fonts no)
+		)
 		(symbol "beepyRc_symbols:PWR_FLAG"
 			(power)
 			(pin_numbers
@@ -954,113 +1063,6 @@
 					)
 					(fill
 						(type none)
-					)
-				)
-			)
-			(embedded_fonts no)
-		)
-		(symbol "beepyRc_symbols:TestPoint"
-			(pin_numbers
-				(hide yes)
-			)
-			(pin_names
-				(offset 0.762)
-				(hide yes)
-			)
-			(exclude_from_sim no)
-			(in_bom yes)
-			(on_board yes)
-			(property "Reference" "TP"
-				(at 0 6.858 0)
-				(effects
-					(font
-						(size 1.27 1.27)
-					)
-				)
-			)
-			(property "Value" "TestPoint"
-				(at 0 5.08 0)
-				(effects
-					(font
-						(size 1.27 1.27)
-					)
-				)
-			)
-			(property "Footprint" ""
-				(at 5.08 0 0)
-				(effects
-					(font
-						(size 1.27 1.27)
-					)
-					(hide yes)
-				)
-			)
-			(property "Datasheet" "~"
-				(at 5.08 0 0)
-				(effects
-					(font
-						(size 1.27 1.27)
-					)
-					(hide yes)
-				)
-			)
-			(property "Description" "test point"
-				(at 0 0 0)
-				(effects
-					(font
-						(size 1.27 1.27)
-					)
-					(hide yes)
-				)
-			)
-			(property "ki_keywords" "test point tp"
-				(at 0 0 0)
-				(effects
-					(font
-						(size 1.27 1.27)
-					)
-					(hide yes)
-				)
-			)
-			(property "ki_fp_filters" "Pin* Test*"
-				(at 0 0 0)
-				(effects
-					(font
-						(size 1.27 1.27)
-					)
-					(hide yes)
-				)
-			)
-			(symbol "TestPoint_0_1"
-				(circle
-					(center 0 3.302)
-					(radius 0.762)
-					(stroke
-						(width 0)
-						(type default)
-					)
-					(fill
-						(type none)
-					)
-				)
-			)
-			(symbol "TestPoint_1_1"
-				(pin passive line
-					(at 0 0 90)
-					(length 2.54)
-					(name "1"
-						(effects
-							(font
-								(size 1.27 1.27)
-							)
-						)
-					)
-					(number "1"
-						(effects
-							(font
-								(size 1.27 1.27)
-							)
-						)
 					)
 				)
 			)
@@ -1599,13 +1601,23 @@
 	)
 	(text "BeepyRC"
 		(exclude_from_sim no)
-		(at 230.886 173.736 0)
+		(at 253.238 173.99 0)
 		(effects
 			(font
 				(size 7.62 7.62)
 			)
 		)
 		(uuid "65eafa3b-1e27-40db-9985-8406c005f1a4")
+	)
+	(text "Board Mounting Holes"
+		(exclude_from_sim no)
+		(at 264.668 82.55 0)
+		(effects
+			(font
+				(size 1.905 1.905)
+			)
+		)
+		(uuid "c9b2c69c-19dd-4960-a994-a8fb3dd363af")
 	)
 	(junction
 		(at 63.5 139.7)
@@ -1614,10 +1626,22 @@
 		(uuid "006d531c-a03f-4573-92d0-775bfef9bed7")
 	)
 	(junction
-		(at 63.5 149.86)
+		(at 259.08 109.22)
 		(diameter 0)
 		(color 0 0 0 0)
-		(uuid "32ee73dd-5b8d-4f79-993a-e8aa3bce4a49")
+		(uuid "4cb80d26-2dd0-4906-bce8-61b2a482afa6")
+	)
+	(junction
+		(at 259.08 96.52)
+		(diameter 0)
+		(color 0 0 0 0)
+		(uuid "7dfbdfd1-3b7c-458a-b910-145c908c15dc")
+	)
+	(junction
+		(at 259.08 102.87)
+		(diameter 0)
+		(color 0 0 0 0)
+		(uuid "8421cf7d-abd2-4a8e-bb0f-f7e1a976ae92")
 	)
 	(wire
 		(pts
@@ -1648,16 +1672,6 @@
 			(type default)
 		)
 		(uuid "0748f426-ea63-45c0-af5f-c266ec831dec")
-	)
-	(wire
-		(pts
-			(xy 63.5 143.51) (xy 63.5 139.7)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "08805b9a-f058-47c4-9aa4-b7591bdad425")
 	)
 	(wire
 		(pts
@@ -1851,6 +1865,16 @@
 	)
 	(wire
 		(pts
+			(xy 259.08 90.17) (xy 259.08 96.52)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "363685a4-490f-4a34-af3c-7eec0bdc905a")
+	)
+	(wire
+		(pts
 			(xy 181.61 60.96) (xy 195.58 60.96)
 		)
 		(stroke
@@ -1951,6 +1975,16 @@
 	)
 	(wire
 		(pts
+			(xy 259.08 109.22) (xy 262.89 109.22)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "51bddeb6-9dd3-4e63-9aca-d5c9970b3c1e")
+	)
+	(wire
+		(pts
 			(xy 181.61 41.91) (xy 195.58 41.91)
 		)
 		(stroke
@@ -1968,16 +2002,6 @@
 			(type default)
 		)
 		(uuid "5606c30b-670f-42c0-9906-e3cabfd79cad")
-	)
-	(wire
-		(pts
-			(xy 59.69 146.05) (xy 63.5 146.05)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "5759e8f5-6c65-4b6d-a07f-81a33f11c9c8")
 	)
 	(wire
 		(pts
@@ -2008,16 +2032,6 @@
 			(type default)
 		)
 		(uuid "5abaf90f-716b-443f-84b5-d362d323ec7d")
-	)
-	(wire
-		(pts
-			(xy 59.69 143.51) (xy 63.5 143.51)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "5f33bf04-19c8-4833-8811-5d39f7a58671")
 	)
 	(wire
 		(pts
@@ -2171,6 +2185,16 @@
 	)
 	(wire
 		(pts
+			(xy 262.89 90.17) (xy 259.08 90.17)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "7c208df5-df43-4685-9387-7331de402dfa")
+	)
+	(wire
+		(pts
 			(xy 217.17 38.1) (xy 229.87 38.1)
 		)
 		(stroke
@@ -2261,6 +2285,16 @@
 	)
 	(wire
 		(pts
+			(xy 259.08 96.52) (xy 262.89 96.52)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "93d47d24-5048-48c9-a4e6-676976500196")
+	)
+	(wire
+		(pts
 			(xy 261.62 49.53) (xy 274.32 49.53)
 		)
 		(stroke
@@ -2291,6 +2325,16 @@
 	)
 	(wire
 		(pts
+			(xy 165.1 27.94) (xy 165.1 36.83)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "99656c3d-5c17-4b45-8056-729a040c0483")
+	)
+	(wire
+		(pts
 			(xy 137.16 58.42) (xy 149.86 58.42)
 		)
 		(stroke
@@ -2308,6 +2352,16 @@
 			(type default)
 		)
 		(uuid "a0e4ca16-f7ab-4f06-b4be-58f27fce6daf")
+	)
+	(polyline
+		(pts
+			(xy 241.3 125.73) (xy 241.3 78.74)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "a14224c5-c29e-4f23-85b6-988a0e2d17b2")
 	)
 	(wire
 		(pts
@@ -2331,13 +2385,23 @@
 	)
 	(wire
 		(pts
-			(xy 80.01 26.67) (xy 80.01 31.75)
+			(xy 259.08 109.22) (xy 259.08 115.57)
 		)
 		(stroke
 			(width 0)
 			(type default)
 		)
-		(uuid "a762cd7f-79f2-42fd-8b1e-1a59d4f3de93")
+		(uuid "a800bca1-ecf6-4dd4-9050-65851894e082")
+	)
+	(wire
+		(pts
+			(xy 259.08 96.52) (xy 259.08 102.87)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "aa9d5f51-293a-4c89-b1d2-750650a72f45")
 	)
 	(wire
 		(pts
@@ -2371,6 +2435,16 @@
 	)
 	(wire
 		(pts
+			(xy 259.08 102.87) (xy 259.08 109.22)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "aeecc42d-0673-4a80-9f82-a37ff72f28fb")
+	)
+	(wire
+		(pts
 			(xy 101.6 85.09) (xy 120.65 85.09)
 		)
 		(stroke
@@ -2378,6 +2452,16 @@
 			(type default)
 		)
 		(uuid "afc3b2e9-5835-4e3a-bc96-19835d89002d")
+	)
+	(polyline
+		(pts
+			(xy 241.3 78.74) (xy 284.48 78.74)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "b1ca1cd2-c8da-41fc-9db5-3dee0804080e")
 	)
 	(wire
 		(pts
@@ -2528,16 +2612,6 @@
 			(type default)
 		)
 		(uuid "c5747f0b-e3c0-44f1-93ed-fc0811a94f53")
-	)
-	(wire
-		(pts
-			(xy 63.5 146.05) (xy 63.5 149.86)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "c72a01c5-d844-409a-aede-48ae0867f979")
 	)
 	(wire
 		(pts
@@ -2718,6 +2792,16 @@
 			(type default)
 		)
 		(uuid "dd96da7e-557a-411e-84ee-e5077516c955")
+	)
+	(wire
+		(pts
+			(xy 259.08 102.87) (xy 262.89 102.87)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "ddb45c13-84b2-42e0-81e2-5a0ab6a082ea")
 	)
 	(wire
 		(pts
@@ -4016,7 +4100,7 @@
 				(hide yes)
 			)
 		)
-		(property "Footprint" "lscs:CONN-TH_P5.00_KF301-5.0-2P"
+		(property "Footprint" "beepyRcBrd:CONN-TH_P5.00_KF301-5.0-2P"
 			(at 36.83 146.05 0)
 			(effects
 				(font
@@ -4209,6 +4293,91 @@
 		)
 	)
 	(symbol
+		(lib_id "beepyRc_symbols:MountingHole_Pad")
+		(at 265.43 96.52 270)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom no)
+		(on_board yes)
+		(dnp no)
+		(fields_autoplaced yes)
+		(uuid "35dd1e2d-f0ad-44ed-8245-bbeb3756427b")
+		(property "Reference" "H2"
+			(at 269.24 95.2499 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Value" "MT"
+			(at 269.24 97.7899 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Footprint" "beepyRcBrd:MountingHole_4.3mm_M4_DIN965_Pad_TopBottom"
+			(at 265.43 96.52 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" "~"
+			(at 265.43 96.52 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" "Mounting Hole with connection"
+			(at 265.43 96.52 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Sim.Device" ""
+			(at 265.43 96.52 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Sim.Type" ""
+			(at 265.43 96.52 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "1"
+			(uuid "04315576-6d45-4e27-b466-a723cec61e7a")
+		)
+		(instances
+			(project "beepyRcBrd"
+				(path "/c17d25e0-24c9-466a-aee2-e4b5dcf71363"
+					(reference "H2")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
 		(lib_id "beepyRc_symbols:V_MOT")
 		(at 168.91 129.54 0)
 		(unit 1)
@@ -4367,7 +4536,7 @@
 				(hide yes)
 			)
 		)
-		(property "Footprint" "lscs:CONN-TH_5P-P3.50_DORABO_DB125-3.5-5P-GN-S"
+		(property "Footprint" "beepyRcBrd:CONN-TH_5P-P3.50_DORABO_DB125-3.5-5P-GN-S"
 			(at 257.81 148.59 0)
 			(effects
 				(font
@@ -4562,6 +4731,156 @@
 			(project "beepyRc"
 				(path "/c17d25e0-24c9-466a-aee2-e4b5dcf71363"
 					(reference "#PWR0105")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "beepyRc_symbols:GND")
+		(at 259.08 115.57 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(uuid "4bc73f77-d242-4ed6-9573-8a74c2b763ed")
+		(property "Reference" "#PWR092"
+			(at 259.08 121.92 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Value" "GND"
+			(at 259.08 119.38 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" ""
+			(at 259.08 115.57 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" ""
+			(at 259.08 115.57 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" "Power symbol creates a global label with name \"GND\" , ground"
+			(at 259.08 115.57 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "1"
+			(uuid "b4479b61-7ba2-4d89-a8da-197da0e1a986")
+		)
+		(instances
+			(project "beepyRcBrd"
+				(path "/c17d25e0-24c9-466a-aee2-e4b5dcf71363"
+					(reference "#PWR092")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "beepyRc_symbols:MountingHole_Pad")
+		(at 265.43 90.17 270)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom no)
+		(on_board yes)
+		(dnp no)
+		(fields_autoplaced yes)
+		(uuid "4ea96fc5-77a0-4392-b02f-8c6fa2fce0fb")
+		(property "Reference" "H1"
+			(at 269.24 88.8999 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Value" "MT"
+			(at 269.24 91.4399 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Footprint" "beepyRcBrd:MountingHole_4.3mm_M4_DIN965_Pad_TopBottom"
+			(at 265.43 90.17 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" "~"
+			(at 265.43 90.17 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" "Mounting Hole with connection"
+			(at 265.43 90.17 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Sim.Device" ""
+			(at 265.43 90.17 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Sim.Type" ""
+			(at 265.43 90.17 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "1"
+			(uuid "947dc986-3d84-48f9-ae9c-c44edc6164bd")
+		)
+		(instances
+			(project "beepyRcBrd"
+				(path "/c17d25e0-24c9-466a-aee2-e4b5dcf71363"
+					(reference "H1")
 					(unit 1)
 				)
 			)
@@ -4764,6 +5083,71 @@
 		)
 	)
 	(symbol
+		(lib_id "beepyRc_symbols:+5V")
+		(at 165.1 27.94 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(uuid "6808c356-72af-4e2c-879b-c65440c077c6")
+		(property "Reference" "#PWR03"
+			(at 165.1 31.75 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Value" "V_USB"
+			(at 165.354 24.13 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" ""
+			(at 165.1 27.94 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" ""
+			(at 165.1 27.94 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" "Power symbol creates a global label with name \"+5V\""
+			(at 165.1 27.94 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "1"
+			(uuid "042ba726-4317-4a35-aa62-3df085b0fe74")
+		)
+		(instances
+			(project "beepyRcBrd"
+				(path "/c17d25e0-24c9-466a-aee2-e4b5dcf71363"
+					(reference "#PWR03")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
 		(lib_id "beepyRc_symbols:V_MCU")
 		(at 88.9 187.96 0)
 		(unit 1)
@@ -4823,91 +5207,6 @@
 			(project "beepyRcBrd"
 				(path "/c17d25e0-24c9-466a-aee2-e4b5dcf71363"
 					(reference "#PWR0135")
-					(unit 1)
-				)
-			)
-		)
-	)
-	(symbol
-		(lib_id "beepyRc_symbols:TestPoint")
-		(at 59.69 143.51 90)
-		(unit 1)
-		(exclude_from_sim no)
-		(in_bom yes)
-		(on_board yes)
-		(dnp no)
-		(uuid "6cd43a70-a9f7-4776-a05c-20872229049c")
-		(property "Reference" "TP1"
-			(at 55.372 143.51 90)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify left)
-			)
-		)
-		(property "Value" "TestPoint"
-			(at 54.61 142.2401 90)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify left)
-				(hide yes)
-			)
-		)
-		(property "Footprint" "TestPoint:TestPoint_Pad_D2.5mm"
-			(at 59.69 138.43 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Datasheet" "~"
-			(at 59.69 138.43 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Description" "test point"
-			(at 59.69 143.51 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Sim.Device" ""
-			(at 59.69 143.51 90)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Sim.Type" ""
-			(at 59.69 143.51 90)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(pin "1"
-			(uuid "31a3a6ee-342f-40dd-81b9-0a8262aaa34b")
-		)
-		(instances
-			(project "beepyRc"
-				(path "/c17d25e0-24c9-466a-aee2-e4b5dcf71363"
-					(reference "TP1")
 					(unit 1)
 				)
 			)
@@ -5241,71 +5540,6 @@
 		)
 	)
 	(symbol
-		(lib_id "beepyRc_symbols:+5V")
-		(at 80.01 26.67 0)
-		(unit 1)
-		(exclude_from_sim no)
-		(in_bom yes)
-		(on_board yes)
-		(dnp no)
-		(uuid "8205542a-7c46-434b-90f7-b2edf0ccdea8")
-		(property "Reference" "#PWR077"
-			(at 80.01 30.48 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Value" "V_USB"
-			(at 80.264 22.86 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Footprint" ""
-			(at 80.01 26.67 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Datasheet" ""
-			(at 80.01 26.67 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Description" "Power symbol creates a global label with name \"+5V\""
-			(at 80.01 26.67 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(pin "1"
-			(uuid "5ceabfe5-0205-4048-b3ab-297ddd16547b")
-		)
-		(instances
-			(project "beepyRcBrd"
-				(path "/c17d25e0-24c9-466a-aee2-e4b5dcf71363"
-					(reference "#PWR077")
-					(unit 1)
-				)
-			)
-		)
-	)
-	(symbol
 		(lib_name "+5V_1")
 		(lib_id "beepyRc_symbols:+5V_1")
 		(at 177.8 129.54 0)
@@ -5431,91 +5665,6 @@
 			(project "beepyRcBrd"
 				(path "/c17d25e0-24c9-466a-aee2-e4b5dcf71363"
 					(reference "#PWR0141")
-					(unit 1)
-				)
-			)
-		)
-	)
-	(symbol
-		(lib_id "beepyRc_symbols:TestPoint")
-		(at 59.69 146.05 90)
-		(unit 1)
-		(exclude_from_sim no)
-		(in_bom yes)
-		(on_board yes)
-		(dnp no)
-		(uuid "90e91d10-d715-4807-abf6-9e09021cca40")
-		(property "Reference" "TP6"
-			(at 55.372 146.05 90)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify left)
-			)
-		)
-		(property "Value" "TestPoint"
-			(at 54.61 144.7801 90)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify left)
-				(hide yes)
-			)
-		)
-		(property "Footprint" "TestPoint:TestPoint_Pad_D2.5mm"
-			(at 59.69 140.97 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Datasheet" "~"
-			(at 59.69 140.97 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Description" "test point"
-			(at 59.69 146.05 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Sim.Device" ""
-			(at 59.69 146.05 90)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Sim.Type" ""
-			(at 59.69 146.05 90)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(pin "1"
-			(uuid "de61cd5e-257f-48ac-a47f-0f0959ba8125")
-		)
-		(instances
-			(project "beepyRc"
-				(path "/c17d25e0-24c9-466a-aee2-e4b5dcf71363"
-					(reference "TP6")
 					(unit 1)
 				)
 			)
@@ -5914,6 +6063,91 @@
 		)
 	)
 	(symbol
+		(lib_id "beepyRc_symbols:MountingHole_Pad")
+		(at 265.43 102.87 270)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom no)
+		(on_board yes)
+		(dnp no)
+		(fields_autoplaced yes)
+		(uuid "c99e6c03-d98c-42e9-803d-c063c3b12b6f")
+		(property "Reference" "H3"
+			(at 269.24 101.5999 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Value" "MT"
+			(at 269.24 104.1399 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Footprint" "beepyRcBrd:MountingHole_4.3mm_M4_DIN965_Pad_TopBottom"
+			(at 265.43 102.87 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" "~"
+			(at 265.43 102.87 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" "Mounting Hole with connection"
+			(at 265.43 102.87 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Sim.Device" ""
+			(at 265.43 102.87 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Sim.Type" ""
+			(at 265.43 102.87 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "1"
+			(uuid "d7100745-26aa-40ab-ad32-5c958a39a18b")
+		)
+		(instances
+			(project "beepyRcBrd"
+				(path "/c17d25e0-24c9-466a-aee2-e4b5dcf71363"
+					(reference "H3")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
 		(lib_id "beepyRc_symbols:V_MOT")
 		(at 114.3 187.96 0)
 		(unit 1)
@@ -5973,6 +6207,91 @@
 			(project "beepyRcBrd"
 				(path "/c17d25e0-24c9-466a-aee2-e4b5dcf71363"
 					(reference "#PWR0139")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "beepyRc_symbols:MountingHole_Pad")
+		(at 265.43 109.22 270)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom no)
+		(on_board yes)
+		(dnp no)
+		(fields_autoplaced yes)
+		(uuid "dfd5f254-4052-489c-a36c-0c86b2158a4d")
+		(property "Reference" "H4"
+			(at 269.24 107.9499 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Value" "MT"
+			(at 269.24 110.4899 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Footprint" "beepyRcBrd:MountingHole_4.3mm_M4_DIN965_Pad_TopBottom"
+			(at 265.43 109.22 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" "~"
+			(at 265.43 109.22 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" "Mounting Hole with connection"
+			(at 265.43 109.22 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Sim.Device" ""
+			(at 265.43 109.22 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Sim.Type" ""
+			(at 265.43 109.22 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "1"
+			(uuid "715f2249-fcbf-4db3-8bfa-79baf1364821")
+		)
+		(instances
+			(project "beepyRcBrd"
+				(path "/c17d25e0-24c9-466a-aee2-e4b5dcf71363"
+					(reference "H4")
 					(unit 1)
 				)
 			)
@@ -6719,16 +7038,6 @@
 				(justify left)
 			)
 		)
-		(pin "V_USB" input
-			(at 80.01 31.75 90)
-			(uuid "715cf4fc-a93d-4dd1-96db-88085ade09c3")
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify right)
-			)
-		)
 		(pin "ADC1_IN8" bidirectional
 			(at 59.69 100.33 180)
 			(uuid "63041c74-cf43-44d7-aeb4-f22b7a3f5953")
@@ -6759,9 +7068,9 @@
 				(justify left)
 			)
 		)
-		(pin "UART2_TX" input
+		(pin "UART2_TX" output
 			(at 59.69 58.42 180)
-			(uuid "e8e8e86c-68bc-4ba7-b4e4-7d76c1051710")
+			(uuid "e1703847-e421-4fb4-bd89-5ae00e650a78")
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -7126,6 +7435,16 @@
 		(pin "ACC_INT" output
 			(at 181.61 52.07 0)
 			(uuid "ebaf31c1-27e3-41df-baab-f556b71f2b0a")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify right)
+			)
+		)
+		(pin "V_USB" input
+			(at 165.1 36.83 90)
+			(uuid "d6689f21-86c1-4f55-88d0-4431386788aa")
 			(effects
 				(font
 					(size 1.27 1.27)

@@ -9,6 +9,8 @@
 		(date "2026-02-25")
 		(rev "V0.0")
 		(company "ElectronPlant")
+		(comment 1 "© David Arnaiz 2026")
+		(comment 2 "Licensed under CERN-OHL-S v2")
 	)
 	(lib_symbols
 		(symbol "beepyRc_symbols:+5V"
@@ -1999,7 +2001,7 @@
 	)
 	(text "BeepyRC"
 		(exclude_from_sim no)
-		(at 233.426 173.228 0)
+		(at 252.73 173.99 0)
 		(effects
 			(font
 				(size 7.62 7.62)
@@ -2037,7 +2039,7 @@
 		)
 		(uuid "24b92966-b594-471b-84ee-fea116c1ffdb")
 	)
-	(text "C14 between AVDD (P12) and AGND (P10)\nC29 between DVDD (P2) and DGND (P1)\nC30 between PVDD (P14) and PGND (P11)"
+	(text "C33 between AVDD (P12) and AGND (P10)\nC34 between DVDD (P2) and DGND (P1)\nC37 between PVDD (P14) and PGND (P11)"
 		(exclude_from_sim no)
 		(at 48.514 47.244 0)
 		(effects
@@ -3464,7 +3466,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" "Capacitor_SMD:C_0603_1608Metric_Pad1.08x0.95mm_HandSolder"
+		(property "Footprint" "beepyRcBrd:C_0603_1608Metric_Pad1.08x0.95mm_HandSolder"
 			(at 101.6 161.5948 0)
 			(effects
 				(font
@@ -3747,7 +3749,7 @@
 				(hide yes)
 			)
 		)
-		(property "Footprint" "TestPoint:TestPoint_Bridge_Pitch2.54mm_Drill1.0mm"
+		(property "Footprint" "beepyRcBrd:PinHeader_1x04_P2.54mm_Vertical"
 			(at 240.03 44.45 0)
 			(effects
 				(font
@@ -3841,7 +3843,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" "lscs:SOT-23-3_L2.9-W1.6-P1.90-LS2.8-BR"
+		(property "Footprint" "beepyRcBrd:SOT-23-3_L2.9-W1.6-P1.90-LS2.8-BR"
 			(at 166.37 59.69 0)
 			(effects
 				(font
@@ -4136,7 +4138,7 @@
 				(hide yes)
 			)
 		)
-		(property "Footprint" "TestPoint:TestPoint_Bridge_Pitch2.54mm_Drill1.0mm"
+		(property "Footprint" "beepyRcBrd:PinHeader_1x02_P2.54mm_Vertical"
 			(at 242.57 91.44 0)
 			(effects
 				(font
@@ -4223,7 +4225,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" "Capacitor_SMD:C_0603_1608Metric_Pad1.08x0.95mm_HandSolder"
+		(property "Footprint" "beepyRcBrd:C_0603_1608Metric_Pad1.08x0.95mm_HandSolder"
 			(at 101.6 150.1648 0)
 			(effects
 				(font
@@ -4375,7 +4377,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" "Capacitor_SMD:C_0603_1608Metric_Pad1.08x0.95mm_HandSolder"
+		(property "Footprint" "beepyRcBrd:C_0603_1608Metric_Pad1.08x0.95mm_HandSolder"
 			(at 64.4652 77.47 0)
 			(effects
 				(font
@@ -4527,7 +4529,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" "Capacitor_SMD:C_0603_1608Metric_Pad1.08x0.95mm_HandSolder"
+		(property "Footprint" "beepyRcBrd:C_0603_1608Metric_Pad1.08x0.95mm_HandSolder"
 			(at 82.2452 77.47 0)
 			(effects
 				(font
@@ -4680,7 +4682,7 @@
 				(hide yes)
 			)
 		)
-		(property "Footprint" "TestPoint:TestPoint_Bridge_Pitch2.54mm_Drill1.0mm"
+		(property "Footprint" "beepyRcBrd:rc"
 			(at 180.34 49.53 0)
 			(effects
 				(font
@@ -4771,7 +4773,7 @@
 				(hide yes)
 			)
 		)
-		(property "Footprint" "TestPoint:TestPoint_Bridge_Pitch2.54mm_Drill1.0mm"
+		(property "Footprint" "beepyRcBrd:PinHeader_1x04_P2.54mm_Vertical"
 			(at 179.07 91.44 0)
 			(effects
 				(font
@@ -4864,7 +4866,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" "Capacitor_SMD:C_0603_1608Metric_Pad1.08x0.95mm_HandSolder"
+		(property "Footprint" "beepyRcBrd:C_0603_1608Metric_Pad1.08x0.95mm_HandSolder"
 			(at 101.6 156.5148 0)
 			(effects
 				(font
@@ -4951,7 +4953,7 @@
 				(justify right)
 			)
 		)
-		(property "Footprint" "lscs:HC-49S_L11.4-W4.8-LS12.7"
+		(property "Footprint" "beepyRcBrd:HC-49S_L11.4-W4.8-LS12.7"
 			(at 205.74 146.05 0)
 			(effects
 				(font
@@ -5047,7 +5049,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" "Capacitor_SMD:C_0603_1608Metric_Pad1.08x0.95mm_HandSolder"
+		(property "Footprint" "beepyRcBrd:C_0603_1608Metric_Pad1.08x0.95mm_HandSolder"
 			(at 73.3552 77.47 0)
 			(effects
 				(font
@@ -5264,7 +5266,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" "Resistor_SMD:R_0603_1608Metric_Pad0.98x0.95mm_HandSolder"
+		(property "Footprint" "beepyRcBrd:R_0603_1608Metric_Pad0.98x0.95mm_HandSolder"
 			(at 162.052 35.56 90)
 			(effects
 				(font
@@ -5350,7 +5352,7 @@
 				)
 			)
 		)
-		(property "Footprint" "lscs:LGA-16_L6.8-W4.0-P0.65-TL-2EP"
+		(property "Footprint" "beepyRcBrd:LGA-16_L6.8-W4.0-P0.65-TL-2EP"
 			(at 68.58 180.34 0)
 			(effects
 				(font
@@ -5476,7 +5478,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" "Resistor_SMD:R_0603_1608Metric_Pad0.98x0.95mm_HandSolder"
+		(property "Footprint" "beepyRcBrd:R_0603_1608Metric_Pad0.98x0.95mm_HandSolder"
 			(at 104.902 172.72 90)
 			(effects
 				(font
@@ -5739,7 +5741,7 @@
 				)
 			)
 		)
-		(property "Footprint" "Resistor_SMD:R_0603_1608Metric_Pad0.98x0.95mm_HandSolder"
+		(property "Footprint" "beepyRcBrd:R_0603_1608Metric_Pad0.98x0.95mm_HandSolder"
 			(at 116.84 152.908 90)
 			(effects
 				(font

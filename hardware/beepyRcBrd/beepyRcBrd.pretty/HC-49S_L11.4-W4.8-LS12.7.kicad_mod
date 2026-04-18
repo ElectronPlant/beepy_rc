@@ -1,0 +1,241 @@
+(footprint "HC-49S_L11.4-W4.8-LS12.7"
+	(version 20241229)
+	(generator "pcbnew")
+	(generator_version "9.0")
+	(layer "F.Cu")
+	(property "Reference" "REF**"
+		(at -6.5 -2.316514 270)
+		(layer "F.SilkS")
+		(uuid "e7be3869-d7a2-437d-83fe-5c89be26d2a9")
+		(effects
+			(font
+				(size 1 1)
+				(thickness 0.15)
+			)
+		)
+	)
+	(property "Value" "H6OEL89CSC-SUGYLC-27M"
+		(at 0 4 180)
+		(layer "F.Fab")
+		(hide yes)
+		(uuid "2141995e-894d-42fd-b72c-e6a2b52ef5e7")
+		(effects
+			(font
+				(size 1 1)
+				(thickness 0.15)
+			)
+		)
+	)
+	(property "Datasheet" ""
+		(at 0 0 180)
+		(layer "F.Fab")
+		(hide yes)
+		(uuid "b8a52ffb-f388-4b84-92a8-5eb5e3bf28c8")
+		(effects
+			(font
+				(size 1.27 1.27)
+				(thickness 0.15)
+			)
+		)
+	)
+	(property "Description" ""
+		(at 0 0 180)
+		(layer "F.Fab")
+		(hide yes)
+		(uuid "97f858d5-3033-4c70-ad34-723a849ea980")
+		(effects
+			(font
+				(size 1.27 1.27)
+				(thickness 0.15)
+			)
+		)
+	)
+	(property "LCSC Part" "C19078186"
+		(at 0 0 0)
+		(unlocked yes)
+		(layer "F.Fab")
+		(hide yes)
+		(uuid "232ce063-cd3a-439e-a6b5-fc8fddde7f1b")
+		(effects
+			(font
+				(size 1 1)
+				(thickness 0.15)
+			)
+		)
+	)
+	(property "Sim.Device" ""
+		(at 0 0 0)
+		(unlocked yes)
+		(layer "F.Fab")
+		(hide yes)
+		(uuid "7babf2f6-d0f9-46f3-b57f-985f76b02e20")
+		(effects
+			(font
+				(size 1 1)
+				(thickness 0.15)
+			)
+		)
+	)
+	(property "Sim.Type" ""
+		(at 0 0 0)
+		(unlocked yes)
+		(layer "F.Fab")
+		(hide yes)
+		(uuid "2492f5e6-c181-4747-bd78-8c44ae7788c7")
+		(effects
+			(font
+				(size 1 1)
+				(thickness 0.15)
+			)
+		)
+	)
+	(attr smd)
+	(fp_line
+		(start -5.72 -2.41)
+		(end -5.7 -1)
+		(stroke
+			(width 0.15)
+			(type solid)
+		)
+		(layer "F.SilkS")
+		(uuid "294be387-d74e-4a3c-92e4-79f4dce1473a")
+	)
+	(fp_line
+		(start -5.72 2.41)
+		(end 5.71 2.41)
+		(stroke
+			(width 0.15)
+			(type solid)
+		)
+		(layer "F.SilkS")
+		(uuid "290481b9-16f8-4337-9955-dc49f428c12a")
+	)
+	(fp_line
+		(start -5.72 2.41)
+		(end 5.71 2.41)
+		(stroke
+			(width 0.15)
+			(type solid)
+		)
+		(layer "F.SilkS")
+		(uuid "4ddc8ac5-df1d-4e91-8125-b9c8d1220257")
+	)
+	(fp_line
+		(start -5.7 1)
+		(end -5.72 2.41)
+		(stroke
+			(width 0.15)
+			(type solid)
+		)
+		(layer "F.SilkS")
+		(uuid "f06ebed8-019a-43a1-8d2c-371de4d0518e")
+	)
+	(fp_line
+		(start 5.7 -1)
+		(end 5.71 -2.41)
+		(stroke
+			(width 0.15)
+			(type solid)
+		)
+		(layer "F.SilkS")
+		(uuid "8523fd53-1fec-43d7-9a40-75efd0c30c52")
+	)
+	(fp_line
+		(start 5.71 -2.41)
+		(end -5.72 -2.41)
+		(stroke
+			(width 0.15)
+			(type solid)
+		)
+		(layer "F.SilkS")
+		(uuid "6a423ea7-240f-475d-a4b0-8ab26101f408")
+	)
+	(fp_line
+		(start 5.71 -2.41)
+		(end -5.72 -2.41)
+		(stroke
+			(width 0.15)
+			(type solid)
+		)
+		(layer "F.SilkS")
+		(uuid "a5d8a83c-6e14-4640-a75e-fe11c6251b99")
+	)
+	(fp_line
+		(start 5.71 2.41)
+		(end 5.7 1)
+		(stroke
+			(width 0.15)
+			(type solid)
+		)
+		(layer "F.SilkS")
+		(uuid "874b0352-f9d4-4fee-bb44-d79a9e5120a9")
+	)
+	(fp_circle
+		(center 6.34 -2.4)
+		(end 6.37 -2.4)
+		(stroke
+			(width 0.06)
+			(type solid)
+		)
+		(fill no)
+		(layer "F.Fab")
+		(uuid "68148a40-8c0d-4ee5-be66-92f1e6c34463")
+	)
+	(fp_text user "${REFERENCE}"
+		(at 0 4.456514 180)
+		(layer "F.Fab")
+		(uuid "9124fee4-3baa-4060-8bb3-0135cb08d709")
+		(effects
+			(font
+				(size 1 1)
+				(thickness 0.15)
+			)
+		)
+	)
+	(pad "1" smd rect
+		(at -4.55 0)
+		(size 5.5 1.3)
+		(layers "F.Cu" "F.Mask" "F.Paste")
+		(teardrops
+			(best_length_ratio 0.5)
+			(max_length 1)
+			(best_width_ratio 1)
+			(max_width 2)
+			(curved_edges no)
+			(filter_ratio 0.9)
+			(enabled yes)
+			(allow_two_segments yes)
+			(prefer_zone_connections yes)
+		)
+		(uuid "f6f84882-ee1e-4f62-835f-a2849844fba0")
+	)
+	(pad "2" smd rect
+		(at 4.55 0)
+		(size 5.5 1.3)
+		(layers "F.Cu" "F.Mask" "F.Paste")
+		(teardrops
+			(best_length_ratio 0.5)
+			(max_length 1)
+			(best_width_ratio 1)
+			(max_width 2)
+			(curved_edges no)
+			(filter_ratio 0.9)
+			(enabled yes)
+			(allow_two_segments yes)
+			(prefer_zone_connections yes)
+		)
+		(uuid "ffdf2d6c-4202-42bd-bb22-2087d287840f")
+	)
+	(embedded_fonts no)
+	(model "/home/du555/code/06_hardware/lscs_components/lscs.3dshapes/HC-49S_L11.4-W1.8-H3.0-LS12.7.wrl"
+		(offset
+			(xyz -0.25 -0.13 -0)
+		)
+		(scale
+			(xyz 1 1 1)
+		)
+		(rotate
+			(xyz 0 0 0)
+		)
+	)
+)

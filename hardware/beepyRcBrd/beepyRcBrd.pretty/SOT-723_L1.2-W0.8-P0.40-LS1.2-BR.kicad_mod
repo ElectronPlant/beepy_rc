@@ -1,0 +1,195 @@
+(footprint "SOT-723_L1.2-W0.8-P0.40-LS1.2-BR"
+	(version 20241229)
+	(generator "pcbnew")
+	(generator_version "9.0")
+	(layer "F.Cu")
+	(property "Reference" "REF**"
+		(at -0.183486 1.5 0)
+		(layer "F.SilkS")
+		(uuid "a18451cc-6cc8-4f88-a292-ee290c38b98e")
+		(effects
+			(font
+				(size 1 1)
+				(thickness 0.15)
+			)
+		)
+	)
+	(property "Value" "UESD3.3DT5G"
+		(at 0 4.4 0)
+		(layer "F.Fab")
+		(hide yes)
+		(uuid "0a9d5170-13e8-4a7a-bc93-bd3d5a933b20")
+		(effects
+			(font
+				(size 1 1)
+				(thickness 0.15)
+			)
+		)
+	)
+	(property "Datasheet" "https://lcsc.com/product-detail/Others_ON-Semicon_UESD3-3DT5G_ON-Semicon-ON-UESD3-3DT5G_C233435.html"
+		(at 0 0 0)
+		(layer "F.Fab")
+		(hide yes)
+		(uuid "c37c367f-771a-4a00-88e9-afe99c06372e")
+		(effects
+			(font
+				(size 1.27 1.27)
+				(thickness 0.15)
+			)
+		)
+	)
+	(property "Description" ""
+		(at 0 0 0)
+		(layer "F.Fab")
+		(hide yes)
+		(uuid "ba9ebbfc-b463-4a65-8f11-b53e138f2a21")
+		(effects
+			(font
+				(size 1.27 1.27)
+				(thickness 0.15)
+			)
+		)
+	)
+	(property "LCSC Part" "C233435"
+		(at 0 0 180)
+		(unlocked yes)
+		(layer "F.Fab")
+		(hide yes)
+		(uuid "880c9d22-83da-4751-95fa-28c581cf4d0b")
+		(effects
+			(font
+				(size 1 1)
+				(thickness 0.15)
+			)
+		)
+	)
+	(property "Sim.Device" ""
+		(at 0 0 180)
+		(unlocked yes)
+		(layer "F.Fab")
+		(hide yes)
+		(uuid "8fc9776b-d060-44ba-a68b-ea5cc2974ae4")
+		(effects
+			(font
+				(size 1 1)
+				(thickness 0.15)
+			)
+		)
+	)
+	(property "Sim.Type" ""
+		(at 0 0 180)
+		(unlocked yes)
+		(layer "F.Fab")
+		(hide yes)
+		(uuid "a1264dcd-dd81-42c5-a7ba-0583c4b84cdc")
+		(effects
+			(font
+				(size 1 1)
+				(thickness 0.15)
+			)
+		)
+	)
+	(attr smd dnp)
+	(fp_line
+		(start 0.48 0.68)
+		(end -0.48 0.68)
+		(stroke
+			(width 0.15)
+			(type solid)
+		)
+		(layer "F.SilkS")
+		(uuid "cbcd6181-dfc6-4333-a8b2-864ac6e78481")
+	)
+	(fp_line
+		(start 0.48 -0.02)
+		(end 0.48 0.02)
+		(stroke
+			(width 0.15)
+			(type solid)
+		)
+		(layer "F.SilkS")
+		(uuid "c176310c-ea20-47fb-808a-94e051861bd8")
+	)
+	(fp_line
+		(start 0.48 -0.68)
+		(end -0.48 -0.68)
+		(stroke
+			(width 0.15)
+			(type solid)
+		)
+		(layer "F.SilkS")
+		(uuid "639d9f52-6325-4416-bf0c-29ad10b29eb4")
+	)
+	(fp_line
+		(start -0.48 0.68)
+		(end -0.48 0.38)
+		(stroke
+			(width 0.15)
+			(type solid)
+		)
+		(layer "F.SilkS")
+		(uuid "6ec6554b-84ee-4138-b41b-10bb3e4b7d72")
+	)
+	(fp_line
+		(start -0.48 -0.68)
+		(end -0.48 -0.38)
+		(stroke
+			(width 0.15)
+			(type solid)
+		)
+		(layer "F.SilkS")
+		(uuid "b4778f39-867c-4982-990d-424d0537f325")
+	)
+	(fp_circle
+		(center 0.6 0.6)
+		(end 0.63 0.6)
+		(stroke
+			(width 0.06)
+			(type solid)
+		)
+		(fill no)
+		(layer "F.Fab")
+		(uuid "ed431e53-5070-4a15-90a8-766767f554b5")
+	)
+	(fp_text user "${REFERENCE}"
+		(at 0 0 0)
+		(layer "F.Fab")
+		(uuid "dc472a65-9dc5-4049-b03b-25781ebf3a90")
+		(effects
+			(font
+				(size 1 1)
+				(thickness 0.15)
+			)
+		)
+	)
+	(pad "1" smd rect
+		(at 0.53 0.4 180)
+		(size 0.49 0.29)
+		(layers "F.Cu" "F.Mask" "F.Paste")
+		(uuid "487891f4-1bc3-4a41-a343-458275aace33")
+	)
+	(pad "2" smd rect
+		(at 0.53 -0.4 180)
+		(size 0.49 0.29)
+		(layers "F.Cu" "F.Mask" "F.Paste")
+		(uuid "e54df444-f207-44f3-95b6-9cdc9b32e525")
+	)
+	(pad "3" smd rect
+		(at -0.53 0 180)
+		(size 0.49 0.43)
+		(layers "F.Cu" "F.Mask" "F.Paste")
+		(uuid "13db491a-a059-459e-b66d-88be07881b4b")
+	)
+	(embedded_fonts no)
+	(model "/home/du555/code/06_hardware/lscs_components/lscs.3dshapes/SOT-723-3P_L1.2-W0.8-H0.6-LS1.2-P0.40.wrl"
+		(offset
+			(xyz -938.78 840.99 -0)
+		)
+		(scale
+			(xyz 1 1 1)
+		)
+		(rotate
+			(xyz 0 0 180)
+		)
+	)
+)
