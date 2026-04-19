@@ -29,9 +29,25 @@ For information on how to get started with the template, refer to the:
 
 ## License
 
-### Source code
+This project consists of multiple parts, each licensed differently:
 
-For the licensing information about the source code and the external libraries refer to the ```NOTICE.MD``` and ```LICENSE``` files in the project's root directly.
+1. FIRMWARE/CODE:
+   This includes all files in ```/firmware``` unless specified otherwise.
+   Licensed under the GNU General Public License v3.0.
+   See ```/firmware/LICENSE``` for the full text.
 
-### Documentation
-Licensing information for the documentation is in the [license](license.md) page.
+2. HARDWARE (Schematics, PCB, Gerbers, BOMs, etc):
+   This includes all files in ```/hardware``` unless specified otherwise.
+   Licensed under the CERN Open Hardware License Version 2 - Strongly Reciprocal (CERN-OHL-S).
+   See ```/hardware/LICENSE``` for the full text.
+
+3. DOCUMENTATION (images, documentation, etc.):
+   This includes all files in ```/docs``` unless specified otherwise.
+   Licensed under Creative Commons Attribution-ShareAlike 4.0 International (CC BY-SA 4.0).
+   See ```/docs/LICENSE``` for the full text.
+
+### Credits
+This projects uses external libraries that are documented in the ```NOTICE.md``` file in the
+project's root directory.
+
+More information on used external libraries an reference projects can be seen [credits](about/credits.md)

@@ -19,5 +19,5 @@ fp-info-cache
 hardware/beepyRcBrd/beepyRCBrd-backups
 hardware/beepyRcBrd/*bak
 hardware/beepyRcBrd/fp-info-cache
-hardware/beepyRcBrd/docs/models
-hardware/docs/.
+hardware/docs/models
+hardware/docs/models/*
