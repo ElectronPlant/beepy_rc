@@ -24,12 +24,6 @@
 
 #include "target.h"
 
-#include "encoder.h"
-#include "motion.h"
-#include "motor.h"
-#include "pwm_timer.h"
-#include "servo.h"
-
 
 /** @addtogroup Motion
  *   @{
@@ -47,7 +41,7 @@
 
 #define MOTION_DEFAULT_MOTOR_PWM_FREQ_KHZ (20U)
 
-#define MOTION_NUM_MOTORS (4U)
+#define MOTION_NUM_MOTORS (TARGET_MOTOR_NUM)
 
 #define MOTION_NUM_PARALLEL_QUEUE_REQUESTS (5U)
 #define MOTION_TIMEOUT_MS                  (3000u) /* Time between motion updates */ //TODO update
@@ -90,123 +84,6 @@ static void Motion_TaskMain(PLT_UTILS_UNUSED void* parameters);
 TaskHandle_t         Motion_TaskHandle = NULL;
 static QueueHandle_t Motion_RxQueueHandle = NULL;
 
-PWM_TIM_INSTANCE_T Motion_MotorPwmTimers[TARGET_NUM_MOTOR_PWM_TIMERS] = {
-    {
-        .Status = PWM_TIM_STATUS_UNINITIALIZED,
-        .Peripheral = &TargetMotorTim1,
-        .EnChannels = 0x00,
-        .InitChannels = 0x00,
-    },
-    {
-        .Status = PWM_TIM_STATUS_UNINITIALIZED,
-        .Peripheral = &TargetMotorTim2,
-        .EnChannels = 0x00,
-        .InitChannels = 0x00,
-    },
-    {
-        .Status = PWM_TIM_STATUS_UNINITIALIZED,
-        .Peripheral = &TargetMotorTim3,
-        .EnChannels = 0x00,
-        .InitChannels = 0x00,
-    }
-};
-
-ENC_INSTANCE_T Motion_Encoders[TARGET_ENCODER_NUM] = {
-    {
-        .Status = ENC_STATUS_UNINITIALIZED,
-        .Peripheral = &TargetEnc1,
-    },
-    {
-        .Status = ENC_STATUS_UNINITIALIZED,
-        .Peripheral = &TargetEnc2,
-    },
-    {
-        .Status = ENC_STATUS_UNINITIALIZED,
-        .Peripheral = &TargetEnc3,
-    },
-    {
-        .Status = ENC_STATUS_UNINITIALIZED,
-        .Peripheral = &TargetEnc4,
-    },
-};
-
-MOTOR_T Motion_Motors[MOTION_NUM_MOTORS] = {
-    {
-        .Encoder = &Motion_Encoders[0],
-        .PwmChn[0] =
-            {
-                .Timer = &Motion_MotorPwmTimers[0],
-                .Chn = PWM_TIM_CHANNELS_CH1,
-            },
-        .PwmChn[1] =
-            {
-                .Timer = &Motion_MotorPwmTimers[0],
-                .Chn = PWM_TIM_CHANNELS_CH2,
-            },
-    },
-    {
-        .Encoder = &Motion_Encoders[1],
-        .PwmChn[0] =
-            {
-                .Timer = &Motion_MotorPwmTimers[0],
-                .Chn = PWM_TIM_CHANNELS_CH4,
-            },
-        .PwmChn[1] =
-            {
-                .Timer = &Motion_MotorPwmTimers[2],
-                .Chn = PWM_TIM_CHANNELS_CH1,
-            },
-    },
-    {
-        .Encoder = &Motion_Encoders[2],
-        .PwmChn[0] =
-            {
-                .Timer = &Motion_MotorPwmTimers[1],
-                .Chn = PWM_TIM_CHANNELS_CH1,
-            },
-        .PwmChn[1] =
-            {
-                .Timer = &Motion_MotorPwmTimers[1],
-                .Chn = PWM_TIM_CHANNELS_CH2,
-            },
-    },
-    {
-        .Encoder = &Motion_Encoders[3],
-        .PwmChn[0] =
-            {
-                .Timer = &Motion_MotorPwmTimers[1],
-                .Chn = PWM_TIM_CHANNELS_CH3,
-            },
-        .PwmChn[1] = {
-            .Timer = &Motion_MotorPwmTimers[1],
-            .Chn = PWM_TIM_CHANNELS_CH4,
-        },
-    },
-};
-
-/******************************************
- * Servos
- ******************************************/
-PWM_TIM_INSTANCE_T Motion_ServoPwmTimers[TARGET_NUM_SERVO_PWM_CHANNELS] = {
-    {
-        .Status = PWM_TIM_STATUS_UNINITIALIZED,
-        .Peripheral = &TargetServoTim1,
-        .EnChannels = 0x00,
-        .InitChannels = 0x00,
-    },
-    {
-        .Status = PWM_TIM_STATUS_UNINITIALIZED,
-        .Peripheral = &TargetServoTim2,
-        .EnChannels = 0x00,
-        .InitChannels = 0x00,
-    },
-};
-
-SERVO_T Motion_Servos[TARGET_NUM_SERVO_PWM_CHANNELS] = {
-    {.Timer = &Motion_ServoPwmTimers[0], .Chn = PWM_TIM_CHANNELS_CH1},
-    {.Timer = &Motion_ServoPwmTimers[0], .Chn = PWM_TIM_CHANNELS_CH2},
-    {.Timer = &Motion_ServoPwmTimers[1], .Chn = PWM_TIM_CHANNELS_CH1}
-};
 
 /********************************************************************************
  * Function Implementations
@@ -224,14 +101,14 @@ bool_t Motion_Init(void) {
     bool_t ok;
 
     for (uint8_t m = 0; m < MOTION_NUM_MOTORS; m++) {
-        ok = Motor_Init((MOTOR_HANDLER_T)&Motion_Motors[m]);
+        ok = Motor_Init((MOTOR_HANDLER_T)&Target_Motors[m]);
         if (DEF_FALSE == ok) {
             return DEF_FALSE;
         }
     }
 
     for (uint8_t m = 0; m < MOTION_NUM_SERVOS; m++) {
-        ok = Servo_Init((SERVO_HANDLER_T)&Motion_Servos[m]);
+        ok = Servo_Init((SERVO_HANDLER_T)&Target_Servos[m]);
         if (DEF_FALSE == ok) {
             return DEF_FALSE;
         }
@@ -288,20 +165,20 @@ static void Motion_TaskLoop(void) {
         printf("--- MOTOR %u ---\n", m);
         printf("Start drive\n");
         if (DEF_TRUE == forward) {
-            Motor_SetSpeed((MOTOR_HANDLER_T)&Motion_Motors[m], 70.0);
+            Motor_SetSpeed((MOTOR_HANDLER_T)&Target_Motors[m], 70.0);
             printf("going forward\n");
         } else {
-            Motor_SetSpeed((MOTOR_HANDLER_T)&Motion_Motors[m], -70.0);
+            Motor_SetSpeed((MOTOR_HANDLER_T)&Target_Motors[m], -70.0);
             printf("Going backwards\n");
         }
-        Motor_GetEncoderCnt((MOTOR_HANDLER_T)&Motion_Motors[m], &cnt, &dir);
+        Motor_GetEncoderCnt((MOTOR_HANDLER_T)&Target_Motors[m], &cnt, &dir);
         printf("Encoder Count %lu, %u\n", cnt, dir);
     }
     forward = !forward;
     printf("--------------\n");
 
     for (uint8_t m = 0; m < MOTION_NUM_SERVOS; m++) {
-        Servo_SetAngle((SERVO_HANDLER_T)&Motion_Servos[m], angle);
+        Servo_SetAngle((SERVO_HANDLER_T)&Target_Servos[m], angle);
     }
     angle += 10.0f;
     if (angle > 180.0f) {
@@ -315,11 +192,11 @@ static void Motion_TaskLoop(void) {
 static void Motion_TaskMain(PLT_UTILS_UNUSED void* parameters) {
     /* Setup */
     for (uint8_t m = 0; m < MOTION_NUM_MOTORS; m++) {
-        Motor_Start((MOTOR_HANDLER_T)&Motion_Motors[m]);
+        Motor_Start((MOTOR_HANDLER_T)&Target_Motors[m]);
     }
 
     for (uint8_t m = 0; m < MOTION_NUM_SERVOS; m++) {
-        Servo_Start((SERVO_HANDLER_T)&Motion_Servos[m]);
+        Servo_Start((SERVO_HANDLER_T)&Target_Servos[m]);
     }
 
     /* Loop */

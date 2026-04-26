@@ -18,10 +18,13 @@
 
 #include "target.h"
 
-
 /** @addtogroup Target
  *    @{
  */
+
+/********************************************************************************
+ * RC
+ ********************************************************************************/
 
 /******************************************
  * Rx Serial
@@ -56,9 +59,17 @@ const SERIAL_PERIPHERAL_PORT_T TargetRcSerial = {
     .RxClkEnFn_Ptr = LL_AHB1_GRP1_EnableClock,
 };
 
+/********************************************************************************
+ * Drive
+ ********************************************************************************/
+
 /******************************************
  * Motor PWM
  ******************************************/
+#include "encoder.h"
+#include "motion.h"
+#include "motor.h"
+#include "pwm_timer.h"
 #include "pwm_timer_port.h"
 
 /** Motor timer 1
@@ -231,10 +242,32 @@ const PWM_TIM_PORT_T TargetMotorTim3 = {
     .Channels = {&TargetMotorTim3Ch1, NULL, NULL, NULL}
 };
 
+PWM_TIM_INSTANCE_T Target_MotorPwmTimers[TARGET_NUM_MOTOR_PWM_TIMERS] = {
+    {
+        .Status = PWM_TIM_STATUS_UNINITIALIZED,
+        .Peripheral = &TargetMotorTim1,
+        .EnChannels = 0x00,
+        .InitChannels = 0x00,
+    },
+    {
+        .Status = PWM_TIM_STATUS_UNINITIALIZED,
+        .Peripheral = &TargetMotorTim2,
+        .EnChannels = 0x00,
+        .InitChannels = 0x00,
+    },
+    {
+        .Status = PWM_TIM_STATUS_UNINITIALIZED,
+        .Peripheral = &TargetMotorTim3,
+        .EnChannels = 0x00,
+        .InitChannels = 0x00,
+    }
+};
+
 /******************************************
  * Encoders
  ******************************************/
 #include "encoder_port.h"
+
 const ENC_PERIPHERAL_PORT_T TargetEnc1 = {
     .Timer = TIM1,
     .TimerClk = LL_APB2_GRP1_PERIPH_TIM1,
@@ -315,11 +348,92 @@ const ENC_PERIPHERAL_PORT_T TargetEnc4 = {
     .Gpio2ClkEnFn_Ptr = LL_AHB1_GRP1_EnableClock,
 };
 
+ENC_INSTANCE_T Target_Encoders[TARGET_ENCODER_NUM] = {
+    {
+        .Status = ENC_STATUS_UNINITIALIZED,
+        .Peripheral = &TargetEnc1,
+    },
+    {
+        .Status = ENC_STATUS_UNINITIALIZED,
+        .Peripheral = &TargetEnc2,
+    },
+    {
+        .Status = ENC_STATUS_UNINITIALIZED,
+        .Peripheral = &TargetEnc3,
+    },
+    {
+        .Status = ENC_STATUS_UNINITIALIZED,
+        .Peripheral = &TargetEnc4,
+    },
+};
 
 /******************************************
- * SERVOS
+ * Motors
+ ******************************************/
+MOTOR_T Target_Motors[TARGET_MOTOR_NUM] = {
+    {
+        .Encoder = &Target_Encoders[0],
+        .PwmChn[0] =
+            {
+                .Timer = &Target_MotorPwmTimers[0],
+                .Chn = PWM_TIM_CHANNELS_CH1,
+            },
+        .PwmChn[1] =
+            {
+                .Timer = &Target_MotorPwmTimers[0],
+                .Chn = PWM_TIM_CHANNELS_CH2,
+            },
+    },
+    {
+        .Encoder = &Target_Encoders[1],
+        .PwmChn[0] =
+            {
+                .Timer = &Target_MotorPwmTimers[0],
+                .Chn = PWM_TIM_CHANNELS_CH4,
+            },
+        .PwmChn[1] =
+            {
+                .Timer = &Target_MotorPwmTimers[2],
+                .Chn = PWM_TIM_CHANNELS_CH1,
+            },
+    },
+    {
+        .Encoder = &Target_Encoders[2],
+        .PwmChn[0] =
+            {
+                .Timer = &Target_MotorPwmTimers[1],
+                .Chn = PWM_TIM_CHANNELS_CH1,
+            },
+        .PwmChn[1] =
+            {
+                .Timer = &Target_MotorPwmTimers[1],
+                .Chn = PWM_TIM_CHANNELS_CH2,
+            },
+    },
+    {
+        .Encoder = &Target_Encoders[3],
+        .PwmChn[0] =
+            {
+                .Timer = &Target_MotorPwmTimers[1],
+                .Chn = PWM_TIM_CHANNELS_CH3,
+            },
+        .PwmChn[1] = {
+            .Timer = &Target_MotorPwmTimers[1],
+            .Chn = PWM_TIM_CHANNELS_CH4,
+        },
+    },
+};
+
+/********************************************************************************
+ * Servos Motors
+ ********************************************************************************/
+
+/******************************************
+ * PWM Timers
  ******************************************/
 #include "pwm_timer_port.h"
+#include "servo.h"
+
 /** Servo timer 1
  *  Is mapped to timer 12.
  *  Both channels of the timer are used as servo outputs.
@@ -408,4 +522,28 @@ const PWM_TIM_PORT_T TargetServoTim2 = {
     .TimerIs32bits = DEF_FALSE,
     .NumChannels = TARGET_SERVO_TIM2_N_CHANNELS,
     .Channels = {&TargetServoTim1Ch1, NULL, NULL, NULL}
+};
+
+PWM_TIM_INSTANCE_T Motion_ServoPwmTimers[TARGET_NUM_SERVO_PWM_CHANNELS] = {
+    {
+        .Status = PWM_TIM_STATUS_UNINITIALIZED,
+        .Peripheral = &TargetServoTim1,
+        .EnChannels = 0x00,
+        .InitChannels = 0x00,
+    },
+    {
+        .Status = PWM_TIM_STATUS_UNINITIALIZED,
+        .Peripheral = &TargetServoTim2,
+        .EnChannels = 0x00,
+        .InitChannels = 0x00,
+    },
+};
+
+/******************************************
+ * Servos
+ ******************************************/
+SERVO_T Target_Servos[TARGET_NUM_SERVO_PWM_CHANNELS] = {
+    {.Timer = &Motion_ServoPwmTimers[0], .Chn = PWM_TIM_CHANNELS_CH1},
+    {.Timer = &Motion_ServoPwmTimers[0], .Chn = PWM_TIM_CHANNELS_CH2},
+    {.Timer = &Motion_ServoPwmTimers[1], .Chn = PWM_TIM_CHANNELS_CH1}
 };

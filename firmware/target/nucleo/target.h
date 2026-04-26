@@ -60,9 +60,9 @@
     #define SWO_GPIO_Port      GPIOB
 #endif
 
-/******************************************
+/********************************************************************************
  * Rc
- ******************************************/
+ ********************************************************************************/
 /* RC Input */
 #define TARGET_RC_DRIVER SBUS
 
@@ -72,10 +72,11 @@
 extern const SERIAL_PERIPHERAL_PORT_T TargetRcSerial;
 
 
-/******************************************
+/********************************************************************************
  * Drive
- ******************************************/
-/** Motor PWM timers
+ ********************************************************************************/
+/**
+ * Motor PWM timers
  * Each motor is driven by two PWM outputs.
  */
 #include "pwm_timer_port.h"
@@ -84,8 +85,8 @@ extern const SERIAL_PERIPHERAL_PORT_T TargetRcSerial;
 extern const PWM_TIM_PORT_T TargetMotorTim1, TargetMotorTim2, TargetMotorTim3;
 
 
-/** Encoder timers
- *
+/**
+ * Encoder timers
  * @note List of notes:
  *      1. At the moment is not clear if 4 or 2 encoders will be used. In the
  *         future it may be something adjustable from the target definition,
@@ -96,14 +97,27 @@ extern const PWM_TIM_PORT_T TargetMotorTim1, TargetMotorTim2, TargetMotorTim3;
 /* Encoders are defined in the target.c file. */
 extern const ENC_PERIPHERAL_PORT_T TargetEnc1, TargetEnc2, TargetEnc3, TargetEnc4;
 
-/** Servo motor PWM timers
+/**
+ * Motors
+ * Each motor is composed from two PWM outputs, and a quadrature encoder.
+ */
+#include "motor.h"
+#define TARGET_MOTOR_NUM (4U)
+extern MOTOR_T Target_Motors[TARGET_MOTOR_NUM];
+
+/**
+ * Servo motor PWM timers
  * Each servo motor is driven by a single PWM output.
  */
 #include "pwm_timer_port.h"
+#include "servo.h"
 #define TARGET_NUM_SERVO_PWM_TIMERS   (2U)
 #define TARGET_NUM_SERVO_PWM_CHANNELS (3U)
-/* Servo PWM timers are defined  in the target.c file. */
-extern const PWM_TIM_PORT_T TargetServoTim1, TargetServoTim2;
+/* Servo PWM timers */
+extern PWM_TIM_INSTANCE_T Target_ServoPwmTimers[TARGET_NUM_SERVO_PWM_CHANNELS];
+/* Servo Motors */
+extern SERVO_T Target_Servos[TARGET_NUM_SERVO_PWM_CHANNELS];
+
 
 /********************************************************************************
  * Typedefs
