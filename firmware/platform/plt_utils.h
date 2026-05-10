@@ -78,6 +78,15 @@
 #define PLT_UTILS_MIN(A, B) ((A) < (B) ? (A) : (B))
 
 /**
+ * @brief  Absolute value of A.
+ *
+ * @param  A: Value for which to get the absolute.
+ *
+ * @return ABS(A).
+ */
+#define PLT_UTILS_ABS(A) ((A) < 0 ? -(A) : (A))
+
+/**
  * @brief  Saturates a value to the defined range.
  *
  * @param  A: Value to saturate.
