@@ -63,6 +63,9 @@
 /********************************************************************************
  * Function Prototypes
  ********************************************************************************/
+static float32_t Servo_DutyFromAngle(float32_t angle);
+static float32_t Servo_DutyFromPercentage(float32_t pct);
+
 
 /********************************************************************************
  * Local Vars
@@ -113,14 +116,11 @@ void Servo_Stop(SERVO_HANDLER_T servo) {
 }
 
 /**
- * @brief  
+ * @brief  Calculate the required duty cycle to set the specified angle.
  *
- * @param  inp 
+ * @param  angle Target angle to set.
  *
- * @return DEF_TRUE if successful, DEF_FALSE otherwise.
- *
- * @note List of notes:
- *       1. 
+ * @return duty cycle to set.
  */
 static float32_t Servo_DutyFromAngle(float32_t angle) {
     float32_t angle_dur = PltUtils_MapF32(
@@ -134,12 +134,28 @@ static float32_t Servo_DutyFromAngle(float32_t angle) {
 }
 
 /**
+ * @brief  Calculate the required duty cycle for the specified span percentage.
+ *
+ * @param  pct Span percentage to set.
+ *
+ * @return duty cycle to set.
+ */
+static float32_t Servo_DutyFromPercentage(float32_t pct) {
+    float32_t pct_dur = PltUtils_MapF32(
+        pct,
+        SERVO_MIN_PERCENTAGE,
+        SERVO_MAX_PERCENTAGE,
+        SERVO_MIN_ANGLE_DURATION_MS,
+        SERVO_MAX_ANGLE_DURATION_MS
+    );
+    return SERVO_DURATION_TO_DUTY_PERCENT(pct_dur);
+}
+
+/**
  * @brief  Set angle for a servo motor.
  *
  * @param  servo Servo handler.
- * @param  angle Set angle.
- *
- * @return DEF_TRUE if successful, DEF_FALSE otherwise.
+ * @param  angle Set angle. See note 1.
  *
  * @note List of notes:
  *       1. The angle must be between SERVO_MIN_ANGLE and SERVO_MAX_ANGLE. The angle will be
@@ -150,6 +166,28 @@ void Servo_SetAngle(SERVO_HANDLER_T servo, float32_t angle) {
     float32_t sat_angle = PLT_UTILS_SATURATE(angle, SERVO_MIN_ANGLE, SERVO_MAX_ANGLE);
 
     float32_t duty = Servo_DutyFromAngle(sat_angle);
+    PwmTim_SetDuty(servo->Timer, servo->Chn, duty);
+}
+
+/**
+ * @brief  Set the servo angle as a percentage of the total servo span.
+ *         There are some servo motors that rotate 180 degrees, while others only rotate 90
+ *         degrees. Thus, to directly set the servo angle, the model needs to be known a priory.
+ *         In most cases it may be more usefull the control the servo angle based on the percentage
+ *         of the total rotation span.
+ *
+ * @param  servo  Servo handler.
+ * @param  travel Set point for the servo angle. See note 1
+ *
+ * @note List of notes:
+ *       1. Any span value outside the range [SERVO_MIN_PERCENTAGE, SERVO_MAX_PERCENTAGE] will be
+ *          saturated between the limit values.
+ */
+void Servo_Set(SERVO_HANDLER_T servo, float32_t travel) {
+    PLT_ASSERT(NULL != servo);
+    float32_t sat_travel = PLT_UTILS_SATURATE(travel, SERVO_MIN_PERCENTAGE, SERVO_MAX_PERCENTAGE);
+
+    float32_t duty = Servo_DutyFromPercentage(sat_travel);
     PwmTim_SetDuty(servo->Timer, servo->Chn, duty);
 }
 

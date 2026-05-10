@@ -25,7 +25,8 @@
 /********************************************************************************
  * Defines
  ********************************************************************************/
-
+#define SERVO_MAX_PERCENTAGE (100.0f)
+#define SERVO_MIN_PERCENTAGE (-100.0f)
 /********************************************************************************
  * Typedefs
  ********************************************************************************/
@@ -50,5 +51,6 @@ void   Servo_Start(SERVO_HANDLER_T Servo);
 void   Servo_Stop(SERVO_HANDLER_T Servo);
 
 void Servo_SetAngle(SERVO_HANDLER_T Servo, float32_t angle);
+void Servo_SetSpan(SERVO_HANDLER_T Servo, float32_t travel);
 
 #endif /* __SERVO_H__       */
