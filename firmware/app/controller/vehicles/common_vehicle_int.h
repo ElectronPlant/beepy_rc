@@ -61,4 +61,4 @@ static inline void ComVInt_CheckInterface(void) {
 }
 
 
-#endif /* __COMMON_RX_INT_H__       */
+#endif /* __COMMON_VEHICLE_INT_H__       */

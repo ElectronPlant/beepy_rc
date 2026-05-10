@@ -49,10 +49,11 @@
 #define RC_RX_ALIGNMENT_RETRIES (5)
 
 /* --- Debug --- */
-#define RC_DEBUG_RAW_FRAME (1) /* Set to 1 to enable RX raw frame debugging */
+#define RC_DEBUG_RAW_FRAME (0) /* Set to 1 to enable RX raw frame debugging */
 
 /* --- STD Frames --- */
 #define RC_NUMBER_OF_PROCESSED_FRAMES (2U)
+
 
 /********************************************************************************
  * Typedefs
@@ -203,8 +204,10 @@ static void Rc_ActionRxComplete(RXINT_RX_BUFFER_INFO_T* p_buffer_info) {
     STD_FRAME_T processed_frame;
 
 #if RC_DEBUG_RAW_FRAME == 1
-    if (NULL != ComRxInt_Interface.RxInt_DebugFrame) {
+    static uint8_t cnt = 0;
+    if (cnt++ > 100 && NULL != ComRxInt_Interface.RxInt_DebugFrame) {
         ComRxInt_Interface.RxInt_DebugFrame(p_buffer_info);
+        cnt = 0;
     }
 #endif
 

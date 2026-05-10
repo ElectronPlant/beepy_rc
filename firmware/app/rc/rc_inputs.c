@@ -42,6 +42,8 @@
 static void RcIn_ProcessControlInputs(STD_FRAME_T* p_rc_frame);
 static void RcIn_ProcessAuxInputs(STD_FRAME_T* p_rc_frame);
 
+static MODEL_RC_SETPOINT_STATE_T RcIn_TranslateState(STD_FRAME_T* p_rc_frame);
+
 
 /********************************************************************************
  * Local Vars
@@ -49,7 +51,7 @@ static void RcIn_ProcessAuxInputs(STD_FRAME_T* p_rc_frame);
 static RCIN_CHN_CTRL_SUBS_T RcIn_ControlSubs[RCIN_CONTROL_INPUTS_MAX] = {
     {.Chn = 0U, .Input = RCIN_CONTROL_THROTTLE, .Curve = {.Type = RCIN_CURVE_TYPE_NONE}},
     {.Chn = 1U, .Input = RCIN_CONTROL_YAW, .Curve = {.Type = RCIN_CURVE_TYPE_NONE}},
-    {.Chn = 2U, .Input = RCIN_CONTROL_ARM_SWITCH, .Curve = {.Type = RCIN_CURVE_TYPE_NONE}},
+    {.Chn = 10U, .Input = RCIN_CONTROL_ARM_SWITCH, .Curve = {.Type = RCIN_CURVE_TYPE_NONE}},
     {.Chn = 0U, .Input = RCIN_CONTROL_NONE, .Curve = {.Type = RCIN_CURVE_TYPE_NONE}},
 };
 
@@ -89,13 +91,26 @@ void RcIn_HandleRcFrame(STD_FRAME_T* p_rc_frame) {
     RcIn_ProcessAuxInputs(p_rc_frame);
 }
 
+static MODEL_RC_SETPOINT_STATE_T RcIn_TranslateState(STD_FRAME_T* p_rc_frame) {
+    MODEL_RC_SETPOINT_STATE_T state = MODEL_RC_SETPOINT_STATE_PENDING;
+    switch (p_rc_frame->State) {
+        case STD_FRAME_STATE_VALID:
+            state = MODEL_RC_SETPOINT_STATE_VALID;
+            break;
+        default:
+            state = MODEL_RC_SETPOINT_STATE_FAILSAFE;
+            break;
+    }
+    return state;
+}
+
 /**
  * @brief  Processes the control inputs of the RC frame.
  *
  * @param p_rc_frame Pointer to the RC frame to manage.
  */
 static void RcIn_ProcessControlInputs(STD_FRAME_T* p_rc_frame) {
-    MODEL_RC_SETPOINT_T output = {.State = p_rc_frame->State};
+    MODEL_RC_SETPOINT_T output = {.State = RcIn_TranslateState(p_rc_frame)};
 
     for (uint8_t i = 0; RCIN_CONTROL_INPUTS_MAX > i; i++) {
         switch (RcIn_ControlSubs[i].Input) {
@@ -107,9 +122,9 @@ static void RcIn_ProcessControlInputs(STD_FRAME_T* p_rc_frame) {
                 output.Yaw = (float32_t)p_rc_frame->Channels[RcIn_ControlSubs[i].Chn];
                 break;
             case RCIN_CONTROL_ARM_SWITCH:
-                output.ArmSwitch = (bool_t)p_rc_frame->Channels[RcIn_ControlSubs[i].Chn] < 0
-                    ? DEF_FALSE
-                    : DEF_TRUE;
+                output.ArmSwitch =
+                    (bool_t)(p_rc_frame->Channels[RcIn_ControlSubs[i].Chn] < 0 ? DEF_FALSE
+                                                                               : DEF_TRUE);
                 break;
             case RCIN_CONTROL_NONE:
                 /* - No-op - */

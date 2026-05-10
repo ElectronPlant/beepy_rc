@@ -32,7 +32,7 @@
 /********************************************************************************
  * Defines
  ********************************************************************************/
-#define FWD_YAW_SCALE (0.2f)
+#define FWD_YAW_SCALE (0.5f)
 
 #define FWD_MOTOR_DISARM_DUTY (0.0f)
 
@@ -65,7 +65,7 @@ static uint8_t Fwd_Config2TargetTranslator[FWD_REQUIRED_MOTORS] = {0, 1, 2, 3};
  ********************************************************************************/
 
 /**
- * @brief  Initialize the FWD vehicle controller.
+ * @brief  FWD implementation of the init interface.
  *
  * @return DEF_TRUE if successful, DEF_FALSE otherwise.
  */
@@ -83,7 +83,7 @@ bool_t Fwd_Init(void) {
 }
 
 /**
- * @brief  Starts the FWD vehicle controller.
+ * @brief  FWD implementation of the start interface.
  */
 void Fwd_Start(void) {
     for (uint8_t m = 0; m < FWD_REQUIRED_MOTORS; m++) {
@@ -93,7 +93,7 @@ void Fwd_Start(void) {
 }
 
 /**
- * @brief  Stops the FWD vehicle controller.
+ * @brief  FWD implementation of the stop interface.
  */
 void Fwd_Stop(void) {
     for (uint8_t m = 0; m < FWD_REQUIRED_MOTORS; m++) {
@@ -103,7 +103,7 @@ void Fwd_Stop(void) {
 }
 
 /**
- * @brief  Runs an iteration of the control loop.
+ * @brief  FWD implementation of the RunControlLoop Interface.
  */
 void Fwd_RunControlLoop(MODEL_RC_SETPOINT_T* p_frame) {
     float32_t throttle = p_frame->Throttle;
@@ -120,8 +120,8 @@ void Fwd_RunControlLoop(MODEL_RC_SETPOINT_T* p_frame) {
         }
     }
 
-    float32_t t_r = (throttle + vang) / 10.0f;
-    float32_t t_l = (throttle - vang) / 10.0f;
+    float32_t t_r = (throttle + vang);
+    float32_t t_l = (throttle - vang);
 
     /* Update motors */
     Motor_SetSpeed((MOTOR_HANDLER_T)&Target_Motors[Fwd_Config2TargetTranslator[FRONT_LEFT]], t_l);
@@ -131,7 +131,7 @@ void Fwd_RunControlLoop(MODEL_RC_SETPOINT_T* p_frame) {
 }
 
 /**
- * @brief  Disarms the vehicle.
+ * @brief  FWD implementation of the Disarm interface.
  */
 void Fwd_Disarm(void) {
     /* Update motors */

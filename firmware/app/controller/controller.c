@@ -59,15 +59,13 @@
 /* -- Failsafe -- */
 #define CTRLR_FAILSAFE_CNT_LIMIT (100U) /* Number of RC failsafe frames to trigger a failsafe */
 
-/* -- Control -- */
-#define CTRLR_TEMP_VANG_SCALE (0.2f) // TODO this is only to simplify the control for now
-
 /********************************************************************************
  * Typedefs
  ********************************************************************************/
 typedef enum CTRLR_STATUS_E {
     CTRLR_STATUS_UNINITIALIZED = 0,
     CTRLR_STATUS_STOPPED,
+    CTRLR_STATUS_PREARMED,
     CTRLR_STATUS_DISARMED,
     CTRLR_STATUS_RUNNING,
     CTRLR_STATUS_FAILSAFE,
@@ -105,11 +103,13 @@ typedef struct CTRLR_FSM_TABLE_ENTRY_S {
  ********************************************************************************/
 static void Ctrlr_TaskMain(PLT_UTILS_UNUSED void* parameters);
 static void Ctrlr_LoopTimerCallback(TimerHandle_t xTimer);
+static void Ctrlr_HandleModelUpdate(MODEL_NOTIFY_SOURCE_T source);
 
 static void Ctrlr_UpdateState(CTRLR_STATUS_T status);
 static void Ctrlr_ActionAssert(void);
 static void Ctrlr_ActionNone(void);
 static void Ctrlr_TransitionApply(CTRLR_STATUS_T status);
+static void Ctrlr_WaitForDisarmAction(void);
 static void Ctrlr_DisarmedAction(void);
 static void Ctrlr_DisarmedTransition(CTRLR_STATUS_T status);
 static void Ctrlr_RunningAction(void);
@@ -139,6 +139,11 @@ static CTRLR_FSM_TABLE_ENTRY_T Ctrlr_FsmTable[CTRLR_STATUS_MAX] = {
      .Action = Ctrlr_ActionAssert,
      .Transition = Ctrlr_TransitionApply},
 
+    /* PREARMED      */
+    {.TaskNotificationMask = CTRLR_BIT_OFFSET_TO_MASK(CTRLR_TASK_NOTICE_OFFSET_RC),
+     .Action = Ctrlr_WaitForDisarmAction,
+     .Transition = Ctrlr_TransitionApply},
+
     /* DISARMED      */
     {.TaskNotificationMask = CTRLR_BIT_OFFSET_TO_MASK(CTRLR_TASK_NOTICE_OFFSET_RC),
      .Action = Ctrlr_DisarmedAction,
@@ -150,8 +155,8 @@ static CTRLR_FSM_TABLE_ENTRY_T Ctrlr_FsmTable[CTRLR_STATUS_MAX] = {
      .Transition = Ctrlr_RunningTransition},
 
     /* FAILSAFE      */
-    {.TaskNotificationMask = UINT32_MAX,
-     .Action = Ctrlr_ActionNone,
+    {.TaskNotificationMask = CTRLR_BIT_OFFSET_TO_MASK(CTRLR_TASK_NOTICE_OFFSET_RC),
+     .Action = Ctrlr_WaitForDisarmAction,
      .Transition = Ctrlr_TransitionApply},
 };
 
@@ -160,12 +165,9 @@ static CTRLR_FSM_TABLE_ENTRY_T Ctrlr_FsmTable[CTRLR_STATUS_MAX] = {
  * Function Implementations
  ********************************************************************************/
 /**
- * @brief  Initialize the motion module.
+ * @brief  Initialize the controller module.
  *
  * @return DEF_TRUE if successful, DEF_FALSE otherwise.
- *
- * @note List of notes:
- *       1.
  */
 bool_t Ctrlr_Init(void) {
     bool_t ok;
@@ -180,7 +182,7 @@ bool_t Ctrlr_Init(void) {
         NULL,
         Ctrlr_LoopTimerCallback
     );
-    ok = NULL == Ctrlr_TimerHandle ? DEF_TRUE : DEF_FALSE;
+    ok = NULL != Ctrlr_TimerHandle ? DEF_TRUE : DEF_FALSE;
 
     /* Init Task */
     if (DEF_TRUE == ok) {
@@ -201,6 +203,10 @@ bool_t Ctrlr_Init(void) {
         ok = CVInt_Interface.VInt_Init();
     }
 
+    /* Init model */
+    if (DEF_TRUE == ok) {
+        ok = Model_Init(Ctrlr_HandleModelUpdate);
+    }
 
     /* State */
     if (DEF_TRUE == ok) {
@@ -212,6 +218,7 @@ bool_t Ctrlr_Init(void) {
 
 /**
  * @brief  Callback function for the loop timer.
+ *         Sends the control loop timer task notification.
  *
  * @param  xTimer Pointer to the timer that caused the callback.
  */
@@ -227,12 +234,35 @@ static void Ctrlr_LoopTimerCallback(PLT_UTILS_UNUSED TimerHandle_t xTimer) {
     portYIELD_FROM_ISR(higher_priority_task_awaken);
 }
 
+/**
+ * @brief  Callback function to update the model data.
+ *
+ * @param  source Source that is updating the model.
+ */
+static void Ctrlr_HandleModelUpdate(MODEL_NOTIFY_SOURCE_T source) {
+    switch (source) {
+        case MODEL_NOTIFY_SOURCE_RC:
+            xTaskNotify(
+                Ctrlr_TaskHandle,
+                CTRLR_BIT_OFFSET_TO_MASK(CTRLR_TASK_NOTICE_OFFSET_RC),
+                eSetBits
+            );
+            break;
+        case MODEL_NOTIFY_SOURCE_POS:
+        case MODEL_NOTIFY_SOURCE_ATTITUDE:
+            // TODO not implemented.
+            break;
+        default:
+            PLT_UNREACHABLE;
+    }
+}
+
 
 /******************************************
  * Actions
  ******************************************/
 /**
- * @brief  Updates the state in a centralized way
+ * @brief  Updates the state and handles the transition actions.
  *
  * @param  status New status to be set.
  */
@@ -242,14 +272,23 @@ static void Ctrlr_UpdateState(CTRLR_STATUS_T status) {
     p_funct(status);
 }
 
+/**
+ * @brief  Action to assert. Reserved for when a state must not execute an action.
+ */
 static void Ctrlr_ActionAssert(void) {
     PLT_UNREACHABLE;
 }
 
+/**
+ * @brief  Ignores the action.
+ */
 static void Ctrlr_ActionNone(void) {
     /* - No-op - */
 }
 
+/**
+ * @brief Transition action to just apply the new state.
+ */
 static void Ctrlr_TransitionApply(CTRLR_STATUS_T status) {
     Ctrlr_Info.Status = status;
 }
@@ -271,14 +310,21 @@ static void Ctrlr_DisableControlLoopTimer(void) {
 }
 
 /**
- * @brief  Task loop for the Disarmed state.
- *
- * @param  inp 
- *
- * @return DEF_TRUE if successful, DEF_FALSE otherwise.
- *
- * @note List of notes:
- *       1. 
+ * @brief  Waits for a valid RC frame with the arm switch disabled, to transition to the disabled
+ *         state.
+ */
+static void Ctrlr_WaitForDisarmAction(void) {
+    /* Update RC model */
+    Model_GetRcSetpoint(&Ctrlr_Info.RcSetPoint);
+    if (Ctrlr_Info.RcSetPoint.State == MODEL_RC_SETPOINT_STATE_VALID
+        && DEF_FALSE == Ctrlr_Info.RcSetPoint.ArmSwitch) {
+        Ctrlr_UpdateState(CTRLR_STATUS_DISARMED);
+    }
+}
+
+/**
+ * @brief  Notification action for the disarmed state.
+ *         Waits for a valid RC frame with the arm switch enabled.
  */
 static void Ctrlr_DisarmedAction(void) {
     /* Update RC model */
@@ -286,15 +332,25 @@ static void Ctrlr_DisarmedAction(void) {
     if (Ctrlr_Info.RcSetPoint.State == MODEL_RC_SETPOINT_STATE_VALID
         && DEF_TRUE == Ctrlr_Info.RcSetPoint.ArmSwitch) {
         Ctrlr_UpdateState(CTRLR_STATUS_RUNNING);
+        printf("Controller :: Armed!!\n");
     }
 }
 
+/**
+ * @brief  Transition from the disarmed state to the running state.
+ *         Also enables the control loop timer.
+ */
 static void Ctrlr_DisarmedTransition(CTRLR_STATUS_T status) {
     PLT_ASSERT(CTRLR_STATUS_RUNNING == status);
     Ctrlr_TransitionApply(CTRLR_STATUS_RUNNING);
     Ctrlr_EnableControlLoopTimer();
 }
 
+/**
+ * @brief  Checks the validity of the RC setpoint and handles any errors.
+ *
+ * @return DEF_TRUE if the RC frame is valid, DEF_FALSE otherwise.
+ */
 static bool_t Ctrlr_HandleRcErrors(void) {
     bool_t   rc_error = DEF_FALSE;
     uint32_t mask = CTRLR_BIT_OFFSET_TO_MASK(CTRLR_TASK_NOTICE_OFFSET_RC);
@@ -316,23 +372,23 @@ static bool_t Ctrlr_HandleRcErrors(void) {
     return rc_error;
 }
 
+/**
+ * @brief  Runs the control loop.
+ */
 static void Ctrlr_RunControlLoop(void) {
     CVInt_Interface.VInt_RunControlLoop(&Ctrlr_Info.RcSetPoint);
 }
 
+/**
+ * @brief  Disarm motors.
+ */
 static void Ctrlr_StopMotors(void) {
     CVInt_Interface.VInt_Disarm();
 }
 
 /**
- * @brief  
- *
- * @param  inp 
- *
- * @return DEF_TRUE if successful, DEF_FALSE otherwise.
- *
- * @note List of notes:
- *       1. 
+ * @brief  Notification action for the running state.
+ *         It additionally manages RC errors and disarming.
  */
 static void Ctrlr_RunningAction(void) {
     /* Update RC model */
@@ -351,6 +407,11 @@ static void Ctrlr_RunningAction(void) {
     }
 }
 
+/**
+ * @brief  Transition action from the running state.
+ *
+ * @param  status New state to transition to.
+ */
 static void Ctrlr_RunningTransition(CTRLR_STATUS_T status) {
     switch (status) {
         case CTRLR_STATUS_FAILSAFE:
@@ -371,32 +432,19 @@ static void Ctrlr_RunningTransition(CTRLR_STATUS_T status) {
  * Task Main
  ******************************************/
 /**
- * @brief  
- *
- * @param  inp 
- *
- * @return DEF_TRUE if successful, DEF_FALSE otherwise.
- *
- * @note List of notes:
- *       1. 
+ * @brief  Starts the controller task.
  */
 static void Ctrlr_TaskStart(void) {
     CVInt_Interface.VInt_Start();
-    Ctrlr_UpdateState(CTRLR_STATUS_DISARMED);
+    Ctrlr_UpdateState(CTRLR_STATUS_PREARMED);
 }
 
 /**
- * @brief  
- *
- * @param  inp 
- *
- * @return DEF_TRUE if successful, DEF_FALSE otherwise.
- *
- * @note List of notes:
- *       1. 
+ * @brief  Loop for the controller task.
+ *         Waits for the task notifications, performs the actions, and handles the FSM.
  */
 static void Ctrlr_TaskLoop(void) {
-    bool_t received;
+    bool_t received = DEF_FALSE;
 
     uint32_t mask = Ctrlr_FsmTable[Ctrlr_Info.Status].TaskNotificationMask;
     uint32_t current = ulTaskNotifyValueClear(Ctrlr_TaskHandle, mask);
@@ -407,7 +455,7 @@ static void Ctrlr_TaskLoop(void) {
             &Ctrlr_Info.PrevNotification,
             CTRLR_TIMEOUT_TICKS
         );
-        received = PLT_UTILS_STM_ERR_STATUS_TO_PLT(received_int);
+        received = PLT_UTILS_RTOS_TO_PLT_PASS_FAIL(received_int);
     } else {
         received = DEF_TRUE;
     }
@@ -420,14 +468,9 @@ static void Ctrlr_TaskLoop(void) {
 }
 
 /**
- * @brief  
+ * @brief  Controller task function.
  *
- * @param  inp 
- *
- * @return DEF_TRUE if successful, DEF_FALSE otherwise.
- *
- * @note List of notes:
- *       1. 
+ * @param  task parameters, it won't be used.
  */
 static void Ctrlr_TaskMain(PLT_UTILS_UNUSED void* parameters) {
     /* Setup */
