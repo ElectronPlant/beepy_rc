@@ -2,7 +2,7 @@
  * @file     sbus.h
  * @brief    SBUS driver.
  *
- * @ingroup   Main
+ * @ingroup   Sbus
  * @version   V0.0
  * @author    David Arnaiz
  * @copyright 2025 David Arnaiz
@@ -17,8 +17,6 @@
 #include "plt_assert.h"
 #include "plt_types.h"
 #include "plt_utils.h"
-
-#include "rx_interface.h"
 
 /********************************************************************************
  * Defines

@@ -37,13 +37,11 @@
  */
 typedef enum {
     STD_FRAME_STATE_UNDEFINED = 0, /**< Default value for when the state is pending to be set */
-    STD_FRAME_STATE_UNINITIALIZED, /**< The Rx module is not yet initialized or has desync */
-    STD_FRAME_STATE_RX_PENDING,    /**< The frame is being read */
-    STD_FRAME_STATE_RECEIVED,      /**< The frame needs to be processed */
     STD_FRAME_STATE_INVALID,       /**< Received frame is incorrect */
     STD_FRAME_STATE_VALID,         /**< The frame is valid */
     STD_FRAME_STATE_FAILSAFE,      /**< Failsafe has been activated */
     STD_FRAME_STATE_DROPPED,       /**< The frame could not be processed in time */
+    STD_FRAME_STATE_TIMEOUT,       /**< Too much time since the last frame. */
 } STD_FRAME_STATE_T;
 
 /**

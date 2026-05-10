@@ -148,11 +148,6 @@ typedef struct {
      *        This function is called inside the RX ISR while performing the alignment. Once the
      *        alignment is completed, the Rx buffer should contain a valid frame.
      *
-     * @note WARNING: The alignment process ISR may be more intensive than the regular Rx ISR.
-     *                Thus it should only be used during the initialization process, not at
-     *                runtime.
-     *                TODO: Evaluate this limitation.
-     *
      * @param  p_buffer_info Pointer to the Rx buffer info struct.
      * @param  rx_byte Received byte.
      *
@@ -185,8 +180,6 @@ typedef struct {
     void (*RxInt_DebugFrame)(RXINT_RX_BUFFER_INFO_T* p_buffer_info);
 
 } RXINT_INTERFACE_T;
-
-typedef RXINT_INTERFACE_T*(RxInt_InterfaceGetter)(void);
 
 
 /********************************************************************************

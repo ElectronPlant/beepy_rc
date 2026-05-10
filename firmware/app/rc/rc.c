@@ -13,6 +13,7 @@
  * @note Module Prefix: Rc_
  *
  */
+#include <string.h>
 
 #include "circular_alloc.h"
 #include "plt_assert.h"
@@ -25,6 +26,8 @@
 
 #include "common_rx_interface.h"
 #include "common_rx_sizes.h"
+#include "model.h"
+#include "rc_inputs.h"
 #include "rx_interface.h"
 #include "std_frame.h"
 
@@ -41,13 +44,15 @@
 #define RC_TASK_PRIORITY   (configMAX_PRIORITIES - 2U)
 
 /* --- Rx --- */
-#define RC_RX_TIMEOUT_MS        (300u) /* Time between two frames before the failsafe is triggered */
-#define RC_RX_TIMEOUT_TICKS     ((RC_RX_TIMEOUT_MS * configTICK_RATE_HZ) / PLT_UTILS_SECS_TO_MS_FACTOR)
+#define RC_RX_TIMEOUT_MS    (300u) /* Time between two frames before the failsafe is triggered */
+#define RC_RX_TIMEOUT_TICKS ((RC_RX_TIMEOUT_MS * configTICK_RATE_HZ) / PLT_UTILS_SECS_TO_MS_FACTOR)
 #define RC_RX_ALIGNMENT_RETRIES (5)
 
 /* --- Debug --- */
 #define RC_DEBUG_RAW_FRAME (1) /* Set to 1 to enable RX raw frame debugging */
 
+/* --- STD Frames --- */
+#define RC_NUMBER_OF_PROCESSED_FRAMES (2U)
 
 /********************************************************************************
  * Typedefs
@@ -56,7 +61,6 @@ typedef enum {
     RC_STATUS_UNINITIALIZED = 0,
     RC_STATUS_STOPPED,
     RC_STATUS_MISALIGNED,
-    RC_STATUS_WAITING_FOR_ALIGNMENT,
     RC_STATUS_RUNNING,
     RC_STATUS_ERROR,
 } RC_STATUS_T;
@@ -123,6 +127,8 @@ static QueueHandle_t Rc_RxQueueHandle = NULL;
 static const uint16_t Rc_RxBuffersNum = RXINT_MAX_PARALLEL_RAW_BUFFERS;
 static uint8_t        Rc_RxBuffersPool[RXINT_MAX_PARALLEL_RAW_BUFFERS][COMRXS_BUFFER_SIZE];
 static RC_STATUS_T    Rc_Status = RC_STATUS_UNINITIALIZED;
+
+static STD_FRAME_T Rc_FailSafeFrame = {0};
 
 /**
  * @note Access model: The buffer must only be allocated by the ISR, deallocation only be the Task.
@@ -196,10 +202,6 @@ bool_t Rc_Init(void) {
 static void Rc_ActionRxComplete(RXINT_RX_BUFFER_INFO_T* p_buffer_info) {
     STD_FRAME_T processed_frame;
 
-    if (RC_STATUS_MISALIGNED == Rc_Status) {
-        Rc_UpdateStatus(RC_STATUS_RUNNING);
-    }
-
 #if RC_DEBUG_RAW_FRAME == 1
     if (NULL != ComRxInt_Interface.RxInt_DebugFrame) {
         ComRxInt_Interface.RxInt_DebugFrame(p_buffer_info);
@@ -207,8 +209,18 @@ static void Rc_ActionRxComplete(RXINT_RX_BUFFER_INFO_T* p_buffer_info) {
 #endif
 
     ComRxInt_Interface.RxInt_ProcessFrame(p_buffer_info, &processed_frame);
-    //TODO is probably a good thing to do here to check if the frame is valid, to remove the error state.
-    (void)processed_frame; //TODO need to be implement this part.
+
+    if (STD_FRAME_STATE_VALID == processed_frame.State) {
+        if (RC_STATUS_MISALIGNED == Rc_Status || RC_STATUS_ERROR == Rc_Status) {
+            Rc_UpdateStatus(RC_STATUS_RUNNING);
+        }
+        RcIn_HandleRcFrame(&processed_frame);
+    } else if (STD_FRAME_STATE_INVALID == processed_frame.State) {
+        memcpy(&processed_frame, &Rc_FailSafeFrame, sizeof(STD_FRAME_T));
+        processed_frame.State = STD_FRAME_STATE_INVALID;
+        Rc_UpdateStatus(RC_STATUS_MISALIGNED);
+        Rc_ResetIsr = DEF_TRUE;
+    }
 
     PltMemCA_FreeCritical(&Rc_RxBufferAllocator, p_buffer_info->RxBufferPtr);
 }
@@ -218,12 +230,15 @@ static void Rc_ActionRxComplete(RXINT_RX_BUFFER_INFO_T* p_buffer_info) {
  *         No RX has been received, handles the failsafe.
  */
 static void Rc_ActionRxTimeout(void) {
-    STD_FRAME_T error_frame = {
-        .State = STD_FRAME_STATE_DROPPED,
-    };
     printf("RC - Frame dropped\n");
-    (void)error_frame; //TODO need to implement this part.
-    // This will be reached if the RC module has not connected to the RX.
+
+    /* Generate error frame */
+    STD_FRAME_T error_frame;
+    memcpy(&error_frame, &Rc_FailSafeFrame, sizeof(STD_FRAME_T));
+    error_frame.State = STD_FRAME_STATE_DROPPED;
+
+    /* Notify error */
+    RcIn_HandleRcFrame(&error_frame);
 }
 
 /**
@@ -233,9 +248,13 @@ static void Rc_ActionRxTimeout(void) {
  */
 static void Rc_ActionNotifyError(RC_ERROR_TYPES_T error) {
     printf("RC - Error %u\n", error);
+
+    /* Restart RC */
     Rc_UpdateStatus(RC_STATUS_ERROR);
     ComRxInt_Interface.RxInt_Stop(ComRxBus_BusHandler);
-    //TODO handle error.
+    Rc_ResetIsr = DEF_TRUE;
+    bool_t ok = ComRxInt_Interface.RxInt_Start(ComRxBus_BusHandler);
+    PLT_ASSERT(DEF_TRUE == ok);
 }
 
 /**

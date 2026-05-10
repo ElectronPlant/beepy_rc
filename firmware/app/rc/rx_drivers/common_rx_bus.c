@@ -84,7 +84,6 @@ COM_RX_BUS_HANDLER_T ComRxBus_GetBusHandler(void) {
     return ComRxBus_BusHandler;
 }
 
-
 /** @} (end addtogroup ComRxBus)  */
 /** @} (end addtogroup RxDriver)  */
 /** @} (end addtogroup Rc)        */
