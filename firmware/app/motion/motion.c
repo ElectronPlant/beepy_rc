@@ -184,7 +184,7 @@ static void Motion_TaskLoop(void) {
     if (angle > 180.0f) {
         angle = 0;
     }
-    printf("angle: %d\n", (uint32_t)angle);
+    printf("angle: %ld\n", (int32_t)angle);
 
     Rc_WaitForSetPoint();
 }
