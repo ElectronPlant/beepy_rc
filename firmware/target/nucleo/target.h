@@ -75,6 +75,8 @@ extern const SERIAL_PERIPHERAL_PORT_T TargetRcSerial;
 /********************************************************************************
  * Drive
  ********************************************************************************/
+#define TARGET_VEHICLE_TYPE FWD
+
 /**
  * Motor PWM timers
  * Each motor is driven by two PWM outputs.

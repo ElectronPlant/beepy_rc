@@ -240,10 +240,14 @@ C_APP_SOURCE := \
 ../app/rc/rc.c \
 ../app/rc/rx_drivers/sbus/sbus.c \
 ../app/rc/rx_drivers/common_rx_bus.c \
+../app/rc/rc_inputs.c \
 ../app/bsp/bsp.c \
 ../app/motion/motion.c \
 ../libs/motor.c \
-../libs/servo.c
+../libs/servo.c \
+../app/controller/model.c \
+../app/controller/controller.c \
+../app/controller/vehicles/fwd/fwd.c
 
 H_APP_SOURCE := \
 -I../app/rc \
@@ -251,6 +255,9 @@ H_APP_SOURCE := \
 -I../app/rc/rx_drivers/sbus \
 -I../app/bsp \
 -I../app/motion \
+-I../app/controller \
+-I../app/controller/vehicles \
+-I../app/controller/vehicles/fwd.h \
 -I../libs \
 -I../configs
 

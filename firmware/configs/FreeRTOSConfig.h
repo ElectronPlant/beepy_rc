@@ -91,6 +91,10 @@ extern uint32_t SystemCoreClock;
 #define configUSE_CO_ROUTINES           0
 #define configMAX_CO_ROUTINE_PRIORITIES (2)
 
+/* Task notifications. */
+#define configTASK_NOTIFICATION_ARRAY_ENTRIES (1)
+#define configUSE_TASK_NOTIFICATIONS          (1)
+
 /* Software timer definitions. */
 #define configUSE_TIMERS             1
 #define configTIMER_TASK_PRIORITY    (2) // TODO check
