@@ -1,0 +1,675 @@
+/**
+ * @file  target.c
+ * @brief Target definition for the BeepyRcBrd board.
+ *
+ * @ingroup   Target
+ * @version   V0.0
+ * @author    David Arnaiz
+ * @copyright 2026 David Arnaiz
+ *
+ * This file is part of BeepyRC <TODO: link to repo>.
+ * This project is licensed under the GNU General Public License v3.0 license.
+ *
+ * @note    Module Prefix: Target_
+ */
+
+#include "plt_assert.h"
+#include "plt_types.h"
+
+#include "target.h"
+
+/** @addtogroup Target
+ *    @{
+ */
+
+/********************************************************************************
+ * RC
+ ********************************************************************************/
+
+/******************************************
+ * Rx Serial
+ ******************************************/
+#include "serial_port.h"
+
+/** Rx Serial interface.
+ *  The serial interface can be used by the SBUS (only Rx with external inverter).
+ *  Alternatively it can be used for debug interface.
+ *
+ *  The Rx serial is mapped to UART4.
+ */
+const SERIAL_PERIPHERAL_PORT_T TargetRcSerial = {
+    .Serial = UART4,
+    .Clk = LL_APB1_GRP1_PERIPH_UART4,
+    .ClkEnFn_Ptr = LL_APB1_GRP1_EnableClock,
+
+    .IrqType = UART4_IRQn,
+
+    .TxAvailable = DEF_TRUE,
+    .TxPin = LL_GPIO_PIN_10,
+    .TxPort = GPIOC,
+    .TxAlternateFunc = LL_GPIO_AF_8,
+    .TxClk = LL_AHB1_GRP1_PERIPH_GPIOC,
+    .TxClkEnFn_Ptr = LL_AHB1_GRP1_EnableClock,
+
+    .RxAvailable = DEF_TRUE,
+    .RxPin = LL_GPIO_PIN_11,
+    .RxPort = GPIOC,
+    .RxAlternateFunc = LL_GPIO_AF_8,
+    .RxClk = LL_AHB1_GRP1_PERIPH_GPIOC,
+    .RxClkEnFn_Ptr = LL_AHB1_GRP1_EnableClock,
+};
+
+/********************************************************************************
+ * Drive
+ ********************************************************************************/
+
+/******************************************
+ * Motor PWM
+ ******************************************/
+#include "encoder.h"
+#include "motion.h"
+#include "motor.h"
+#include "pwm_timer.h"
+#include "pwm_timer_port.h"
+
+/** Motor timer 1
+ *  Is mapped to timer 2.
+ *  All channels except for the third channel are used. Channel 3 is used for the
+ *  I2C bus.
+ *
+ * @note List of notes:
+ *      1. TIM2 is connected the APB2 clock, which is set to 84MHz, and it is a 32-bit timer.
+ *         The PWM signal will be between 1kHz to 100kHz. To have the maximum resolution possible,
+ *         the prescaller needs to be set so the count required to achieve the minimum frequency
+ *         just fits the maximum count value. In this case CEIL(84MHz / (F_MIN * 2^32)) - 1 = X.
+ *         With X being the prescaller, and the -1 is a correction since 0 is the identity
+ *         prescaller instead of 1. In this case solves to X = 0.
+ *         Note that this is for the edge aligned mode in center mode the frequency is halved.
+ */
+#define TARGET_MOTOR_TIM1_N_CHANNELS    (3U)
+#define TARGET_MOTOR_TIM1_PRESCALLER    (0U) /* See note 1 */
+#define TARGET_MOTOR_TIM1_CLK_FREQUENCY (84000 / (1 + TARGET_MOTOR_TIM1_PRESCALLER))
+
+const PWM_TIM_PORT_CHN_T TargetMotorTim1Ch1 = {
+    .GpioPin = LL_GPIO_PIN_8,
+    .GpioPort = GPIOB,
+    .GpioAlternateFunc = LL_GPIO_AF_1,
+    .GpioClk = LL_AHB1_GRP1_PERIPH_GPIOB,
+    .GpioClkEnFn_Ptr = LL_AHB1_GRP1_EnableClock,
+    .OutputPolarity = LL_TIM_OCPOLARITY_HIGH,
+    .OutputIdleState = LL_TIM_OCIDLESTATE_LOW,
+};
+
+const PWM_TIM_PORT_CHN_T TargetMotorTim1Ch2 = {
+    .GpioPin = LL_GPIO_PIN_9,
+    .GpioPort = GPIOB,
+    .GpioAlternateFunc = LL_GPIO_AF_1,
+    .GpioClk = LL_AHB1_GRP1_PERIPH_GPIOB,
+    .GpioClkEnFn_Ptr = LL_AHB1_GRP1_EnableClock,
+    .OutputPolarity = LL_TIM_OCPOLARITY_HIGH,
+    .OutputIdleState = LL_TIM_OCIDLESTATE_LOW,
+};
+
+/** Channel 3 is used for the I2C bus. */
+
+const PWM_TIM_PORT_CHN_T TargetMotorTim1Ch4 = {
+    .GpioPin = LL_GPIO_PIN_2,
+    .GpioPort = GPIOB,
+    .GpioAlternateFunc = LL_GPIO_AF_1,
+    .GpioClk = LL_AHB1_GRP1_PERIPH_GPIOB,
+    .GpioClkEnFn_Ptr = LL_AHB1_GRP1_EnableClock,
+    .OutputPolarity = LL_TIM_OCPOLARITY_HIGH,
+    .OutputIdleState = LL_TIM_OCIDLESTATE_LOW,
+};
+
+const PWM_TIM_PORT_T TargetMotorTim1 = {
+    .Timer = TIM2,
+    .TimerClk = LL_APB1_GRP1_PERIPH_TIM2,
+    .TimerClkEnFn_Ptr = LL_APB1_GRP1_EnableClock,
+    .TimerPrescaller = TARGET_MOTOR_TIM1_PRESCALLER,
+    .TimerClkDivision = LL_TIM_CLOCKDIVISION_DIV1,
+    .TimerClkFreqKhz = TARGET_MOTOR_TIM1_CLK_FREQUENCY,
+    .TimerIs32bits = DEF_TRUE,
+    .NumChannels = TARGET_MOTOR_TIM1_N_CHANNELS,
+    .Channels = {&TargetMotorTim1Ch1, &TargetMotorTim1Ch2, NULL, &TargetMotorTim1Ch4}
+};
+
+/** Motor timer 2
+ *  Is mapped to timer 8.
+ *  This timer has all channels available.
+ *
+ * @note List of notes:
+ *      1. TIM2 is connected the APB2 clock, which is set to 84MHz, and it is a 16-bit timer.
+ *         The PWM signal will be between 1kHz to 100kHz. To have the maximum resolution possible,
+ *         the prescaller needs to be set so the count required to achieve the minimum frequency
+ *         just fits the maximum count value. In this case CEIL(84MHz / (F_MIN * 2^16)) - 1 = X.
+ *         With X being the prescaller, and the -1 is a correction since 0 is the identity
+ *         prescaller instead of 1. In this case solves to X = 0.
+ *         Note that this is for the edge aligned mode in center mode the frequency is halved.
+ */
+#define TARGET_MOTOR_TIM2_N_CHANNELS    (4U)
+#define TARGET_MOTOR_TIM2_PRESCALLER    (1U) /* See note 1 */
+#define TARGET_MOTOR_TIM2_CLK_FREQUENCY (84000 / (1 + TARGET_MOTOR_TIM2_PRESCALLER))
+
+const PWM_TIM_PORT_CHN_T TargetMotorTim2Ch1 = {
+    .GpioPin = LL_GPIO_PIN_6,
+    .GpioPort = GPIOC,
+    .GpioAlternateFunc = LL_GPIO_AF_3,
+    .GpioClk = LL_AHB1_GRP1_PERIPH_GPIOC,
+    .GpioClkEnFn_Ptr = LL_AHB1_GRP1_EnableClock,
+    .OutputPolarity = LL_TIM_OCPOLARITY_HIGH,
+    .OutputIdleState = LL_TIM_OCIDLESTATE_LOW,
+};
+
+const PWM_TIM_PORT_CHN_T TargetMotorTim2Ch2 = {
+    .GpioPin = LL_GPIO_PIN_7,
+    .GpioPort = GPIOC,
+    .GpioAlternateFunc = LL_GPIO_AF_3,
+    .GpioClk = LL_AHB1_GRP1_PERIPH_GPIOC,
+    .GpioClkEnFn_Ptr = LL_AHB1_GRP1_EnableClock,
+    .OutputPolarity = LL_TIM_OCPOLARITY_HIGH,
+    .OutputIdleState = LL_TIM_OCIDLESTATE_LOW,
+};
+
+const PWM_TIM_PORT_CHN_T TargetMotorTim2Ch3 = {
+    .GpioPin = LL_GPIO_PIN_8,
+    .GpioPort = GPIOC,
+    .GpioAlternateFunc = LL_GPIO_AF_3,
+    .GpioClk = LL_AHB1_GRP1_PERIPH_GPIOC,
+    .GpioClkEnFn_Ptr = LL_AHB1_GRP1_EnableClock,
+    .OutputPolarity = LL_TIM_OCPOLARITY_HIGH,
+    .OutputIdleState = LL_TIM_OCIDLESTATE_LOW,
+};
+
+const PWM_TIM_PORT_CHN_T TargetMotorTim2Ch4 = {
+    .GpioPin = LL_GPIO_PIN_9,
+    .GpioPort = GPIOC,
+    .GpioAlternateFunc = LL_GPIO_AF_3,
+    .GpioClk = LL_AHB1_GRP1_PERIPH_GPIOC,
+    .GpioClkEnFn_Ptr = LL_AHB1_GRP1_EnableClock,
+    .OutputPolarity = LL_TIM_OCPOLARITY_HIGH,
+    .OutputIdleState = LL_TIM_OCIDLESTATE_LOW,
+};
+
+const PWM_TIM_PORT_T TargetMotorTim2 = {
+    .Timer = TIM8,
+    .TimerClk = LL_APB2_GRP1_PERIPH_TIM8,
+    .TimerClkEnFn_Ptr = LL_APB1_GRP1_EnableClock,
+    .TimerPrescaller = TARGET_MOTOR_TIM2_PRESCALLER,
+    .TimerClkDivision = LL_TIM_CLOCKDIVISION_DIV1,
+    .TimerClkFreqKhz = TARGET_MOTOR_TIM2_CLK_FREQUENCY,
+    .TimerIs32bits = DEF_FALSE,
+    .NumChannels = TARGET_MOTOR_TIM2_N_CHANNELS,
+    .Channels = {&TargetMotorTim2Ch1, &TargetMotorTim2Ch2, &TargetMotorTim2Ch3, &TargetMotorTim2Ch4}
+};
+
+/** Motor timer 3
+ *  Is mapped to timer 14.
+ *  This timer only has one channel.
+ *
+ * @note List of notes:
+ *      1. TIM14 is connected the APB1 clock, which is set to 84MHz, and it is a 16-bit timer.
+ *         The PWM signal will be between 1kHz to 100kHz. To have the maximum resolution possible,
+ *         the prescaller needs to be set so the count required to achieve the minimum frequency
+ *         just fits the maximum count value. In this case CEIL(84MHz / (F_MIN * 2^16)) - 1 = X.
+ *         With X being the prescaller, and the -1 is a correction since 0 is the identity
+ *         prescaller instead of 1. In this case solves to X = 0.
+ *         Note that this is for the edge aligned mode in center mode the frequency is halved.
+ */
+#define TARGET_MOTOR_TIM3_N_CHANNELS    (1U)
+#define TARGET_MOTOR_TIM3_PRESCALLER    (1U) /* See note 1 */
+#define TARGET_MOTOR_TIM3_CLK_FREQUENCY (84000 / (1 + TARGET_MOTOR_TIM3_PRESCALLER))
+
+const PWM_TIM_PORT_CHN_T TargetMotorTim3Ch1 = {
+    .GpioPin = LL_GPIO_PIN_7,
+    .GpioPort = GPIOA,
+    .GpioAlternateFunc = LL_GPIO_AF_9,
+    .GpioClk = LL_AHB1_GRP1_PERIPH_GPIOA,
+    .GpioClkEnFn_Ptr = LL_AHB1_GRP1_EnableClock,
+    .OutputPolarity = LL_TIM_OCPOLARITY_HIGH,
+    .OutputIdleState = LL_TIM_OCIDLESTATE_LOW,
+};
+
+const PWM_TIM_PORT_T TargetMotorTim3 = {
+    .Timer = TIM14,
+    .TimerClk = LL_APB1_GRP1_PERIPH_TIM14,
+    .TimerClkEnFn_Ptr = LL_APB1_GRP1_EnableClock,
+    .TimerPrescaller = TARGET_MOTOR_TIM3_PRESCALLER,
+    .TimerClkDivision = LL_TIM_CLOCKDIVISION_DIV1,
+    .TimerClkFreqKhz = TARGET_MOTOR_TIM3_CLK_FREQUENCY,
+    .TimerIs32bits = DEF_FALSE,
+    .NumChannels = TARGET_MOTOR_TIM3_N_CHANNELS,
+    .Channels = {&TargetMotorTim3Ch1, NULL, NULL, NULL}
+};
+
+PWM_TIM_INSTANCE_T Target_MotorPwmTimers[TARGET_NUM_MOTOR_PWM_TIMERS] = {
+    {
+        .Status = PWM_TIM_STATUS_UNINITIALIZED,
+        .Peripheral_Ptr = &TargetMotorTim1,
+        .EnChannels = 0x00,
+        .InitChannels = 0x00,
+    },
+    {
+        .Status = PWM_TIM_STATUS_UNINITIALIZED,
+        .Peripheral_Ptr = &TargetMotorTim2,
+        .EnChannels = 0x00,
+        .InitChannels = 0x00,
+    },
+    {
+        .Status = PWM_TIM_STATUS_UNINITIALIZED,
+        .Peripheral_Ptr = &TargetMotorTim3,
+        .EnChannels = 0x00,
+        .InitChannels = 0x00,
+    }
+};
+
+/******************************************
+ * Encoders
+ ******************************************/
+#include "encoder_port.h"
+
+const ENC_PERIPHERAL_PORT_T TargetEnc1 = {
+    .Timer = TIM1,
+    .TimerClk = LL_APB2_GRP1_PERIPH_TIM1,
+    .TimerClkEnFn_Ptr = LL_APB2_GRP1_EnableClock,
+    .TimerChn1 = LL_TIM_CHANNEL_CH1,
+    .TimerChn2 = LL_TIM_CHANNEL_CH2,
+
+    .Gpio1Pin = LL_GPIO_PIN_8,
+    .Gpio1Port = GPIOA,
+    .Gpio1AlternateFunc = LL_GPIO_AF_1,
+    .Gpio1Clk = LL_AHB1_GRP1_PERIPH_GPIOA,
+    .Gpio1ClkEnFn_Ptr = LL_AHB1_GRP1_EnableClock,
+
+    .Gpio2Pin = LL_GPIO_PIN_9,
+    .Gpio2Port = GPIOA,
+    .Gpio2AlternateFunc = LL_GPIO_AF_1,
+    .Gpio2Clk = LL_AHB1_GRP1_PERIPH_GPIOA,
+    .Gpio2ClkEnFn_Ptr = LL_AHB1_GRP1_EnableClock,
+};
+
+const ENC_PERIPHERAL_PORT_T TargetEnc2 = {
+    .Timer = TIM3,
+    .TimerClk = LL_APB1_GRP1_PERIPH_TIM3,
+    .TimerClkEnFn_Ptr = LL_APB1_GRP1_EnableClock,
+    .TimerChn1 = LL_TIM_CHANNEL_CH1,
+    .TimerChn2 = LL_TIM_CHANNEL_CH2,
+
+    .Gpio1Pin = LL_GPIO_PIN_6,
+    .Gpio1Port = GPIOA,
+    .Gpio1AlternateFunc = LL_GPIO_AF_2,
+    .Gpio1Clk = LL_AHB1_GRP1_PERIPH_GPIOA,
+    .Gpio1ClkEnFn_Ptr = LL_AHB1_GRP1_EnableClock,
+
+    .Gpio2Pin = LL_GPIO_PIN_7,
+    .Gpio2Port = GPIOA,
+    .Gpio2AlternateFunc = LL_GPIO_AF_2,
+    .Gpio2Clk = LL_AHB1_GRP1_PERIPH_GPIOA,
+    .Gpio2ClkEnFn_Ptr = LL_AHB1_GRP1_EnableClock,
+};
+
+const ENC_PERIPHERAL_PORT_T TargetEnc3 = {
+    .Timer = TIM4,
+    .TimerClk = LL_APB1_GRP1_PERIPH_TIM4,
+    .TimerClkEnFn_Ptr = LL_APB1_GRP1_EnableClock,
+    .TimerChn1 = LL_TIM_CHANNEL_CH1,
+    .TimerChn2 = LL_TIM_CHANNEL_CH2,
+
+    .Gpio1Pin = LL_GPIO_PIN_6,
+    .Gpio1Port = GPIOB,
+    .Gpio1AlternateFunc = LL_GPIO_AF_2,
+    .Gpio1Clk = LL_AHB1_GRP1_PERIPH_GPIOB,
+    .Gpio1ClkEnFn_Ptr = LL_AHB1_GRP1_EnableClock,
+
+    .Gpio2Pin = LL_GPIO_PIN_7,
+    .Gpio2Port = GPIOB,
+    .Gpio2AlternateFunc = LL_GPIO_AF_2,
+    .Gpio2Clk = LL_AHB1_GRP1_PERIPH_GPIOB,
+    .Gpio2ClkEnFn_Ptr = LL_AHB1_GRP1_EnableClock,
+};
+
+const ENC_PERIPHERAL_PORT_T TargetEnc4 = {
+    .Timer = TIM5,
+    .TimerClk = LL_APB1_GRP1_PERIPH_TIM5,
+    .TimerClkEnFn_Ptr = LL_APB1_GRP1_EnableClock,
+    .TimerChn1 = LL_TIM_CHANNEL_CH1,
+    .TimerChn2 = LL_TIM_CHANNEL_CH2,
+
+    .Gpio1Pin = LL_GPIO_PIN_0,
+    .Gpio1Port = GPIOA,
+    .Gpio1AlternateFunc = LL_GPIO_AF_2,
+    .Gpio1Clk = LL_AHB1_GRP1_PERIPH_GPIOA,
+    .Gpio1ClkEnFn_Ptr = LL_AHB1_GRP1_EnableClock,
+
+    .Gpio2Pin = LL_GPIO_PIN_1,
+    .Gpio2Port = GPIOA,
+    .Gpio2AlternateFunc = LL_GPIO_AF_2,
+    .Gpio2Clk = LL_AHB1_GRP1_PERIPH_GPIOA,
+    .Gpio2ClkEnFn_Ptr = LL_AHB1_GRP1_EnableClock,
+};
+
+ENC_INSTANCE_T Target_Encoders[TARGET_ENCODER_NUM] = {
+    {
+        .Status = ENC_STATUS_UNINITIALIZED,
+        .Peripheral = &TargetEnc1,
+    },
+    {
+        .Status = ENC_STATUS_UNINITIALIZED,
+        .Peripheral = &TargetEnc2,
+    },
+    {
+        .Status = ENC_STATUS_UNINITIALIZED,
+        .Peripheral = &TargetEnc3,
+    },
+    {
+        .Status = ENC_STATUS_UNINITIALIZED,
+        .Peripheral = &TargetEnc4,
+    },
+};
+
+/******************************************
+ * Motors
+ ******************************************/
+MOTOR_T Target_Motors[TARGET_MOTOR_NUM] = {
+    {
+        .Encoder = &Target_Encoders[0],
+        .PwmChn[0] =
+            {
+                .Timer = &Target_MotorPwmTimers[0],
+                .Chn = PWM_TIM_CHANNELS_CH1,
+            },
+        .PwmChn[1] =
+            {
+                .Timer = &Target_MotorPwmTimers[0],
+                .Chn = PWM_TIM_CHANNELS_CH2,
+            },
+    },
+    {
+        .Encoder = &Target_Encoders[1],
+        .PwmChn[0] =
+            {
+                .Timer = &Target_MotorPwmTimers[0],
+                .Chn = PWM_TIM_CHANNELS_CH4,
+            },
+        .PwmChn[1] =
+            {
+                .Timer = &Target_MotorPwmTimers[2],
+                .Chn = PWM_TIM_CHANNELS_CH1,
+            },
+    },
+    {
+        .Encoder = &Target_Encoders[2],
+        .PwmChn[0] =
+            {
+                .Timer = &Target_MotorPwmTimers[1],
+                .Chn = PWM_TIM_CHANNELS_CH1,
+            },
+        .PwmChn[1] =
+            {
+                .Timer = &Target_MotorPwmTimers[1],
+                .Chn = PWM_TIM_CHANNELS_CH2,
+            },
+    },
+    {
+        .Encoder = &Target_Encoders[3],
+        .PwmChn[0] =
+            {
+                .Timer = &Target_MotorPwmTimers[1],
+                .Chn = PWM_TIM_CHANNELS_CH3,
+            },
+        .PwmChn[1] = {
+            .Timer = &Target_MotorPwmTimers[1],
+            .Chn = PWM_TIM_CHANNELS_CH4,
+        },
+    },
+};
+
+/********************************************************************************
+ * Servos Motors
+ ********************************************************************************/
+
+/******************************************
+ * PWM Timers
+ ******************************************/
+#include "pwm_timer_port.h"
+#include "servo.h"
+
+/** Servo timer 1
+ *  Is mapped to timer 12.
+ *  Both channels of the timer are used as servo outputs.
+ *
+ * @note List of notes:
+ *      1. TIM12 is connected the APB1 clock, which is set to 84MHz, and it is a 16-bit timer.
+ *         The PWM signal will be 50Hz. To have the maximum resolution possible,
+ *         the prescaller needs to be set so the count required to achieve the minimum frequency
+ *         just fits the maximum count value. In this case CEIL(84MHz / (F * 2^16)) - 1 = X.
+ *         With X being the prescaller, and the -1 is a correction since 0 is the identity
+ *         prescaller instead of 1. In this case solves to X = 0.
+ *         Note that this is for the edge aligned mode in center mode the frequency is halved.
+ *         In this case the prescaller is set to 25.
+ */
+#define TARGET_SERVO_TIM1_N_CHANNELS    (2U)
+#define TARGET_SERVO_TIM1_PRESCALLER    (25U) /* See note 1 */
+#define TARGET_SERVO_TIM1_CLK_FREQUENCY (84000 / (1 + TARGET_SERVO_TIM1_PRESCALLER))
+
+const PWM_TIM_PORT_CHN_T TargetServoTim1Ch1 = {
+    .GpioPin = LL_GPIO_PIN_14,
+    .GpioPort = GPIOB,
+    .GpioAlternateFunc = LL_GPIO_AF_9,
+    .GpioClk = LL_AHB1_GRP1_PERIPH_GPIOB,
+    .GpioClkEnFn_Ptr = LL_AHB1_GRP1_EnableClock,
+    .OutputPolarity = LL_TIM_OCPOLARITY_HIGH,
+    .OutputIdleState = LL_TIM_OCIDLESTATE_LOW,
+};
+
+const PWM_TIM_PORT_CHN_T TargetServoTim1Ch2 = {
+    .GpioPin = LL_GPIO_PIN_15,
+    .GpioPort = GPIOB,
+    .GpioAlternateFunc = LL_GPIO_AF_9,
+    .GpioClk = LL_AHB1_GRP1_PERIPH_GPIOB,
+    .GpioClkEnFn_Ptr = LL_AHB1_GRP1_EnableClock,
+    .OutputPolarity = LL_TIM_OCPOLARITY_HIGH,
+    .OutputIdleState = LL_TIM_OCIDLESTATE_LOW,
+};
+
+const PWM_TIM_PORT_T TargetServoTim1 = {
+    .Timer = TIM12,
+    .TimerClk = LL_APB1_GRP1_PERIPH_TIM12,
+    .TimerClkEnFn_Ptr = LL_APB1_GRP1_EnableClock,
+    .TimerPrescaller = TARGET_SERVO_TIM1_PRESCALLER,
+    .TimerClkDivision = LL_TIM_CLOCKDIVISION_DIV1,
+    .TimerClkFreqKhz = TARGET_SERVO_TIM1_CLK_FREQUENCY,
+    .TimerIs32bits = DEF_FALSE,
+    .NumChannels = TARGET_SERVO_TIM1_N_CHANNELS,
+    .Channels = {&TargetServoTim1Ch1, &TargetServoTim1Ch2, NULL, NULL}
+};
+
+/** Servo timer 2
+ *  Is mapped to timer 13.
+ *  This timer only has one channel.
+ *
+ * @note List of notes:
+ *      1. TIM13 is connected the APB1 clock, which is set to 84MHz, and it is a 16-bit timer.
+ *         The PWM signal will be 50Hz. To have the maximum resolution possible,
+ *         the prescaller needs to be set so the count required to achieve the minimum frequency
+ *         just fits the maximum count value. In this case CEIL(84MHz / (F * 2^16)) - 1 = X.
+ *         With X being the prescaller, and the -1 is a correction since 0 is the identity
+ *         prescaller instead of 1. In this case solves to X = 0.
+ *         Note that this is for the edge aligned mode in center mode the frequency is halved.
+ *         In this case the prescaller is set to 25.
+ */
+#define TARGET_SERVO_TIM2_N_CHANNELS    (1U)
+#define TARGET_SERVO_TIM2_PRESCALLER    (25U) /* See note 1 */
+#define TARGET_SERVO_TIM2_CLK_FREQUENCY (84000 / (1 + TARGET_SERVO_TIM1_PRESCALLER))
+
+const PWM_TIM_PORT_CHN_T TargetServoTim2Ch1 = {
+    .GpioPin = LL_GPIO_PIN_6,
+    .GpioPort = GPIOA,
+    .GpioAlternateFunc = LL_GPIO_AF_9,
+    .GpioClk = LL_AHB1_GRP1_PERIPH_GPIOA,
+    .GpioClkEnFn_Ptr = LL_AHB1_GRP1_EnableClock,
+    .OutputPolarity = LL_TIM_OCPOLARITY_HIGH,
+    .OutputIdleState = LL_TIM_OCIDLESTATE_LOW,
+};
+
+const PWM_TIM_PORT_T TargetServoTim2 = {
+    .Timer = TIM13,
+    .TimerClk = LL_APB1_GRP1_PERIPH_TIM13,
+    .TimerClkEnFn_Ptr = LL_APB1_GRP1_EnableClock,
+    .TimerPrescaller = TARGET_SERVO_TIM2_PRESCALLER,
+    .TimerClkDivision = LL_TIM_CLOCKDIVISION_DIV1,
+    .TimerClkFreqKhz = TARGET_SERVO_TIM2_CLK_FREQUENCY,
+    .TimerIs32bits = DEF_FALSE,
+    .NumChannels = TARGET_SERVO_TIM2_N_CHANNELS,
+    .Channels = {&TargetServoTim1Ch1, NULL, NULL, NULL}
+};
+
+PWM_TIM_INSTANCE_T Motion_ServoPwmTimers[TARGET_NUM_SERVO_PWM_CHANNELS] = {
+    {
+        .Status = PWM_TIM_STATUS_UNINITIALIZED,
+        .Peripheral_Ptr = &TargetServoTim1,
+        .EnChannels = 0x00,
+        .InitChannels = 0x00,
+    },
+    {
+        .Status = PWM_TIM_STATUS_UNINITIALIZED,
+        .Peripheral_Ptr = &TargetServoTim2,
+        .EnChannels = 0x00,
+        .InitChannels = 0x00,
+    },
+};
+
+/******************************************
+ * Servos
+ ******************************************/
+SERVO_T Target_Servos[TARGET_NUM_SERVO_PWM_CHANNELS] = {
+    {.Timer = &Motion_ServoPwmTimers[0], .Chn = PWM_TIM_CHANNELS_CH1},
+    {.Timer = &Motion_ServoPwmTimers[0], .Chn = PWM_TIM_CHANNELS_CH2},
+    {.Timer = &Motion_ServoPwmTimers[1], .Chn = PWM_TIM_CHANNELS_CH1}
+};
+
+/********************************************************************************
+ * UI
+ ********************************************************************************/
+#include "gpio.h"
+#include "gpio_port.h"
+
+#include "button.h"
+
+/******************************************
+ * LEDS
+ ******************************************/
+const GPIO_PERIPHERAL_PORT_T Target_LedGreenGpio = {
+    .GpioPin = LL_GPIO_PIN_10,
+    .GpioPort = GPIOA,
+    .GpioClk = LL_AHB1_GRP1_PERIPH_GPIOA,
+    .GpioClkEnFn_Ptr = LL_AHB1_GRP1_EnableClock,
+};
+
+const GPIO_PERIPHERAL_PORT_T Target_LedYellowGpio = {
+    .GpioPin = LL_GPIO_PIN_12,
+    .GpioPort = GPIOA,
+    .GpioClk = LL_AHB1_GRP1_PERIPH_GPIOA,
+    .GpioClkEnFn_Ptr = LL_AHB1_GRP1_EnableClock,
+};
+
+const GPIO_PERIPHERAL_PORT_T Target_LedRedGpio = {
+    .GpioPin = LL_GPIO_PIN_11,
+    .GpioPort = GPIOA,
+    .GpioClk = LL_AHB1_GRP1_PERIPH_GPIOA,
+    .GpioClkEnFn_Ptr = LL_AHB1_GRP1_EnableClock,
+};
+
+GPIO_INSTANCE_T Target_LedGreenInstance = {
+    .Status = GPIO_STATUS_UNINITIALIZED,
+    .Mode = GPIO_MODE_OUTPUT,
+    .Pull = GPIO_PULL_NONE,
+    .Peripheral_Ptr = &Target_LedGreenGpio,
+};
+GPIO_INSTANCE_T Target_LedYellowInstance = {
+    .Status = GPIO_STATUS_UNINITIALIZED,
+    .Mode = GPIO_MODE_OUTPUT,
+    .Pull = GPIO_PULL_NONE,
+    .Peripheral_Ptr = &Target_LedYellowGpio,
+};
+GPIO_INSTANCE_T Target_LedRedInstance = {
+    .Status = GPIO_STATUS_UNINITIALIZED,
+    .Mode = GPIO_MODE_OUTPUT,
+    .Pull = GPIO_PULL_NONE,
+    .Peripheral_Ptr = &Target_LedRedGpio,
+};
+
+GPIO_HANDLER_T Target_Leds[TARGET_NUM_LEDS] = {
+    &Target_LedGreenInstance,
+    &Target_LedYellowInstance,
+    &Target_LedRedInstance,
+};
+
+/******************************************
+ * BUTTONS
+ ******************************************/
+const GPIO_PERIPHERAL_PORT_T Target_Button1Gpio = {
+    .GpioPin = LL_GPIO_PIN_15,
+    .GpioPort = GPIOA,
+    .GpioClk = LL_AHB1_GRP1_PERIPH_GPIOA,
+    .GpioClkEnFn_Ptr = LL_AHB1_GRP1_EnableClock,
+};
+
+const GPIO_PERIPHERAL_PORT_T Target_Button2Gpio = {
+    .GpioPin = LL_GPIO_PIN_12,
+    .GpioPort = GPIOB,
+    .GpioClk = LL_AHB1_GRP1_PERIPH_GPIOB,
+    .GpioClkEnFn_Ptr = LL_AHB1_GRP1_EnableClock,
+};
+
+GPIO_INSTANCE_T Target_Button1GpioInstance = {
+    .Status = GPIO_STATUS_UNINITIALIZED,
+    .Mode = GPIO_MODE_INPUT,
+    .Pull = GPIO_PULL_NONE,
+    .Peripheral_Ptr = &Target_Button1Gpio,
+};
+
+GPIO_INSTANCE_T Target_Button2GpioInstance = {
+    .Status = GPIO_STATUS_UNINITIALIZED,
+    .Mode = GPIO_MODE_INPUT,
+    .Pull = GPIO_PULL_NONE,
+    .Peripheral_Ptr = &Target_Button2Gpio,
+};
+
+BUTTON_T Target_Button1Instance = {
+    .Gpio = &Target_Button1GpioInstance,
+    .Status = BUTTON_STATUS_UNINITIALIZED,
+    .Pull = BUTTON_PULL_HIGH,
+    .CallbackFunc_Ptr = NULL
+};
+
+BUTTON_T Target_Button2Instance = {
+    .Gpio = &Target_Button2GpioInstance,
+    .Status = BUTTON_STATUS_UNINITIALIZED,
+    .Pull = BUTTON_PULL_HIGH,
+    .CallbackFunc_Ptr = NULL
+};
+
+BUTTON_HANDLER_T Target_Buttons[TARGET_NUM_BUTTONS] = {
+    &Target_Button1Instance,
+    &Target_Button2Instance,
+};
+
+/******************************************
+ * BATTERY
+ ******************************************/
+const GPIO_PERIPHERAL_PORT_T Target_BatEnableGpio = {
+    .GpioPin = LL_GPIO_PIN_1,
+    .GpioPort = GPIOB,
+    .GpioClk = LL_AHB1_GRP1_PERIPH_GPIOB,
+    .GpioClkEnFn_Ptr = LL_AHB1_GRP1_EnableClock,
+};
+
+GPIO_INSTANCE_T Target_BatEnableInstance = {
+    .Status = GPIO_STATUS_UNINITIALIZED,
+    .Mode = GPIO_MODE_OUTPUT,
+    .Pull = GPIO_PULL_NONE,
+    .Peripheral_Ptr = &Target_BatEnableGpio,
+};
+
+GPIO_HANDLER_T Target_BatEnable = &Target_BatEnableInstance;

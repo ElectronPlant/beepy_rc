@@ -43,7 +43,9 @@ PROJECTNAME = beepy_rc
 TARGET := STM32F44RETx
 CPU    := cortex-m4
 FPU    := fpv4-sp-d16
-FLOAT-ABI := hard # Specifies whether to use hardware or software FPU implementations.
+# Specifies whether to use hardware (hard) or software FPU implementations (soft).
+FLOAT-ABI := hard
+# Board seledction, can be set to: BeepyRcBrd or nucleo
 BOARD := nucleo
 
 
@@ -204,25 +206,28 @@ H_FREERTOS := \
 -I../external_libs/FreeRTOS/portable/GCC/ARM_CM4F
 
 ifeq ($(CPU), cortex-m4) # If the CPU is not support there will be a compilation error
-	C_FREERTOS += \
-	../external_libs/FreeRTOS/portable/GCC/ARM_CM4F/port.c
-	H_FREERTOS += \
-	-I../external_libs/FreeRTOS/portable/GCC/ARM_CM4F
+    C_FREERTOS += \
+    ../external_libs/FreeRTOS/portable/GCC/ARM_CM4F/port.c
+    H_FREERTOS += \
+    -I../external_libs/FreeRTOS/portable/GCC/ARM_CM4F
 else
-	$(error CPU not supported, check FreeRTOS ports)
+    $(error CPU not supported, check FreeRTOS ports)
 endif
 
 # BSP
 ifeq ($(BOARD), nucleo)
-	C_BSP := ../target/nucleo/target.c
-	H_BSP := -I../target/nucleo
+    C_BSP := ../target/nucleo/target.c
+    H_BSP := -I../target/nucleo
+else ifeq ($(BOARD), BeepyRcBrd)
+    C_BSP := ../target/beepy_rc_brd/target.c
+    H_BSP := -I../target/beepy_rc_brd
 else
-	$(error BOART not supported, check targets)
+    $(error BOART not supported, check targets)
 endif
 
 # PORT
-ifeq ($(BOARD), nucleo)
-	C_PORT := \
+ifneq ($(filter $(BOARD),nucleo BeepyRcBrd),)
+    C_PORT := \
 		../port/stm32/encoder.c \
 		../port/stm32/pwm_timer.c \
 		../port/stm32/serial.c \
@@ -233,7 +238,7 @@ ifeq ($(BOARD), nucleo)
 		-I../port \
 		-I../port/stm32
 else
-	$(error BOART not supported, check targets)
+    $(error BOARD not supported, check targets)
 endif
 
 # Application files
@@ -399,4 +404,7 @@ help:
 	@echo ""
 	@echo "    All actions:"
 	@echo "         make clean && make all -j4 && make flash && make monitor"
+	@echo ""
+	@echo "    Compile for the BeepyRcBrd board (nucleo by default):"
+	@echo "         make all BOARD=BeepyRcBrd"
 	@echo ""
