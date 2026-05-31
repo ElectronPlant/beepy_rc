@@ -22,30 +22,6 @@
 /********************************************************************************
  * Defines
  ********************************************************************************/
-/******************************************
- * Internal Components
- ******************************************/
-/* --- LED --- */
-#define TARGET_USE_LED
-#define TARGET_LED_PIN        LL_GPIO_PIN_5
-#define TARGET_LED_PORT       GPIOA
-#define TARGET_LED_GPIO_CLOCK LL_AHB1_GRP1_PERIPH_GPIOA
-
-/* --- Button --- */
-/** @note List of notes:
- *      1. EXTI ints can be seen here:
- *         https://controllerstech.com/external-interrupt-using-registers/
- */
-#define TARGET_USE_BUTTON
-#define TARGET_BUTTON_PIN              LL_GPIO_PIN_13
-#define TARGET_BUTTON_PORT             GPIOC
-#define TARGET_BUTTON_GPIO_CLOCK       LL_AHB1_GRP1_PERIPH_GPIOC
-#define TARGET_BUTTON_EXTI_LINE        LL_EXTI_LINE_13
-#define TARGET_BUTTON_EXTI_IRQ         EXTI15_10_IRQn /* Note 1 */
-#define TARGET_BUTTON_EXIT_IRQ_HANDLER EXTI15_10_IRQHandler
-#define TARGET_BUTTON_SYSCFG_EXTI_PORT LL_SYSCFG_EXTI_PORTC
-#define TARGET_BUTTON_SYSCFG_EXTI_LINE LL_SYSCFG_EXTI_LINE13
-
 /* --- */ // TODO things I'm not sure I need
 #if 0
     #define USART_TX_Pin       LL_GPIO_PIN_2
@@ -119,6 +95,26 @@ extern MOTOR_T Target_Motors[TARGET_MOTOR_NUM];
 extern PWM_TIM_INSTANCE_T Target_ServoPwmTimers[TARGET_NUM_SERVO_PWM_CHANNELS];
 /* Servo Motors */
 extern SERVO_T Target_Servos[TARGET_NUM_SERVO_PWM_CHANNELS];
+
+
+/********************************************************************************
+ * UI
+ ********************************************************************************/
+#include "gpio_port.h"
+
+#include "button.h"
+#include "gpio.h"
+
+/* --- LEDs --- */
+#define TARGET_NUM_LEDS (3U)
+extern GPIO_HANDLER_T Target_Leds[TARGET_NUM_LEDS];
+
+/* --- Buttons --- */
+#define TARGET_NUM_BUTTONS (2U)
+extern BUTTON_HANDLER_T Target_Buttons[TARGET_NUM_BUTTONS];
+
+/* --- Battery --- */
+extern GPIO_HANDLER_T Target_BatEnable;
 
 
 /********************************************************************************

@@ -95,7 +95,7 @@ static const uint32_t PwmTim_ChnEnableBits[PWM_TIM_MAX_N_CHANNELS] =
  * @return Max timer CNT.
  */
 static inline uint32_t PwmTim_GetMaxTimerCnt(PWM_TIM_HANDLER_T pwm) {
-    return DEF_TRUE == pwm->Peripheral->TimerIs32bits ? UINT32_MAX : UINT16_MAX;
+    return DEF_TRUE == pwm->Peripheral_Ptr->TimerIs32bits ? UINT32_MAX : UINT16_MAX;
 }
 
 /**
@@ -162,7 +162,7 @@ static inline bool_t PwmTim_IsChnEnabled(PWM_TIM_HANDLER_T pwm, PWM_TIM_CHANNELS
  *         to set the required frequency.
  */
 static uint32_t PwmTim_GetAutoReload(PWM_TIM_HANDLER_T pwm, float32_t freq_khz) {
-    float32_t clk_freq = pwm->Peripheral->TimerClkFreqKhz;
+    float32_t clk_freq = pwm->Peripheral_Ptr->TimerClkFreqKhz;
     float32_t reload_f = (clk_freq / freq_khz);
 
     /* See note 1 */
@@ -184,7 +184,7 @@ static uint32_t PwmTim_GetAutoReload(PWM_TIM_HANDLER_T pwm, float32_t freq_khz) 
  *      1. The channel must not be already initialized.
  */
 static bool_t PwmTim_InitChnInternal(PWM_TIM_HANDLER_T pwm, PWM_TIM_CHANNELS_T chn) {
-    const PWM_TIM_PORT_CHN_T* p_chn = pwm->Peripheral->Channels[chn];
+    const PWM_TIM_PORT_CHN_T* p_chn = pwm->Peripheral_Ptr->Channels[chn];
     ErrorStatus               err;
 
     PLT_ASSERT(NULL != p_chn);
@@ -202,12 +202,12 @@ static bool_t PwmTim_InitChnInternal(PWM_TIM_HANDLER_T pwm, PWM_TIM_CHANNELS_T c
         .OCIdleState = p_chn->OutputIdleState,
         .OCNIdleState = p_chn->OutputIdleState
     };
-    LL_TIM_OC_EnablePreload(pwm->Peripheral->Timer, PwmTim_ChnNumToLLChn[chn]);
-    err = LL_TIM_OC_Init(pwm->Peripheral->Timer, PwmTim_ChnNumToLLChn[chn], &channel_cfg);
+    LL_TIM_OC_EnablePreload(pwm->Peripheral_Ptr->Timer, PwmTim_ChnNumToLLChn[chn]);
+    err = LL_TIM_OC_Init(pwm->Peripheral_Ptr->Timer, PwmTim_ChnNumToLLChn[chn], &channel_cfg);
     if (SUCCESS != err) {
         return DEF_FALSE;
     }
-    LL_TIM_OC_DisableFast(pwm->Peripheral->Timer, PwmTim_ChnNumToLLChn[chn]);
+    LL_TIM_OC_DisableFast(pwm->Peripheral_Ptr->Timer, PwmTim_ChnNumToLLChn[chn]);
 
     /* Channel GPIO */
     p_chn->GpioClkEnFn_Ptr(p_chn->GpioClk);
@@ -254,26 +254,26 @@ static bool_t PwmTim_InitTimer(PWM_TIM_HANDLER_T pwm, float32_t freq_khz) {
     autoreload = PwmTim_GetAutoReload(pwm, freq_khz);
 
     /* Enable timer clock */
-    pwm->Peripheral->TimerClkEnFn_Ptr(pwm->Peripheral->TimerClk);
+    pwm->Peripheral_Ptr->TimerClkEnFn_Ptr(pwm->Peripheral_Ptr->TimerClk);
 
     /* Configure timer peripheral */
     LL_TIM_InitTypeDef tim_cfg = {
-        .Prescaler = pwm->Peripheral->TimerPrescaller,
+        .Prescaler = pwm->Peripheral_Ptr->TimerPrescaller,
         .CounterMode = LL_TIM_COUNTERMODE_UP, /* Default value */
         .Autoreload = autoreload,
-        .ClockDivision = pwm->Peripheral->TimerClkDivision,
+        .ClockDivision = pwm->Peripheral_Ptr->TimerClkDivision,
         .RepetitionCounter = 0U, /* Default value, see note 2. */
     };
-    err = LL_TIM_Init(pwm->Peripheral->Timer, &tim_cfg);
+    err = LL_TIM_Init(pwm->Peripheral_Ptr->Timer, &tim_cfg);
     if (SUCCESS != err) {
         return DEF_FALSE;
     }
-    LL_TIM_DisableARRPreload(pwm->Peripheral->Timer);
-    LL_TIM_SetClockSource(pwm->Peripheral->Timer, LL_TIM_CLOCKSOURCE_INTERNAL);
+    LL_TIM_DisableARRPreload(pwm->Peripheral_Ptr->Timer);
+    LL_TIM_SetClockSource(pwm->Peripheral_Ptr->Timer, LL_TIM_CLOCKSOURCE_INTERNAL);
 
     /* Timer cfg */
-    LL_TIM_SetTriggerOutput(pwm->Peripheral->Timer, LL_TIM_TRGO_RESET);
-    LL_TIM_DisableMasterSlaveMode(pwm->Peripheral->Timer);
+    LL_TIM_SetTriggerOutput(pwm->Peripheral_Ptr->Timer, LL_TIM_TRGO_RESET);
+    LL_TIM_DisableMasterSlaveMode(pwm->Peripheral_Ptr->Timer);
 
     pwm->Status = PWM_TIM_STATUS_INITIALIZED;
     return DEF_TRUE;
@@ -308,9 +308,9 @@ bool_t PwmTim_InitAll(PWM_TIM_HANDLER_T pwm, float32_t freq_khz) {
     }
 
     /* Enable channels */
-    uint8_t rem_chn = pwm->Peripheral->NumChannels;
+    uint8_t rem_chn = pwm->Peripheral_Ptr->NumChannels;
     for (uint8_t chn = 0; chn < PWM_TIM_MAX_N_CHANNELS && rem_chn > 0; chn++) {
-        if (NULL != pwm->Peripheral->Channels[chn]) {
+        if (NULL != pwm->Peripheral_Ptr->Channels[chn]) {
             bool_t chn_ok = PwmTim_InitChnInternal(pwm, chn);
             if (DEF_FALSE == chn_ok) {
                 return DEF_FALSE;
@@ -334,7 +334,7 @@ static void PwmTim_StartTimer(PWM_TIM_HANDLER_T pwm) {
     PLT_ASSERT(PWM_TIM_STATUS_INITIALIZED == pwm->Status); /* See note 1 */
 
     /* Enable Timer */
-    pwm->Peripheral->Timer->CR1 |= TIM_CR1_CEN;
+    pwm->Peripheral_Ptr->Timer->CR1 |= TIM_CR1_CEN;
     pwm->Status = PWM_TIM_STATUS_RUNNING;
 }
 
@@ -348,12 +348,12 @@ static void PwmTim_StartTimer(PWM_TIM_HANDLER_T pwm) {
  *      1. The PWM timer channel must only be started if it is initialized and not already enabled.
  */
 static void PwmTim_StartChnInternal(PWM_TIM_HANDLER_T pwm, PWM_TIM_CHANNELS_T chn) {
-    PLT_ASSERT(NULL != pwm->Peripheral->Channels[chn]);
+    PLT_ASSERT(NULL != pwm->Peripheral_Ptr->Channels[chn]);
     PLT_ASSERT(DEF_TRUE == PwmTim_IsChnInit(pwm, chn));
     PLT_ASSERT(DEF_FALSE == PwmTim_IsChnEnabled(pwm, chn)); /* See note 1 */
 
     PwmTim_SetDuty(pwm, chn, 0.0f);
-    pwm->Peripheral->Timer->CCER |= PwmTim_ChnEnableBits[chn];
+    pwm->Peripheral_Ptr->Timer->CCER |= PwmTim_ChnEnableBits[chn];
     pwm->EnChannels |= PWM_TIM_GET_CHN_BITFIELD_MSK(chn);
 }
 
@@ -369,7 +369,7 @@ static void PwmTim_StopTimer(PWM_TIM_HANDLER_T pwm) {
     PLT_ASSERT(PWM_TIM_STATUS_RUNNING == pwm->Status); /* See note 1 */
 
     /* Enable Timer */
-    pwm->Peripheral->Timer->CR1 &= ~TIM_CR1_CEN;
+    pwm->Peripheral_Ptr->Timer->CR1 &= ~TIM_CR1_CEN;
     pwm->Status = PWM_TIM_STATUS_INITIALIZED;
 }
 
@@ -383,11 +383,11 @@ static void PwmTim_StopTimer(PWM_TIM_HANDLER_T pwm) {
  *      1. The PWM timer channel must only be stopped if it is initialized and enabled.
  */
 static void PwmTim_StopChnInternal(PWM_TIM_HANDLER_T pwm, PWM_TIM_CHANNELS_T chn) {
-    PLT_ASSERT(NULL != pwm->Peripheral->Channels[chn]);
+    PLT_ASSERT(NULL != pwm->Peripheral_Ptr->Channels[chn]);
     PLT_ASSERT(DEF_TRUE == PwmTim_IsChnInit(pwm, chn));
     PLT_ASSERT(DEF_TRUE == PwmTim_IsChnEnabled(pwm, chn)); /* See note 1 */
 
-    pwm->Peripheral->Timer->CCER &= ~PwmTim_ChnEnableBits[chn];
+    pwm->Peripheral_Ptr->Timer->CCER &= ~PwmTim_ChnEnableBits[chn];
     pwm->EnChannels &= ~PWM_TIM_GET_CHN_BITFIELD_MSK(chn);
 }
 
@@ -416,9 +416,9 @@ void PwmTim_StartAll(PWM_TIM_HANDLER_T pwm) {
     PwmTim_StartTimer(pwm);
 
     /* Start all channels with duty cycle set to zero */
-    uint8_t rem_chn = pwm->Peripheral->NumChannels;
+    uint8_t rem_chn = pwm->Peripheral_Ptr->NumChannels;
     for (uint8_t chn = 0; chn < PWM_TIM_MAX_N_CHANNELS && rem_chn > 0; chn++) {
-        if (NULL != pwm->Peripheral->Channels[chn]) {
+        if (NULL != pwm->Peripheral_Ptr->Channels[chn]) {
             PwmTim_StartChnInternal(pwm, chn);
             rem_chn--;
         }
@@ -451,9 +451,9 @@ void PwmTim_Stop(PWM_TIM_HANDLER_T pwm) {
     PwmTim_StopTimer(pwm);
 
     /* Stop all channels */
-    uint8_t rem_chn = pwm->Peripheral->NumChannels;
+    uint8_t rem_chn = pwm->Peripheral_Ptr->NumChannels;
     for (uint8_t chn = 0; chn < PWM_TIM_MAX_N_CHANNELS && rem_chn > 0; chn++) {
-        if (NULL != pwm->Peripheral->Channels[chn]) {
+        if (NULL != pwm->Peripheral_Ptr->Channels[chn]) {
             PwmTim_StopChnInternal(pwm, chn);
             rem_chn--;
         }
@@ -468,7 +468,7 @@ void PwmTim_ChangeFreq(PWM_TIM_HANDLER_T pwm, uint16_t freq_khz) {
     PLT_ASSERT(NULL != pwm);
     PWM_TIM_RUNNING_ASSERT(pwm);
     uint16_t autoreload = PwmTim_GetAutoReload(pwm, freq_khz);
-    LL_TIM_SetAutoReload(pwm->Peripheral->Timer, autoreload);
+    LL_TIM_SetAutoReload(pwm->Peripheral_Ptr->Timer, autoreload);
 }
 
 /**
@@ -484,7 +484,7 @@ static uint32_t PwmTim_Duty2CompareValue(PWM_TIM_HANDLER_T pwm, float32_t duty_c
     PWM_TIM_RUNNING_ASSERT(pwm);
     PLT_ASSERT(PWM_TIM_MAX_DUTY_CYCLE >= duty_cycle && PWM_TIM_MIN_DUTY_CYCLE <= duty_cycle);
 
-    uint32_t  reload_value = pwm->Peripheral->Timer->ARR;
+    uint32_t  reload_value = pwm->Peripheral_Ptr->Timer->ARR;
     float32_t f_compare = (float32_t)reload_value;
     f_compare /= (PWM_TIM_MAX_DUTY_CYCLE - PWM_TIM_MIN_DUTY_CYCLE);
     f_compare *= (duty_cycle - PWM_TIM_MIN_DUTY_CYCLE);
@@ -503,16 +503,16 @@ void PwmTim_SetDuty(PWM_TIM_HANDLER_T pwm, PWM_TIM_CHANNELS_T chn, float32_t dut
 
     switch (chn) {
         case PWM_TIM_CHANNELS_CH1:
-            pwm->Peripheral->Timer->CCR1 = compare_value;
+            pwm->Peripheral_Ptr->Timer->CCR1 = compare_value;
             break;
         case PWM_TIM_CHANNELS_CH2:
-            pwm->Peripheral->Timer->CCR2 = compare_value;
+            pwm->Peripheral_Ptr->Timer->CCR2 = compare_value;
             break;
         case PWM_TIM_CHANNELS_CH3:
-            pwm->Peripheral->Timer->CCR3 = compare_value;
+            pwm->Peripheral_Ptr->Timer->CCR3 = compare_value;
             break;
         case PWM_TIM_CHANNELS_CH4:
-            pwm->Peripheral->Timer->CCR4 = compare_value;
+            pwm->Peripheral_Ptr->Timer->CCR4 = compare_value;
             break;
         default:
             PLT_UNREACHABLE;

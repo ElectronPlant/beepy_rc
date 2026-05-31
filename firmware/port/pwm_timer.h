@@ -51,7 +51,7 @@ typedef struct PWM_TIM_INSTANCE_S {
     PWM_TIM_STATUS_T Status; /* Must be set to ENC_STATUS_UNINITIALIZED on the struct def */
     PWM_TIM_CHANNELS_BITFIELD_TYPE InitChannels; /* Bitfield for the initialized channels */
     PWM_TIM_CHANNELS_BITFIELD_TYPE EnChannels;   /* Bitfield for the started channels */
-    const PWM_TIM_PERIPHERAL_T     Peripheral;
+    const PWM_TIM_PERIPHERAL_T     Peripheral_Ptr;
 } PWM_TIM_INSTANCE_T;
 
 typedef PWM_TIM_INSTANCE_T* PWM_TIM_HANDLER_T;

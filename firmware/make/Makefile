@@ -225,7 +225,9 @@ ifeq ($(BOARD), nucleo)
 	C_PORT := \
 		../port/stm32/encoder.c \
 		../port/stm32/pwm_timer.c \
-		../port/stm32/serial.c
+		../port/stm32/serial.c \
+		../port/stm32/gpio.c \
+		../port/stm32/exti.c
 
 	H_PORT := \
 		-I../port \
@@ -245,9 +247,12 @@ C_APP_SOURCE := \
 ../app/motion/motion.c \
 ../libs/motor.c \
 ../libs/servo.c \
+../libs/button.c \
 ../app/controller/model.c \
 ../app/controller/controller.c \
-../app/controller/vehicles/fwd/fwd.c
+../app/controller/vehicles/fwd/fwd.c \
+../app/supervisor/supervisor.c \
+../app/supervisor/ui.c
 
 H_APP_SOURCE := \
 -I../app/rc \
@@ -257,7 +262,7 @@ H_APP_SOURCE := \
 -I../app/motion \
 -I../app/controller \
 -I../app/controller/vehicles \
--I../app/controller/vehicles/fwd.h \
+-I../app/supervisor \
 -I../libs \
 -I../configs
 

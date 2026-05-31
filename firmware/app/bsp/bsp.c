@@ -42,9 +42,6 @@
  ********************************************************************************/
 #define BSP_LL_DRIVER_TO_APP_ERROR(X) (SUCCESS == X ? DEF_TRUE : DEF_FALSE)
 
-#define BSP_HEARTBEAT_TIMER_NAME      ("HbeatT")
-#define BSP_HEARTBEAT_TIMER_PERIOD_MS (1000) /* 1s */
-#define BSP_TICK_PERIOD_MS            (portTICK_PERIOD_MS)
 
 /********************************************************************************
  * Typedefs
@@ -58,169 +55,9 @@
  * Local Vars
  ********************************************************************************/
 
-/* Callback function for the button interrupt. */
-#ifdef TARGET_USE_BUTTON
-static void (*BSP_ButtonCallbackFunct_Ptr)(void) = NULL;
-#endif /* ifdef TARGET_USE_BUTTON */
-
-#ifdef TARGET_USE_LED
-static TimerHandle_t BSP_HbeatTimerHandler = NULL;
-#endif /* ifdef TARGET_USE_LED */
-
-
 /********************************************************************************
  * Function Implementations
  ********************************************************************************/
-
-/******************************************
- * Onboard LED
- ******************************************/
-
-#ifdef TARGET_USE_LED
-
-static void BSP_ToggleLed(void) {
-    LL_GPIO_TogglePin(TARGET_LED_PORT, TARGET_LED_PIN);
-}
-
-/**
- * @brief
- *
- * @param  inp
- *
- * @return DEF_TRUE if successful, DEF_FALSE otherwise.
- *
- * @note List of notes:
- *       1.
- */
-static void BSP_HeartbeatCallback(PLT_UTILS_UNUSED TimerHandle_t p_handle) {
-    BSP_ToggleLed();
-}
-
-
-/**
- * @brief
- *
- * @param  inp
- *
- * @return DEF_TRUE if successful, DEF_FALSE otherwise.
- *
- * @note List of notes:
- *       1.
- */
-bool_t BSP_SetupLed(void) {
-    /* Enable Clocks */
-    LL_AHB1_GRP1_EnableClock(TARGET_LED_GPIO_CLOCK);
-
-    LL_GPIO_InitTypeDef gpio_init_struct = {
-        .Pin = TARGET_LED_PIN,
-        .Mode = LL_GPIO_MODE_OUTPUT,
-        .Speed = LL_GPIO_SPEED_FREQ_LOW,
-        .OutputType = LL_GPIO_OUTPUT_PUSHPULL,
-        .Pull = LL_GPIO_PULL_NO
-    };
-    LL_GPIO_Init(TARGET_LED_PORT, &gpio_init_struct);
-
-    return BSP_LL_DRIVER_TO_APP_ERROR(SUCCESS);
-}
-
-/**
- * @brief
- *
- * @param  inp
- *
- * @return DEF_TRUE if successful, DEF_FALSE otherwise.
- *
- * @note List of notes:
- *       1.
- */
-bool_t BSP_SetupHeartbeat(void) {
-    TickType_t period_ticks = BSP_HEARTBEAT_TIMER_PERIOD_MS / BSP_TICK_PERIOD_MS;
-
-    BSP_HbeatTimerHandler = xTimerCreate(
-        BSP_HEARTBEAT_TIMER_NAME,
-        period_ticks,
-        pdTRUE,
-        NULL,
-        BSP_HeartbeatCallback
-
-    );
-    bool_t ok = NULL == BSP_HbeatTimerHandler ? DEF_FALSE : DEF_TRUE;
-
-    if (DEF_TRUE == ok) {
-        ok = xTimerStart(BSP_HbeatTimerHandler, 0u);
-    }
-
-    return ok;
-}
-
-#endif /* ifdef TARGET_USE_LED */
-
-/******************************************
- * Interrupt Button
- ******************************************/
-
-#ifdef TARGET_USE_BUTTON
-
-/**
- * @brief
- *
- * @param  inp
- *
- * @return DEF_TRUE if successful, DEF_FALSE otherwise.
- *
- * @note List of notes:
- *       1. Priority just above the IDLE task
- */
-bool_t BSP_SetupButton(void) {
-    /* Enable Clocks */
-    LL_AHB1_GRP1_EnableClock(TARGET_BUTTON_GPIO_CLOCK);
-
-    LL_SYSCFG_SetEXTISource(TARGET_BUTTON_SYSCFG_EXTI_PORT, TARGET_BUTTON_SYSCFG_EXTI_LINE);
-
-    LL_EXTI_InitTypeDef it_init_struct = {
-        .Line_0_31 = TARGET_BUTTON_EXTI_LINE,
-        .LineCommand = ENABLE,
-        .Mode = LL_EXTI_MODE_IT,
-        .Trigger = LL_EXTI_TRIGGER_FALLING
-    };
-    LL_EXTI_Init(&it_init_struct);
-    LL_GPIO_SetPinPull(TARGET_BUTTON_PORT, TARGET_BUTTON_PIN, LL_GPIO_PULL_NO);
-    LL_GPIO_SetPinMode(TARGET_BUTTON_PORT, TARGET_BUTTON_PIN, LL_GPIO_MODE_INPUT);
-
-    /* See note 1 */
-    NVIC_SetPriority(
-        TARGET_BUTTON_EXTI_IRQ,
-        NVIC_EncodePriority(NVIC_GetPriorityGrouping(), 1u, 0)
-    );
-    NVIC_EnableIRQ(TARGET_BUTTON_EXTI_IRQ);
-
-    return BSP_LL_DRIVER_TO_APP_ERROR(SUCCESS);
-}
-
-void TARGET_BUTTON_EXIT_IRQ_HANDLER(void) {
-    if (LL_EXTI_ReadFlag_0_31(TARGET_BUTTON_EXTI_LINE) != RESET) {
-        if (NULL != BSP_ButtonCallbackFunct_Ptr) {
-            BSP_ButtonCallbackFunct_Ptr();
-        }
-        LL_EXTI_ClearFlag_0_31(TARGET_BUTTON_EXTI_LINE);
-    }
-}
-
-void BSP_RegisterButtonCallback(void (*p_callback)(void)) {
-    BSP_ButtonCallbackFunct_Ptr = p_callback;
-    NVIC_EnableIRQ(TARGET_BUTTON_EXTI_IRQ);
-}
-
-void BSP_ResetButtonCallback(void) {
-    BSP_ButtonCallbackFunct_Ptr = NULL;
-    NVIC_DisableIRQ(TARGET_BUTTON_EXTI_IRQ);
-}
-
-#endif /* ifdef TARGET_USE_BUTTON */
-
-/******************************************
- * Definitions
- ******************************************/
 /**
  * @brief System Clock Configuration
  * @retval None
@@ -288,29 +125,6 @@ bool_t BSP_Init(void) {
 
     /* Setup system clock */
     Bsp_InitSystemClock();
-
-    /* Setup Hearbeat LED */
-
-#ifdef TARGET_USE_LED
-    ok = BSP_SetupLed();
-    if (DEF_TRUE == ok) {
-        ok = BSP_SetupHeartbeat();
-    }
-#endif /* ifdef TARGET_USE_LED */
-
-    /* Setup Button */
-#ifdef TARGET_USE_BUTTON
-    if (DEF_TRUE == ok) {
-        ok = BSP_SetupButton();
-    }
-    if (DEF_TRUE == ok) {
-    #ifdef TARGET_USE_LED
-        BSP_RegisterButtonCallback(BSP_ToggleLed);
-    #else
-        BSP_ResetButtonCallback();
-    #endif /* ifdef TARGET_USE_LED */
-    }
-#endif /* ifdef TARGET_USE_BUTTON */
 
     return ok;
 }

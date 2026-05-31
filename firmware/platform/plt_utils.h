@@ -55,7 +55,35 @@
 #define PLT_UTILS_PACKED __attribute__((__packed__))
 
 /********************************************************************************
- * BASIC
+ * Bit operations
+ ********************************************************************************/
+/**
+ * @brief  Sets the mask for a bit based on its offset.
+ *
+ * @param  X offset of the bit for which to get the mask.
+ */
+#define PLT_UTILS_BIT_OFFSET_TO_MASK(X) (0x01 << X)
+
+/**
+ * @brief  Checks if the bit specified by the offset is set or not.
+ *
+ * @param  Y Bit map.
+ * @param  X offset of the bit for which to get the mask.
+ */
+#define PLT_UTILS_IS_BIT_OFFSET_SET(Y, X) ((Y && (0x01 << X)) == 0 ? DEF_FALSE : DEF_TRUE)
+
+/**
+ * @brief  Returns the offset of the first non-zero bit.
+ *
+ * @param  val Value to check.
+ *
+ * @return Offset of the first non-zero bit 32 if no offset was found.
+ */
+uint32_t PltUtils_GetFirstNonZeroOffset(uint32_t val);
+
+
+/********************************************************************************
+ * BASIC MATH
  ********************************************************************************/
 /**
  * @brief  Returns the maximum between A and B.

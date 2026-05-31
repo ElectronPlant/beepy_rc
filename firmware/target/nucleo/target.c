@@ -245,19 +245,19 @@ const PWM_TIM_PORT_T TargetMotorTim3 = {
 PWM_TIM_INSTANCE_T Target_MotorPwmTimers[TARGET_NUM_MOTOR_PWM_TIMERS] = {
     {
         .Status = PWM_TIM_STATUS_UNINITIALIZED,
-        .Peripheral = &TargetMotorTim1,
+        .Peripheral_Ptr = &TargetMotorTim1,
         .EnChannels = 0x00,
         .InitChannels = 0x00,
     },
     {
         .Status = PWM_TIM_STATUS_UNINITIALIZED,
-        .Peripheral = &TargetMotorTim2,
+        .Peripheral_Ptr = &TargetMotorTim2,
         .EnChannels = 0x00,
         .InitChannels = 0x00,
     },
     {
         .Status = PWM_TIM_STATUS_UNINITIALIZED,
-        .Peripheral = &TargetMotorTim3,
+        .Peripheral_Ptr = &TargetMotorTim3,
         .EnChannels = 0x00,
         .InitChannels = 0x00,
     }
@@ -527,13 +527,13 @@ const PWM_TIM_PORT_T TargetServoTim2 = {
 PWM_TIM_INSTANCE_T Motion_ServoPwmTimers[TARGET_NUM_SERVO_PWM_CHANNELS] = {
     {
         .Status = PWM_TIM_STATUS_UNINITIALIZED,
-        .Peripheral = &TargetServoTim1,
+        .Peripheral_Ptr = &TargetServoTim1,
         .EnChannels = 0x00,
         .InitChannels = 0x00,
     },
     {
         .Status = PWM_TIM_STATUS_UNINITIALIZED,
-        .Peripheral = &TargetServoTim2,
+        .Peripheral_Ptr = &TargetServoTim2,
         .EnChannels = 0x00,
         .InitChannels = 0x00,
     },
@@ -547,3 +547,129 @@ SERVO_T Target_Servos[TARGET_NUM_SERVO_PWM_CHANNELS] = {
     {.Timer = &Motion_ServoPwmTimers[0], .Chn = PWM_TIM_CHANNELS_CH2},
     {.Timer = &Motion_ServoPwmTimers[1], .Chn = PWM_TIM_CHANNELS_CH1}
 };
+
+/********************************************************************************
+ * UI
+ ********************************************************************************/
+#include "gpio.h"
+#include "gpio_port.h"
+
+#include "button.h"
+
+/******************************************
+ * LEDS
+ ******************************************/
+const GPIO_PERIPHERAL_PORT_T Target_LedGreenGpio = {
+    .GpioPin = LL_GPIO_PIN_10,
+    .GpioPort = GPIOA,
+    .GpioClk = LL_AHB1_GRP1_PERIPH_GPIOA,
+    .GpioClkEnFn_Ptr = LL_AHB1_GRP1_EnableClock,
+};
+
+const GPIO_PERIPHERAL_PORT_T Target_LedYellowGpio = {
+    .GpioPin = LL_GPIO_PIN_12,
+    .GpioPort = GPIOA,
+    .GpioClk = LL_AHB1_GRP1_PERIPH_GPIOA,
+    .GpioClkEnFn_Ptr = LL_AHB1_GRP1_EnableClock,
+};
+
+const GPIO_PERIPHERAL_PORT_T Target_LedRedGpio = {
+    .GpioPin = LL_GPIO_PIN_11,
+    .GpioPort = GPIOA,
+    .GpioClk = LL_AHB1_GRP1_PERIPH_GPIOA,
+    .GpioClkEnFn_Ptr = LL_AHB1_GRP1_EnableClock,
+};
+
+GPIO_INSTANCE_T Target_LedGreenInstance = {
+    .Status = GPIO_STATUS_UNINITIALIZED,
+    .Mode = GPIO_MODE_OUTPUT,
+    .Pull = GPIO_PULL_NONE,
+    .Peripheral_Ptr = &Target_LedGreenGpio,
+};
+GPIO_INSTANCE_T Target_LedYellowInstance = {
+    .Status = GPIO_STATUS_UNINITIALIZED,
+    .Mode = GPIO_MODE_OUTPUT,
+    .Pull = GPIO_PULL_NONE,
+    .Peripheral_Ptr = &Target_LedYellowGpio,
+};
+GPIO_INSTANCE_T Target_LedRedInstance = {
+    .Status = GPIO_STATUS_UNINITIALIZED,
+    .Mode = GPIO_MODE_OUTPUT,
+    .Pull = GPIO_PULL_NONE,
+    .Peripheral_Ptr = &Target_LedRedGpio,
+};
+
+GPIO_HANDLER_T Target_Leds[TARGET_NUM_LEDS] = {
+    &Target_LedGreenInstance,
+    &Target_LedYellowInstance,
+    &Target_LedRedInstance,
+};
+
+/******************************************
+ * BUTTONS
+ ******************************************/
+const GPIO_PERIPHERAL_PORT_T Target_Button1Gpio = {
+    .GpioPin = LL_GPIO_PIN_15,
+    .GpioPort = GPIOA,
+    .GpioClk = LL_AHB1_GRP1_PERIPH_GPIOA,
+    .GpioClkEnFn_Ptr = LL_AHB1_GRP1_EnableClock,
+};
+
+const GPIO_PERIPHERAL_PORT_T Target_Button2Gpio = {
+    .GpioPin = LL_GPIO_PIN_12,
+    .GpioPort = GPIOB,
+    .GpioClk = LL_AHB1_GRP1_PERIPH_GPIOB,
+    .GpioClkEnFn_Ptr = LL_AHB1_GRP1_EnableClock,
+};
+
+GPIO_INSTANCE_T Target_Button1GpioInstance = {
+    .Status = GPIO_STATUS_UNINITIALIZED,
+    .Mode = GPIO_MODE_INPUT,
+    .Pull = GPIO_PULL_NONE,
+    .Peripheral_Ptr = &Target_Button1Gpio,
+};
+
+GPIO_INSTANCE_T Target_Button2GpioInstance = {
+    .Status = GPIO_STATUS_UNINITIALIZED,
+    .Mode = GPIO_MODE_INPUT,
+    .Pull = GPIO_PULL_NONE,
+    .Peripheral_Ptr = &Target_Button2Gpio,
+};
+
+BUTTON_T Target_Button1Instance = {
+    .Gpio = &Target_Button1GpioInstance,
+    .Status = BUTTON_STATUS_UNINITIALIZED,
+    .Pull = BUTTON_PULL_HIGH,
+    .CallbackFunc_Ptr = NULL
+};
+
+BUTTON_T Target_Button2Instance = {
+    .Gpio = &Target_Button2GpioInstance,
+    .Status = BUTTON_STATUS_UNINITIALIZED,
+    .Pull = BUTTON_PULL_HIGH,
+    .CallbackFunc_Ptr = NULL
+};
+
+BUTTON_HANDLER_T Target_Buttons[TARGET_NUM_BUTTONS] = {
+    &Target_Button1Instance,
+    &Target_Button2Instance,
+};
+
+/******************************************
+ * BATTERY
+ ******************************************/
+const GPIO_PERIPHERAL_PORT_T Target_BatEnableGpio = {
+    .GpioPin = LL_GPIO_PIN_1,
+    .GpioPort = GPIOB,
+    .GpioClk = LL_AHB1_GRP1_PERIPH_GPIOB,
+    .GpioClkEnFn_Ptr = LL_AHB1_GRP1_EnableClock,
+};
+
+GPIO_INSTANCE_T Target_BatEnableInstance = {
+    .Status = GPIO_STATUS_UNINITIALIZED,
+    .Mode = GPIO_MODE_OUTPUT,
+    .Pull = GPIO_PULL_NONE,
+    .Peripheral_Ptr = &Target_BatEnableGpio,
+};
+
+GPIO_HANDLER_T Target_BatEnable = &Target_BatEnableInstance;

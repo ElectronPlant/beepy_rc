@@ -27,7 +27,7 @@
 #include "motor.h"
 #include "pwm_timer.h"
 
-/** @addtogroup Motion
+/** @addtogroup Libs
  *   @{
  */
 
@@ -183,5 +183,5 @@ void Motor_GetEncoderCnt(MOTOR_HANDLER_T mot, uint32_t* p_cnt, MOTOR_DIRECTION_T
 }
 
 
-/** @} (end addtogroup Motor)  */
-/** @} (end addtogroup Motion)  */
+/** @} (end addtogroup Motor)   */
+/** @} (end addtogroup Libs)    */

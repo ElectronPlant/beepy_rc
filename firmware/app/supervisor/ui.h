@@ -1,8 +1,8 @@
 /**
- * @file  controller.h
- * @brief Controller - Translates RC channel inputs to actions.
+ * @file  ui.h
+ * @brief User Interface, buttons and status LEDs.
  *
- * @ingroup   Controller
+ * @ingroup   UI
  * @version   V0.0
  * @author    David Arnaiz
  * @copyright 2026 David Arnaiz
@@ -11,8 +11,8 @@
  * This project is licensed under the GNU General Public License v3.0 license.
  */
 
-#ifndef __CONTROLLER_H__
-#define __CONTROLLER_H__
+#ifndef __UI_H__
+#define __UI_H__
 
 #include "plt_types.h"
 
@@ -32,7 +32,7 @@
 /********************************************************************************
  * Function Prototypes
  ********************************************************************************/
-bool_t Ctrlr_Init(void);
-void   Ctrlr_HandleButtonDisarm(void);
+bool_t Ui_Init(void);
+void   Ui_SetStatusLeds(uint32_t map, bool_t run_blink);
 
-#endif /* __CONTROLLER_H__  */
+#endif /* __UI_H__       */

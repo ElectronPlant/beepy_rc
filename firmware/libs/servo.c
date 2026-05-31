@@ -29,7 +29,7 @@
 #include "pwm_timer.h"
 #include "servo.h"
 
-/** @addtogroup Motion
+/** @addtogroup Libs
  *   @{
  */
 
@@ -192,5 +192,5 @@ void Servo_Set(SERVO_HANDLER_T servo, float32_t travel) {
 }
 
 
-/** @} (end addtogroup Servo)  */
-/** @} (end addtogroup Motion)  */
+/** @} (end addtogroup Servo)   */
+/** @} (end addtogroup Libs)    */
