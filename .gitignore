@@ -21,3 +21,4 @@ hardware/beepyRcBrd/*bak
 hardware/beepyRcBrd/fp-info-cache
 hardware/docs/models
 hardware/docs/models/*
+hardware/docs/*/fabrication_files/*
