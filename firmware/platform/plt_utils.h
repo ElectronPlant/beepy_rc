@@ -70,7 +70,7 @@
  * @param  Y Bit map.
  * @param  X offset of the bit for which to get the mask.
  */
-#define PLT_UTILS_IS_BIT_OFFSET_SET(Y, X) ((Y && (0x01 << X)) == 0 ? DEF_FALSE : DEF_TRUE)
+#define PLT_UTILS_IS_BIT_OFFSET_SET(Y, X) ((Y & (0x01 << X)) == 0 ? DEF_FALSE : DEF_TRUE)
 
 /**
  * @brief  Returns the offset of the first non-zero bit.

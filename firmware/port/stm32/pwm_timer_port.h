@@ -46,6 +46,7 @@ typedef struct {
     uint32_t TimerClkFreqKhz;
     bool_t   TimerIs32bits;
     uint8_t  NumChannels;
+    bool_t   TimerIsAdvanced;
 
     const PWM_TIM_PORT_CHN_T* Channels[PWM_TIM_PORT_MAX_NUM_CHANNELS];
 } PWM_TIM_PORT_T;

@@ -29,6 +29,8 @@
 #include "std_frame.h"
 #include "vehicle_int.h"
 
+#include "supervisor.h"
+
 #include "target.h"
 
 /** @addtogroup Controller
@@ -340,6 +342,7 @@ static void Ctrlr_DisarmedAction(void) {
     if (Ctrlr_Info.RcSetPoint.State == MODEL_RC_SETPOINT_STATE_VALID
         && DEF_TRUE == Ctrlr_Info.RcSetPoint.ArmSwitch) {
         Ctrlr_UpdateState(CTRLR_STATUS_RUNNING);
+        Super_NotifyArmed();
         printf("Controller :: Armed!!\n");
     }
 }
@@ -408,11 +411,13 @@ static void Ctrlr_RunningAction(void) {
         Ctrlr_UpdateState(CTRLR_STATUS_FAILSAFE);
         Ctrlr_Info.RcSetPoint.Throttle = 0.0f;
         Ctrlr_Info.RcSetPoint.Yaw = 0.0f;
+        Super_NotifyControllerError();
     } else if (disarmed) {
         CTRLR_STATUS_T new_status = DEF_FALSE == Ctrlr_Info.RcSetPoint.ArmSwitch
             ? CTRLR_STATUS_DISARMED
             : CTRLR_STATUS_PREARMED;
         Ctrlr_UpdateState(new_status);
+        Super_NotifyDisarmed();
     } else {
         /* --- Control loop --- */
         Ctrlr_RunControlLoop();
@@ -472,6 +477,7 @@ static void Ctrlr_TaskLoop(void) {
         received = DEF_TRUE;
     }
 
+    printf("Received: %u, %u\n", Ctrlr_Info.Status, received);
     if (DEF_TRUE == received) {
         CTRLR_FSM_ACTION_T p_action = Ctrlr_FsmTable[Ctrlr_Info.Status].Action;
         PLT_ASSERT(NULL != p_action);
@@ -487,6 +493,7 @@ static void Ctrlr_TaskLoop(void) {
 static void Ctrlr_TaskMain(PLT_UTILS_UNUSED void* parameters) {
     /* Setup */
     Ctrlr_TaskStart();
+    printf("Controller started\n");
 
     /* Loop */
     while (DEF_TRUE) {

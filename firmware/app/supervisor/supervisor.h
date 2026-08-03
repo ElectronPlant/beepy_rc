@@ -39,7 +39,6 @@ void Super_NotifyRcError(void);
 void Super_NotifyArmed(void);
 void Super_NotifyDisarmed(void);
 void Super_NotifyControllerError(void);
-void Super_NotifyControllerError(void);
 
 
 #endif /* __SUPERVISOR_H__      */

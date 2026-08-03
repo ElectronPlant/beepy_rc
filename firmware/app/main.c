@@ -25,6 +25,7 @@
 #include "bsp.h"
 #include "controller.h"
 #include "rc.h"
+#include "supervisor.h"
 
 
 /* Private includes ----------------------------------------------------------*/
@@ -57,6 +58,10 @@ static void Main_InitModules(void) {
 
     /* Motion module */
     ok = Ctrlr_Init();
+    PLT_ASSERT(DEF_TRUE == ok);
+
+    /* Supervisor module */
+    ok = Super_Init();
     PLT_ASSERT(DEF_TRUE == ok);
 }
 

@@ -15,13 +15,15 @@
 #define __SUPERVISOR_DEFINES_H__
 
 #include "plt_types.h"
+#include "plt_utils.h"
 
 
 /********************************************************************************
  * Defines
  ********************************************************************************/
 #define SUPERDEF_SOURCE_BUTTONS_MASK \
-    (SUPERDEF_SOURCE_OFFSET_BUTTON_1 | SUPERDEF_SOURCE_OFFSET_BUTTON_2)
+    (PLT_UTILS_BIT_OFFSET_TO_MASK(SUPERDEF_SOURCE_OFFSET_BUTTON_1) \
+     | PLT_UTILS_BIT_OFFSET_TO_MASK(SUPERDEF_SOURCE_OFFSET_BUTTON_2))
 
 /********************************************************************************
  * Typedefs

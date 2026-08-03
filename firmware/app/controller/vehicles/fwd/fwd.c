@@ -32,7 +32,7 @@
 /********************************************************************************
  * Defines
  ********************************************************************************/
-#define FWD_YAW_SCALE (0.5f)
+#define FWD_YAW_SCALE (-1.0f)
 
 #define FWD_MOTOR_DISARM_DUTY (0.0f)
 
@@ -41,8 +41,8 @@
  ********************************************************************************/
 typedef enum FWD_MOTOR_NAME_E {
     FRONT_LEFT = 0,
-    BACK_LEFT,
     FRONT_RIGHT,
+    BACK_LEFT,
     BACK_RIGHT,
 
     FWD_REQUIRED_MOTORS,
@@ -60,6 +60,7 @@ typedef enum FWD_MOTOR_NAME_E {
  */
 static uint8_t Fwd_Config2TargetTranslator[FWD_REQUIRED_MOTORS] = {0, 1, 2, 3};
 
+static const float32_t Fwd_MotorGains[] = {1.0f, -1.0f, 1.0f, -1.0f};
 /********************************************************************************
  * Function Implementations
  ********************************************************************************/
@@ -124,10 +125,22 @@ void Fwd_RunControlLoop(MODEL_RC_SETPOINT_T* p_frame) {
     float32_t t_l = (throttle - vang);
 
     /* Update motors */
-    Motor_SetSpeed((MOTOR_HANDLER_T)&Target_Motors[Fwd_Config2TargetTranslator[FRONT_LEFT]], t_l);
-    Motor_SetSpeed((MOTOR_HANDLER_T)&Target_Motors[Fwd_Config2TargetTranslator[BACK_LEFT]], t_l);
-    Motor_SetSpeed((MOTOR_HANDLER_T)&Target_Motors[Fwd_Config2TargetTranslator[FRONT_RIGHT]], t_r);
-    Motor_SetSpeed((MOTOR_HANDLER_T)&Target_Motors[Fwd_Config2TargetTranslator[BACK_RIGHT]], t_r);
+    Motor_SetSpeed(
+        (MOTOR_HANDLER_T)&Target_Motors[Fwd_Config2TargetTranslator[FRONT_LEFT]],
+        t_l * Fwd_MotorGains[FRONT_LEFT]
+    );
+    Motor_SetSpeed(
+        (MOTOR_HANDLER_T)&Target_Motors[Fwd_Config2TargetTranslator[BACK_LEFT]],
+        t_l * Fwd_MotorGains[BACK_LEFT]
+    );
+    Motor_SetSpeed(
+        (MOTOR_HANDLER_T)&Target_Motors[Fwd_Config2TargetTranslator[FRONT_RIGHT]],
+        t_r * Fwd_MotorGains[FRONT_RIGHT]
+    );
+    Motor_SetSpeed(
+        (MOTOR_HANDLER_T)&Target_Motors[Fwd_Config2TargetTranslator[BACK_RIGHT]],
+        t_r * Fwd_MotorGains[BACK_RIGHT]
+    );
 }
 
 /**

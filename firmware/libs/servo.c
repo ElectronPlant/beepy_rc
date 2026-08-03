@@ -183,7 +183,7 @@ void Servo_SetAngle(SERVO_HANDLER_T servo, float32_t angle) {
  *       1. Any span value outside the range [SERVO_MIN_PERCENTAGE, SERVO_MAX_PERCENTAGE] will be
  *          saturated between the limit values.
  */
-void Servo_Set(SERVO_HANDLER_T servo, float32_t travel) {
+void Servo_SetSpan(SERVO_HANDLER_T servo, float32_t travel) {
     PLT_ASSERT(NULL != servo);
     float32_t sat_travel = PLT_UTILS_SATURATE(travel, SERVO_MIN_PERCENTAGE, SERVO_MAX_PERCENTAGE);
 

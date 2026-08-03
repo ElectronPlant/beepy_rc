@@ -154,7 +154,7 @@ void Ui_SetStatusLeds(uint32_t map, bool_t run_blink) {
     Gpio_Write(Target_Leds[RED], error_active);
 
     /* Green LED */
-    bool_t armed = PLT_UTILS_IS_BIT_OFFSET_SET(map, SUPERDEF_SOURCE_OFFSET_ARMED);
+    bool_t armed = PLT_UTILS_IS_BIT_OFFSET_SET(map, SUPERDEF_CONTEXT_OFFSET_ARMED);
     Gpio_Write(Target_Leds[GREEN], armed);
 
     /* Yellow LED */

@@ -521,7 +521,7 @@ const PWM_TIM_PORT_T TargetServoTim2 = {
     .TimerClkFreqKhz = TARGET_SERVO_TIM2_CLK_FREQUENCY,
     .TimerIs32bits = DEF_FALSE,
     .NumChannels = TARGET_SERVO_TIM2_N_CHANNELS,
-    .Channels = {&TargetServoTim1Ch1, NULL, NULL, NULL}
+    .Channels = {&TargetServoTim2Ch1, NULL, NULL, NULL}
 };
 
 PWM_TIM_INSTANCE_T Motion_ServoPwmTimers[TARGET_NUM_SERVO_PWM_CHANNELS] = {

@@ -196,6 +196,7 @@ static bool_t PwmTim_InitChnInternal(PWM_TIM_HANDLER_T pwm, PWM_TIM_CHANNELS_T c
     LL_TIM_OC_InitTypeDef channel_cfg = {
         .OCMode = LL_TIM_OCMODE_PWM1,
         .OCState = LL_TIM_OCSTATE_DISABLE,
+        .OCNState = LL_TIM_OCSTATE_DISABLE,
         .CompareValue = 0,
         .OCPolarity = p_chn->OutputPolarity,
         .OCNPolarity = p_chn->OutputPolarity,
@@ -227,6 +228,30 @@ static bool_t PwmTim_InitChnInternal(PWM_TIM_HANDLER_T pwm, PWM_TIM_CHANNELS_T c
     /* Set channel enabled bit */
     pwm->InitChannels |= PWM_TIM_GET_CHN_BITFIELD_MSK(chn);
 
+    return DEF_TRUE;
+}
+
+/**
+ * @brief  Initialized the advanced timer specific fields.
+ *
+ * @param  pwm PWM timer handler.
+ *
+ * @return DEF_TRUE if successful, DEF_FALSE otherwise.
+ */
+static bool_t PwmTim_InitAdvancedTimer(PWM_TIM_HANDLER_T pwm) {
+    LL_TIM_BDTR_InitTypeDef adv_tim_cfg = {
+        .OSSRState = LL_TIM_OSSR_DISABLE,
+        .OSSIState = LL_TIM_OSSI_DISABLE,
+        .LockLevel = LL_TIM_LOCKLEVEL_OFF,
+        .DeadTime = 0,
+        .BreakState = LL_TIM_BREAK_DISABLE,
+        .BreakPolarity = LL_TIM_BREAK_POLARITY_HIGH,
+        .AutomaticOutput = LL_TIM_AUTOMATICOUTPUT_DISABLE,
+    };
+    ErrorStatus err = LL_TIM_BDTR_Init(pwm->Peripheral_Ptr->Timer, &adv_tim_cfg);
+    if (SUCCESS != err) {
+        return DEF_FALSE;
+    }
     return DEF_TRUE;
 }
 
@@ -274,6 +299,13 @@ static bool_t PwmTim_InitTimer(PWM_TIM_HANDLER_T pwm, float32_t freq_khz) {
     /* Timer cfg */
     LL_TIM_SetTriggerOutput(pwm->Peripheral_Ptr->Timer, LL_TIM_TRGO_RESET);
     LL_TIM_DisableMasterSlaveMode(pwm->Peripheral_Ptr->Timer);
+
+    /* Advance timer cfg */
+    if (DEF_TRUE == pwm->Peripheral_Ptr->TimerIsAdvanced) {
+        if (DEF_FALSE == PwmTim_InitAdvancedTimer(pwm)) {
+            return DEF_FALSE;
+        }
+    }
 
     pwm->Status = PWM_TIM_STATUS_INITIALIZED;
     return DEF_TRUE;
@@ -332,6 +364,11 @@ bool_t PwmTim_InitAll(PWM_TIM_HANDLER_T pwm, float32_t freq_khz) {
  */
 static void PwmTim_StartTimer(PWM_TIM_HANDLER_T pwm) {
     PLT_ASSERT(PWM_TIM_STATUS_INITIALIZED == pwm->Status); /* See note 1 */
+
+    /* Advanced timers */
+    if (DEF_TRUE == pwm->Peripheral_Ptr->TimerIsAdvanced) {
+        pwm->Peripheral_Ptr->Timer->BDTR |= TIM_BDTR_MOE;
+    }
 
     /* Enable Timer */
     pwm->Peripheral_Ptr->Timer->CR1 |= TIM_CR1_CEN;

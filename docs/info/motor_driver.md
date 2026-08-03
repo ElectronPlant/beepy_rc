@@ -9,8 +9,7 @@ There are two types control according to [DRV883x datasheet](https://lcsc.com/da
 
 The problem with the PWM control approach is that the PWM needs to be applied through a different pin depending on the motor direction.
 Normally, this is not ideal since each timer output is assigned to a given pin. This requires having two channels per motor or adding extra logic.
-An example of this can be seen in the [following repository](https://github.com/NicholasBerryman/GenericMotorDriver/tree/master), where the motor is controlled
-using two PWM output pins.
+An example of this can be seen in the [following repository](https://github.com/NicholasBerryman/GenericMotorDriver/tree/master), where the motor is controlled using two PWM output pins.
 
 The problem with the phase-enable motor drivers is that they are significantly less available. Thus, depending on them will make the design harder or more costly.
 

@@ -295,7 +295,7 @@ static void Super_TaskLoop(void) {
     BaseType_t received_int = xTaskNotifyWait(0, mask, &notifications, SUPER_TIMEOUT_TICKS);
     if (DEF_TRUE == PLT_UTILS_RTOS_TO_PLT_PASS_FAIL(received_int)) {
         printf("Supervisor::Task running\n");
-        if (0 == (notifications & SUPERDEF_SOURCE_BUTTONS_MASK)) {
+        if (0 != (notifications & ~SUPERDEF_SOURCE_BUTTONS_MASK)) {
             Super_ProcessContextUpdate(notifications);
         } else {
             // TODO button actions.

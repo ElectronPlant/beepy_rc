@@ -92,6 +92,7 @@ uint32_t Gpio_TranslatePull(GPIO_PULL_T pull, uint32_t* p_ll_pull) {
  * @return DEF_TRUE if successful, DEF_FALSE otherwise.
  */
 bool_t Gpio_Init(GPIO_HANDLER_T gpio) {
+    PLT_ASSERT(GPIO_STATUS_UNINITIALIZED == gpio->Status);
     gpio->Peripheral_Ptr->GpioClkEnFn_Ptr(gpio->Peripheral_Ptr->GpioClk);
 
     switch (gpio->Mode) {
@@ -130,7 +131,12 @@ bool_t Gpio_Init(GPIO_HANDLER_T gpio) {
     };
 
     ErrorStatus init_ok = LL_GPIO_Init(gpio->Peripheral_Ptr->GpioPort, &gpio_init_struct);
-    return PLT_UTILS_STM_ERR_STATUS_TO_PLT(init_ok);
+
+    bool_t res = PLT_UTILS_STM_ERR_STATUS_TO_PLT(init_ok);
+    if (DEF_TRUE == res) {
+        gpio->Status = GPIO_STATUS_INITIALIZED;
+    }
+    return res;
 }
 
 void Gpio_Write(GPIO_HANDLER_T gpio, GPIO_VALUE_T value) {

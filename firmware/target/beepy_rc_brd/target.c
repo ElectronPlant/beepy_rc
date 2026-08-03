@@ -91,10 +91,10 @@ const SERIAL_PERIPHERAL_PORT_T TargetRcSerial = {
 #define TARGET_MOTOR_TIM1_CLK_FREQUENCY (84000 / (1 + TARGET_MOTOR_TIM1_PRESCALLER))
 
 const PWM_TIM_PORT_CHN_T TargetMotorTim1Ch1 = {
-    .GpioPin = LL_GPIO_PIN_8,
-    .GpioPort = GPIOB,
+    .GpioPin = LL_GPIO_PIN_5,
+    .GpioPort = GPIOA,
     .GpioAlternateFunc = LL_GPIO_AF_1,
-    .GpioClk = LL_AHB1_GRP1_PERIPH_GPIOB,
+    .GpioClk = LL_AHB1_GRP1_PERIPH_GPIOA,
     .GpioClkEnFn_Ptr = LL_AHB1_GRP1_EnableClock,
     .OutputPolarity = LL_TIM_OCPOLARITY_HIGH,
     .OutputIdleState = LL_TIM_OCIDLESTATE_LOW,
@@ -130,6 +130,7 @@ const PWM_TIM_PORT_T TargetMotorTim1 = {
     .TimerClkDivision = LL_TIM_CLOCKDIVISION_DIV1,
     .TimerClkFreqKhz = TARGET_MOTOR_TIM1_CLK_FREQUENCY,
     .TimerIs32bits = DEF_TRUE,
+    .TimerIsAdvanced = DEF_FALSE,
     .NumChannels = TARGET_MOTOR_TIM1_N_CHANNELS,
     .Channels = {&TargetMotorTim1Ch1, &TargetMotorTim1Ch2, NULL, &TargetMotorTim1Ch4}
 };
@@ -194,11 +195,12 @@ const PWM_TIM_PORT_CHN_T TargetMotorTim2Ch4 = {
 const PWM_TIM_PORT_T TargetMotorTim2 = {
     .Timer = TIM8,
     .TimerClk = LL_APB2_GRP1_PERIPH_TIM8,
-    .TimerClkEnFn_Ptr = LL_APB1_GRP1_EnableClock,
+    .TimerClkEnFn_Ptr = LL_APB2_GRP1_EnableClock,
     .TimerPrescaller = TARGET_MOTOR_TIM2_PRESCALLER,
     .TimerClkDivision = LL_TIM_CLOCKDIVISION_DIV1,
     .TimerClkFreqKhz = TARGET_MOTOR_TIM2_CLK_FREQUENCY,
     .TimerIs32bits = DEF_FALSE,
+    .TimerIsAdvanced = DEF_TRUE,
     .NumChannels = TARGET_MOTOR_TIM2_N_CHANNELS,
     .Channels = {&TargetMotorTim2Ch1, &TargetMotorTim2Ch2, &TargetMotorTim2Ch3, &TargetMotorTim2Ch4}
 };
@@ -238,6 +240,7 @@ const PWM_TIM_PORT_T TargetMotorTim3 = {
     .TimerClkDivision = LL_TIM_CLOCKDIVISION_DIV1,
     .TimerClkFreqKhz = TARGET_MOTOR_TIM3_CLK_FREQUENCY,
     .TimerIs32bits = DEF_FALSE,
+    .TimerIsAdvanced = DEF_FALSE,
     .NumChannels = TARGET_MOTOR_TIM3_N_CHANNELS,
     .Channels = {&TargetMotorTim3Ch1, NULL, NULL, NULL}
 };
@@ -295,16 +298,16 @@ const ENC_PERIPHERAL_PORT_T TargetEnc2 = {
     .TimerChn1 = LL_TIM_CHANNEL_CH1,
     .TimerChn2 = LL_TIM_CHANNEL_CH2,
 
-    .Gpio1Pin = LL_GPIO_PIN_6,
-    .Gpio1Port = GPIOA,
+    .Gpio1Pin = LL_GPIO_PIN_4,
+    .Gpio1Port = GPIOB,
     .Gpio1AlternateFunc = LL_GPIO_AF_2,
-    .Gpio1Clk = LL_AHB1_GRP1_PERIPH_GPIOA,
+    .Gpio1Clk = LL_AHB1_GRP1_PERIPH_GPIOB,
     .Gpio1ClkEnFn_Ptr = LL_AHB1_GRP1_EnableClock,
 
-    .Gpio2Pin = LL_GPIO_PIN_7,
-    .Gpio2Port = GPIOA,
+    .Gpio2Pin = LL_GPIO_PIN_5,
+    .Gpio2Port = GPIOB,
     .Gpio2AlternateFunc = LL_GPIO_AF_2,
-    .Gpio2Clk = LL_AHB1_GRP1_PERIPH_GPIOA,
+    .Gpio2Clk = LL_AHB1_GRP1_PERIPH_GPIOB,
     .Gpio2ClkEnFn_Ptr = LL_AHB1_GRP1_EnableClock,
 };
 
@@ -521,7 +524,7 @@ const PWM_TIM_PORT_T TargetServoTim2 = {
     .TimerClkFreqKhz = TARGET_SERVO_TIM2_CLK_FREQUENCY,
     .TimerIs32bits = DEF_FALSE,
     .NumChannels = TARGET_SERVO_TIM2_N_CHANNELS,
-    .Channels = {&TargetServoTim1Ch1, NULL, NULL, NULL}
+    .Channels = {&TargetServoTim2Ch1, NULL, NULL, NULL}
 };
 
 PWM_TIM_INSTANCE_T Motion_ServoPwmTimers[TARGET_NUM_SERVO_PWM_CHANNELS] = {

@@ -31,6 +31,9 @@
 #include "rx_interface.h"
 #include "std_frame.h"
 
+#include "supervisor.h"
+
+
 /** @addtogroup Rc
  *   @{
  */
@@ -119,6 +122,7 @@ static void Rc_RxComplete(RC_ISR_DATA_T* p_data);
 static void Rc_RxHandler(uint8_t rx_byte);
 static void Rc_RxErrorHandler(void);
 
+
 /********************************************************************************
  * Local Vars
  ********************************************************************************/
@@ -140,6 +144,7 @@ PLTMEMCA_INSTANCE_T Rc_RxBufferAllocator; /* See note. */
  * @note Access model: The Reset flag must only be modified after stopping the ISR.
  */
 volatile bool_t Rc_ResetIsr = DEF_TRUE; /* See note. */
+
 
 /********************************************************************************
  * Function Implementations
@@ -216,6 +221,7 @@ static void Rc_ActionRxComplete(RXINT_RX_BUFFER_INFO_T* p_buffer_info) {
     if (STD_FRAME_STATE_VALID == processed_frame.State) {
         if (RC_STATUS_MISALIGNED == Rc_Status || RC_STATUS_ERROR == Rc_Status) {
             Rc_UpdateStatus(RC_STATUS_RUNNING);
+            Super_NotifyRcRunning();
         }
         RcIn_HandleRcFrame(&processed_frame);
     } else if (STD_FRAME_STATE_INVALID == processed_frame.State) {
@@ -252,8 +258,10 @@ static void Rc_ActionRxTimeout(void) {
 static void Rc_ActionNotifyError(RC_ERROR_TYPES_T error) {
     printf("RC - Error %u\n", error);
 
-    /* Restart RC */
     Rc_UpdateStatus(RC_STATUS_ERROR);
+    Super_NotifyRcError();
+
+    /* Restart RC */
     ComRxInt_Interface.RxInt_Stop(ComRxBus_BusHandler);
     Rc_ResetIsr = DEF_TRUE;
     bool_t ok = ComRxInt_Interface.RxInt_Start(ComRxBus_BusHandler);
