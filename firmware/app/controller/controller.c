@@ -477,7 +477,6 @@ static void Ctrlr_TaskLoop(void) {
         received = DEF_TRUE;
     }
 
-    printf("Received: %u, %u\n", Ctrlr_Info.Status, received);
     if (DEF_TRUE == received) {
         CTRLR_FSM_ACTION_T p_action = Ctrlr_FsmTable[Ctrlr_Info.Status].Action;
         PLT_ASSERT(NULL != p_action);

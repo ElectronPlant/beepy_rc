@@ -23,14 +23,18 @@
 /** SysTick
  * @note The SysTick needs to have the lowest priority, so as not to delay the hardware IRQs.
  *       For more info about this: https://www.programmersought.com/article/169111516206/
+ *       In this case it will be set to the second lowest priority, since the button presses
+ *       can be delayed without problems.
  */
-#define PRIORITIES_CFG_SYSTICK_PRIORITY (configLIBRARY_LOWEST_INTERRUPT_PRIORITY)
+#define PRIORITIES_CFG_SYSTICK_PRIORITY (configLIBRARY_LOWEST_INTERRUPT_PRIORITY - 1U)
 
 /** IRQ priorities
  *  @note To prevent FreeRTOS ConfigAsserts
  */
 #define PRIORITIES_CFG_IRQ_MAX_PRIORITY (configLIBRARY_MAX_SYSCALL_INTERRUPT_PRIORITY)
 
+/** Button IRQ priorities */
+#define PRIORITIES_CFG_BUTTON_IRQ_PRIORITY (configLIBRARY_LOWEST_INTERRUPT_PRIORITY)
 
 /********************************************************************************
  * Typedefs

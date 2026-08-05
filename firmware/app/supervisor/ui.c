@@ -92,13 +92,21 @@ bool_t Ui_Init(void) {
     PLT_BUILD_ASSERT(TARGET_NUM_LEDS >= UI_REQUIRED_LEDS);
     PLT_BUILD_ASSERT(TARGET_NUM_BUTTONS >= UI_REQUIRED_BUTTONS);
 
+    /* Status LEDs */
     for (uint8_t led = 0; UI_REQUIRED_LEDS > led && DEF_TRUE == ok; led++) {
         ok = Gpio_Init(Target_Leds[led]);
     }
 
+    /* Buttons */
     for (uint8_t button = 0; UI_REQUIRED_BUTTONS > button && DEF_TRUE == ok; button++) {
         ok = Button_Init(Target_Buttons[button]);
     }
+
+    /* Power Off */
+    if (DEF_TRUE == ok) {
+        ok = Gpio_Init(Target_BatEnable);
+    }
+
 
     return ok;
 }
@@ -113,12 +121,16 @@ void Ui_Start(void) {
     }
 }
 
+/******************************************
+ * Buttons
+ ******************************************/
+
 /**
  * @brief  Disarm button callback function.
  *         Callback function for button 1. Disarms the vehicle.
  */
 void Ui_Button1Callback(void) {
-    Ctrlr_HandleButtonDisarm();
+    Super_NotifyButton1();
 }
 
 /**
@@ -126,8 +138,12 @@ void Ui_Button1Callback(void) {
  *         Callback function for button 2. Turns off the board power.
  */
 void Ui_Button2Callback(void) {
-    // TODO - Power off
+    Super_NotifyButton2();
 }
+
+/******************************************
+ * Status LEDs
+ ******************************************/
 
 /**
  * @brief  Sets the status LEDs.
@@ -151,19 +167,34 @@ void Ui_Button2Callback(void) {
 void Ui_SetStatusLeds(uint32_t map, bool_t run_blink) {
     /* Red LED */
     bool_t error_active = SuperDef_IsAnyErrorSet(map);
-    Gpio_Write(Target_Leds[RED], error_active);
+    Gpio_Write(Target_Leds[RED], GPIO_BOOL_TO_VALUE(error_active));
 
     /* Green LED */
     bool_t armed = PLT_UTILS_IS_BIT_OFFSET_SET(map, SUPERDEF_CONTEXT_OFFSET_ARMED);
-    Gpio_Write(Target_Leds[GREEN], armed);
+    Gpio_Write(Target_Leds[GREEN], GPIO_BOOL_TO_VALUE(armed));
 
     /* Yellow LED */
     bool_t rc_aligned = PLT_UTILS_IS_BIT_OFFSET_SET(map, SUPERDEF_CONTEXT_OFFSET_RC_ALIGNEND);
     if (DEF_TRUE == rc_aligned) {
-        Gpio_Write(Target_Leds[YELLOW], rc_aligned);
+        Gpio_Write(Target_Leds[YELLOW], GPIO_BOOL_TO_VALUE(rc_aligned));
     } else if (DEF_TRUE == run_blink) {
         Gpio_Toggle(Target_Leds[YELLOW]);
     }
+}
+
+/******************************************
+ * Power off.
+ ******************************************/
+
+/**
+ * @brief  Powers off the board.
+ *
+ * @note List of notes:
+ *       1. Once powered off, it can only be turned back on by removing the battery for a few
+ *          seconds and connecting it back.
+ */
+void Ui_PowerOff(void) {
+    Gpio_Write(Target_BatEnable, GPIO_VALUE_HIGH);
 }
 
 /** @} (end addtogroup UI)  */

@@ -34,6 +34,9 @@
  ********************************************************************************/
 bool_t Super_Init(void);
 
+void Super_NotifyButton1(void);
+void Super_NotifyButton2(void);
+
 void Super_NotifyRcRunning(void);
 void Super_NotifyRcError(void);
 void Super_NotifyArmed(void);

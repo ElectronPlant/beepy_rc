@@ -25,6 +25,8 @@
 #include "supervisor_defines.h"
 #include "ui.h"
 
+#include "controller.h"
+
 
 /** @addtogroup Supervisor
  *    @{
@@ -46,6 +48,11 @@
     ((SUPER_TIMER_PERIOD_MS * configTICK_RATE_HZ) / PLT_UTILS_SECS_TO_MS_FACTOR)
 #define SUPER_TIMEOUT_MS    (1000u) /* Time between queue updates */
 #define SUPER_TIMEOUT_TICKS ((SUPER_TIMEOUT_MS * configTICK_RATE_HZ) / PLT_UTILS_SECS_TO_MS_FACTOR)
+
+/* -- Power off delay -- */
+#define SUPER_POWER_OFF_DELAY_MS (250U)
+#define SUPER_POWER_OFF_DELAY_TICKS \
+    ((SUPER_POWER_OFF_DELAY_MS * configTICK_RATE_HZ) / PLT_UTILS_SECS_TO_MS_FACTOR)
 
 
 /********************************************************************************
@@ -166,6 +173,20 @@ static void Super_TimerCallback(PLT_UTILS_UNUSED TimerHandle_t xTimer) {
 }
 
 /**
+  * @brief  Notifies that button 1 has been pressed.
+  */
+void Super_NotifyButton1(void) {
+    Super_GenericIsrCallback(SUPERDEF_SOURCE_OFFSET_BUTTON_1);
+}
+
+/**
+  * @brief  Notifies that button 2 has been pressed..
+  */
+void Super_NotifyButton2(void) {
+    Super_GenericIsrCallback(SUPERDEF_SOURCE_OFFSET_BUTTON_2);
+}
+
+/**
   * @brief  Notifies that the RC task is running.
   */
 void Super_NotifyRcRunning(void) {
@@ -207,7 +228,6 @@ void Super_NotifyControllerError(void) {
     Super_ContextNotice(SUPERDEF_SOURCE_OFFSET_CONTROLLER_ERROR);
 }
 
-
 /**
  * @brief  Notifies a new context event.
  *
@@ -236,6 +256,9 @@ static void Super_UpdateState(SUPER_STATUS_T status) {
 static void Super_TaskStart(void) {
     BaseType_t tim_ok = xTimerStart(Super_TimerHandle, SUPER_TIMEOUT_TICKS);
     PLT_ASSERT(DEF_TRUE == PLT_UTILS_RTOS_TO_PLT_PASS_FAIL(tim_ok));
+
+    Ui_Start();
+
     Super_UpdateState(SUPER_STATUS_RUNNING);
 }
 
@@ -250,8 +273,6 @@ static void Super_TaskStart(void) {
  *       1. 
  */
 static void Super_ProcessContextUpdate(uint32_t notifications) {
-    printf("Supervisor::Task running\n");
-
     bool_t timer_update = PLT_UTILS_IS_BIT_OFFSET_SET(notifications, SUPERDEF_SOURCE_OFFSET_TIMER);
 
     if (PLT_UTILS_IS_BIT_OFFSET_SET(notifications, SUPERDEF_SOURCE_OFFSET_RC_ALIGNED)) {
@@ -285,6 +306,28 @@ static void Super_ProcessContextUpdate(uint32_t notifications) {
 }
 
 /**
+ * @brief  Handle the button actions.
+ *
+ * @param  notifications Task notifications.
+ *
+ * @note List of notes:
+ *       1. Button 1 is used to disarm without the RC.
+ *       2. Button 2 is used to power the RC car off.
+ */
+void Super_ButtonActions(uint32_t notifications) {
+    if (PLT_UTILS_IS_BIT_OFFSET_SET(notifications, SUPERDEF_SOURCE_OFFSET_BUTTON_1)) {
+        printf("Button Disarming\n");
+        Ctrlr_HandleButtonDisarm();
+    }
+
+    if (PLT_UTILS_IS_BIT_OFFSET_SET(notifications, SUPERDEF_SOURCE_OFFSET_BUTTON_2)) {
+        printf("Button power off...\n");
+        vTaskDelay(SUPER_POWER_OFF_DELAY_TICKS);
+        Ui_PowerOff();
+    }
+}
+
+/**
  * @brief  Loop for the controller task.
  *         Waits for the task notifications, performs the actions, and handles the FSM.
  */
@@ -294,11 +337,12 @@ static void Super_TaskLoop(void) {
 
     BaseType_t received_int = xTaskNotifyWait(0, mask, &notifications, SUPER_TIMEOUT_TICKS);
     if (DEF_TRUE == PLT_UTILS_RTOS_TO_PLT_PASS_FAIL(received_int)) {
-        printf("Supervisor::Task running\n");
+        printf("Supervisor::Task running, %lu\n", notifications);
         if (0 != (notifications & ~SUPERDEF_SOURCE_BUTTONS_MASK)) {
             Super_ProcessContextUpdate(notifications);
-        } else {
-            // TODO button actions.
+        }
+        if (0 != (notifications & SUPERDEF_SOURCE_BUTTONS_MASK)) {
+            Super_ButtonActions(notifications);
         }
     }
 }

@@ -167,7 +167,7 @@ static void Button_Callback(void* p_data) {
     BUTTON_T* p_button = (BUTTON_T*)p_data;
 
     uint32_t current_time = (uint32_t)xTaskGetTickCountFromISR();
-    if (BUTTON_DEBOUNCE_TICKS > (current_time - p_button->PrevActivation)) {
+    if (BUTTON_DEBOUNCE_TICKS < (current_time - p_button->PrevActivation)) {
         if (NULL != p_button->CallbackFunc_Ptr) {
             p_button->CallbackFunc_Ptr();
             p_button->PrevActivation = current_time;

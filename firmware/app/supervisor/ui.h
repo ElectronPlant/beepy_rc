@@ -33,6 +33,8 @@
  * Function Prototypes
  ********************************************************************************/
 bool_t Ui_Init(void);
+void   Ui_Start(void);
 void   Ui_SetStatusLeds(uint32_t map, bool_t run_blink);
+void   Ui_PowerOff(void);
 
 #endif /* __UI_H__       */

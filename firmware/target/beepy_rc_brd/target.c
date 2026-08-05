@@ -612,16 +612,16 @@ GPIO_HANDLER_T Target_Leds[TARGET_NUM_LEDS] = {
  * BUTTONS
  ******************************************/
 const GPIO_PERIPHERAL_PORT_T Target_Button1Gpio = {
-    .GpioPin = LL_GPIO_PIN_15,
-    .GpioPort = GPIOA,
-    .GpioClk = LL_AHB1_GRP1_PERIPH_GPIOA,
+    .GpioPin = LL_GPIO_PIN_12,
+    .GpioPort = GPIOB,
+    .GpioClk = LL_AHB1_GRP1_PERIPH_GPIOB,
     .GpioClkEnFn_Ptr = LL_AHB1_GRP1_EnableClock,
 };
 
 const GPIO_PERIPHERAL_PORT_T Target_Button2Gpio = {
-    .GpioPin = LL_GPIO_PIN_12,
-    .GpioPort = GPIOB,
-    .GpioClk = LL_AHB1_GRP1_PERIPH_GPIOB,
+    .GpioPin = LL_GPIO_PIN_15,
+    .GpioPort = GPIOA,
+    .GpioClk = LL_AHB1_GRP1_PERIPH_GPIOA,
     .GpioClkEnFn_Ptr = LL_AHB1_GRP1_EnableClock,
 };
 
@@ -671,7 +671,7 @@ const GPIO_PERIPHERAL_PORT_T Target_BatEnableGpio = {
 GPIO_INSTANCE_T Target_BatEnableInstance = {
     .Status = GPIO_STATUS_UNINITIALIZED,
     .Mode = GPIO_MODE_OUTPUT,
-    .Pull = GPIO_PULL_NONE,
+    .Pull = GPIO_PULL_DOWN,
     .Peripheral_Ptr = &Target_BatEnableGpio,
 };
 
