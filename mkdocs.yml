@@ -49,6 +49,9 @@ nav:
     - Getting Started:
         - getting_started/setup.md
         - getting_started/hardware.md
+    - Info:
+        - info/motor_driver.md
+        - info/sbus.md
     - About:
         - about/credits.md
         - license.md

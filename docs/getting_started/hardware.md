@@ -8,11 +8,12 @@ Check [SBUS](../info/sbus.md) for more information on the radio receiver.
 
 ## Motor Driver
 
-* [MX1616](https://datasheet.lcsc.com/lcsc/2207251030_Mixic-MX1616H_C5119044.pdf)
-* [Tutorial](https://www.instructables.com/Tutorial-for-Dual-Channel-DC-Motor-Driver-Board-PW/)
+Information about the motor driver and motor used can be seen in the [motor driver](../info/motor_driver.md) page.
 
 ## MCU
-The development of the RC-Rover is done on a STM32 nucleo board:
+
+### Development Board
+The initial development of the RC-Rover is done on an STM32 nucleo board:
 
 * Board: Nucleo-F446RE
 * MCU: STM32F446RET6
@@ -23,8 +24,15 @@ Important links:
 * [Information page](https://www.st.com/en/evaluation-tools/nucleo-f446re.html)
 * [Schematic](https://www.arrow.com/en/reference-designs/nucleo-f446re-stm32-nucleo-development-board-with-stm32f446ret6-mcu-supports-arduino-and-st-morpho-connectivity/f2ac4e6d8de8e6fba9c9553a41b0d756afdac90c8a34)
 
+The different components (e.g. motor driver, SBUS, etc.) need to be connected following the definitions in
+```firmware/target/nucleo/target.c```
 
-### Pin Out
+#### Pin Out
 ![image](../imgs/nucleo_pinout.jpg)
 
 [image source](https://www.thegioiic.com/upload/large/48757.jpg)
+
+### BeepyRcBoard
+
+* Check [main](../README.md) for information on the latest board releases.
+* Check [design notes](../beepyRcBrd/pcb_notes.md) for information on the board design decisions.

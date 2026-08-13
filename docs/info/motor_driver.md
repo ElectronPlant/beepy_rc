@@ -1,6 +1,6 @@
 # Motor Driver
 
-Notes on the motor brushed motor driver.
+## Notes on the motor brushed motor driver.
 
 There are two types control according to [DRV883x datasheet](https://lcsc.com/datasheet/lcsc_datasheet_2410122006_Texas-Instruments-DRV8837DSGR_C39159.pdf)
 
@@ -35,12 +35,13 @@ There are two options to apply the PWM:
 With option 1, during the _off_ state, the energy of the motor discharges slowly through the MOSFET's body diodes. If the frequency is too low the motor may not start (MX1616 driver)
 With option 2, the motor breaks during the _off_ state. This enables accurate speed control. However, if the frequency is too low, the breaking may make the spinning be not smooth.
 
-Test option 1 and option 2 with the following frequencies: 1kHz, 10kHz, 50kHz
-Following tests: running freely, apply some load
-Duty: 0, 25, 50, 75, 100
+After some initial testing it was decided to go with _option 2_ as it provided a more accurate speed control. The PWM frequency will be kept high enough to avoid the negative effects.
 
-### Test encoder
-MX1616h
+# Test Motor Diver
+
+The initial implementation will be done using a [MX1616](https://datasheet.lcsc.com/lcsc/2207251030_Mixic-MX1616H_C5119044.pdf) module I had around. Then, the board will evaluate different motor divers.
+
+* [Tutorial](https://www.instructables.com/Tutorial-for-Dual-Channel-DC-Motor-Driver-Board-PW/)
 
 
 # Motor information
@@ -48,11 +49,11 @@ MX1616h
 The motors used for the project are N20 motors from aliexpress.
 
 Characteristics:
+
 * Voltage: 6V
 * RPM: 1500RPM
 * Logic voltage: 5V - 3.3V
 * [Datasheet](https://cdn-shop.adafruit.com/product-files/4640/n20+motors_C15011+6V.pdf)
 * [Usefull info](https://docs.cirkitdesigner.com/component/72ca542f-9daa-409a-9db7-2735e4f8f9b2/n20-motor-with-encoder)
 
-
-The internal circuitry of the encoders directly generates the encoder signals as a digital signal.
+The internal circuitry of the encoders directly generates the encoder signals as a digital wave.

@@ -37,13 +37,3 @@ Update Taranis
 Nice to have:
 
 * https://raw.githubusercontent.com/mrRobot62/betaflight_processing/refs/heads/BF4.3/bf-4.3_processing-workflow.drawio.svg
-
-
-Process:
-
-* First trying to connect SBUS (inverted signal)
-* Binding... another problem + having to update the radio.
-* Problem with the HAL
-* Transision to LL_HAL + working.
-* Improvements: DMA, reduce the memory consumption.
-* Further work, translate the signals.
