@@ -1,0 +1,12 @@
+[submodule "firmware/external_libs/mcu/stm32f446x/STM32F4xx_HAL_Driver"]
+	path = firmware/external_libs/mcu/stm32f446x/STM32F4xx_HAL_Driver
+	url = https://github.com/STMicroelectronics/stm32f4xx-hal-driver
+[submodule "firmware/external_libs/FreeRTOS"]
+	path = firmware/external_libs/FreeRTOS
+	url = https://github.com/FreeRTOS/FreeRTOS-Kernel
+[submodule "firmware/external_libs/mcu/stm32f446x/cmsis-device-f4"]
+	path = firmware/external_libs/mcu/stm32f446x/cmsis-device-f4
+	url = https://github.com/STMicroelectronics/cmsis-device-f4
+[submodule "firmware/external_libs/mcu/CMSIS_6"]
+	path = firmware/external_libs/mcu/CMSIS_6
+	url = https://github.com/ARM-software/CMSIS_6

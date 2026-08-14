@@ -18,7 +18,6 @@
 
 /* Includes ------------------------------------------------------------------*/
 #include "stm32f4xx_it.h"
-#include "portmacro.h"
 
 #include "plt_assert.h"
 
@@ -50,12 +49,12 @@ void HardFault_Handler(void) {
     printf("--------------------------\n");
     printf("Hard Fault\n");
     printf("--------------------------\n");
-    printf("CFSR: %08lX\n", *(uint32_t *)0xE000ED28);
-    printf("UFSR: %04X\n", *(uint16_t *)0xE000ED2A);
-    printf("BFSR: %02X\n", *(uint8_t *)0xE000ED29);
-    printf("ABFSR: %08lX\n", *(uint32_t *)0xE000EFA8);
-    printf("MMFSR: %02X\n", *(uint8_t *)0xE000ED28);
-    printf("HFSR: %08lX\n", *(uint32_t *)0xE000ED2C);
+    printf("CFSR: %08lX\n", *(uint32_t*)0xE000ED28);
+    printf("UFSR: %04X\n", *(uint16_t*)0xE000ED2A);
+    printf("BFSR: %02X\n", *(uint8_t*)0xE000ED29);
+    printf("ABFSR: %08lX\n", *(uint32_t*)0xE000EFA8);
+    printf("MMFSR: %02X\n", *(uint8_t*)0xE000ED28);
+    printf("HFSR: %08lX\n", *(uint32_t*)0xE000ED2C);
     printf("Test: %08lX\n", (uint32_t)0x00000001);
 
     PLT_UNREACHABLE;
