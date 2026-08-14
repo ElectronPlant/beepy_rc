@@ -32,9 +32,8 @@ There are two different repositories for the CMSIS this module.
      * Copyright: ```ARM Limited```
      * License: [Apache License 2.0](https://www.apache.org/licenses/LICENSE-2.0.html)
 
-
 * CMSIS Device:
-     * * Source: [repository](https://github.com/STMicroelectronics/cmsis-device-f4)
+     * Source: [repository](https://github.com/STMicroelectronics/cmsis-device-f4)
      * Description: Common Microcontroller Software Interface Standard (CMSIS), port for STM32F4 MCUs.
      * Path: ```firmware/external_libs/mcu/stm32f446x/cmsis-device-f4```
      * Copyright: ```STMicroelectronics```
