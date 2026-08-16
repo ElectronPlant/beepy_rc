@@ -27,10 +27,10 @@
 #include "common_rx_interface.h"
 #include "common_rx_sizes.h"
 #include "model.h"
-#include "rc_inputs.h"
 #include "rx_interface.h"
 #include "std_frame.h"
 
+#include "control_inputs.h"
 #include "supervisor.h"
 
 
@@ -223,7 +223,7 @@ static void Rc_ActionRxComplete(RXINT_RX_BUFFER_INFO_T* p_buffer_info) {
             Rc_UpdateStatus(RC_STATUS_RUNNING);
             Super_NotifyRcRunning();
         }
-        RcIn_HandleRcFrame(&processed_frame);
+        CIn_HandleRcFrame(&processed_frame);
     } else if (STD_FRAME_STATE_INVALID == processed_frame.State) {
         memcpy(&processed_frame, &Rc_FailSafeFrame, sizeof(STD_FRAME_T));
         processed_frame.State = STD_FRAME_STATE_INVALID;
@@ -247,7 +247,7 @@ static void Rc_ActionRxTimeout(void) {
     error_frame.State = STD_FRAME_STATE_DROPPED;
 
     /* Notify error */
-    RcIn_HandleRcFrame(&error_frame);
+    CIn_HandleRcFrame(&error_frame);
 }
 
 /**

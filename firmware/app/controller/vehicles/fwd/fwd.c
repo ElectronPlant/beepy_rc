@@ -20,8 +20,8 @@
 #include "target.h"
 
 #include "fwd.h"
-#include "model.h"
 #include "motor.h"
+#include "rc_subs.h"
 
 
 /** @addtogroup FWD
@@ -32,9 +32,8 @@
 /********************************************************************************
  * Defines
  ********************************************************************************/
-#define FWD_YAW_SCALE (-1.0f)
-
 #define FWD_MOTOR_DISARM_DUTY (0.0f)
+
 
 /********************************************************************************
  * Typedefs
@@ -107,13 +106,13 @@ void Fwd_Stop(void) {
  * @brief  FWD implementation of the RunControlLoop Interface.
  */
 void Fwd_RunControlLoop(MODEL_RC_SETPOINT_T* p_frame) {
-    float32_t throttle = p_frame->Throttle;
-    float32_t vang = p_frame->Yaw * FWD_YAW_SCALE;
+    float32_t throttle = p_frame->DriveInputs[RCSUBS_DRIVE_SETPOINT_THROTTLE];
+    float32_t vang = p_frame->DriveInputs[RCSUBS_DRIVE_SETPOINT_YAW];
     float32_t throttle_abs = PLT_UTILS_ABS(throttle);
     float32_t vang_abs = PLT_UTILS_ABS(vang);
 
-    if (throttle_abs + vang_abs > 1000.0f) {
-        float32_t delta = 1000.0f - vang_abs - throttle_abs;
+    if (throttle_abs + vang_abs > MOTOR_MAX_SPEED_VAL) {
+        float32_t delta = MOTOR_MAX_SPEED_VAL - vang_abs - throttle_abs;
         if (throttle < 0.0f) {
             throttle += delta;
         } else {

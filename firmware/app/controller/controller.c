@@ -23,9 +23,11 @@
 #include "timers.h"
 
 #include "common_vehicle_int.h"
+#include "control_inputs.h"
 #include "controller.h"
+#include "curves.h"
 #include "model.h"
-#include "rc_inputs.h"
+#include "rc_subs.h"
 #include "std_frame.h"
 #include "vehicle_int.h"
 
@@ -207,6 +209,11 @@ bool_t Ctrlr_Init(void) {
         ok = Model_Init(Ctrlr_HandleModelUpdate);
     }
 
+    /* Init Aux peripherals */
+    if (DEF_TRUE == ok) {
+        ok = CIn_Init();
+    }
+
     /* State */
     if (DEF_TRUE == ok) {
         Ctrlr_UpdateState(CTRLR_STATUS_STOPPED);
@@ -275,6 +282,10 @@ void Ctrlr_HandleButtonDisarm(void) {
 }
 
 
+static bool_t Ctrlr_GetArmSwitch(MODEL_RC_SETPOINT_T* p_setpoint) {
+    return Curves_Analog2Dig(p_setpoint->DriveInputs[RCSUBS_DRIVE_SETPOINT_ARM_SWITCH]);
+}
+
 /******************************************
  * Actions
  ******************************************/
@@ -327,7 +338,7 @@ static void Ctrlr_WaitForDisarmAction(void) {
     /* Update RC model */
     Model_GetRcSetpoint(&Ctrlr_Info.RcSetPoint);
     if (Ctrlr_Info.RcSetPoint.State == MODEL_RC_SETPOINT_STATE_VALID
-        && DEF_FALSE == Ctrlr_Info.RcSetPoint.ArmSwitch) {
+        && DEF_FALSE == Ctrlr_GetArmSwitch(&Ctrlr_Info.RcSetPoint)) {
         Ctrlr_UpdateState(CTRLR_STATUS_DISARMED);
     }
 }
@@ -340,7 +351,7 @@ static void Ctrlr_DisarmedAction(void) {
     /* Update RC model */
     Model_GetRcSetpoint(&Ctrlr_Info.RcSetPoint);
     if (Ctrlr_Info.RcSetPoint.State == MODEL_RC_SETPOINT_STATE_VALID
-        && DEF_TRUE == Ctrlr_Info.RcSetPoint.ArmSwitch) {
+        && DEF_TRUE == Ctrlr_GetArmSwitch(&Ctrlr_Info.RcSetPoint)) {
         Ctrlr_UpdateState(CTRLR_STATUS_RUNNING);
         Super_NotifyArmed();
         printf("Controller :: Armed!!\n");
@@ -362,7 +373,7 @@ static void Ctrlr_DisarmedTransition(CTRLR_STATUS_T status) {
  *
  * @return DEF_TRUE if the RC frame is valid, DEF_FALSE otherwise.
  */
-static bool_t Ctrlr_HandleRcErrors(void) {
+static bool_t Ctrlr_HandleRcSetpoint(void) {
     bool_t   rc_error = DEF_FALSE;
     uint32_t mask = PLT_UTILS_BIT_OFFSET_TO_MASK(CTRLR_TASK_NOTICE_OFFSET_RC);
     if (0U != (ulTaskNotifyValueClear(Ctrlr_TaskHandle, mask) & mask)) {
@@ -388,6 +399,7 @@ static bool_t Ctrlr_HandleRcErrors(void) {
  */
 static void Ctrlr_RunControlLoop(void) {
     CVInt_Interface.VInt_RunControlLoop(&Ctrlr_Info.RcSetPoint);
+    CIn_RunAux(&Ctrlr_Info.RcSetPoint);
 }
 
 /**
@@ -403,17 +415,17 @@ static void Ctrlr_StopMotors(void) {
  */
 static void Ctrlr_RunningAction(void) {
     /* Update RC model */
-    bool_t rc_error = Ctrlr_HandleRcErrors();
-    bool_t disarmed = (DEF_FALSE == Ctrlr_Info.RcSetPoint.ArmSwitch)
+    bool_t rc_error = Ctrlr_HandleRcSetpoint();
+    bool_t disarmed = (DEF_FALSE == Ctrlr_GetArmSwitch(&Ctrlr_Info.RcSetPoint))
         || (PLT_UTILS_IS_BIT_OFFSET_SET(Ctrlr_Info.NotVal, CTRLR_TASK_NOTICE_OFFSET_BUTTON_DISARM));
 
     if (DEF_TRUE == rc_error) {
         Ctrlr_UpdateState(CTRLR_STATUS_FAILSAFE);
-        Ctrlr_Info.RcSetPoint.Throttle = 0.0f;
-        Ctrlr_Info.RcSetPoint.Yaw = 0.0f;
+        Ctrlr_Info.RcSetPoint.DriveInputs[RCSUBS_DRIVE_SETPOINT_THROTTLE] = 0.0f;
+        Ctrlr_Info.RcSetPoint.DriveInputs[RCSUBS_DRIVE_SETPOINT_YAW] = 0.0f;
         Super_NotifyControllerError();
     } else if (disarmed) {
-        CTRLR_STATUS_T new_status = DEF_FALSE == Ctrlr_Info.RcSetPoint.ArmSwitch
+        CTRLR_STATUS_T new_status = DEF_FALSE == Ctrlr_GetArmSwitch(&Ctrlr_Info.RcSetPoint)
             ? CTRLR_STATUS_DISARMED
             : CTRLR_STATUS_PREARMED;
         Ctrlr_UpdateState(new_status);
@@ -452,6 +464,7 @@ static void Ctrlr_RunningTransition(CTRLR_STATUS_T status) {
  */
 static void Ctrlr_TaskStart(void) {
     CVInt_Interface.VInt_Start();
+    CIn_Start();
     Ctrlr_UpdateState(CTRLR_STATUS_PREARMED);
 }
 

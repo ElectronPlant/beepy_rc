@@ -545,11 +545,14 @@ PWM_TIM_INSTANCE_T Motion_ServoPwmTimers[TARGET_NUM_SERVO_PWM_CHANNELS] = {
 /******************************************
  * Servos
  ******************************************/
-SERVO_T Target_Servos[TARGET_NUM_SERVO_PWM_CHANNELS] = {
+SERVO_T Target_ServosInstance[TARGET_NUM_SERVO_PWM_CHANNELS] = {
     {.Timer = &Motion_ServoPwmTimers[0], .Chn = PWM_TIM_CHANNELS_CH1},
     {.Timer = &Motion_ServoPwmTimers[0], .Chn = PWM_TIM_CHANNELS_CH2},
     {.Timer = &Motion_ServoPwmTimers[1], .Chn = PWM_TIM_CHANNELS_CH1}
 };
+
+SERVO_HANDLER_T Target_Servos[TARGET_NUM_SERVO_PWM_CHANNELS] =
+    {&Target_ServosInstance[0], &Target_ServosInstance[1], &Target_ServosInstance[2]};
 
 /********************************************************************************
  * UI
@@ -676,3 +679,46 @@ GPIO_INSTANCE_T Target_BatEnableInstance = {
 };
 
 GPIO_HANDLER_T Target_BatEnable = &Target_BatEnableInstance;
+
+/******************************************
+ * LIGHTS
+ ******************************************/
+/* TODO -> LIGHTS_EN is not connected to the MCU */
+GPIO_HANDLER_T Target_Lights[1U] = {
+    NULL,
+};
+
+
+/******************************************
+ * RC Subscriptions
+ ******************************************/
+#include "peripherals.h"
+#include "rc_subs.h"
+
+const RCSUBS_DRIVE_INPUTS_T Target_DriveSubs[RCSUBS_DRIVE_SETPOINT_MAX] = {
+    {.Chn = 0U,
+     .Input = RCSUBS_DRIVE_SETPOINT_THROTTLE,
+     .Curve = {.Name = CURVES_NAME_LINEAR_WITH_DEADBAND, .Params = {0.0f, 1.0f, 50.0f, -50.0f}}},
+
+    {.Chn = 3U,
+     .Input = RCSUBS_DRIVE_SETPOINT_YAW,
+     .Curve = {.Name = CURVES_NAME_LINEAR, .Params = {0.0f, -1.0f}}},
+
+    {.Chn = 10U,
+     .Input = RCSUBS_DRIVE_SETPOINT_ARM_SWITCH,
+     .Curve = {.Name = CURVES_NAME_THRESHOLD, .Params = {0.0f}}},
+};
+
+const RCSUBS_AUX_INPUTS_T Target_AuxSubs[TARGET_NUM_AUX_PERIPHERALS] = {
+    {.Chn = 1U,
+     .Per = {.Type = PER_TYPE_REL_SERVO, .Instance = {.Servos = PER_SERVOS_0}},
+     .Curve = {.Name = CURVES_NAME_LINEAR_WITH_DEADBAND, .Params = {0.0f, 0.05f, 5.0f, -5.0f}}},
+
+    {.Chn = 2U,
+     .Per = {.Type = PER_TYPE_REL_SERVO, .Instance = {.Servos = PER_SERVOS_1}},
+     .Curve = {.Name = CURVES_NAME_LINEAR_WITH_DEADBAND, .Params = {0.0f, 0.05f, 5.0f, -5.0f}}},
+
+    {.Chn = 11U,
+     .Per = {.Type = PER_TYPE_ABS_SERVO, .Instance = {.Servos = PER_SERVOS_2}},
+     .Curve = {.Name = CURVES_NAME_NONE, .Params = {0.0f}}},
+};

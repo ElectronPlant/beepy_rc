@@ -55,6 +55,7 @@
 #define SERVO_MIN_ANGLE_DURATION_MS          (0.5f)
 #define SERVO_DURATION_TO_DUTY_PERCENT(X_MS) (100.0f * X_MS / SERVO_PWM_PERIOD_MS)
 
+#define SERVO_INITIAL_SPAN (0.0f)
 
 /********************************************************************************
  * Typedefs
@@ -102,6 +103,7 @@ void Servo_Start(SERVO_HANDLER_T servo) {
     PLT_ASSERT(NULL != servo);
 
     PwmTim_StartChn(servo->Timer, servo->Chn);
+    Servo_SetSpan(servo, SERVO_INITIAL_SPAN);
 }
 
 /**
@@ -177,18 +179,36 @@ void Servo_SetAngle(SERVO_HANDLER_T servo, float32_t angle) {
  *         of the total rotation span.
  *
  * @param  servo  Servo handler.
- * @param  travel Set point for the servo angle. See note 1
+ * @param  span Set point for the servo angle. See note 1
  *
  * @note List of notes:
  *       1. Any span value outside the range [SERVO_MIN_PERCENTAGE, SERVO_MAX_PERCENTAGE] will be
  *          saturated between the limit values.
  */
-void Servo_SetSpan(SERVO_HANDLER_T servo, float32_t travel) {
+void Servo_SetSpan(SERVO_HANDLER_T servo, float32_t span) {
     PLT_ASSERT(NULL != servo);
-    float32_t sat_travel = PLT_UTILS_SATURATE(travel, SERVO_MIN_PERCENTAGE, SERVO_MAX_PERCENTAGE);
+    float32_t sat_span = PLT_UTILS_SATURATE(span, SERVO_MIN_PERCENTAGE, SERVO_MAX_PERCENTAGE);
 
-    float32_t duty = Servo_DutyFromPercentage(sat_travel);
+    float32_t duty = Servo_DutyFromPercentage(sat_span);
     PwmTim_SetDuty(servo->Timer, servo->Chn, duty);
+    servo->CurrentSpan = sat_span;
+}
+
+/**
+ * @brief  Set the servo angle as an increment of the current percentage of the total servo span.
+ *         See Servo_SetSpan for information about servo spans.
+ *
+ * @param  servo  Servo handler.
+ * @param  span Set point for the servo angle. See note 1
+ *
+ * @note List of notes:
+ *       1. Any span value outside the range [SERVO_MIN_PERCENTAGE, SERVO_MAX_PERCENTAGE] will be
+ *          saturated between the limit values.
+ */
+void Servo_SetRelSpan(SERVO_HANDLER_T servo, float32_t span) {
+    PLT_ASSERT(NULL != servo);
+    float32_t rel_span = servo->CurrentSpan + span;
+    Servo_SetSpan(servo, rel_span);
 }
 
 

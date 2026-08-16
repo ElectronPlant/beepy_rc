@@ -16,14 +16,25 @@
 
 #include "plt_types.h"
 
+#include "peripherals.h"
+#include "rc_subs.h"
+#include "target.h"
+
 
 /********************************************************************************
  * Defines
  ********************************************************************************/
+#define MODEL_MAX_RC_SETPOINT_DRIVE_INPUTS (RCSUBS_DRIVE_SETPOINT_MAX)
+#define MODEL_MAX_RC_SETPOINT_AUX_INPUTS   (TARGET_NUM_AUX_PERIPHERALS)
+
 
 /********************************************************************************
  * Typedefs
  ********************************************************************************/
+
+/******************************************
+ * Position & Attitude
+ ******************************************/
 typedef struct MODEL_POS_S {
     float32_t Disp;  /**< Polar coordinates, radius from the center. */
     float32_t Theta; /**< Polar coordinates, angle  */
@@ -37,6 +48,10 @@ typedef struct MODEL_ATTITUDE_S {
     float32_t Yaw; /**< Orientation of the vehicle */
 } MODEL_ATTITUDE_T;
 
+
+/******************************************
+ * RC Setpoint
+ ******************************************/
 typedef enum MODEL_RC_SETPOINT_STATE_E {
     MODEL_RC_SETPOINT_STATE_PENDING = 0,
     MODEL_RC_SETPOINT_STATE_VALID,
@@ -44,9 +59,9 @@ typedef enum MODEL_RC_SETPOINT_STATE_E {
 } MODEL_RC_SETPOINT_STATE_T;
 
 typedef struct MODEL_RC_SETPOINT_S {
-    float32_t                 Throttle;
-    float32_t                 Yaw;
-    bool_t                    ArmSwitch;
+    float32_t                 DriveInputs[MODEL_MAX_RC_SETPOINT_DRIVE_INPUTS];
+    PER_PERIPHERAL_T          AuxInputs[MODEL_MAX_RC_SETPOINT_AUX_INPUTS];
+    float32_t                 AuxInputValues[MODEL_MAX_RC_SETPOINT_AUX_INPUTS];
     uint32_t                  Timestamp;
     MODEL_RC_SETPOINT_STATE_T State;
 } MODEL_RC_SETPOINT_T;

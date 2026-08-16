@@ -78,10 +78,9 @@ extern MOTOR_T Target_Motors[TARGET_MOTOR_NUM];
 #include "servo.h"
 #define TARGET_NUM_SERVO_PWM_TIMERS   (2U)
 #define TARGET_NUM_SERVO_PWM_CHANNELS (3U)
-/* Servo PWM timers */
-extern PWM_TIM_INSTANCE_T Target_ServoPwmTimers[TARGET_NUM_SERVO_PWM_CHANNELS];
+#define TARGET_NUM_SERVOS             (TARGET_NUM_SERVO_PWM_CHANNELS)
 /* Servo Motors */
-extern SERVO_T Target_Servos[TARGET_NUM_SERVO_PWM_CHANNELS];
+extern SERVO_HANDLER_T Target_Servos[TARGET_NUM_SERVOS];
 
 
 /********************************************************************************
@@ -102,6 +101,24 @@ extern BUTTON_HANDLER_T Target_Buttons[TARGET_NUM_BUTTONS];
 
 /* --- Battery --- */
 extern GPIO_HANDLER_T Target_BatEnable;
+
+/********************************************************************************
+ * Lights
+ ********************************************************************************/
+/* TODO no support for lights at the moment */
+#define TARGET_NUM_LIGHTS (0U)
+extern GPIO_HANDLER_T Target_Lights[1U];
+
+/********************************************************************************
+ * Control Inputs
+ ********************************************************************************/
+#include "peripherals.h"
+#include "rc_subs.h"
+
+extern const RCSUBS_DRIVE_INPUTS_T Target_DriveSubs[RCSUBS_DRIVE_SETPOINT_MAX];
+
+#define TARGET_NUM_AUX_PERIPHERALS (TARGET_NUM_SERVOS + TARGET_NUM_LIGHTS)
+extern const RCSUBS_AUX_INPUTS_T Target_AuxSubs[TARGET_NUM_AUX_PERIPHERALS];
 
 
 /********************************************************************************

@@ -246,17 +246,19 @@ C_APP_SOURCE := \
 ../app/rc/rc.c \
 ../app/rc/rx_drivers/sbus/sbus.c \
 ../app/rc/rx_drivers/common_rx_bus.c \
-../app/rc/rc_inputs.c \
 ../app/bsp/bsp.c \
 ../app/motion/motion.c \
 ../libs/motor.c \
 ../libs/servo.c \
 ../libs/button.c \
+../libs/peripherals.c \
 ../app/controller/model.c \
 ../app/controller/controller.c \
+../app/controller/control_inputs.c \
+../app/controller/curves.c \
 ../app/controller/vehicles/fwd/fwd.c \
 ../app/supervisor/supervisor.c \
-../app/supervisor/ui.c
+../app/supervisor/ui.c \
 
 H_APP_SOURCE := \
 -I../app/rc \

@@ -1,11 +1,8 @@
 /**
- * @file  servo.h
- * @brief Driver for analog servo motors.
- *        Analog servos allow setting their angle based on the duty cycle of their PWM control
- *        signal. The signal has a period of 20ms (50Hz) and the duration of 1ms (for 0deg) and
- *        a duration of 2ms (for 180deg).
+ * @file  control_inputs.h
+ * @brief Process RC subscriptions.
  *
- * @ingroup   MotionServo
+ * @ingroup   RcInputs
  * @version   V0.0
  * @author    David Arnaiz
  * @copyright 2026 David Arnaiz
@@ -14,31 +11,23 @@
  * This project is licensed under the GNU General Public License v3.0 license.
  */
 
-#ifndef __SERVO_H__
-#define __SERVO_H__
+#ifndef __CONTROL_INPUTS_H__
+#define __CONTROL_INPUTS_H__
 
 #include "plt_types.h"
 
-#include "pwm_timer.h"
-
+#include "model.h"
+#include "std_frame.h"
 
 /********************************************************************************
  * Defines
  ********************************************************************************/
-#define SERVO_MAX_PERCENTAGE (100.0f)
-#define SERVO_MIN_PERCENTAGE (-100.0f)
+#define RCSUBS_INVALID_RC_CHANNEL (255) /* Sentinel channel value to indicate no channel. */
+
+
 /********************************************************************************
  * Typedefs
  ********************************************************************************/
-
-typedef struct SERVO_S {
-    PWM_TIM_HANDLER_T  Timer;
-    PWM_TIM_CHANNELS_T Chn;
-    float32_t          CurrentSpan;
-} SERVO_T;
-
-typedef SERVO_T* SERVO_HANDLER_T;
-
 
 /********************************************************************************
  * Local Vars
@@ -47,12 +36,13 @@ typedef SERVO_T* SERVO_HANDLER_T;
 /********************************************************************************
  * Function Prototypes
  ********************************************************************************/
-bool_t Servo_Init(SERVO_HANDLER_T servo);
-void   Servo_Start(SERVO_HANDLER_T Servo);
-void   Servo_Stop(SERVO_HANDLER_T Servo);
+/* Controller task */
+bool_t CIn_Init(void);
+void   CIn_Start(void);
+void   CIn_RunAux(MODEL_RC_SETPOINT_T* p_rc_setpoint);
 
-void Servo_SetAngle(SERVO_HANDLER_T Servo, float32_t angle);
-void Servo_SetSpan(SERVO_HANDLER_T Servo, float32_t span);
-void Servo_SetRelSpan(SERVO_HANDLER_T servo, float32_t span);
+/* RC task */
+void CIn_HandleRcFrame(STD_FRAME_T* p_rc_frame);
 
-#endif /* __SERVO_H__       */
+
+#endif /* __CONTROL_INPUTS_H__   */

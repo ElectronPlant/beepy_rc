@@ -1,6 +1,6 @@
 /**
  * @file  curves.h
- * @brief Library for the control curves.
+ * @brief Library with curves to map RC channels to control values.
  *
  * @ingroup   Curves
  * @version   V0.0
@@ -20,44 +20,35 @@
 /********************************************************************************
  * Defines
  ********************************************************************************/
-#define CURVE_MAX_STATES (5U)
+#define CURVES_MAX_PARAMS (5U)
 
 
 /********************************************************************************
  * Typedefs
  ********************************************************************************/
-typedef enum CURVE_TYPE_E {
-    CURVE_TYPE_NONE = 0,
-    CURVE_DIGITAL,
-    CURVE_TYPE_STATES,
-    CURVE_TYPE_ANALOG,
+typedef enum CURVES_NAME_E {
+    /* --- Analog Curves --- */
+    CURVES_NAME_NONE = 0,             /**< Keep output as is. y = x */
+    CURVES_NAME_LINEAR,               /**< First order polynomial mapping.  x = (p[0] + a) * p[1] */
+    CURVES_NAME_LINEAR_WITH_DEADBAND, /**< Linear curve with deadband.
+                                            x = {a > p[2]: (p[0] + (a - p[2])) * p[1]
+                                                 b < p[3]: (p[0] + (a + p[3])) * p[1]
+                                                 else 0 } */
 
-    CURVE_TYPE_MAX,
-} CURVE_TYPE_T;
+    /* --- Digital Curves --- */
+    CURVES_NAME_THRESHOLD,     /**< STD_FRAME_HIGH_LIMIT if higher than p[0],
+                                    STD_FRAME_LOW_LIMIT otherwise. */
+    CURVES_NAME_INV_THRESHOLD, /**< STD_FRAME_HIGH_LIMIT if lower than p[0],
+                                    STD_FRAME_LOW_LIMIT otherwise. */
 
-typedef struct CURVE_PARAMS_DIGITAL_S {
-    float32_t Threshold;
-} CURVE_PARAMS_DIGITAL_T;
+    CURVES_NAME_MAX, /**< __INVALID__ sentinel value marking the end of the curves. */
+} CURVES_NAME_T;
 
-typedef struct CURVE_PARAMS_STATES_S {
-    float32_t Thresholds[CURVE_MAX_STATES];
-} CURVE_PARAMS_STATES_T;
 
-typedef struct CURVE_PARAMS_ANALOG_S {
-    float32_t Slope;
-    float32_t Gain;
-} CURVE_PARAMS_ANALOG_T;
-
-typedef union CURVE_PARAMS_U {
-    CURVE_PARAMS_DIGITAL_T Digital;
-    CURVE_PARAMS_STATES_T  States;
-    CURVE_PARAMS_ANALOG_T  Analog;
-} CURVE_PARAMS_T;
-
-typedef struct CURVE_S {
-    CURVE_TYPE_T   Type;
-    CURVE_PARAMS_T Param;
-} CURVE_T;
+typedef struct CURVES_S {
+    CURVES_NAME_T Name;
+    float32_t     Params[CURVES_MAX_PARAMS];
+} CURVES_T;
 
 
 /********************************************************************************
@@ -67,6 +58,7 @@ typedef struct CURVE_S {
 /********************************************************************************
  * Function Prototypes
  ********************************************************************************/
-
+void   Curves_ApplyCurve(const CURVES_T* p_curve, float32_t input, float32_t* p_output);
+bool_t Curves_Analog2Dig(float32_t v);
 
 #endif /* __CURVES_H__       */

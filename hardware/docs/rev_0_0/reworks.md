@@ -29,3 +29,6 @@ This rework is more complex than the rest, and require the following steps:
 5. Add a wire between pin 4 and V_Servo.
 
 ![TC118S](./rework_img/mot_rework.png)
+
+## Lights Enable
+The lights enable signal is not connected to the MCU. For now no rework has been proposed for this, since there are no GPIOs available.
