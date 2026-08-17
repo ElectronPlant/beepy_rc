@@ -153,6 +153,7 @@ void Ui_Button2Callback(void) {
  *         LED Meaning:
  *              * RED LED:
  *                  - OFF => No error active.
+ *                  - BLINKING => RC connection lost.
  *                  - ON  => At least one error active.
  *              * YELLOW LED:
  *                  - BLINKING => Waitin for RC alignment.
@@ -165,20 +166,29 @@ void Ui_Button2Callback(void) {
  * @param  run_blink Flag to control if the LED blink should update.
  */
 void Ui_SetStatusLeds(uint32_t map, bool_t run_blink) {
-    /* Red LED */
-    bool_t error_active = SuperDef_IsAnyErrorSet(map);
-    Gpio_Write(Target_Leds[RED], GPIO_BOOL_TO_VALUE(error_active));
+    /* Yellow LED */
+    bool_t rc_aligned = PLT_UTILS_IS_BIT_OFFSET_SET(map, SUPERDEF_CONTEXT_OFFSET_RC_ALIGNED);
+    if (DEF_TRUE == rc_aligned) {
+        Gpio_Write(Target_Leds[YELLOW], GPIO_VALUE_HIGH);
+    } else if (DEF_TRUE == run_blink) {
+        Gpio_Toggle(Target_Leds[YELLOW]);
+    }
 
     /* Green LED */
     bool_t armed = PLT_UTILS_IS_BIT_OFFSET_SET(map, SUPERDEF_CONTEXT_OFFSET_ARMED);
     Gpio_Write(Target_Leds[GREEN], GPIO_BOOL_TO_VALUE(armed));
 
-    /* Yellow LED */
-    bool_t rc_aligned = PLT_UTILS_IS_BIT_OFFSET_SET(map, SUPERDEF_CONTEXT_OFFSET_RC_ALIGNEND);
-    if (DEF_TRUE == rc_aligned) {
-        Gpio_Write(Target_Leds[YELLOW], GPIO_BOOL_TO_VALUE(rc_aligned));
-    } else if (DEF_TRUE == run_blink) {
-        Gpio_Toggle(Target_Leds[YELLOW]);
+    /* Red LED */
+    bool_t error_active = SuperDef_IsAnyErrorSet(map);
+    bool_t connection_ok = PLT_UTILS_IS_BIT_OFFSET_SET(map, SUPERDEF_CONTEXT_OFFSET_RC_CONNECTED);
+    if (DEF_TRUE == error_active) {
+        Gpio_Write(Target_Leds[RED], GPIO_VALUE_HIGH);
+    } else if (DEF_TRUE == rc_aligned && DEF_FALSE == connection_ok) {
+        if (DEF_TRUE == run_blink) {
+            Gpio_Toggle(Target_Leds[RED]);
+        }
+    } else {
+        Gpio_Write(Target_Leds[RED], GPIO_VALUE_LOW);
     }
 }
 

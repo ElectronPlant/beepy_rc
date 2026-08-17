@@ -137,7 +137,7 @@ static void CIn_TranslateState(STD_FRAME_T* p_rc_frame, MODEL_RC_SETPOINT_T* p_o
             state = MODEL_RC_SETPOINT_STATE_VALID;
             break;
         default:
-            state = MODEL_RC_SETPOINT_STATE_FAILSAFE;
+            state = MODEL_RC_SETPOINT_STATE_DISCONNECTED;
             break;
     }
     p_output->State = state;

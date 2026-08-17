@@ -41,7 +41,8 @@ typedef enum {
     STD_FRAME_STATE_VALID,         /**< The frame is valid */
     STD_FRAME_STATE_FAILSAFE,      /**< Failsafe has been activated */
     STD_FRAME_STATE_DROPPED,       /**< The frame could not be processed in time */
-    STD_FRAME_STATE_TIMEOUT,       /**< Too much time since the last frame. */
+    STD_FRAME_STATE_TIMEOUT,       /**< Too much time since the last frame */
+    STD_FRAME_STATE_DISCONNECTED,  /**< To many frames have been lost, connection is compromised */
 } STD_FRAME_STATE_T;
 
 /**

@@ -56,9 +56,8 @@
 #define CTRLR_TIMEOUT_MS    (1000u) /* Time between queue updates */
 #define CTRLR_TIMEOUT_TICKS ((CTRLR_TIMEOUT_MS * configTICK_RATE_HZ) / PLT_UTILS_SECS_TO_MS_FACTOR)
 
-/* -- Failsafe -- */
-#define CTRLR_FAILSAFE_CNT_LIMIT (100U) /* Number of RC failsafe frames to trigger a failsafe */
-
+/* --- Disarm --- */
+#define CTRLR_DISARM_FRAMES (100U)
 
 /********************************************************************************
  * Typedefs
@@ -76,9 +75,9 @@ typedef enum CTRLR_STATUS_E {
 
 typedef struct CTRLR_INFO_S {
     CTRLR_STATUS_T      Status;
-    MODEL_RC_SETPOINT_T RcSetPoint; /**< Local snapshot of the latest RC setpoint. */
-    uint32_t            NotVal;     /**< Latest Task notification value */
-    uint16_t            FailsafeCnt;
+    MODEL_RC_SETPOINT_T RcSetPoint;       /**< Local snapshot of the latest RC setpoint. */
+    uint32_t            NotVal;           /**< Latest Task notification value */
+    uint16_t            DisarmedFrameCnt; /**< Number of disarmed frames */
 } CTRLR_INFO_T;
 
 typedef enum CTRLR_TASK_NOTICE_OFFSET_E {
@@ -92,11 +91,14 @@ typedef enum CTRLR_TASK_NOTICE_OFFSET_E {
 /* --- FSM --- */
 typedef void (*CTRLR_FSM_ACTION_T)(void);
 typedef void (*CTRLR_FSM_TRANSITION_T)(CTRLR_STATUS_T);
+typedef void (*CTRLR_FSM_INIT_STATE_T)(void);
 
 typedef struct CTRLR_FSM_TABLE_ENTRY_S {
     uint32_t TaskNotificationMask;     /**< Mask for bits to be checked in the task notification */
     CTRLR_FSM_ACTION_T     Action;     /**< Action to process the task notification */
     CTRLR_FSM_TRANSITION_T Transition; /**< Function pointer to handle the state transitions */
+    CTRLR_FSM_INIT_STATE_T Init;       /** Initialize state. */
+
 } CTRLR_FSM_TABLE_ENTRY_T;
 
 
@@ -116,6 +118,9 @@ static void Ctrlr_DisarmedTransition(CTRLR_STATUS_T status);
 static void Ctrlr_RunningAction(void);
 static void Ctrlr_RunningTransition(CTRLR_STATUS_T status);
 
+static void Ctrlr_InitStateNoop(void);
+static void Ctrlr_InitStateResetDisarmCnt(void);
+
 /********************************************************************************
  * Local Vars
  ********************************************************************************/
@@ -126,39 +131,45 @@ static CTRLR_INFO_T Ctrlr_Info = {
     .Status = CTRLR_STATUS_UNINITIALIZED,
     .RcSetPoint.State = MODEL_RC_SETPOINT_STATE_PENDING,
     .NotVal = 0x00000000,
-    .FailsafeCnt = 0U,
+    .DisarmedFrameCnt = 0,
 };
 
 static CTRLR_FSM_TABLE_ENTRY_T Ctrlr_FsmTable[CTRLR_STATUS_MAX] = {
     /* UNINITIALIZED */
     {.TaskNotificationMask = UINT32_MAX,
      .Action = Ctrlr_ActionAssert,
-     .Transition = Ctrlr_TransitionApply},
+     .Transition = Ctrlr_TransitionApply,
+     .Init = Ctrlr_InitStateNoop},
 
     /* STOPPED       */
     {.TaskNotificationMask = UINT32_MAX,
      .Action = Ctrlr_ActionAssert,
-     .Transition = Ctrlr_TransitionApply},
+     .Transition = Ctrlr_TransitionApply,
+     .Init = Ctrlr_InitStateNoop},
 
     /* PREARMED      */
     {.TaskNotificationMask = PLT_UTILS_BIT_OFFSET_TO_MASK(CTRLR_TASK_NOTICE_OFFSET_RC),
      .Action = Ctrlr_WaitForDisarmAction,
-     .Transition = Ctrlr_TransitionApply},
+     .Transition = Ctrlr_TransitionApply,
+     .Init = Ctrlr_InitStateResetDisarmCnt},
 
     /* DISARMED      */
     {.TaskNotificationMask = PLT_UTILS_BIT_OFFSET_TO_MASK(CTRLR_TASK_NOTICE_OFFSET_RC),
      .Action = Ctrlr_DisarmedAction,
-     .Transition = Ctrlr_DisarmedTransition},
+     .Transition = Ctrlr_DisarmedTransition,
+     .Init = Ctrlr_InitStateNoop},
 
     /* RUNNING      */
     {.TaskNotificationMask = PLT_UTILS_BIT_OFFSET_TO_MASK(CTRLR_TASK_NOTICE_OFFSET_CONTROL_LOOP),
      .Action = Ctrlr_RunningAction,
-     .Transition = Ctrlr_RunningTransition},
+     .Transition = Ctrlr_RunningTransition,
+     .Init = Ctrlr_InitStateNoop},
 
     /* FAILSAFE      */
     {.TaskNotificationMask = PLT_UTILS_BIT_OFFSET_TO_MASK(CTRLR_TASK_NOTICE_OFFSET_RC),
      .Action = Ctrlr_WaitForDisarmAction,
-     .Transition = Ctrlr_TransitionApply},
+     .Transition = Ctrlr_TransitionApply,
+     .Init = Ctrlr_InitStateResetDisarmCnt},
 };
 
 
@@ -295,9 +306,15 @@ static bool_t Ctrlr_GetArmSwitch(MODEL_RC_SETPOINT_T* p_setpoint) {
  * @param  status New status to be set.
  */
 static void Ctrlr_UpdateState(CTRLR_STATUS_T status) {
-    CTRLR_FSM_TRANSITION_T p_funct = Ctrlr_FsmTable[Ctrlr_Info.Status].Transition;
-    PLT_ASSERT(NULL != p_funct);
-    p_funct(status);
+    /* Transition from current state */
+    CTRLR_FSM_TRANSITION_T p_transition_funct = Ctrlr_FsmTable[Ctrlr_Info.Status].Transition;
+    PLT_ASSERT(NULL != p_transition_funct);
+    p_transition_funct(status);
+
+    /* Initialize current state */
+    CTRLR_FSM_INIT_STATE_T p_init_funct = Ctrlr_FsmTable[status].Init;
+    PLT_ASSERT(NULL != p_init_funct);
+    p_init_funct();
 }
 
 /**
@@ -326,7 +343,7 @@ static void Ctrlr_EnableControlLoopTimer(void) {
  * @brief  Stops the Control loop timer.
  */
 static void Ctrlr_DisableControlLoopTimer(void) {
-    BaseType_t ok = xTimerStart(Ctrlr_TimerHandle, CTRLR_TIMEOUT_TICKS);
+    BaseType_t ok = xTimerStop(Ctrlr_TimerHandle, CTRLR_TIMEOUT_TICKS);
     PLT_ASSERT(pdPASS == ok);
 }
 
@@ -339,7 +356,9 @@ static void Ctrlr_WaitForDisarmAction(void) {
     Model_GetRcSetpoint(&Ctrlr_Info.RcSetPoint);
     if (Ctrlr_Info.RcSetPoint.State == MODEL_RC_SETPOINT_STATE_VALID
         && DEF_FALSE == Ctrlr_GetArmSwitch(&Ctrlr_Info.RcSetPoint)) {
-        Ctrlr_UpdateState(CTRLR_STATUS_DISARMED);
+        if (CTRLR_DISARM_FRAMES <= Ctrlr_Info.DisarmedFrameCnt++) {
+            Ctrlr_UpdateState(CTRLR_STATUS_DISARMED);
+        }
     }
 }
 
@@ -369,29 +388,13 @@ static void Ctrlr_DisarmedTransition(CTRLR_STATUS_T status) {
 }
 
 /**
- * @brief  Checks the validity of the RC setpoint and handles any errors.
- *
- * @return DEF_TRUE if the RC frame is valid, DEF_FALSE otherwise.
+ * @brief  Updates the Rc Setpoint if applicable.
  */
-static bool_t Ctrlr_HandleRcSetpoint(void) {
-    bool_t   rc_error = DEF_FALSE;
+static void Ctrlr_HandleRcSetpoint(void) {
     uint32_t mask = PLT_UTILS_BIT_OFFSET_TO_MASK(CTRLR_TASK_NOTICE_OFFSET_RC);
     if (0U != (ulTaskNotifyValueClear(Ctrlr_TaskHandle, mask) & mask)) {
         Model_GetRcSetpoint(&Ctrlr_Info.RcSetPoint);
-        switch (Ctrlr_Info.RcSetPoint.State) {
-            case MODEL_RC_SETPOINT_STATE_VALID:
-                Ctrlr_Info.FailsafeCnt = 0;
-                break;
-            case MODEL_RC_SETPOINT_STATE_FAILSAFE:
-                Ctrlr_Info.FailsafeCnt++;
-                if (CTRLR_FAILSAFE_CNT_LIMIT >= Ctrlr_Info.FailsafeCnt) {
-                    rc_error = DEF_TRUE;
-                }
-            default:
-                rc_error = DEF_TRUE;
-        }
     }
-    return rc_error;
 }
 
 /**
@@ -415,24 +418,27 @@ static void Ctrlr_StopMotors(void) {
  */
 static void Ctrlr_RunningAction(void) {
     /* Update RC model */
-    bool_t rc_error = Ctrlr_HandleRcSetpoint();
+    Ctrlr_HandleRcSetpoint();
     bool_t disarmed = (DEF_FALSE == Ctrlr_GetArmSwitch(&Ctrlr_Info.RcSetPoint))
         || (PLT_UTILS_IS_BIT_OFFSET_SET(Ctrlr_Info.NotVal, CTRLR_TASK_NOTICE_OFFSET_BUTTON_DISARM));
 
-    if (DEF_TRUE == rc_error) {
-        Ctrlr_UpdateState(CTRLR_STATUS_FAILSAFE);
-        Ctrlr_Info.RcSetPoint.DriveInputs[RCSUBS_DRIVE_SETPOINT_THROTTLE] = 0.0f;
-        Ctrlr_Info.RcSetPoint.DriveInputs[RCSUBS_DRIVE_SETPOINT_YAW] = 0.0f;
-        Super_NotifyControllerError();
-    } else if (disarmed) {
-        CTRLR_STATUS_T new_status = DEF_FALSE == Ctrlr_GetArmSwitch(&Ctrlr_Info.RcSetPoint)
-            ? CTRLR_STATUS_DISARMED
-            : CTRLR_STATUS_PREARMED;
-        Ctrlr_UpdateState(new_status);
-        Super_NotifyDisarmed();
-    } else {
-        /* --- Control loop --- */
-        Ctrlr_RunControlLoop();
+    switch (Ctrlr_Info.RcSetPoint.State) {
+        case MODEL_RC_SETPOINT_STATE_VALID:
+            if (disarmed) {
+                CTRLR_STATUS_T new_status = DEF_FALSE == Ctrlr_GetArmSwitch(&Ctrlr_Info.RcSetPoint)
+                    ? CTRLR_STATUS_DISARMED
+                    : CTRLR_STATUS_PREARMED;
+                Ctrlr_UpdateState(new_status);
+            } else {
+                /* --- Control loop --- */
+                Ctrlr_RunControlLoop();
+            }
+            break;
+        case MODEL_RC_SETPOINT_STATE_DISCONNECTED:
+            Ctrlr_UpdateState(CTRLR_STATUS_FAILSAFE);
+            break;
+        default:
+            PLT_UNREACHABLE;
     }
 }
 
@@ -447,12 +453,28 @@ static void Ctrlr_RunningTransition(CTRLR_STATUS_T status) {
         case CTRLR_STATUS_DISARMED:
         case CTRLR_STATUS_PREARMED:
             Ctrlr_StopMotors();
+            Super_NotifyDisarmed();
+            Ctrlr_Info.DisarmedFrameCnt = 0;
             break;
         default:
             PLT_UNREACHABLE;
     }
     Ctrlr_TransitionApply(status);
     Ctrlr_DisableControlLoopTimer();
+}
+
+/**
+ * @brief  Transition Init, do nothing. This is the default action.
+ */
+static void Ctrlr_InitStateNoop(void) {
+    /* - No-op - */
+}
+
+/**
+ * @brief  Transition Init, reset disarm frame cnt.
+ */
+static void Ctrlr_InitStateResetDisarmCnt(void) {
+    Ctrlr_Info.DisarmedFrameCnt = 0;
 }
 
 

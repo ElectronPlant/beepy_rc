@@ -194,6 +194,20 @@ void Super_NotifyRcRunning(void) {
 }
 
 /**
+  * @brief  Notifies that the RC task is running.
+  */
+void Super_NotifyRcDisconnected(void) {
+    Super_ContextNotice(SUPERDEF_SOURCE_OFFSET_RC_DISCONNECTED);
+}
+
+/**
+  * @brief  Notifies that the RC task is running.
+  */
+void Super_NotifyRcReconnected(void) {
+    Super_ContextNotice(SUPERDEF_SOURCE_OFFSET_RC_RECONNECTED);
+}
+
+/**
   * @brief  Notifies that the RC task has had an error.
   */
 void Super_NotifyRcError(void) {
@@ -279,11 +293,27 @@ static void Super_ProcessContextUpdate(uint32_t notifications) {
         Super_Info.ExternalContextMap &=
             ~PLT_UTILS_BIT_OFFSET_TO_MASK(SUPERDEF_CONTEXT_OFFSET_RC_ERROR);
         Super_Info.ExternalContextMap |=
-            PLT_UTILS_BIT_OFFSET_TO_MASK(SUPERDEF_CONTEXT_OFFSET_RC_ALIGNEND);
+            PLT_UTILS_BIT_OFFSET_TO_MASK(SUPERDEF_CONTEXT_OFFSET_RC_ALIGNED);
+        Super_Info.ExternalContextMap |=
+            PLT_UTILS_BIT_OFFSET_TO_MASK(SUPERDEF_CONTEXT_OFFSET_RC_CONNECTED);
     }
     if (PLT_UTILS_IS_BIT_OFFSET_SET(notifications, SUPERDEF_SOURCE_OFFSET_RC_ERROR)) {
         Super_Info.ExternalContextMap |=
             PLT_UTILS_BIT_OFFSET_TO_MASK(SUPERDEF_CONTEXT_OFFSET_RC_ERROR);
+        Super_Info.ExternalContextMap &=
+            ~PLT_UTILS_BIT_OFFSET_TO_MASK(SUPERDEF_CONTEXT_OFFSET_RC_ALIGNED);
+        Super_Info.ExternalContextMap &=
+            ~PLT_UTILS_BIT_OFFSET_TO_MASK(SUPERDEF_CONTEXT_OFFSET_RC_CONNECTED);
+    }
+    if (PLT_UTILS_IS_BIT_OFFSET_SET(notifications, SUPERDEF_SOURCE_OFFSET_RC_DISCONNECTED)) {
+        Super_Info.ExternalContextMap &=
+            ~PLT_UTILS_BIT_OFFSET_TO_MASK(SUPERDEF_CONTEXT_OFFSET_RC_CONNECTED);
+    }
+    if (PLT_UTILS_IS_BIT_OFFSET_SET(notifications, SUPERDEF_SOURCE_OFFSET_RC_RECONNECTED)) {
+        Super_Info.ExternalContextMap |=
+            PLT_UTILS_BIT_OFFSET_TO_MASK(SUPERDEF_CONTEXT_OFFSET_RC_CONNECTED);
+        Super_Info.ExternalContextMap &=
+            ~PLT_UTILS_BIT_OFFSET_TO_MASK(SUPERDEF_CONTEXT_OFFSET_RC_ERROR);
     }
     if (PLT_UTILS_IS_BIT_OFFSET_SET(notifications, SUPERDEF_SOURCE_OFFSET_ARMED)) {
         Super_Info.ExternalContextMap |=

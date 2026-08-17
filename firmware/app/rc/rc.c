@@ -51,6 +51,9 @@
 #define RC_RX_TIMEOUT_TICKS ((RC_RX_TIMEOUT_MS * configTICK_RATE_HZ) / PLT_UTILS_SECS_TO_MS_FACTOR)
 #define RC_RX_ALIGNMENT_RETRIES (5)
 
+/* Max number of non valid frames before notifying an connection error */
+#define RC_RX_MAX_NON_VALID_FRAMES (256U)
+
 /* --- Debug --- */
 #define RC_DEBUG_RAW_FRAME (0) /* Set to 1 to enable RX raw frame debugging */
 
@@ -66,6 +69,7 @@ typedef enum {
     RC_STATUS_STOPPED,
     RC_STATUS_MISALIGNED,
     RC_STATUS_RUNNING,
+    RC_STATUS_DISCONNECTED,
     RC_STATUS_ERROR,
 } RC_STATUS_T;
 
@@ -132,6 +136,7 @@ static QueueHandle_t Rc_RxQueueHandle = NULL;
 static const uint16_t Rc_RxBuffersNum = RXINT_MAX_PARALLEL_RAW_BUFFERS;
 static uint8_t        Rc_RxBuffersPool[RXINT_MAX_PARALLEL_RAW_BUFFERS][COMRXS_BUFFER_SIZE];
 static RC_STATUS_T    Rc_Status = RC_STATUS_UNINITIALIZED;
+static uint16_t       Rc_NotValidFrameCnt = 0U;
 
 static STD_FRAME_T Rc_FailSafeFrame = {0};
 
@@ -202,11 +207,33 @@ bool_t Rc_Init(void) {
  ******************************************/
 /**
  * @brief  Handles a Rx Complete action request.
+ *         If this is the first valid frame (previous state is misaligned), it means that the
+ *         alignment process has been successful. Similarly, if the RC module was in the error state
+ *         and a valid frame is received, the error has been resolved.
+ *
+ *         When running the RC link will not be perfect, and some frames may be dropped. When a
+ *         frame is lost, the RC values are replaced with the failsafe values. The fail safe values
+ *         depend on the radio configuration, but for example it may replace all inputs with zeros.
+ *         For a single lost frame, this is extremely disruptive to the control behavior. However,
+ *         just ignoring the dropped frames keeping the previous value, is also far from ideal
+ *         since it may produce the vehicle to be stuck with a given config when the connection is
+ *         dropped. To minimize these effects, each time a frame is dropped it is ignored (i.e.
+ *         not used to update the RC setpoint). A counter keeps tracks of how many consecutive
+ *         frames are dropped (increasing the counter for each dropped frame, and resetting it for
+ *         each valid frame). If the counter crosses a threshold (defined by
+ *         RC_RX_MAX_NON_VALID_FRAMES), the connection is considered lost. If the connection is
+ *         considered lost, the controller is disarmed, to stop the vehicle safely.
+ *
+ *         There may also be the chance that an invalid frame is received. This is likely to take
+ *         place if the RC module has failed, and alignment has been lost. If an invalid frame is
+ *         received, the RC module will raise an error. Which will also trigger the controller
+ *         failsafe.
  *
  * @param  p_buffer_info: Pointer to the buffer information.
  */
 static void Rc_ActionRxComplete(RXINT_RX_BUFFER_INFO_T* p_buffer_info) {
     STD_FRAME_T processed_frame;
+    bool_t      skip_rc_update = DEF_FALSE;
 
 #if RC_DEBUG_RAW_FRAME == 1
     static uint8_t cnt = 0;
@@ -223,14 +250,33 @@ static void Rc_ActionRxComplete(RXINT_RX_BUFFER_INFO_T* p_buffer_info) {
             Rc_UpdateStatus(RC_STATUS_RUNNING);
             Super_NotifyRcRunning();
         }
-        CIn_HandleRcFrame(&processed_frame);
+        if (RC_STATUS_DISCONNECTED == Rc_Status) {
+            Rc_UpdateStatus(RC_STATUS_RUNNING);
+            Super_NotifyRcReconnected();
+        }
+        Rc_NotValidFrameCnt = 0;
     } else if (STD_FRAME_STATE_INVALID == processed_frame.State) {
-        memcpy(&processed_frame, &Rc_FailSafeFrame, sizeof(STD_FRAME_T));
+        memset(processed_frame.Channels, 0x00, sizeof(processed_frame.Channels));
         processed_frame.State = STD_FRAME_STATE_INVALID;
         Rc_UpdateStatus(RC_STATUS_MISALIGNED);
         Rc_ResetIsr = DEF_TRUE;
-    }
+    } else if (RC_STATUS_RUNNING == Rc_Status || RC_STATUS_DISCONNECTED == Rc_Status) {
+        skip_rc_update = DEF_TRUE;
+        memset(processed_frame.Channels, 0x00, sizeof(processed_frame.Channels));
+        if (RC_RX_MAX_NON_VALID_FRAMES == Rc_NotValidFrameCnt + 1) {
+            processed_frame.State = STD_FRAME_STATE_DISCONNECTED;
+            Rc_UpdateStatus(RC_STATUS_DISCONNECTED);
+            Rc_NotValidFrameCnt = RC_RX_MAX_NON_VALID_FRAMES;
+            Super_NotifyRcDisconnected();
+            skip_rc_update = DEF_FALSE;
+        } else if (RC_RX_MAX_NON_VALID_FRAMES > Rc_NotValidFrameCnt) {
+            Rc_NotValidFrameCnt++;
+        }
+    };
 
+    if (DEF_FALSE == skip_rc_update) {
+        CIn_HandleRcFrame(&processed_frame);
+    }
     PltMemCA_FreeCritical(&Rc_RxBufferAllocator, p_buffer_info->RxBufferPtr);
 }
 
@@ -244,7 +290,7 @@ static void Rc_ActionRxTimeout(void) {
     /* Generate error frame */
     STD_FRAME_T error_frame;
     memcpy(&error_frame, &Rc_FailSafeFrame, sizeof(STD_FRAME_T));
-    error_frame.State = STD_FRAME_STATE_DROPPED;
+    error_frame.State = STD_FRAME_STATE_DISCONNECTED;
 
     /* Notify error */
     CIn_HandleRcFrame(&error_frame);
