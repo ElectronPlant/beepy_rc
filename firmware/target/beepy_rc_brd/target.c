@@ -721,4 +721,8 @@ const RCSUBS_AUX_INPUTS_T Target_AuxSubs[TARGET_NUM_AUX_PERIPHERALS] = {
     {.Chn = 11U,
      .Per = {.Type = PER_TYPE_ABS_SERVO, .Instance = {.Servos = PER_SERVOS_2}},
      .Curve = {.Name = CURVES_NAME_NONE, .Params = {0.0f}}},
+
+    {.Chn = 6U,
+     .Per = {.Type = PER_TYPE_POWER_OFF, .Instance = {.Single = PER_SINGLE}},
+     .Curve = {.Name = CURVES_NAME_THRESHOLD, .Params = {50.0f}}},
 };

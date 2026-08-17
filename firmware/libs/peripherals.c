@@ -25,6 +25,7 @@
 
 #include "curves.h"
 #include "peripherals.h"
+#include "ui.h"
 
 
 /** @addtogroup Libs
@@ -78,17 +79,20 @@ typedef struct {
 /********************************************************************************
  * Function Prototypes
  ********************************************************************************/
-bool_t Per_InitAbsServo(const PER_PERIPHERAL_T* p_per);
-bool_t Per_InitRelServo(const PER_PERIPHERAL_T* p_per);
-bool_t Per_InitLight(const PER_PERIPHERAL_T* p_per);
+static bool_t Per_InitAbsServo(const PER_PERIPHERAL_T* p_per);
+static bool_t Per_InitRelServo(const PER_PERIPHERAL_T* p_per);
+static bool_t Per_InitLight(const PER_PERIPHERAL_T* p_per);
+static bool_t Per_InitPowerOff(const PER_PERIPHERAL_T* p_per);
 
-void Per_StartAbsServo(const PER_PERIPHERAL_T* p_per);
-void Per_StartRelServo(const PER_PERIPHERAL_T* p_per);
-void Per_StartLight(const PER_PERIPHERAL_T* p_per);
+static void Per_StartAbsServo(const PER_PERIPHERAL_T* p_per);
+static void Per_StartRelServo(const PER_PERIPHERAL_T* p_per);
+static void Per_StartLight(const PER_PERIPHERAL_T* p_per);
+static void Per_StartPowerOff(const PER_PERIPHERAL_T* p_per);
 
-void Per_ApplyAbsServoSetpoint(const PER_PERIPHERAL_T* p_per, float32_t setpoint);
-void Per_ApplyRelServoSetpoint(const PER_PERIPHERAL_T* p_per, float32_t setpoint);
-void Per_ApplyLightSetpoint(const PER_PERIPHERAL_T* p_per, float32_t setpoint);
+static void Per_ApplyAbsServoSetpoint(const PER_PERIPHERAL_T* p_per, float32_t setpoint);
+static void Per_ApplyRelServoSetpoint(const PER_PERIPHERAL_T* p_per, float32_t setpoint);
+static void Per_ApplyLightSetpoint(const PER_PERIPHERAL_T* p_per, float32_t setpoint);
+static void Per_ApplyPowerOffSetpoint(const PER_PERIPHERAL_T* p_per, float32_t setpoint);
 
 /********************************************************************************
  * Local Vars
@@ -101,6 +105,9 @@ PERIPHERAL_INTERFACE_T Per_Interface[PER_TYPE_MAX] = {
      .Start = Per_StartRelServo,
      .ApplySetpoint = Per_ApplyRelServoSetpoint},
     {.Init = Per_InitLight, .Start = Per_StartLight, .ApplySetpoint = Per_ApplyLightSetpoint},
+    {.Init = Per_InitPowerOff,
+     .Start = Per_StartPowerOff,
+     .ApplySetpoint = Per_ApplyPowerOffSetpoint},
 };
 
 
@@ -113,7 +120,7 @@ PERIPHERAL_INTERFACE_T Per_Interface[PER_TYPE_MAX] = {
 /**
  * @brief  Init implementation for the absolute servo.
  */
-bool_t Per_InitAbsServo(const PER_PERIPHERAL_T* p_per) {
+static bool_t Per_InitAbsServo(const PER_PERIPHERAL_T* p_per) {
     if (TARGET_NUM_SERVOS <= p_per->Instance.Servos) {
         return DEF_FALSE;
     }
@@ -123,18 +130,26 @@ bool_t Per_InitAbsServo(const PER_PERIPHERAL_T* p_per) {
 /**
  * @brief  Init implementation for the relative servo.
  */
-bool_t Per_InitRelServo(const PER_PERIPHERAL_T* p_per) {
+static bool_t Per_InitRelServo(const PER_PERIPHERAL_T* p_per) {
     return Per_InitAbsServo(p_per);
 }
 
 /**
  * @brief  Init implementation for the lights.
  */
-bool_t Per_InitLight(const PER_PERIPHERAL_T* p_per) {
+static bool_t Per_InitLight(const PER_PERIPHERAL_T* p_per) {
     if (TARGET_NUM_LIGHTS <= p_per->Instance.Lights) {
         return DEF_FALSE;
     }
     return Gpio_Init(Target_Lights[p_per->Instance.Lights]);
+}
+
+/**
+ * @brief  Init implementation for the power off.
+ */
+static bool_t Per_InitPowerOff(const PER_PERIPHERAL_T* p_per) {
+    /* - No-op - is enabled by the UI module. */
+    return DEF_TRUE;
 }
 
 /**
@@ -155,7 +170,7 @@ bool_t Per_Init(const PER_PERIPHERAL_T* p_per) {
 /**
  * @brief  Start implementation for the absolute servo.
  */
-void Per_StartAbsServo(const PER_PERIPHERAL_T* p_per) {
+static void Per_StartAbsServo(const PER_PERIPHERAL_T* p_per) {
     PLT_ASSERT(TARGET_NUM_SERVOS > p_per->Instance.Servos);
     Servo_Start(Target_Servos[p_per->Instance.Servos]);
 }
@@ -163,7 +178,7 @@ void Per_StartAbsServo(const PER_PERIPHERAL_T* p_per) {
 /**
  * @brief  Start implementation for the relative servo.
  */
-void Per_StartRelServo(const PER_PERIPHERAL_T* p_per) {
+static void Per_StartRelServo(const PER_PERIPHERAL_T* p_per) {
     Per_StartAbsServo(p_per);
 }
 
@@ -171,11 +186,19 @@ void Per_StartRelServo(const PER_PERIPHERAL_T* p_per) {
  * @brief  Start implementation for the lights.
  *
  * @param  p_per Pointer to the peripheral to control.
- * @param  setpoint Setpoint to apply.
  */
-void Per_StartLight(const PER_PERIPHERAL_T* p_per) {
+static void Per_StartLight(const PER_PERIPHERAL_T* p_per) {
     PLT_ASSERT(TARGET_NUM_LIGHTS > p_per->Instance.Lights);
     Gpio_Write(Target_Lights[p_per->Instance.Lights], GPIO_VALUE_LOW);
+}
+
+/**
+ * @brief  Start implementation for the power off.
+ *
+ * @param  p_per Pointer to the peripheral to control.
+ */
+static void Per_StartPowerOff(const PER_PERIPHERAL_T* p_per) {
+    /* - No-op - */
 }
 
 
@@ -196,7 +219,7 @@ void Per_Start(const PER_PERIPHERAL_T* p_per) {
 /**
  * @brief  ApplySetpoint implementation for the absolute servo.
  */
-void Per_ApplyAbsServoSetpoint(const PER_PERIPHERAL_T* p_per, float32_t setpoint) {
+static void Per_ApplyAbsServoSetpoint(const PER_PERIPHERAL_T* p_per, float32_t setpoint) {
     PLT_ASSERT(TARGET_NUM_SERVOS > p_per->Instance.Servos);
     Servo_SetSpan(Target_Servos[p_per->Instance.Servos], setpoint);
 }
@@ -204,7 +227,7 @@ void Per_ApplyAbsServoSetpoint(const PER_PERIPHERAL_T* p_per, float32_t setpoint
 /**
  * @brief  ApplySetpoint implementation for the relative servo.
  */
-void Per_ApplyRelServoSetpoint(const PER_PERIPHERAL_T* p_per, float32_t setpoint) {
+static void Per_ApplyRelServoSetpoint(const PER_PERIPHERAL_T* p_per, float32_t setpoint) {
     PLT_ASSERT(TARGET_NUM_SERVOS > p_per->Instance.Servos);
     Servo_SetRelSpan(Target_Servos[p_per->Instance.Servos], setpoint);
 }
@@ -212,11 +235,20 @@ void Per_ApplyRelServoSetpoint(const PER_PERIPHERAL_T* p_per, float32_t setpoint
 /**
  * @brief ApplySetpoint implementation for the absolute servo.
  */
-void Per_ApplyLightSetpoint(const PER_PERIPHERAL_T* p_per, float32_t setpoint) {
+static void Per_ApplyLightSetpoint(const PER_PERIPHERAL_T* p_per, float32_t setpoint) {
     bool_t dig_setpoint = Curves_Analog2Dig(setpoint);
 
     PLT_ASSERT(TARGET_NUM_LIGHTS > p_per->Instance.Lights);
     Gpio_Write(Target_Lights[p_per->Instance.Lights], dig_setpoint);
+}
+
+/**
+ * @brief ApplySetpoint implementation for the absolute servo.
+ */
+static void Per_ApplyPowerOffSetpoint(const PER_PERIPHERAL_T* p_per, float32_t setpoint) {
+    if (0.0f <= setpoint) {
+        Ui_PowerOff();
+    };
 }
 
 
