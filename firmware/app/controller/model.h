@@ -60,7 +60,6 @@ typedef enum MODEL_RC_SETPOINT_STATE_E {
 
 typedef struct MODEL_RC_SETPOINT_S {
     float32_t                 DriveInputs[MODEL_MAX_RC_SETPOINT_DRIVE_INPUTS];
-    PER_PERIPHERAL_T          AuxInputs[MODEL_MAX_RC_SETPOINT_AUX_INPUTS];
     float32_t                 AuxInputValues[MODEL_MAX_RC_SETPOINT_AUX_INPUTS];
     uint32_t                  Timestamp;
     MODEL_RC_SETPOINT_STATE_T State;

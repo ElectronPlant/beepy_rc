@@ -56,7 +56,6 @@ static MODEL_T Model_Model = {
             .State = MODEL_RC_SETPOINT_STATE_PENDING,
             .Timestamp = 0,
             .DriveInputs = {0},
-            .AuxInputs = {{.Type = PER_TYPE_NONE}},
             .AuxInputValues = {0},
         },
     .Attitude = {.Yaw = 0.0f},

@@ -113,10 +113,10 @@ void CIn_RunAux(MODEL_RC_SETPOINT_T* p_rc_setpoint) {
     bool_t done = DEF_FALSE;
     for (uint8_t i = 0; MODEL_MAX_RC_SETPOINT_AUX_INPUTS > i && DEF_FALSE == done; i++) {
 
-        if (PER_TYPE_NONE == p_rc_setpoint->AuxInputs[i].Type) {
+        if (PER_TYPE_NONE == Target_AuxSubs[i].Per.Type) {
             done = DEF_TRUE;
         } else {
-            Per_ApplySetpoint(&p_rc_setpoint->AuxInputs[i], p_rc_setpoint->AuxInputValues[i]);
+            Per_ApplySetpoint(&Target_AuxSubs[i].Per, p_rc_setpoint->AuxInputValues[i]);
         }
     }
 }
@@ -181,7 +181,6 @@ static void CIn_ProcessAuxInputs(STD_FRAME_T* p_rc_frame, MODEL_RC_SETPOINT_T* p
             );
             p_output->AuxInputValues[i] = temp;
         }
-        memcpy(&p_output->AuxInputs[i], &Target_AuxSubs[i].Per, sizeof(PER_PERIPHERAL_T));
     }
 }
 
