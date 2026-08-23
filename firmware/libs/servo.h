@@ -27,6 +27,9 @@
  ********************************************************************************/
 #define SERVO_MAX_PERCENTAGE (100.0f)
 #define SERVO_MIN_PERCENTAGE (-100.0f)
+
+#define SERVO_DEFAULT_INITIAL_SPAN (0.0f)
+
 /********************************************************************************
  * Typedefs
  ********************************************************************************/
@@ -48,7 +51,7 @@ typedef SERVO_T* SERVO_HANDLER_T;
  * Function Prototypes
  ********************************************************************************/
 bool_t Servo_Init(SERVO_HANDLER_T servo);
-void   Servo_Start(SERVO_HANDLER_T Servo);
+void   Servo_Start(SERVO_HANDLER_T servo, float32_t initial_value);
 void   Servo_Stop(SERVO_HANDLER_T Servo);
 
 void Servo_SetAngle(SERVO_HANDLER_T Servo, float32_t angle);

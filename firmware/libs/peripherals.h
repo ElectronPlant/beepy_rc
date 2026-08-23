@@ -89,7 +89,7 @@ typedef struct PER_PERIPHERAL_S {
  * Function Prototypes
  ********************************************************************************/
 bool_t Per_Init(const PER_PERIPHERAL_T* p_per);
-void   Per_Start(const PER_PERIPHERAL_T* p_per);
+void   Per_Start(const PER_PERIPHERAL_T* p_per, float32_t initial_value);
 void   Per_ApplySetpoint(const PER_PERIPHERAL_T* p_per, float32_t setpoint);
 
 #endif /* __PERIPHERALS_H__       */

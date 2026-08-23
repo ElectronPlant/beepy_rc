@@ -78,9 +78,10 @@ typedef struct RCSUBS_DRIVE_INPUTS_S {
  *        subscriptions.
  */
 typedef struct RCSUBS_AUX_INPUTS_S {
-    uint8_t          Chn;   /**< Channel the subscription is linked to. */
-    PER_PERIPHERAL_T Per;   /**< Peripheral subscribed to the channel.  */
-    CURVES_T         Curve; /**< Curve to adjust the channel ouput.     */
+    uint8_t          Chn;          /**< Channel the subscription is linked to. */
+    PER_PERIPHERAL_T Per;          /**< Peripheral subscribed to the channel.  */
+    CURVES_T         Curve;        /**< Curve to adjust the channel ouput.     */
+    float32_t        InitialValue; /**< Value to set after initialization.     */
 } RCSUBS_AUX_INPUTS_T;
 
 

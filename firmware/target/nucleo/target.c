@@ -711,13 +711,21 @@ const RCSUBS_DRIVE_INPUTS_T Target_DriveSubs[RCSUBS_DRIVE_SETPOINT_MAX] = {
 const RCSUBS_AUX_INPUTS_T Target_AuxSubs[TARGET_NUM_AUX_PERIPHERALS] = {
     {.Chn = 1U,
      .Per = {.Type = PER_TYPE_REL_SERVO, .Instance = {.Servos = PER_SERVOS_0}},
-     .Curve = {.Name = CURVES_NAME_LINEAR_WITH_DEADBAND, .Params = {0.0f, 0.05f, 5.0f, -5.0f}}},
+     .Curve = {.Name = CURVES_NAME_LINEAR_WITH_DEADBAND, .Params = {0.0f, 0.05f, 5.0f, -5.0f}},
+     .InitialValue = 0.0f},
 
     {.Chn = 2U,
      .Per = {.Type = PER_TYPE_REL_SERVO, .Instance = {.Servos = PER_SERVOS_1}},
-     .Curve = {.Name = CURVES_NAME_LINEAR_WITH_DEADBAND, .Params = {0.0f, 0.05f, 5.0f, -5.0f}}},
+     .Curve = {.Name = CURVES_NAME_LINEAR_WITH_DEADBAND, .Params = {0.0f, 0.05f, 5.0f, -5.0f}},
+     .InitialValue = 0.0f},
 
     {.Chn = 11U,
      .Per = {.Type = PER_TYPE_ABS_SERVO, .Instance = {.Servos = PER_SERVOS_2}},
-     .Curve = {.Name = CURVES_NAME_NONE, .Params = {0.0f}}},
+     .Curve = {.Name = CURVES_NAME_NONE, .Params = {0.0f}},
+     .InitialValue = -100.0f},
+
+    {.Chn = 6U,
+     .Per = {.Type = PER_TYPE_POWER_OFF, .Instance = {.Single = PER_SINGLE}},
+     .Curve = {.Name = CURVES_NAME_THRESHOLD, .Params = {50.0f}},
+     .InitialValue = -100.0f},
 };

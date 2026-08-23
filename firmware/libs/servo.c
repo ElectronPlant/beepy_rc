@@ -55,7 +55,6 @@
 #define SERVO_MIN_ANGLE_DURATION_MS          (0.5f)
 #define SERVO_DURATION_TO_DUTY_PERCENT(X_MS) (100.0f * X_MS / SERVO_PWM_PERIOD_MS)
 
-#define SERVO_INITIAL_SPAN (0.0f)
 
 /********************************************************************************
  * Typedefs
@@ -98,12 +97,14 @@ bool_t Servo_Init(SERVO_HANDLER_T servo) {
  * @brief  Start a servo motor.
  *
  * @param  servo Servo handler.
+ * @param  initial_value Initial span to set, use SERVO_DEFAULT_INITIAL_SPAN to set the
+ *                       center value.
  */
-void Servo_Start(SERVO_HANDLER_T servo) {
+void Servo_Start(SERVO_HANDLER_T servo, float32_t initial_value) {
     PLT_ASSERT(NULL != servo);
 
     PwmTim_StartChn(servo->Timer, servo->Chn);
-    Servo_SetSpan(servo, SERVO_INITIAL_SPAN);
+    Servo_SetSpan(servo, initial_value);
 }
 
 /**
