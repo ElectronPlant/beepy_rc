@@ -247,7 +247,6 @@ C_APP_SOURCE := \
 ../app/rc/rx_drivers/sbus/sbus.c \
 ../app/rc/rx_drivers/common_rx_bus.c \
 ../app/bsp/bsp.c \
-../app/motion/motion.c \
 ../libs/motor.c \
 ../libs/servo.c \
 ../libs/button.c \
@@ -265,7 +264,6 @@ H_APP_SOURCE := \
 -I../app/rc/rx_drivers \
 -I../app/rc/rx_drivers/sbus \
 -I../app/bsp \
--I../app/motion \
 -I../app/controller \
 -I../app/controller/vehicles \
 -I../app/supervisor \

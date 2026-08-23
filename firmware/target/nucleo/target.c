@@ -67,7 +67,6 @@ const SERIAL_PERIPHERAL_PORT_T TargetRcSerial = {
  * Motor PWM
  ******************************************/
 #include "encoder.h"
-#include "motion.h"
 #include "motor.h"
 #include "pwm_timer.h"
 #include "pwm_timer_port.h"
