@@ -44,7 +44,7 @@
 /********************************************************************************
  * Function Implementations
  ********************************************************************************/
-void PltAssert_Assert(const char *file, uint32_t line) {
+void PltAssert_Assert(const char* file, uint32_t line) {
     printf("ASSERT: In %s, line %lu\n", file, line);
     // abort();
     __disable_irq();
@@ -53,7 +53,7 @@ void PltAssert_Assert(const char *file, uint32_t line) {
     }
 }
 
-void PltAssert_WarningAssert(const char *file, uint32_t line) {
+void PltAssert_WarningAssert(const char* file, uint32_t line) {
     printf("WARNING: In %s, line %lu\n", file, line);
 }
 

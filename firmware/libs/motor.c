@@ -3,7 +3,7 @@
  *
  * @brief Motors are composed by two PWM timer channels and a encoder timer.
  *
- * @ingroup   MotionMotor
+ * @ingroup   Motor
  * @version   V0.0
  * @author    David Arnaiz
  * @copyright 2025 David Arnaiz

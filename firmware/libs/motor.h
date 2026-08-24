@@ -3,7 +3,7 @@
  * @brief Motor driver.
  *        Motor are composed by two PWM channels and encoder timer.
  *
- * @ingroup   MotionMotor
+ * @ingroup   Motor
  * @version   V0.0
  * @author    David Arnaiz
  * @copyright 2025 David Arnaiz

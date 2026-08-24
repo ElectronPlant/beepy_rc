@@ -6,7 +6,7 @@
  *        signal. The signal has a period of 20ms (50Hz) and the duration of 1ms (for 0deg) and
  *        a duration of 2ms (for 180deg).
  *
- * @ingroup   MotionServo
+ * @ingroup   Servo
  * @version   V0.0
  * @author    David Arnaiz
  * @copyright 2026 David Arnaiz
