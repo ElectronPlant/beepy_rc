@@ -217,7 +217,7 @@ static bool_t PwmTim_InitChnInternal(PWM_TIM_HANDLER_T pwm, PWM_TIM_CHANNELS_T c
         .Mode = LL_GPIO_MODE_ALTERNATE,
         .Speed = LL_GPIO_SPEED_FREQ_LOW,
         .OutputType = LL_GPIO_OUTPUT_PUSHPULL,
-        .Pull = LL_GPIO_PULL_NO,
+        .Pull = p_chn->GpioPull,
         .Alternate = p_chn->GpioAlternateFunc,
     };
     err = LL_GPIO_Init(p_chn->GpioPort, &gpio_cfg);
@@ -467,15 +467,15 @@ void PwmTim_StartAll(PWM_TIM_HANDLER_T pwm) {
  * @brief  STM32 port for the stop PWM timer channel function.
  */
 void PwmTim_StopChn(PWM_TIM_HANDLER_T pwm, PWM_TIM_CHANNELS_T chn) {
-    PLT_ASSERT(NULL == pwm);
+    PLT_ASSERT(NULL != pwm);
+
+    /* Stop channel */
+    PwmTim_StopChnInternal(pwm, chn);
 
     /* Disable Timer if needed, see note 2 */
     if (DEF_FALSE == PwmTim_IsAnyChnEnabled(pwm)) {
-        PwmTim_StopChnInternal(pwm, chn);
+        PwmTim_StopTimer(pwm);
     }
-
-    /* Stop all channels */
-    PwmTim_InitChnInternal(pwm, chn);
 }
 
 /**
@@ -501,7 +501,7 @@ void PwmTim_Stop(PWM_TIM_HANDLER_T pwm) {
 /**
  * @brief  STM32 port for the change PWM timer frequency function.
  */
-void PwmTim_ChangeFreq(PWM_TIM_HANDLER_T pwm, uint16_t freq_khz) {
+void PwmTim_ChangeFreq(PWM_TIM_HANDLER_T pwm, float32_t freq_khz) {
     PLT_ASSERT(NULL != pwm);
     PWM_TIM_RUNNING_ASSERT(pwm);
     uint16_t autoreload = PwmTim_GetAutoReload(pwm, freq_khz);
@@ -529,15 +529,11 @@ static uint32_t PwmTim_Duty2CompareValue(PWM_TIM_HANDLER_T pwm, float32_t duty_c
     return (uint32_t)PLT_UTILS_ROUND_FLOAT_TO_UINT(f_compare);
 }
 
-/**
- * @brief  STM32 port for the set PWM duty cycle function.
- */
-void PwmTim_SetDuty(PWM_TIM_HANDLER_T pwm, PWM_TIM_CHANNELS_T chn, float32_t duty) {
-    PLT_ASSERT(NULL != pwm);
-    PWM_TIM_RUNNING_ASSERT(pwm);
-
-    uint32_t compare_value = PwmTim_Duty2CompareValue(pwm, duty);
-
+static void PwmTim_SetCompareValue(
+    PWM_TIM_HANDLER_T  pwm,
+    PWM_TIM_CHANNELS_T chn,
+    uint32_t           compare_value
+) {
     switch (chn) {
         case PWM_TIM_CHANNELS_CH1:
             pwm->Peripheral_Ptr->Timer->CCR1 = compare_value;
@@ -554,6 +550,39 @@ void PwmTim_SetDuty(PWM_TIM_HANDLER_T pwm, PWM_TIM_CHANNELS_T chn, float32_t dut
         default:
             PLT_UNREACHABLE;
     };
+}
+
+/**
+ * @brief  STM32 port for the set PWM duty cycle function.
+ */
+void PwmTim_SetDuty(PWM_TIM_HANDLER_T pwm, PWM_TIM_CHANNELS_T chn, float32_t duty) {
+    PLT_ASSERT(NULL != pwm);
+    PWM_TIM_RUNNING_ASSERT(pwm);
+
+    uint32_t compare_value = PwmTim_Duty2CompareValue(pwm, duty);
+    PwmTim_SetCompareValue(pwm, chn, compare_value);
+}
+
+/**
+ * @brief  STM32 port for the set tone function.
+ */
+void PwmTim_SetTone(PWM_TIM_HANDLER_T pwm, PWM_TIM_CHANNELS_T chn, float32_t freq_khz) {
+    PLT_ASSERT(NULL != pwm);
+    PWM_TIM_RUNNING_ASSERT(pwm);
+    uint16_t autoreload = PwmTim_GetAutoReload(pwm, freq_khz);
+    LL_TIM_SetAutoReload(pwm->Peripheral_Ptr->Timer, autoreload);
+
+    uint32_t compare_value = autoreload >> 1;
+    PwmTim_SetCompareValue(pwm, chn, compare_value);
+}
+
+/**
+ * @brief  STM32 port for the stop tone function.
+ */
+void PwmTim_StopTone(PWM_TIM_HANDLER_T pwm, PWM_TIM_CHANNELS_T chn) {
+    PLT_ASSERT(NULL != pwm);
+    PWM_TIM_RUNNING_ASSERT(pwm);
+    PwmTim_SetCompareValue(pwm, chn, 0);
 }
 
 /** @} (end addtogroup PwmTimer)   */

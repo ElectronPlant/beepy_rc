@@ -25,6 +25,7 @@
 
 #include "curves.h"
 #include "peripherals.h"
+#include "sound.h"
 #include "ui.h"
 
 
@@ -83,16 +84,20 @@ static bool_t Per_InitAbsServo(const PER_PERIPHERAL_T* p_per);
 static bool_t Per_InitRelServo(const PER_PERIPHERAL_T* p_per);
 static bool_t Per_InitLight(const PER_PERIPHERAL_T* p_per);
 static bool_t Per_InitPowerOff(const PER_PERIPHERAL_T* p_per);
+static bool_t Per_InitBuzzer(const PER_PERIPHERAL_T* p_per);
 
 static void Per_StartAbsServo(const PER_PERIPHERAL_T* p_per, float32_t initial_value);
 static void Per_StartRelServo(const PER_PERIPHERAL_T* p_per, float32_t initial_value);
 static void Per_StartLight(const PER_PERIPHERAL_T* p_per, float32_t initial_value);
 static void Per_StartPowerOff(const PER_PERIPHERAL_T* p_per, float32_t initial_value);
+static void Per_StartBuzzer(const PER_PERIPHERAL_T* p_per, float32_t initial_value);
 
 static void Per_ApplyAbsServoSetpoint(const PER_PERIPHERAL_T* p_per, float32_t setpoint);
 static void Per_ApplyRelServoSetpoint(const PER_PERIPHERAL_T* p_per, float32_t setpoint);
 static void Per_ApplyLightSetpoint(const PER_PERIPHERAL_T* p_per, float32_t setpoint);
 static void Per_ApplyPowerOffSetpoint(const PER_PERIPHERAL_T* p_per, float32_t setpoint);
+static void Per_ApplyBuzzerSetpoint(const PER_PERIPHERAL_T* p_per, float32_t setpoint);
+
 
 /********************************************************************************
  * Local Vars
@@ -108,6 +113,7 @@ PERIPHERAL_INTERFACE_T Per_Interface[PER_TYPE_MAX] = {
     {.Init = Per_InitPowerOff,
      .Start = Per_StartPowerOff,
      .ApplySetpoint = Per_ApplyPowerOffSetpoint},
+    {.Init = Per_InitBuzzer, .Start = Per_StartBuzzer, .ApplySetpoint = Per_ApplyBuzzerSetpoint},
 };
 
 
@@ -148,6 +154,14 @@ static bool_t Per_InitLight(const PER_PERIPHERAL_T* p_per) {
  * @brief  Init implementation for the power off.
  */
 static bool_t Per_InitPowerOff(const PER_PERIPHERAL_T* p_per) {
+    /* - No-op - is enabled by the UI module. */
+    return DEF_TRUE;
+}
+
+/**
+ * @brief  Init implementation for the buzzer.
+ */
+static bool_t Per_InitBuzzer(const PER_PERIPHERAL_T* p_per) {
     /* - No-op - is enabled by the UI module. */
     return DEF_TRUE;
 }
@@ -204,6 +218,17 @@ static void Per_StartPowerOff(const PER_PERIPHERAL_T* p_per, float32_t initial_v
     (void)initial_value;
 }
 
+/**
+ * @brief  Start implementation for the buzzer.
+ *
+ * @param  p_per Pointer to the peripheral to control.
+ */
+static void Per_StartBuzzer(const PER_PERIPHERAL_T* p_per, float32_t initial_value) {
+    /* - No-op - */
+    (void)p_per;
+    (void)initial_value;
+}
+
 
 /**
  * @brief  Starts the specified peripheral.
@@ -236,7 +261,7 @@ static void Per_ApplyRelServoSetpoint(const PER_PERIPHERAL_T* p_per, float32_t s
 }
 
 /**
- * @brief ApplySetpoint implementation for the absolute servo.
+ * @brief ApplySetpoint implementation for the lights.
  */
 static void Per_ApplyLightSetpoint(const PER_PERIPHERAL_T* p_per, float32_t setpoint) {
     bool_t dig_setpoint = Curves_Analog2Dig(setpoint);
@@ -246,12 +271,48 @@ static void Per_ApplyLightSetpoint(const PER_PERIPHERAL_T* p_per, float32_t setp
 }
 
 /**
- * @brief ApplySetpoint implementation for the absolute servo.
+ * @brief ApplySetpoint implementation for the power off.
  */
 static void Per_ApplyPowerOffSetpoint(const PER_PERIPHERAL_T* p_per, float32_t setpoint) {
     if (0.0f <= setpoint) {
         Ui_PowerOff();
     };
+}
+
+/**
+ * @brief ApplySetpoint implementation for the buzzer.
+ *
+ * @note List of notes:
+ *      1. When the switch for the buzzer is switched, it will replay the melody over and over
+ *         again until switched back. This mechanism tracks that the buzzer was previously switched
+ *         off until the sound can be repeated.
+ */
+static void Per_ApplyBuzzerSetpoint(const PER_PERIPHERAL_T* p_per, float32_t setpoint) {
+    static bool_t buzzer_running[PER_BUZZER_MAX] = {
+        DEF_FALSE,
+        DEF_FALSE,
+    };
+
+    if (0.0f <= setpoint && DEF_FALSE == buzzer_running[p_per->Instance.Buzzer]) {
+        buzzer_running[p_per->Instance.Buzzer] = DEF_TRUE;
+
+        SOUND_MELODIES_T melody;
+        switch (p_per->Instance.Buzzer) {
+            case PER_BUZZER_ATTENTION:
+                melody = SOUND_MELODIES_ATTENTION;
+                break;
+            case PER_BUZZER_SAD:
+                melody = SOUND_MELODIES_SAD;
+                break;
+            default:
+                melody = SOUND_MELODIES_MAX;
+        }
+        if (SOUND_MELODIES_MAX != melody) {
+            Sound_StartMelody(melody);
+        }
+    } else if (0.0f > setpoint) {
+        buzzer_running[p_per->Instance.Buzzer] = DEF_FALSE;
+    }
 }
 
 

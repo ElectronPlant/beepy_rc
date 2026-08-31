@@ -35,6 +35,7 @@ typedef struct {
     void (*GpioClkEnFn_Ptr)(uint32_t);
     uint32_t OutputPolarity;
     uint32_t OutputIdleState;
+    uint32_t GpioPull;
 } PWM_TIM_PORT_CHN_T;
 
 typedef struct {

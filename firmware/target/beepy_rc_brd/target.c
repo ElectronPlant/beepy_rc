@@ -97,6 +97,7 @@ const PWM_TIM_PORT_CHN_T TargetMotorTim1Ch1 = {
     .GpioClkEnFn_Ptr = LL_AHB1_GRP1_EnableClock,
     .OutputPolarity = LL_TIM_OCPOLARITY_HIGH,
     .OutputIdleState = LL_TIM_OCIDLESTATE_LOW,
+    .GpioPull = LL_GPIO_PULL_NO,
 };
 
 const PWM_TIM_PORT_CHN_T TargetMotorTim1Ch2 = {
@@ -107,6 +108,7 @@ const PWM_TIM_PORT_CHN_T TargetMotorTim1Ch2 = {
     .GpioClkEnFn_Ptr = LL_AHB1_GRP1_EnableClock,
     .OutputPolarity = LL_TIM_OCPOLARITY_HIGH,
     .OutputIdleState = LL_TIM_OCIDLESTATE_LOW,
+    .GpioPull = LL_GPIO_PULL_NO,
 };
 
 /** Channel 3 is used for the I2C bus. */
@@ -119,6 +121,7 @@ const PWM_TIM_PORT_CHN_T TargetMotorTim1Ch4 = {
     .GpioClkEnFn_Ptr = LL_AHB1_GRP1_EnableClock,
     .OutputPolarity = LL_TIM_OCPOLARITY_HIGH,
     .OutputIdleState = LL_TIM_OCIDLESTATE_LOW,
+    .GpioPull = LL_GPIO_PULL_NO,
 };
 
 const PWM_TIM_PORT_T TargetMotorTim1 = {
@@ -159,6 +162,7 @@ const PWM_TIM_PORT_CHN_T TargetMotorTim2Ch1 = {
     .GpioClkEnFn_Ptr = LL_AHB1_GRP1_EnableClock,
     .OutputPolarity = LL_TIM_OCPOLARITY_HIGH,
     .OutputIdleState = LL_TIM_OCIDLESTATE_LOW,
+    .GpioPull = LL_GPIO_PULL_NO,
 };
 
 const PWM_TIM_PORT_CHN_T TargetMotorTim2Ch2 = {
@@ -169,6 +173,7 @@ const PWM_TIM_PORT_CHN_T TargetMotorTim2Ch2 = {
     .GpioClkEnFn_Ptr = LL_AHB1_GRP1_EnableClock,
     .OutputPolarity = LL_TIM_OCPOLARITY_HIGH,
     .OutputIdleState = LL_TIM_OCIDLESTATE_LOW,
+    .GpioPull = LL_GPIO_PULL_NO,
 };
 
 const PWM_TIM_PORT_CHN_T TargetMotorTim2Ch3 = {
@@ -179,6 +184,7 @@ const PWM_TIM_PORT_CHN_T TargetMotorTim2Ch3 = {
     .GpioClkEnFn_Ptr = LL_AHB1_GRP1_EnableClock,
     .OutputPolarity = LL_TIM_OCPOLARITY_HIGH,
     .OutputIdleState = LL_TIM_OCIDLESTATE_LOW,
+    .GpioPull = LL_GPIO_PULL_NO,
 };
 
 const PWM_TIM_PORT_CHN_T TargetMotorTim2Ch4 = {
@@ -189,6 +195,7 @@ const PWM_TIM_PORT_CHN_T TargetMotorTim2Ch4 = {
     .GpioClkEnFn_Ptr = LL_AHB1_GRP1_EnableClock,
     .OutputPolarity = LL_TIM_OCPOLARITY_HIGH,
     .OutputIdleState = LL_TIM_OCIDLESTATE_LOW,
+    .GpioPull = LL_GPIO_PULL_NO,
 };
 
 const PWM_TIM_PORT_T TargetMotorTim2 = {
@@ -229,6 +236,7 @@ const PWM_TIM_PORT_CHN_T TargetMotorTim3Ch1 = {
     .GpioClkEnFn_Ptr = LL_AHB1_GRP1_EnableClock,
     .OutputPolarity = LL_TIM_OCPOLARITY_HIGH,
     .OutputIdleState = LL_TIM_OCIDLESTATE_LOW,
+    .GpioPull = LL_GPIO_PULL_NO,
 };
 
 const PWM_TIM_PORT_T TargetMotorTim3 = {
@@ -446,7 +454,7 @@ MOTOR_T Target_Motors[TARGET_MOTOR_NUM] = {
  *         the prescaller needs to be set so the count required to achieve the minimum frequency
  *         just fits the maximum count value. In this case CEIL(84MHz / (F * 2^16)) - 1 = X.
  *         With X being the prescaller, and the -1 is a correction since 0 is the identity
- *         prescaller instead of 1. In this case solves to X = 0.
+ *         prescaller instead of 1. In this case solves to X = 25.
  *         Note that this is for the edge aligned mode in center mode the frequency is halved.
  *         In this case the prescaller is set to 25.
  */
@@ -462,6 +470,7 @@ const PWM_TIM_PORT_CHN_T TargetServoTim1Ch1 = {
     .GpioClkEnFn_Ptr = LL_AHB1_GRP1_EnableClock,
     .OutputPolarity = LL_TIM_OCPOLARITY_HIGH,
     .OutputIdleState = LL_TIM_OCIDLESTATE_LOW,
+    .GpioPull = LL_GPIO_PULL_NO,
 };
 
 const PWM_TIM_PORT_CHN_T TargetServoTim1Ch2 = {
@@ -472,6 +481,7 @@ const PWM_TIM_PORT_CHN_T TargetServoTim1Ch2 = {
     .GpioClkEnFn_Ptr = LL_AHB1_GRP1_EnableClock,
     .OutputPolarity = LL_TIM_OCPOLARITY_HIGH,
     .OutputIdleState = LL_TIM_OCIDLESTATE_LOW,
+    .GpioPull = LL_GPIO_PULL_NO,
 };
 
 const PWM_TIM_PORT_T TargetServoTim1 = {
@@ -482,6 +492,7 @@ const PWM_TIM_PORT_T TargetServoTim1 = {
     .TimerClkDivision = LL_TIM_CLOCKDIVISION_DIV1,
     .TimerClkFreqKhz = TARGET_SERVO_TIM1_CLK_FREQUENCY,
     .TimerIs32bits = DEF_FALSE,
+    .TimerIsAdvanced = DEF_TRUE,
     .NumChannels = TARGET_SERVO_TIM1_N_CHANNELS,
     .Channels = {&TargetServoTim1Ch1, &TargetServoTim1Ch2, NULL, NULL}
 };
@@ -496,7 +507,7 @@ const PWM_TIM_PORT_T TargetServoTim1 = {
  *         the prescaller needs to be set so the count required to achieve the minimum frequency
  *         just fits the maximum count value. In this case CEIL(84MHz / (F * 2^16)) - 1 = X.
  *         With X being the prescaller, and the -1 is a correction since 0 is the identity
- *         prescaller instead of 1. In this case solves to X = 0.
+ *         prescaller instead of 1. In this case solves to X = 25.
  *         Note that this is for the edge aligned mode in center mode the frequency is halved.
  *         In this case the prescaller is set to 25.
  */
@@ -512,6 +523,7 @@ const PWM_TIM_PORT_CHN_T TargetServoTim2Ch1 = {
     .GpioClkEnFn_Ptr = LL_AHB1_GRP1_EnableClock,
     .OutputPolarity = LL_TIM_OCPOLARITY_HIGH,
     .OutputIdleState = LL_TIM_OCIDLESTATE_LOW,
+    .GpioPull = LL_GPIO_PULL_NO,
 };
 
 const PWM_TIM_PORT_T TargetServoTim2 = {
@@ -522,11 +534,12 @@ const PWM_TIM_PORT_T TargetServoTim2 = {
     .TimerClkDivision = LL_TIM_CLOCKDIVISION_DIV1,
     .TimerClkFreqKhz = TARGET_SERVO_TIM2_CLK_FREQUENCY,
     .TimerIs32bits = DEF_FALSE,
+    .TimerIsAdvanced = DEF_FALSE,
     .NumChannels = TARGET_SERVO_TIM2_N_CHANNELS,
     .Channels = {&TargetServoTim2Ch1, NULL, NULL, NULL}
 };
 
-PWM_TIM_INSTANCE_T Motion_ServoPwmTimers[TARGET_NUM_SERVO_PWM_CHANNELS] = {
+PWM_TIM_INSTANCE_T Target_ServoPwmTimers[TARGET_NUM_SERVO_PWM_CHANNELS] = {
     {
         .Status = PWM_TIM_STATUS_UNINITIALIZED,
         .Peripheral_Ptr = &TargetServoTim1,
@@ -545,9 +558,9 @@ PWM_TIM_INSTANCE_T Motion_ServoPwmTimers[TARGET_NUM_SERVO_PWM_CHANNELS] = {
  * Servos
  ******************************************/
 SERVO_T Target_ServosInstance[TARGET_NUM_SERVO_PWM_CHANNELS] = {
-    {.Timer = &Motion_ServoPwmTimers[0], .Chn = PWM_TIM_CHANNELS_CH1},
-    {.Timer = &Motion_ServoPwmTimers[0], .Chn = PWM_TIM_CHANNELS_CH2},
-    {.Timer = &Motion_ServoPwmTimers[1], .Chn = PWM_TIM_CHANNELS_CH1}
+    {.Timer = &Target_ServoPwmTimers[0], .Chn = PWM_TIM_CHANNELS_CH1},
+    {.Timer = &Target_ServoPwmTimers[0], .Chn = PWM_TIM_CHANNELS_CH2},
+    {.Timer = &Target_ServoPwmTimers[1], .Chn = PWM_TIM_CHANNELS_CH1}
 };
 
 SERVO_HANDLER_T Target_Servos[TARGET_NUM_SERVO_PWM_CHANNELS] =
@@ -687,10 +700,72 @@ GPIO_HANDLER_T Target_Lights[1U] = {
     NULL,
 };
 
+/********************************************************************************
+ * Buzzer
+ ********************************************************************************/
 
 /******************************************
- * RC Subscriptions
+ * PWM Timers
  ******************************************/
+#include "buzzer.h"
+#include "pwm_timer_port.h"
+
+/** The buzzer timer is mapped to timer 10.
+ *  There is only one buzzer, which is the only thing connected to the timer.
+ *
+ * @note List of notes:
+ *      1. TIM10 is connected the APB2 clock, which is set to 84MHz, and it is a 16-bit timer.
+ *         The human hearing goes between 20Hz and 10kHz. To have the maximum resolution possible,
+ *         the prescaller needs to be set so the count required to achieve the minimum frequency
+ *         just fits the maximum count value. In this case CEIL(84MHz / (F * 2^16)) - 1 = X.
+ *         With X being the prescaller, and the -1 is a correction since 0 is the identity
+ *         prescaller instead of 1. In this case solves to X = 64.
+ *         Note that this is for the edge aligned mode in center mode the frequency is halved.
+ *         In this case the prescaller is set to 64.
+ */
+#define TARGET_BUZZER_TIM_N_CHANNELS    (1U)
+#define TARGET_BUZZER_TIM_PRESCALLER    (64U) /* See note 1 */
+#define TARGET_BUZZER_TIM_CLK_FREQUENCY (84000 / (1 + TARGET_BUZZER_TIM_PRESCALLER))
+
+const PWM_TIM_PORT_CHN_T TargetBuzzerTimCh = {
+    .GpioPin = LL_GPIO_PIN_8,
+    .GpioPort = GPIOB,
+    .GpioAlternateFunc = LL_GPIO_AF_3,
+    .GpioClk = LL_AHB1_GRP1_PERIPH_GPIOB,
+    .GpioClkEnFn_Ptr = LL_AHB1_GRP1_EnableClock,
+    .OutputPolarity = LL_TIM_OCPOLARITY_HIGH,
+    .OutputIdleState = LL_TIM_OCIDLESTATE_LOW,
+    .GpioPull = LL_GPIO_PULL_DOWN,
+};
+
+const PWM_TIM_PORT_T TargetBuzzerTim = {
+    .Timer = TIM10,
+    .TimerClk = LL_APB2_GRP1_PERIPH_TIM10,
+    .TimerClkEnFn_Ptr = LL_APB2_GRP1_EnableClock,
+    .TimerPrescaller = TARGET_BUZZER_TIM_PRESCALLER,
+    .TimerClkDivision = LL_TIM_CLOCKDIVISION_DIV1,
+    .TimerClkFreqKhz = TARGET_BUZZER_TIM_CLK_FREQUENCY,
+    .TimerIs32bits = DEF_FALSE,
+    .TimerIsAdvanced = DEF_FALSE,
+    .NumChannels = TARGET_BUZZER_TIM_N_CHANNELS,
+    .Channels = {&TargetBuzzerTimCh, NULL, NULL, NULL}
+};
+
+PWM_TIM_INSTANCE_T Target_BuzzerTimer = {
+    .Status = PWM_TIM_STATUS_UNINITIALIZED,
+    .Peripheral_Ptr = &TargetBuzzerTim,
+    .EnChannels = 0x00,
+    .InitChannels = 0x00,
+};
+
+BUZZER_T Target_BuzzerInstance = {.Timer = &Target_BuzzerTimer, .Chn = PWM_TIM_CHANNELS_CH1};
+
+BUZZER_HANDLER_T Target_Buzzer = &Target_BuzzerInstance;
+
+
+/********************************************************************************
+ * RC - Susbcriptions
+ ********************************************************************************/
 #include "peripherals.h"
 #include "rc_subs.h"
 
@@ -727,5 +802,15 @@ const RCSUBS_AUX_INPUTS_T Target_AuxSubs[TARGET_NUM_AUX_PERIPHERALS] = {
     {.Chn = 6U,
      .Per = {.Type = PER_TYPE_POWER_OFF, .Instance = {.Single = PER_SINGLE}},
      .Curve = {.Name = CURVES_NAME_THRESHOLD, .Params = {50.0f}},
+     .InitialValue = -100.0f},
+
+    {.Chn = 8U,
+     .Per = {.Type = PER_TYPE_BUZZER, .Instance = {.Buzzer = PER_BUZZER_ATTENTION}},
+     .Curve = {.Name = CURVES_NAME_THRESHOLD, .Params = {0.0f}},
+     .InitialValue = -100.0f},
+
+    {.Chn = 9U,
+     .Per = {.Type = PER_TYPE_BUZZER, .Instance = {.Buzzer = PER_BUZZER_SAD}},
+     .Curve = {.Name = CURVES_NAME_THRESHOLD, .Params = {0.0f}},
      .InitialValue = -100.0f},
 };

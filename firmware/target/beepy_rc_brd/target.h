@@ -110,6 +110,14 @@ extern GPIO_HANDLER_T Target_BatEnable;
 extern GPIO_HANDLER_T Target_Lights[1U];
 
 /********************************************************************************
+ * Buzzer
+ ********************************************************************************/
+#include "pwm_timer_port.h"
+
+#include "buzzer.h"
+extern BUZZER_HANDLER_T Target_Buzzer;
+
+/********************************************************************************
  * Control Inputs
  ********************************************************************************/
 #include "peripherals.h"
@@ -117,7 +125,8 @@ extern GPIO_HANDLER_T Target_Lights[1U];
 
 extern const RCSUBS_DRIVE_INPUTS_T Target_DriveSubs[RCSUBS_DRIVE_SETPOINT_MAX];
 
-#define TARGET_NUM_AUX_PERIPHERALS (TARGET_NUM_SERVOS + TARGET_NUM_LIGHTS + /* Power off */ 1U)
+#define TARGET_NUM_AUX_PERIPHERALS \
+    (TARGET_NUM_SERVOS + TARGET_NUM_LIGHTS + /* Power off */ 1U + /* Buzzer */ 2)
 extern const RCSUBS_AUX_INPUTS_T Target_AuxSubs[TARGET_NUM_AUX_PERIPHERALS];
 
 

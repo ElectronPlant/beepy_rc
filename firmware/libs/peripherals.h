@@ -48,6 +48,13 @@ typedef enum PER_LIGHTS_E {
     PER_LIGHTS_MAX,
 } PER_LIGHTS_T;
 
+typedef enum PER_BUZZER_E {
+    PER_BUZZER_ATTENTION = 0,
+    PER_BUZZER_SAD,
+
+    PER_BUZZER_MAX,
+} PER_BUZZER_T;
+
 /**
  * @brief Reserved for single instance peripherals.
  *
@@ -59,6 +66,7 @@ typedef enum PER_SINGLE_E {
 typedef union PER_INSTANCES_U {
     PER_SERVOS_T Servos;
     PER_LIGHTS_T Lights;
+    PER_BUZZER_T Buzzer;
     PER_SINGLE_E Single;
 } PER_INSTANCES_T;
 
@@ -71,6 +79,8 @@ typedef enum PER_TYPE_E {
     PER_TYPE_LIGHT,     /**< To turn on and off the lights. */
 
     PER_TYPE_POWER_OFF, /**< To power off the board. */
+
+    PER_TYPE_BUZZER, /**< To play melodies using the buzzer. */
 
     PER_TYPE_MAX,
 } PER_TYPE_T;

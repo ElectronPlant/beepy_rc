@@ -174,7 +174,7 @@ void PwmTim_StopAll(PWM_TIM_HANDLER_T pwm);
  * @param  pwm PWM timer handler.
  * @param  freq_khz New frequency to set in kHz.
  */
-void PwmTim_ChangeFreq(PWM_TIM_HANDLER_T pwm, uint16_t freq_khz);
+void PwmTim_ChangeFreq(PWM_TIM_HANDLER_T pwm, float32_t freq_khz);
 
 /**
  * @brief  Updates the PWM duty cycle of the selected channel.
@@ -184,5 +184,22 @@ void PwmTim_ChangeFreq(PWM_TIM_HANDLER_T pwm, uint16_t freq_khz);
  * @param  duty Duty cycle as a percentage [PWM_TIM_MIN_DUTY_CYCLE, PWM_TIM_MAX_DUTY_CYCLE].
  */
 void PwmTim_SetDuty(PWM_TIM_HANDLER_T pwm, PWM_TIM_CHANNELS_T chn, float32_t duty);
+
+/**
+ * @brief  Updates the frequency setting the duty cycle to 50%.
+ *
+ * @param  pwm  PWM timer handler.
+ * @param  chn  Channel to update.
+ * @param  freq_khz New frequency to set in kHz.
+ */
+void PwmTim_SetTone(PWM_TIM_HANDLER_T pwm, PWM_TIM_CHANNELS_T chn, float32_t freq_khz);
+
+/**
+ * @brief  Disables the PWM setting the duty cycle to zero.
+ *
+ * @param  pwm  PWM timer handler.
+ * @param  chn  Channel to update.
+ */
+void PwmTim_StopTone(PWM_TIM_HANDLER_T pwm, PWM_TIM_CHANNELS_T chn);
 
 #endif /* __PWM_TIM_H__       */

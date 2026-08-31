@@ -21,6 +21,7 @@
 #include "task.h"
 #include "timers.h"
 
+#include "sound.h"
 #include "supervisor.h"
 #include "supervisor_defines.h"
 #include "ui.h"
@@ -131,6 +132,10 @@ bool_t Super_Init(void) {
 
     if (DEF_TRUE == ok) {
         ok = Ui_Init();
+    }
+
+    if (DEF_TRUE == ok) {
+        ok = Sound_Init();
     }
 
     if (DEF_TRUE == ok) {
@@ -272,19 +277,15 @@ static void Super_TaskStart(void) {
     PLT_ASSERT(DEF_TRUE == PLT_UTILS_RTOS_TO_PLT_PASS_FAIL(tim_ok));
 
     Ui_Start();
-
+    Sound_StartMelody(SOUND_MELODIES_INIT);
     Super_UpdateState(SUPER_STATUS_RUNNING);
 }
 
 /**
- * @brief  
+ * @brief  Processes the notified context update.
+ *         It uses this information to update the UI.
  *
- * @param  inp 
- *
- * @return DEF_TRUE if successful, DEF_FALSE otherwise.
- *
- * @note List of notes:
- *       1. 
+ * @param  notifications Notification status.
  */
 static void Super_ProcessContextUpdate(uint32_t notifications) {
     bool_t timer_update = PLT_UTILS_IS_BIT_OFFSET_SET(notifications, SUPERDEF_SOURCE_OFFSET_TIMER);
@@ -318,10 +319,12 @@ static void Super_ProcessContextUpdate(uint32_t notifications) {
     if (PLT_UTILS_IS_BIT_OFFSET_SET(notifications, SUPERDEF_SOURCE_OFFSET_ARMED)) {
         Super_Info.ExternalContextMap |=
             PLT_UTILS_BIT_OFFSET_TO_MASK(SUPERDEF_CONTEXT_OFFSET_ARMED);
+        Sound_StartMelody(SOUND_MELODIES_ARM);
     }
     if (PLT_UTILS_IS_BIT_OFFSET_SET(notifications, SUPERDEF_SOURCE_OFFSET_DISARMED)) {
         Super_Info.ExternalContextMap &=
             ~PLT_UTILS_BIT_OFFSET_TO_MASK(SUPERDEF_CONTEXT_OFFSET_ARMED);
+        Sound_StartMelody(SOUND_MELODIES_DISARM);
     }
     if (PLT_UTILS_IS_BIT_OFFSET_SET(notifications, SUPERDEF_SOURCE_OFFSET_CONTROLLER_OK)) {
         Super_Info.ExternalContextMap &=

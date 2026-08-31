@@ -251,6 +251,7 @@ C_APP_SOURCE := \
 ../libs/servo.c \
 ../libs/button.c \
 ../libs/peripherals.c \
+../libs/buzzer.c \
 ../app/controller/model.c \
 ../app/controller/controller.c \
 ../app/controller/control_inputs.c \
@@ -258,6 +259,7 @@ C_APP_SOURCE := \
 ../app/controller/vehicles/fwd/fwd.c \
 ../app/supervisor/supervisor.c \
 ../app/supervisor/ui.c \
+../app/supervisor/sound.c \
 
 H_APP_SOURCE := \
 -I../app/rc \

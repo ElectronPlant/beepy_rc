@@ -125,6 +125,10 @@ uint32_t PltUtils_GetFirstNonZeroOffset(uint32_t val);
  */
 #define PLT_UTILS_SATURATE(A, L_MIN, L_MAX) (PLT_UTILS_MAX(PLT_UTILS_MIN((A), (L_MAX)), (L_MIN)))
 
+/********************************************************************************
+ * ARRAYS
+ ********************************************************************************/
+#define PLT_UTILS_ARRAY_LENGTH(X) (sizeof(X) / sizeof((X)[0]))
 
 /********************************************************************************
  * CONVERSION
