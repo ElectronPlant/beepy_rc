@@ -22,9 +22,11 @@
 
 #include "target.h"
 
-#include "buzzer.h"
 #include "sound.h"
 
+#ifdef USE_BUZZER
+    #include "buzzer.h"
+#endif /* #ifdef USE_BUZZER */
 
 /** @addtogroup Controller
  *    @{
@@ -49,6 +51,9 @@
 /********************************************************************************
  * Typedefs
  ********************************************************************************/
+
+#ifdef USE_BUZZER
+
 typedef struct SOUND_MELODY_TONE_S {
     uint16_t FreqHz;
     uint16_t DurationMs;
@@ -62,6 +67,7 @@ typedef struct SOUND_INFO_S {
     const SOUND_MELODY_TONE_T* Melody_Ptr;
 } SOUND_INFO_T;
 
+#endif /* #ifdef USE_BUZZER */
 
 /********************************************************************************
  * Function Prototypes
@@ -70,6 +76,9 @@ typedef struct SOUND_INFO_S {
 /********************************************************************************
  * Local Vars
  ********************************************************************************/
+
+#ifdef USE_BUZZER
+
 static TimerHandle_t Sound_TimerHandle = NULL;
 
 static SOUND_INFO_T Sound_Info =
@@ -158,9 +167,14 @@ static const uint16_t Sound_MelodySizes[SOUND_MELODIES_MAX] = {
     PLT_UTILS_ARRAY_LENGTH(Sound_MelodySad),
 };
 
+#endif /* #ifdef USE_BUZZER */
+
+
 /********************************************************************************
  * Function Implementations
  ********************************************************************************/
+
+#ifdef USE_BUZZER
 
 /**
  * @brief  Non-blocking function to play the next tone of the melody.
@@ -268,6 +282,30 @@ void Sound_StartMelody(SOUND_MELODIES_T melody_type) {
         printf("Sound:: Ignoring melody %u, already runnning\n", melody_type);
     }
 }
+
+#else
+
+/**
+ * @brief  Initialize the sound generator.
+ *
+ * @return DEF_TRUE if successful, DEF_FALSE otherwise.
+ */
+bool_t Sound_Init(void) {
+    /* - No-op - */
+}
+
+/**
+ * @brief  Starts playing the melody. See note 1.
+ *
+ * @param  melody_type Type of the melody to play.
+ *
+ * @return DEF_TRUE if successful, DEF_FALSE otherwise.
+ */
+void Sound_StartMelody(PLT_UTILS_UNUSED SOUND_MELODIES_T melody_type) {
+    /* - No-op - */
+}
+
+#endif /* #ifdef USE_BUZZER */
 
 /** @} (end addtogroup Sound)       */
 /** @} (end addtogroup Controller)  */

@@ -23,12 +23,10 @@
 ###############################################################################
 
 # Compile in debug mode
-DEBUG        ?= 1
-# Compile and run tests
-TEST         ?=
+DEBUG        ?= true
 
-# Compile and upload test
-RUN          ?= false
+# Mute the buzzer
+MUTE         ?= false
 
 # Generate .map file with memory information
 GENERATE_MAP_FILE ?= true
@@ -46,7 +44,7 @@ FPU    := fpv4-sp-d16
 # Specifies whether to use hardware (hard) or software FPU implementations (soft).
 FLOAT-ABI := hard
 # Board seledction, can be set to: BeepyRcBrd or nucleo
-BOARD := nucleo
+BOARD := BeepyRcBrd
 
 
 ###############################################################################
@@ -138,7 +136,7 @@ ASMMFLAGS = $(OPTIMIZATION) $(MCU) $(TRAIL_FLAGS) $(DEPS_FLAGS)
 
 
 # Debug
-ifeq ($(DEBUG), 1)
+ifeq ($(DEBUG), true)
 	CFLAGS += -g -gdwarf-2
 endif
 
@@ -251,7 +249,6 @@ C_APP_SOURCE := \
 ../libs/servo.c \
 ../libs/button.c \
 ../libs/peripherals.c \
-../libs/buzzer.c \
 ../app/controller/model.c \
 ../app/controller/controller.c \
 ../app/controller/control_inputs.c \
@@ -260,6 +257,12 @@ C_APP_SOURCE := \
 ../app/supervisor/supervisor.c \
 ../app/supervisor/ui.c \
 ../app/supervisor/sound.c \
+
+# Mute
+ifeq ($(MUTE), false)
+	C_APP_SOURCE += ../libs/buzzer.c
+	C_DEFS += -DUSE_BUZZER
+endif
 
 H_APP_SOURCE := \
 -I../app/rc \
@@ -406,6 +409,9 @@ help:
 	@echo "    All actions:"
 	@echo "         make clean && make all -j4 && make flash && make monitor"
 	@echo ""
-	@echo "    Compile for the BeepyRcBrd board (nucleo by default):"
-	@echo "         make all BOARD=BeepyRcBrd"
+	@echo "    Compile for the nucleo board (BeepyRcBrd by default):"
+	@echo "         make all BOARD=nucleo"
+	@echo ""
+	@echo "    Mute the buzzer (enabled by default):"
+	@echo "         make all MUTE=true"
 	@echo ""
