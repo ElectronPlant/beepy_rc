@@ -387,6 +387,11 @@ monitor:
 	$(STLINK_TOOL) -c port=swd -startswv freq=84 portnumber=0 $(BUILD_DIR)/$(PROJECTNAME).log
 
 
+# Extract dependencies
+update:
+	@echo "updating compile commands..."
+	@python -m compiledb make all
+	@mv compile_commands.json ../../.vscode/compile_commands.json
 
 ###############################################################################
 # HELP
@@ -414,4 +419,10 @@ help:
 	@echo ""
 	@echo "    Mute the buzzer (enabled by default):"
 	@echo "         make all MUTE=true"
+	@echo ""
+	@echo "    Erase FLASH:"
+	@echo "         make erase_flash"
+	@echo ""
+	@echo "    Update compile commands:"
+	@echo "         make update"
 	@echo ""
