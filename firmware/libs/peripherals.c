@@ -64,7 +64,7 @@ typedef struct {
      *
      * @param  p_per Pointer to the peripheral to start.
      */
-    void (*Start)(const PER_PERIPHERAL_T* p_per, float32_t initial_value);
+    void (*Start)(const PER_PERIPHERAL_T* p_per);
 
     /**
      * @brief  Applies the setpoint to peripheral.
@@ -86,11 +86,11 @@ static bool_t Per_InitLight(const PER_PERIPHERAL_T* p_per);
 static bool_t Per_InitPowerOff(const PER_PERIPHERAL_T* p_per);
 static bool_t Per_InitBuzzer(const PER_PERIPHERAL_T* p_per);
 
-static void Per_StartAbsServo(const PER_PERIPHERAL_T* p_per, float32_t initial_value);
-static void Per_StartRelServo(const PER_PERIPHERAL_T* p_per, float32_t initial_value);
-static void Per_StartLight(const PER_PERIPHERAL_T* p_per, float32_t initial_value);
-static void Per_StartPowerOff(const PER_PERIPHERAL_T* p_per, float32_t initial_value);
-static void Per_StartBuzzer(const PER_PERIPHERAL_T* p_per, float32_t initial_value);
+static void Per_StartAbsServo(const PER_PERIPHERAL_T* p_per);
+static void Per_StartRelServo(const PER_PERIPHERAL_T* p_per);
+static void Per_StartLight(const PER_PERIPHERAL_T* p_per);
+static void Per_StartPowerOff(const PER_PERIPHERAL_T* p_per);
+static void Per_StartBuzzer(const PER_PERIPHERAL_T* p_per);
 
 static void Per_ApplyAbsServoSetpoint(const PER_PERIPHERAL_T* p_per, float32_t setpoint);
 static void Per_ApplyRelServoSetpoint(const PER_PERIPHERAL_T* p_per, float32_t setpoint);
@@ -184,16 +184,21 @@ bool_t Per_Init(const PER_PERIPHERAL_T* p_per) {
 /**
  * @brief  Start implementation for the absolute servo.
  */
-static void Per_StartAbsServo(const PER_PERIPHERAL_T* p_per, float32_t initial_value) {
+static void Per_StartAbsServo(const PER_PERIPHERAL_T* p_per) {
     PLT_ASSERT(TARGET_NUM_SERVOS > p_per->Instance.Servos);
-    Servo_Start(Target_Servos[p_per->Instance.Servos], initial_value);
+    Servo_Start(Target_Servos[p_per->Instance.Servos], p_per->Params.Servos.InitialSpan);
+    Servo_SetSpanLimits(
+        Target_Servos[p_per->Instance.Servos],
+        p_per->Params.Servos.MaxSpan,
+        p_per->Params.Servos.MinSpan
+    );
 }
 
 /**
  * @brief  Start implementation for the relative servo.
  */
-static void Per_StartRelServo(const PER_PERIPHERAL_T* p_per, float32_t initial_value) {
-    Per_StartAbsServo(p_per, initial_value);
+static void Per_StartRelServo(const PER_PERIPHERAL_T* p_per) {
+    Per_StartAbsServo(p_per);
 }
 
 /**
@@ -201,9 +206,10 @@ static void Per_StartRelServo(const PER_PERIPHERAL_T* p_per, float32_t initial_v
  *
  * @param  p_per Pointer to the peripheral to control.
  */
-static void Per_StartLight(const PER_PERIPHERAL_T* p_per, float32_t initial_value) {
+static void Per_StartLight(const PER_PERIPHERAL_T* p_per) {
     PLT_ASSERT(TARGET_NUM_LIGHTS > p_per->Instance.Lights);
-    GPIO_VALUE_T v = initial_value >= 0.0f ? GPIO_VALUE_HIGH : GPIO_VALUE_LOW;
+    GPIO_VALUE_T v =
+        DEF_FALSE == p_per->Params.Lights.StartEnabled ? GPIO_VALUE_HIGH : GPIO_VALUE_LOW;
     Gpio_Write(Target_Lights[p_per->Instance.Lights], v);
 }
 
@@ -212,10 +218,9 @@ static void Per_StartLight(const PER_PERIPHERAL_T* p_per, float32_t initial_valu
  *
  * @param  p_per Pointer to the peripheral to control.
  */
-static void Per_StartPowerOff(const PER_PERIPHERAL_T* p_per, float32_t initial_value) {
+static void Per_StartPowerOff(const PER_PERIPHERAL_T* p_per) {
     /* - No-op - */
     (void)p_per;
-    (void)initial_value;
 }
 
 /**
@@ -223,10 +228,9 @@ static void Per_StartPowerOff(const PER_PERIPHERAL_T* p_per, float32_t initial_v
  *
  * @param  p_per Pointer to the peripheral to control.
  */
-static void Per_StartBuzzer(const PER_PERIPHERAL_T* p_per, float32_t initial_value) {
+static void Per_StartBuzzer(const PER_PERIPHERAL_T* p_per) {
     /* - No-op - */
     (void)p_per;
-    (void)initial_value;
 }
 
 
@@ -235,9 +239,9 @@ static void Per_StartBuzzer(const PER_PERIPHERAL_T* p_per, float32_t initial_val
  *
  * @param  p_per Pointer to the peripheral to start.
  */
-void Per_Start(const PER_PERIPHERAL_T* p_per, float32_t initial_value) {
+void Per_Start(const PER_PERIPHERAL_T* p_per) {
     PLT_ASSERT(PER_TYPE_MAX > p_per->Type && PER_TYPE_NONE != p_per->Type);
-    Per_Interface[p_per->Type - 1U].Start(p_per, initial_value);
+    Per_Interface[p_per->Type - 1U].Start(p_per);
 }
 
 

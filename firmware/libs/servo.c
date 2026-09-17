@@ -90,6 +90,12 @@ bool_t Servo_Init(SERVO_HANDLER_T servo) {
     if (DEF_FALSE == ok) {
         return DEF_FALSE;
     }
+
+    if (ok == DEF_TRUE) {
+        servo->CurrentSpan = 0;
+        servo->MinSpan = SERVO_MIN_PERCENTAGE;
+        servo->MaxSpan = SERVO_MAX_PERCENTAGE;
+    }
     return DEF_TRUE;
 }
 
@@ -173,6 +179,21 @@ void Servo_SetAngle(SERVO_HANDLER_T servo, float32_t angle) {
 }
 
 /**
+ * @brief  Sets the span maximum and minimum values.
+ *
+ * @param  servo Servo handler.
+ * @param  max   Maximum span value.
+ * @param  min   Minimum span value.
+ */
+void Servo_SetSpanLimits(SERVO_HANDLER_T servo, float32_t max, float32_t min) {
+    PLT_ASSERT(SERVO_MIN_PERCENTAGE <= min);
+    PLT_ASSERT(SERVO_MAX_PERCENTAGE >= max);
+
+    servo->MaxSpan = max;
+    servo->MinSpan = min;
+}
+
+/**
  * @brief  Set the servo angle as a percentage of the total servo span.
  *         There are some servo motors that rotate 180 degrees, while others only rotate 90
  *         degrees. Thus, to directly set the servo angle, the model needs to be known a priory.
@@ -188,7 +209,7 @@ void Servo_SetAngle(SERVO_HANDLER_T servo, float32_t angle) {
  */
 void Servo_SetSpan(SERVO_HANDLER_T servo, float32_t span) {
     PLT_ASSERT(NULL != servo);
-    float32_t sat_span = PLT_UTILS_SATURATE(span, SERVO_MIN_PERCENTAGE, SERVO_MAX_PERCENTAGE);
+    float32_t sat_span = PLT_UTILS_SATURATE(span, servo->MinSpan, servo->MaxSpan);
 
     float32_t duty = Servo_DutyFromPercentage(sat_span);
     PwmTim_SetDuty(servo->Timer, servo->Chn, duty);

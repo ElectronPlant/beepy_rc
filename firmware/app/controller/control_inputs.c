@@ -101,7 +101,7 @@ void CIn_Start(void) {
         if (PER_TYPE_NONE == Target_AuxSubs[i].Per.Type) {
             done = DEF_TRUE;
         } else {
-            Per_Start(&Target_AuxSubs[i].Per, Target_AuxSubs[i].InitialValue);
+            Per_Start(&Target_AuxSubs[i].Per);
         }
     }
 }

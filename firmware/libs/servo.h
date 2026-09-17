@@ -38,6 +38,8 @@ typedef struct SERVO_S {
     PWM_TIM_HANDLER_T  Timer;
     PWM_TIM_CHANNELS_T Chn;
     float32_t          CurrentSpan;
+    float32_t          MinSpan;
+    float32_t          MaxSpan;
 } SERVO_T;
 
 typedef SERVO_T* SERVO_HANDLER_T;
@@ -55,6 +57,7 @@ void   Servo_Start(SERVO_HANDLER_T servo, float32_t initial_value);
 void   Servo_Stop(SERVO_HANDLER_T Servo);
 
 void Servo_SetAngle(SERVO_HANDLER_T Servo, float32_t angle);
+void Servo_SetSpanLimits(SERVO_HANDLER_T servo, float32_t max, float32_t min);
 void Servo_SetSpan(SERVO_HANDLER_T Servo, float32_t span);
 void Servo_SetRelSpan(SERVO_HANDLER_T servo, float32_t span);
 

@@ -37,6 +37,12 @@ typedef enum PER_SERVOS_E {
     PER_SERVOS_MAX,
 } PER_SERVOS_T;
 
+typedef struct PER_SERVOS_PARAMS_S {
+    float32_t InitialSpan;
+    float32_t MinSpan;
+    float32_t MaxSpan;
+} PER_SERVOS_PARAMS_T;
+
 typedef enum PER_LIGHTS_E {
     PER_LIGHTS_0 = 0,
     PER_LIGHTS_1,
@@ -47,6 +53,10 @@ typedef enum PER_LIGHTS_E {
 
     PER_LIGHTS_MAX,
 } PER_LIGHTS_T;
+
+typedef struct PER_LIGHTS_PARAMS_S {
+    bool_t StartEnabled;
+} PER_LIGHTS_PARAMS_T;
 
 typedef enum PER_BUZZER_E {
     PER_BUZZER_ATTENTION = 0,
@@ -70,6 +80,11 @@ typedef union PER_INSTANCES_U {
     PER_SINGLE_E Single;
 } PER_INSTANCES_T;
 
+typedef union PER_PARAMS_U {
+    PER_SERVOS_PARAMS_T Servos;
+    PER_LIGHTS_PARAMS_T Lights;
+} PER_PARAMS_T;
+
 typedef enum PER_TYPE_E {
     PER_TYPE_NONE = 0,  /**< Unused channel. */
     PER_TYPE_ABS_SERVO, /**< Servo with the angle directly controlled with the current RC set
@@ -88,6 +103,7 @@ typedef enum PER_TYPE_E {
 typedef struct PER_PERIPHERAL_S {
     PER_TYPE_T      Type;
     PER_INSTANCES_T Instance;
+    PER_PARAMS_T    Params;
 } PER_PERIPHERAL_T;
 
 
@@ -99,7 +115,7 @@ typedef struct PER_PERIPHERAL_S {
  * Function Prototypes
  ********************************************************************************/
 bool_t Per_Init(const PER_PERIPHERAL_T* p_per);
-void   Per_Start(const PER_PERIPHERAL_T* p_per, float32_t initial_value);
+void   Per_Start(const PER_PERIPHERAL_T* p_per);
 void   Per_ApplySetpoint(const PER_PERIPHERAL_T* p_per, float32_t setpoint);
 
 #endif /* __PERIPHERALS_H__       */

@@ -785,32 +785,57 @@ const RCSUBS_DRIVE_INPUTS_T Target_DriveSubs[RCSUBS_DRIVE_SETPOINT_MAX] = {
 
 const RCSUBS_AUX_INPUTS_T Target_AuxSubs[TARGET_NUM_AUX_PERIPHERALS] = {
     {.Chn = 1U,
-     .Per = {.Type = PER_TYPE_REL_SERVO, .Instance = {.Servos = PER_SERVOS_0}},
-     .Curve = {.Name = CURVES_NAME_LINEAR_WITH_DEADBAND, .Params = {0.0f, 0.05f, 5.0f, -5.0f}},
-     .InitialValue = 0.0f},
+     .Per =
+         {
+             .Type = PER_TYPE_REL_SERVO,
+             .Instance = {.Servos = PER_SERVOS_0},
+             .Params.Servos =
+                 {.InitialSpan = 0.0f,
+                  .MaxSpan = SERVO_MAX_PERCENTAGE,
+                  .MinSpan = SERVO_MIN_PERCENTAGE},
+         },
+     .Curve = {.Name = CURVES_NAME_LINEAR_WITH_DEADBAND, .Params = {0.0f, 0.01f, 5.0f, -5.0f}}},
 
-    {.Chn = 2U,
-     .Per = {.Type = PER_TYPE_REL_SERVO, .Instance = {.Servos = PER_SERVOS_1}},
-     .Curve = {.Name = CURVES_NAME_LINEAR_WITH_DEADBAND, .Params = {0.0f, 0.05f, 5.0f, -5.0f}},
-     .InitialValue = 0.0f},
+    {
+        .Chn = 2U,
+        .Per =
+            {
+                .Type = PER_TYPE_REL_SERVO,
+                .Instance = {.Servos = PER_SERVOS_1},
+                .Params.Servos = {.InitialSpan = 0.0f, .MaxSpan = 40.0f, .MinSpan = -40.0f},
+            },
+        .Curve = {.Name = CURVES_NAME_LINEAR_WITH_DEADBAND, .Params = {0.0f, 0.01f, 5.0f, -5.0f}},
+    },
 
-    {.Chn = 11U,
-     .Per = {.Type = PER_TYPE_ABS_SERVO, .Instance = {.Servos = PER_SERVOS_2}},
-     .Curve = {.Name = CURVES_NAME_NONE, .Params = {0.0f}},
-     .InitialValue = -100.0f},
+    {
+        .Chn = 11U,
+        .Per =
+            {
+                .Type = PER_TYPE_ABS_SERVO,
+                .Instance = {.Servos = PER_SERVOS_2},
+                .Params.Servos =
+                    {.InitialSpan = SERVO_MIN_PERCENTAGE,
+                     .MaxSpan = 0.0f,
+                     .MinSpan = SERVO_MIN_PERCENTAGE},
+            },
+        .Curve = {.Name = CURVES_NAME_NONE, .Params = {0.0f}},
+    },
 
-    {.Chn = 6U,
-     .Per = {.Type = PER_TYPE_POWER_OFF, .Instance = {.Single = PER_SINGLE}},
-     .Curve = {.Name = CURVES_NAME_THRESHOLD, .Params = {50.0f}},
-     .InitialValue = -100.0f},
+    {
+        .Chn = 6U,
+        .Per = {.Type = PER_TYPE_POWER_OFF, .Instance = {.Single = PER_SINGLE}},
+        .Curve = {.Name = CURVES_NAME_THRESHOLD, .Params = {50.0f}},
+    },
 
-    {.Chn = 8U,
-     .Per = {.Type = PER_TYPE_BUZZER, .Instance = {.Buzzer = PER_BUZZER_ATTENTION}},
-     .Curve = {.Name = CURVES_NAME_THRESHOLD, .Params = {0.0f}},
-     .InitialValue = -100.0f},
+    {
+        .Chn = 8U,
+        .Per = {.Type = PER_TYPE_BUZZER, .Instance = {.Buzzer = PER_BUZZER_ATTENTION}},
+        .Curve = {.Name = CURVES_NAME_THRESHOLD, .Params = {0.0f}},
+    },
 
-    {.Chn = 9U,
-     .Per = {.Type = PER_TYPE_BUZZER, .Instance = {.Buzzer = PER_BUZZER_SAD}},
-     .Curve = {.Name = CURVES_NAME_THRESHOLD, .Params = {0.0f}},
-     .InitialValue = -100.0f},
+    {
+        .Chn = 9U,
+        .Per = {.Type = PER_TYPE_BUZZER, .Instance = {.Buzzer = PER_BUZZER_SAD}},
+        .Curve = {.Name = CURVES_NAME_THRESHOLD, .Params = {0.0f}},
+    },
 };

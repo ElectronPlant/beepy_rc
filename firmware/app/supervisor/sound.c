@@ -292,6 +292,7 @@ void Sound_StartMelody(SOUND_MELODIES_T melody_type) {
  */
 bool_t Sound_Init(void) {
     /* - No-op - */
+    return DEF_TRUE;
 }
 
 /**

@@ -97,6 +97,7 @@ const PWM_TIM_PORT_CHN_T TargetMotorTim1Ch1 = {
     .GpioClkEnFn_Ptr = LL_AHB1_GRP1_EnableClock,
     .OutputPolarity = LL_TIM_OCPOLARITY_HIGH,
     .OutputIdleState = LL_TIM_OCIDLESTATE_LOW,
+    .GpioPull = LL_GPIO_PULL_NO,
 };
 
 const PWM_TIM_PORT_CHN_T TargetMotorTim1Ch2 = {
@@ -107,6 +108,7 @@ const PWM_TIM_PORT_CHN_T TargetMotorTim1Ch2 = {
     .GpioClkEnFn_Ptr = LL_AHB1_GRP1_EnableClock,
     .OutputPolarity = LL_TIM_OCPOLARITY_HIGH,
     .OutputIdleState = LL_TIM_OCIDLESTATE_LOW,
+    .GpioPull = LL_GPIO_PULL_NO,
 };
 
 /** Channel 3 is used for the I2C bus. */
@@ -119,6 +121,7 @@ const PWM_TIM_PORT_CHN_T TargetMotorTim1Ch4 = {
     .GpioClkEnFn_Ptr = LL_AHB1_GRP1_EnableClock,
     .OutputPolarity = LL_TIM_OCPOLARITY_HIGH,
     .OutputIdleState = LL_TIM_OCIDLESTATE_LOW,
+    .GpioPull = LL_GPIO_PULL_NO,
 };
 
 const PWM_TIM_PORT_T TargetMotorTim1 = {
@@ -159,6 +162,7 @@ const PWM_TIM_PORT_CHN_T TargetMotorTim2Ch1 = {
     .GpioClkEnFn_Ptr = LL_AHB1_GRP1_EnableClock,
     .OutputPolarity = LL_TIM_OCPOLARITY_HIGH,
     .OutputIdleState = LL_TIM_OCIDLESTATE_LOW,
+    .GpioPull = LL_GPIO_PULL_NO,
 };
 
 const PWM_TIM_PORT_CHN_T TargetMotorTim2Ch2 = {
@@ -169,6 +173,7 @@ const PWM_TIM_PORT_CHN_T TargetMotorTim2Ch2 = {
     .GpioClkEnFn_Ptr = LL_AHB1_GRP1_EnableClock,
     .OutputPolarity = LL_TIM_OCPOLARITY_HIGH,
     .OutputIdleState = LL_TIM_OCIDLESTATE_LOW,
+    .GpioPull = LL_GPIO_PULL_NO,
 };
 
 const PWM_TIM_PORT_CHN_T TargetMotorTim2Ch3 = {
@@ -179,6 +184,7 @@ const PWM_TIM_PORT_CHN_T TargetMotorTim2Ch3 = {
     .GpioClkEnFn_Ptr = LL_AHB1_GRP1_EnableClock,
     .OutputPolarity = LL_TIM_OCPOLARITY_HIGH,
     .OutputIdleState = LL_TIM_OCIDLESTATE_LOW,
+    .GpioPull = LL_GPIO_PULL_NO,
 };
 
 const PWM_TIM_PORT_CHN_T TargetMotorTim2Ch4 = {
@@ -189,6 +195,7 @@ const PWM_TIM_PORT_CHN_T TargetMotorTim2Ch4 = {
     .GpioClkEnFn_Ptr = LL_AHB1_GRP1_EnableClock,
     .OutputPolarity = LL_TIM_OCPOLARITY_HIGH,
     .OutputIdleState = LL_TIM_OCIDLESTATE_LOW,
+    .GpioPull = LL_GPIO_PULL_NO,
 };
 
 const PWM_TIM_PORT_T TargetMotorTim2 = {
@@ -229,6 +236,7 @@ const PWM_TIM_PORT_CHN_T TargetMotorTim3Ch1 = {
     .GpioClkEnFn_Ptr = LL_AHB1_GRP1_EnableClock,
     .OutputPolarity = LL_TIM_OCPOLARITY_HIGH,
     .OutputIdleState = LL_TIM_OCIDLESTATE_LOW,
+    .GpioPull = LL_GPIO_PULL_NO,
 };
 
 const PWM_TIM_PORT_T TargetMotorTim3 = {
@@ -462,6 +470,7 @@ const PWM_TIM_PORT_CHN_T TargetServoTim1Ch1 = {
     .GpioClkEnFn_Ptr = LL_AHB1_GRP1_EnableClock,
     .OutputPolarity = LL_TIM_OCPOLARITY_HIGH,
     .OutputIdleState = LL_TIM_OCIDLESTATE_LOW,
+    .GpioPull = LL_GPIO_PULL_NO,
 };
 
 const PWM_TIM_PORT_CHN_T TargetServoTim1Ch2 = {
@@ -472,6 +481,7 @@ const PWM_TIM_PORT_CHN_T TargetServoTim1Ch2 = {
     .GpioClkEnFn_Ptr = LL_AHB1_GRP1_EnableClock,
     .OutputPolarity = LL_TIM_OCPOLARITY_HIGH,
     .OutputIdleState = LL_TIM_OCIDLESTATE_LOW,
+    .GpioPull = LL_GPIO_PULL_NO,
 };
 
 const PWM_TIM_PORT_T TargetServoTim1 = {
@@ -513,6 +523,7 @@ const PWM_TIM_PORT_CHN_T TargetServoTim2Ch1 = {
     .GpioClkEnFn_Ptr = LL_AHB1_GRP1_EnableClock,
     .OutputPolarity = LL_TIM_OCPOLARITY_HIGH,
     .OutputIdleState = LL_TIM_OCIDLESTATE_LOW,
+    .GpioPull = LL_GPIO_PULL_NO,
 };
 
 const PWM_TIM_PORT_T TargetServoTim2 = {
@@ -724,6 +735,7 @@ const PWM_TIM_PORT_CHN_T TargetBuzzerTimCh = {
     .GpioClkEnFn_Ptr = LL_AHB1_GRP1_EnableClock,
     .OutputPolarity = LL_TIM_OCPOLARITY_HIGH,
     .OutputIdleState = LL_TIM_OCIDLESTATE_LOW,
+    .GpioPull = LL_GPIO_PULL_DOWN,
 };
 
 const PWM_TIM_PORT_T TargetBuzzerTim = {
@@ -773,32 +785,57 @@ const RCSUBS_DRIVE_INPUTS_T Target_DriveSubs[RCSUBS_DRIVE_SETPOINT_MAX] = {
 
 const RCSUBS_AUX_INPUTS_T Target_AuxSubs[TARGET_NUM_AUX_PERIPHERALS] = {
     {.Chn = 1U,
-     .Per = {.Type = PER_TYPE_REL_SERVO, .Instance = {.Servos = PER_SERVOS_0}},
-     .Curve = {.Name = CURVES_NAME_LINEAR_WITH_DEADBAND, .Params = {0.0f, 0.05f, 5.0f, -5.0f}},
-     .InitialValue = 0.0f},
+     .Per =
+         {
+             .Type = PER_TYPE_REL_SERVO,
+             .Instance = {.Servos = PER_SERVOS_0},
+             .Params.Servos =
+                 {.InitialSpan = 0.0f,
+                  .MaxSpan = SERVO_MAX_PERCENTAGE,
+                  .MinSpan = SERVO_MIN_PERCENTAGE},
+         },
+     .Curve = {.Name = CURVES_NAME_LINEAR_WITH_DEADBAND, .Params = {0.0f, 0.01f, 5.0f, -5.0f}}},
 
-    {.Chn = 2U,
-     .Per = {.Type = PER_TYPE_REL_SERVO, .Instance = {.Servos = PER_SERVOS_1}},
-     .Curve = {.Name = CURVES_NAME_LINEAR_WITH_DEADBAND, .Params = {0.0f, 0.05f, 5.0f, -5.0f}},
-     .InitialValue = 0.0f},
+    {
+        .Chn = 2U,
+        .Per =
+            {
+                .Type = PER_TYPE_REL_SERVO,
+                .Instance = {.Servos = PER_SERVOS_1},
+                .Params.Servos = {.InitialSpan = 0.0f, .MaxSpan = 40.0f, .MinSpan = -40.0f},
+            },
+        .Curve = {.Name = CURVES_NAME_LINEAR_WITH_DEADBAND, .Params = {0.0f, 0.01f, 5.0f, -5.0f}},
+    },
 
-    {.Chn = 11U,
-     .Per = {.Type = PER_TYPE_ABS_SERVO, .Instance = {.Servos = PER_SERVOS_2}},
-     .Curve = {.Name = CURVES_NAME_NONE, .Params = {0.0f}},
-     .InitialValue = -100.0f},
+    {
+        .Chn = 11U,
+        .Per =
+            {
+                .Type = PER_TYPE_ABS_SERVO,
+                .Instance = {.Servos = PER_SERVOS_2},
+                .Params.Servos =
+                    {.InitialSpan = SERVO_MIN_PERCENTAGE,
+                     .MaxSpan = 0.0f,
+                     .MinSpan = SERVO_MIN_PERCENTAGE},
+            },
+        .Curve = {.Name = CURVES_NAME_NONE, .Params = {0.0f}},
+    },
 
-    {.Chn = 6U,
-     .Per = {.Type = PER_TYPE_POWER_OFF, .Instance = {.Single = PER_SINGLE}},
-     .Curve = {.Name = CURVES_NAME_THRESHOLD, .Params = {50.0f}},
-     .InitialValue = -100.0f},
+    {
+        .Chn = 6U,
+        .Per = {.Type = PER_TYPE_POWER_OFF, .Instance = {.Single = PER_SINGLE}},
+        .Curve = {.Name = CURVES_NAME_THRESHOLD, .Params = {50.0f}},
+    },
 
-    {.Chn = 8U,
-     .Per = {.Type = PER_TYPE_BUZZER, .Instance = {.Buzzer = PER_BUZZER_ATTENTION}},
-     .Curve = {.Name = CURVES_NAME_THRESHOLD, .Params = {0.0f}},
-     .InitialValue = -100.0f},
+    {
+        .Chn = 8U,
+        .Per = {.Type = PER_TYPE_BUZZER, .Instance = {.Buzzer = PER_BUZZER_ATTENTION}},
+        .Curve = {.Name = CURVES_NAME_THRESHOLD, .Params = {0.0f}},
+    },
 
-    {.Chn = 9U,
-     .Per = {.Type = PER_TYPE_BUZZER, .Instance = {.Buzzer = PER_BUZZER_SAD}},
-     .Curve = {.Name = CURVES_NAME_THRESHOLD, .Params = {0.0f}},
-     .InitialValue = -100.0f},
+    {
+        .Chn = 9U,
+        .Per = {.Type = PER_TYPE_BUZZER, .Instance = {.Buzzer = PER_BUZZER_SAD}},
+        .Curve = {.Name = CURVES_NAME_THRESHOLD, .Params = {0.0f}},
+    },
 };
