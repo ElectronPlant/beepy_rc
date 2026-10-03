@@ -23,7 +23,7 @@
  *   @li Some of the assert macros defined are inspired by the macros defined in the Rust's std
  *       (e.g. unimplemented!() and unreachable!())
  *
- * This file is part of BeepyRC <TODO: link to repo>.
+ * This file is part of BeepyRC (https://github.com/ElectronPlant/beepy_rc).
  * This project is licensed under the GNU General Public License v3.0 license.
  */
 
@@ -46,7 +46,7 @@
  * @param  file Pointer to the file name buffer.
  * @param  line Line of the triggered assert.
  */
-void PltAssert_Assert(const char *file, uint32_t line);
+void PltAssert_Assert(const char* file, uint32_t line);
 
 /**
  * @brief  Prints a warning message with the file and line number of the triggered assert through
@@ -55,16 +55,16 @@ void PltAssert_Assert(const char *file, uint32_t line);
  * @param  file Pointer to the file name buffer.
  * @param  line Line of the triggered assert.
  */
-void PltAssert_WarningAssert(const char *file, uint32_t line);
+void PltAssert_WarningAssert(const char* file, uint32_t line);
 
 /********************************************************************************
  * Assert Macros
  ********************************************************************************/
-#define PLT_ASSERT(expr)                          \
-    do {                                          \
-        if (!(expr)) {                            \
+#define PLT_ASSERT(expr) \
+    do { \
+        if (!(expr)) { \
             PltAssert_Assert(__FILE__, __LINE__); \
-        }                                         \
+        } \
     } while (0)
 
 /**
@@ -100,11 +100,11 @@ void PltAssert_WarningAssert(const char *file, uint32_t line);
  *       PLT_WARNING_ASSERT(a < b);
  *       ```
  */
-#define PLT_WARNING_ASSERT(expr)                         \
-    do {                                                 \
-        if (!(expr)) {                                   \
+#define PLT_WARNING_ASSERT(expr) \
+    do { \
+        if (!(expr)) { \
             PltAssert_WarningAssert(__FILE__, __LINE__); \
-        }                                                \
+        } \
     } while (0)
 
 /**

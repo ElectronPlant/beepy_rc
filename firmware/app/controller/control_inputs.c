@@ -7,7 +7,7 @@
  * @author    David Arnaiz
  * @copyright 2026 David Arnaiz
  *
- * This file is part of BeepyRC <TODO: link to repo>.
+ * This file is part of BeepyRC (https://github.com/ElectronPlant/beepy_rc).
  * This project is licensed under the GNU General Public License v3.0 license.
  *
  * @note    Module Prefix: CIn_
