@@ -41,6 +41,14 @@
 /********************************************************************************
  * Defines
  ********************************************************************************/
+#define UI_BUTTON_ID_POWER_OFF (1U)
+#define UI_BUTTON_ID_DISARM    (0U)
+
+/* -- Power off delay -- */
+#define SUPER_POWER_OFF_DELAY_MS (250U)
+#define SUPER_POWER_OFF_DELAY_TICKS \
+    ((SUPER_POWER_OFF_DELAY_MS * configTICK_RATE_HZ) / PLT_UTILS_SECS_TO_MS_FACTOR)
+
 
 /********************************************************************************
  * Typedefs
@@ -141,6 +149,56 @@ void Ui_Button2Callback(void) {
     Super_NotifyButton2();
 }
 
+/**
+ * @brief  Disarms the controller.
+ *
+ * @note List of notes:
+ *       1. Once disarmed, it can only be rearmed by toggling the arm switch to set it to the
+ *          disarm state, then arming it again.
+ */
+static void Ui_ButtonDisarm(BUTTON_HANDLER_T button) {
+    if (DEF_TRUE == Button_Confirm(button)) {
+        printf("\n\n\nButton Disarm\n\n\n");
+        Ctrlr_HandleButtonDisarm();
+    } else {
+        printf("\n---Button disarm ignored\n");
+    }
+}
+
+/**
+ * @brief  Powers off the board.
+ *
+ * @note List of notes:
+ *       1. Once powered off, it can only be turned back on by removing the battery for a few
+ *          seconds and connecting it back.
+ */
+static void Ui_ButtonPowerOff(BUTTON_HANDLER_T button) {
+    if (DEF_TRUE == Button_Confirm(button)) {
+        printf("\n\n\nButton Power off\n\n\n");
+        Ui_PowerOff();
+    } else {
+        printf("\n---Button power off ignored\n");
+    }
+}
+
+/**
+ * @brief  Runs the button actions
+ *
+ * @param  notifications Task notifications.
+ */
+void Ui_RunButtonActions(uint32_t notifications) {
+    if (PLT_UTILS_IS_BIT_OFFSET_SET(notifications, SUPERDEF_SOURCE_OFFSET_BUTTON_1)) {
+        Ui_ButtonDisarm(Target_Buttons[UI_BUTTON_ID_DISARM]);
+    }
+
+    if (PLT_UTILS_IS_BIT_OFFSET_SET(notifications, SUPERDEF_SOURCE_OFFSET_BUTTON_2)) {
+        printf("Button power off...\n");
+        vTaskDelay(SUPER_POWER_OFF_DELAY_TICKS);
+        Ui_ButtonPowerOff(Target_Buttons[UI_BUTTON_ID_POWER_OFF]);
+    }
+}
+
+
 /******************************************
  * Status LEDs
  ******************************************/
@@ -204,6 +262,7 @@ void Ui_SetStatusLeds(uint32_t map, bool_t run_blink) {
  *          seconds and connecting it back.
  */
 void Ui_PowerOff(void) {
+    printf("Powering off...\n");
     Gpio_Write(Target_BatEnable, GPIO_VALUE_HIGH);
 }
 

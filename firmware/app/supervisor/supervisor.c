@@ -50,11 +50,6 @@
 #define SUPER_TIMEOUT_MS    (1000u) /* Time between queue updates */
 #define SUPER_TIMEOUT_TICKS ((SUPER_TIMEOUT_MS * configTICK_RATE_HZ) / PLT_UTILS_SECS_TO_MS_FACTOR)
 
-/* -- Power off delay -- */
-#define SUPER_POWER_OFF_DELAY_MS (250U)
-#define SUPER_POWER_OFF_DELAY_TICKS \
-    ((SUPER_POWER_OFF_DELAY_MS * configTICK_RATE_HZ) / PLT_UTILS_SECS_TO_MS_FACTOR)
-
 
 /********************************************************************************
  * Typedefs
@@ -342,22 +337,9 @@ static void Super_ProcessContextUpdate(uint32_t notifications) {
  * @brief  Handle the button actions.
  *
  * @param  notifications Task notifications.
- *
- * @note List of notes:
- *       1. Button 1 is used to disarm without the RC.
- *       2. Button 2 is used to power the RC car off.
  */
 void Super_ButtonActions(uint32_t notifications) {
-    if (PLT_UTILS_IS_BIT_OFFSET_SET(notifications, SUPERDEF_SOURCE_OFFSET_BUTTON_1)) {
-        printf("Button Disarming\n");
-        Ctrlr_HandleButtonDisarm();
-    }
-
-    if (PLT_UTILS_IS_BIT_OFFSET_SET(notifications, SUPERDEF_SOURCE_OFFSET_BUTTON_2)) {
-        printf("Button power off...\n");
-        vTaskDelay(SUPER_POWER_OFF_DELAY_TICKS);
-        Ui_PowerOff();
-    }
+    Ui_RunButtonActions(notifications);
 }
 
 /**

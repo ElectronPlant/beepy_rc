@@ -34,6 +34,7 @@
  ********************************************************************************/
 bool_t Ui_Init(void);
 void   Ui_Start(void);
+void   Ui_RunButtonActions(uint32_t notifications);
 void   Ui_SetStatusLeds(uint32_t map, bool_t run_blink);
 void   Ui_PowerOff(void);
 

@@ -175,5 +175,28 @@ static void Button_Callback(void* p_data) {
     }
 }
 
+/**
+ * @brief  Confirms if the button is still pressed.
+ *         This is to be used to prevent spurious press detections on noisy signals.
+ *         The timing between the button ISR and the confirm is not controlled in any way,
+ *         so the button response may be slow (i.e. require longer button presses to be correctly
+ *         detected).
+ *
+ * @param  button Handler for the button to be checked.
+ *
+ * @return DEF_TRUE if the button is still pressed, DEF_FALSE otherwise.
+ */
+bool_t Button_Confirm(BUTTON_HANDLER_T button) {
+    GPIO_VALUE_T  state = Gpio_Read(button->Gpio);
+    BUTTON_PULL_T pull = button->Pull;
+
+    bool_t button_pressed = DEF_FALSE;
+    if ((BUTTON_PULL_DOWN == pull && GPIO_VALUE_HIGH == state)
+        || (BUTTON_PULL_HIGH == pull && GPIO_VALUE_LOW == state)) {
+        button_pressed = DEF_TRUE;
+    }
+    return button_pressed;
+}
+
 /** @} (end addtogroup Button)  */
 /** @} (end addtogroup Libs)    */
