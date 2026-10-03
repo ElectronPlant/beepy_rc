@@ -29,10 +29,10 @@
 typedef enum CURVES_NAME_E {
     /* --- Analog Curves --- */
     CURVES_NAME_NONE = 0,             /**< Keep output as is. y = x */
-    CURVES_NAME_LINEAR,               /**< First order polynomial mapping.  x = (p[0] + a) * p[1] */
+    CURVES_NAME_LINEAR,               /**< First order polynomial mapping.  y = (p[0] + x) * p[1] */
     CURVES_NAME_LINEAR_WITH_DEADBAND, /**< Linear curve with deadband.
-                                            x = {a > p[2]: (p[0] + (a - p[2])) * p[1]
-                                                 b < p[3]: (p[0] + (a + p[3])) * p[1]
+                                            y = {x > p[2]: (p[0] + (x - p[2])) * p[1]
+                                                 x < p[3]: (p[0] + (x + p[3])) * p[1]
                                                  else 0 } */
 
     /* --- Digital Curves --- */
