@@ -13,7 +13,17 @@ Minimal-feature rover to support a simple, yet fun mission: exploring the house 
 
 The rover enables you to explore the house remotely using the RC interface and the FPV live feed provided by the video transmitter (VTX). The Nerf blaster and the VTX are mounted on a servo-operated arm, which controls their yaw and pitch angles. The arm provides two extra degrees of freedom to easily explore the room and aim the blaster. Once the target has been acquired, take the shot remotely using the aux channels of the RC remote.
 
+### Complete Rover
+
 ![BeepyRc](./docs/imgs/beepyRC.jpg)
+
+### Custom PCB
+
+![BeepyRcBrd](./docs/imgs/BeepyRcBrd.jpg)
+
+### Rover
+
+![PCA](./docs/imgs/beepyRcBrd_complete_pca.jpg)
 
 ---
 

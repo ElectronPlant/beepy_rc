@@ -7,7 +7,7 @@ Hobby project to make a RC rover platform using spare RC parts. The goal of this
     * [x] Use RC inputs to control motors.
     * [x] Custom hardware for the RC rover.
     * [X] Control servos with aux channels (camera pan/tilt, fire nerf gun).
-    * [ ] 3D printed case.
+    * [X] 3D printed case.
 * [ ] __Release 2: Sensor-Assisted Rover__
     * [ ] Motor encoders for precise individual motor adjustments.
     * [ ] Accelerometer, gyroscope and barometer integration speed and rotation RC setpoints.
@@ -49,7 +49,9 @@ Each component has its own versioning which are independent from the releases. T
 
 ## Mechanical
 
-No releases yet.
+| Version | Tag | STL Files| Description |
+|---|---|---|---|
+| __REV 0.0__ | [mech_rev0.0]()| [STL](mech/rev_0_0/BeepyRcMech_rev_0_0.zip) | See [Docs](mech/mech_docs.md) |
 
 ---
 
