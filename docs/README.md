@@ -51,7 +51,7 @@ Each component has its own versioning which are independent from the releases. T
 
 | Version | Tag | STL Files| Description |
 |---|---|---|---|
-| __REV 0.0__ | [mech_rev0.0]()| [STL](mech/rev_0_0/BeepyRcMech_rev_0_0.zip) | See [Docs](mech/mech_docs.md) |
+| __REV 0.0__ | [mech_rev0.0](https://github.com/ElectronPlant/beepy_rc/releases/tag/Mech_rev0.0)| [STL](mech/rev_0_0/BeepyRcMech_rev_0_0.zip) | See [Docs](mech/mech_docs.md) |
 
 ---
 
