@@ -4,7 +4,7 @@
  *        The standard frame is an intermediate representation of the Rx frame, Designed
  *        to abstract from the Rx protocol and radio used.
  *
- * @ingroup   Rx
+ * @ingroup   StdFrame
  * @version   V0.0
  * @author    David Arnaiz
  * @copyright 2025 David Arnaiz
@@ -19,6 +19,19 @@
 #include "plt_types.h"
 
 #include "common_rx_sizes.h"
+
+
+/** @addtogroup App
+ *   @{
+ */
+
+/** @addtogroup Rc
+ *   @{
+ */
+
+/** @addtogroup StdFrame
+ *   @{
+ */
 
 /********************************************************************************
  * Defines
@@ -64,5 +77,9 @@ typedef struct {
  * Function Prototypes
  ********************************************************************************/
 
+
+/** @} (end addtogroup StdFrame)    */
+/** @} (end addtogroup Rc)          */
+/** @} (end addtogroup App)         */
 
 #endif /* __STD_FRAME_H__       */

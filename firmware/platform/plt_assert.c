@@ -19,6 +19,10 @@
 #include "plt_types.h"
 #include "target.h"
 
+/** @addtogroup Plt
+ *   @{
+ */
+
 
 /** @addtogroup PltAssert
  *   @{
@@ -57,4 +61,5 @@ void PltAssert_WarningAssert(const char* file, uint32_t line) {
     printf("WARNING: In %s, line %lu\n", file, line);
 }
 
-/** @} (end addtogroup PltAssert)  */
+/** @} (end addtogroup PltAssert)   */
+/** @} (end addtogroup Plt)         */

@@ -20,11 +20,11 @@
 #include "circular_alloc.h"
 
 
-/** @addtogroup Platform
+/** @addtogroup Plt
  *    @{
  */
 
-/** @addtogroup Mem
+/** @addtogroup PltMem
  *    @{
  */
 
@@ -154,6 +154,6 @@ void PltMemCA_FreeCriticalFromIsr(PLTMEMCA_INSTANCE_T* p_instance, void* p_chunk
 }
 #endif /* USE_FREE_RTOS == 1 */
 
-/** @} (end addtogroup Platform)            */
-/** @} (end addtogroup Mem)                 */
+/** @} (end addtogroup Plt)                 */
+/** @} (end addtogroup PltMem)              */
 /** @} (end addtogroup CircularAllocator)   */

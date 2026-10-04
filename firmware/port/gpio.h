@@ -2,7 +2,7 @@
  * @file  gpio.h
  * @brief Driver for the GPIOs.
  *
- * @ingroup   Main
+ * @ingroup   Gpio
  * @version   V0.0
  * @author    David Arnaiz
  * @copyright 2026 David Arnaiz
@@ -15,6 +15,15 @@
 #define __GPIO_H__
 
 #include "plt_types.h"
+
+
+/** @addtogroup Port
+ *    @{
+ */
+
+/** @addtogroup Gpio
+ *    @{
+ */
 
 
 /********************************************************************************
@@ -103,5 +112,8 @@ void Gpio_Toggle(GPIO_HANDLER_T gpio);
  */
 GPIO_VALUE_T Gpio_Read(GPIO_HANDLER_T gpio);
 
+
+/** @} (end addtogroup Port)        */
+/** @} (end addtogroup Gpio)        */
 
 #endif /* __GPIO_H__       */

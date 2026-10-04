@@ -27,6 +27,7 @@
 #include "motor.h"
 #include "pwm_timer.h"
 
+
 /** @addtogroup Libs
  *   @{
  */
@@ -34,7 +35,6 @@
 /** @addtogroup Motor
  *    @{
  */
-
 
 /********************************************************************************
  * Defines

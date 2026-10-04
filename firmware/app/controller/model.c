@@ -23,10 +23,17 @@
 #include "peripherals.h"
 
 
-/** @addtogroup Model
+/** @addtogroup App
  *    @{
  */
 
+/** @addtogroup Controller
+ *    @{
+ */
+
+/** @addtogroup Model
+ *    @{
+ */
 
 /********************************************************************************
  * Defines
@@ -186,4 +193,6 @@ void Model_GetAttitude(MODEL_ATTITUDE_T* p_attitude) {
 }
 
 
-/** @} (end addtogroup Model)  */
+/** @} (end addtogroup Model)       */
+/** @} (end addtogroup Controller)  */
+/** @} (end addtogroup App)         */

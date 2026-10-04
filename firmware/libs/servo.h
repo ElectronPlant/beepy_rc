@@ -22,6 +22,14 @@
 #include "pwm_timer.h"
 
 
+/** @addtogroup Libs
+ *   @{
+ */
+
+/** @addtogroup Servo
+ *    @{
+ */
+
 /********************************************************************************
  * Defines
  ********************************************************************************/
@@ -62,3 +70,6 @@ void Servo_SetSpan(SERVO_HANDLER_T Servo, float32_t span);
 void Servo_SetRelSpan(SERVO_HANDLER_T servo, float32_t span);
 
 #endif /* __SERVO_H__       */
+
+/** @} (end addtogroup Servo)   */
+/** @} (end addtogroup Libs)    */

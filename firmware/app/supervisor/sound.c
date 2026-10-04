@@ -28,14 +28,18 @@
     #include "buzzer.h"
 #endif /* #ifdef USE_BUZZER */
 
-/** @addtogroup Controller
+
+/** @addtogroup App
+ *    @{
+ */
+
+/** @addtogroup Supervisor
  *    @{
  */
 
 /** @addtogroup Sound
  *    @{
  */
-
 
 /********************************************************************************
  * Defines
@@ -309,4 +313,5 @@ void Sound_StartMelody(PLT_UTILS_UNUSED SOUND_MELODIES_T melody_type) {
 #endif /* #ifdef USE_BUZZER */
 
 /** @} (end addtogroup Sound)       */
-/** @} (end addtogroup Controller)  */
+/** @} (end addtogroup Supervisor)  */
+/** @} (end addtogroup App)         */

@@ -2,12 +2,12 @@
  * @file  encoder.h
  * @brief STM32 port of the motor encoder driver.
  *
- * @ingroup   MotionEncoder
+ * @ingroup   EncoderStm32
  * @version   V0.0
  * @author    David Arnaiz
  * @copyright 2025 David Arnaiz
  *
- * This file is part of BeepyRC <TODO: link to repo>.
+ * This file is part of BeepyRC (https://github.com/ElectronPlant/beepy_rc).
  * This project is licensed under the GNU General Public License v3.0 license.
  *
  * @note    Module Prefix: Enc_
@@ -21,14 +21,18 @@
 
 #include "encoder.h"
 
-/** @addtogroup Ports
- *    @{
+
+/** @addtogroup Port
+ *   @{
  */
 
 /** @addtogroup Encoder
- *    @{
+ *   @{
  */
 
+/** @addtogroup EncoderStm32
+ *   @{
+ */
 
 /********************************************************************************
  * Defines
@@ -200,5 +204,6 @@ ENC_DIRECTION_T Enc_GetDirection(ENC_HANDLER_T enc) {
 }
 
 
-/** @} (end addtogroup Encoder)     */
-/** @} (end addtogroup Ports)      */
+/** @} (end addtogroup EncoderStm32) */
+/** @} (end addtogroup Encoder)      */
+/** @} (end addtogroup Port)         */

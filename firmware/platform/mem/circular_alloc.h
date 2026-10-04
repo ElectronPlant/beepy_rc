@@ -21,6 +21,17 @@
 
 #include "plt_types.h"
 
+/** @addtogroup Plt
+ *    @{
+ */
+
+/** @addtogroup PltMem
+ *    @{
+ */
+
+/** @addtogroup CircularAllocator
+ *    @{
+ */
 
 /********************************************************************************
  * Defines
@@ -117,5 +128,9 @@ void* PltMemCA_AllocateCriticalFromIsr(PLTMEMCA_INSTANCE_T* p_instance);
  * @brief  PltMemCA_Free protected with critical sections that can be used by an ISR.
  */
 void PltMemCA_FreeCriticalFromIsr(PLTMEMCA_INSTANCE_T* p_instance, void* p_chunk);
+
+/** @} (end addtogroup Plt)                 */
+/** @} (end addtogroup PltMem)              */
+/** @} (end addtogroup CircularAllocator)   */
 
 #endif /* __PLTMEMCA_CIRCULAR_ALLOCATOR_H__       */

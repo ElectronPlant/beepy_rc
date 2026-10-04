@@ -21,6 +21,9 @@
 /** @addtogroup Target
  *    @{
  */
+/** @addtogroup Nucleo
+ *    @{
+ */
 
 /********************************************************************************
  * RC
@@ -837,3 +840,6 @@ const RCSUBS_AUX_INPUTS_T Target_AuxSubs[TARGET_NUM_AUX_PERIPHERALS] = {
         .Curve = {.Name = CURVES_NAME_THRESHOLD, .Params = {0.0f}},
     },
 };
+
+/** @} (end addtogroup Target)      */
+/** @} (end addtogroup Nucleo)      */

@@ -2,12 +2,12 @@
  * @file     serial.c
  * @brief    Generic implementation of Rx the serial interface.
  *
- * @ingroup   Main
+ * @ingroup   Stm32Serial
  * @version   V0.0
  * @author    David Arnaiz
  * @copyright 2025 David Arnaiz
  *
- * This file is part of BeepyRC <TODO: link to repo>.
+ * This file is part of BeepyRC (https://github.com/ElectronPlant/beepy_rc).
  * This project is licensed under the GNU General Public License v3.0 license.
  *
  * @note    Module Prefix: Serial_
@@ -26,8 +26,16 @@
 #include "serial.h"
 
 
-/** @addtogroup HAL
- *   @{
+/** @addtogroup Port
+ *    @{
+ */
+
+/** @addtogroup Serial
+ *    @{
+ */
+
+/** @addtogroup SerialStm32
+ *    @{
  */
 
 
@@ -222,4 +230,6 @@ bool_t Serial_IsIrqEnabled(SERIAL_HANDLER_T ser) {
 }
 
 
-/** @} (end addtogroup HAL)   */
+/** @} (end addtogroup SerialStm32) */
+/** @} (end addtogroup Serial)      */
+/** @} (end addtogroup Port)        */

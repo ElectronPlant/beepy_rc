@@ -2,7 +2,7 @@
  * @file  control_inputs.h
  * @brief Process RC subscriptions.
  *
- * @ingroup   RcInputs
+ * @ingroup   ControlInputs
  * @version   V0.0
  * @author    David Arnaiz
  * @copyright 2026 David Arnaiz
@@ -18,6 +18,19 @@
 
 #include "model.h"
 #include "std_frame.h"
+
+
+/** @addtogroup App
+ *    @{
+ */
+
+/** @addtogroup Controller
+ *    @{
+ */
+
+/** @addtogroup ControlInputs
+ *    @{
+ */
 
 /********************************************************************************
  * Defines
@@ -44,5 +57,9 @@ void   CIn_RunAux(MODEL_RC_SETPOINT_T* p_rc_setpoint);
 /* RC task */
 void CIn_HandleRcFrame(STD_FRAME_T* p_rc_frame);
 
+
+/** @} (end addtogroup ControlInputs)   */
+/** @} (end addtogroup Controller)      */
+/** @} (end addtogroup App)             */
 
 #endif /* __CONTROL_INPUTS_H__   */

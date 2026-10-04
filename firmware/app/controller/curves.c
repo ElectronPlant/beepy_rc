@@ -20,6 +20,10 @@
 #include "std_frame.h"
 
 
+/** @addtogroup App
+ *    @{
+ */
+
 /** @addtogroup Controller
  *    @{
  */
@@ -153,5 +157,6 @@ bool_t Curves_Analog2Dig(float32_t v) {
 }
 
 
-/** @} (end addtogroup Curves)  */
+/** @} (end addtogroup Curves)      */
 /** @} (end addtogroup Controller)  */
+/** @} (end addtogroup App)         */

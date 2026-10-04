@@ -34,6 +34,10 @@
 #include "supervisor.h"
 
 
+/** @addtogroup App
+ *   @{
+ */
+
 /** @addtogroup Rc
  *   @{
  */
@@ -552,4 +556,6 @@ static void Rc_RxErrorHandler(void) {
     Rc_NotifyFromIsr(&msg);
 }
 
-/** @} (end addtogroup Rc)   */
+
+/** @} (end addtogroup Rc)          */
+/** @} (end addtogroup App)         */

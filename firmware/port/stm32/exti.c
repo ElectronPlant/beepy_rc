@@ -2,15 +2,15 @@
  * @file  exti.c
  * @brief STM port for the external interrupts.
  *
- * @ingroup   Main
+ * @ingroup   ExtiStm32
  * @version   V0.0
  * @author    David Arnaiz
  * @copyright 2026 David Arnaiz
  *
- * This file is part of BeepyRC <TODO: link to repo>.
+ * This file is part of BeepyRC (https://github.com/ElectronPlant/beepy_rc).
  * This project is licensed under the GNU General Public License v3.0 license.
  *
- * @note    Module Prefix: Todo_
+ * @note    Module Prefix: Exti_
  */
 
 #include "plt_assert.h"
@@ -27,14 +27,17 @@
 #include "gpio.h"
 
 
-/** @addtogroup Ports
- *    @{
+/** @addtogroup Port
+ *   @{
  */
 
-/** @addtogroup EXTI
- *    @{
+/** @addtogroup Exti
+ *   @{
  */
 
+/** @addtogroup ExtiStm32
+ *   @{
+ */
 
 /********************************************************************************
  * Defines
@@ -498,5 +501,6 @@ void EXTI15_10_IRQHandler(void) {
 }
 
 
-/** @} (end addtogroup EXTI)    */
-/** @} (end addtogroup Ports)   */
+/** @} (end addtogroup ExtiStm32) */
+/** @} (end addtogroup Exti)      */
+/** @} (end addtogroup Port)      */

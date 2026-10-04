@@ -2,7 +2,7 @@
  * @file  common_rx_bus.c
  * @brief Abstraction layer for the Rx bus.
  *
- * @ingroup   Main
+ * @ingroup   ComRxBus
  * @version   V0.0
  * @author    David Arnaiz
  * @copyright 2025 David Arnaiz
@@ -22,6 +22,10 @@
 #include "common_rx_bus.h"
 
 
+/** @addtogroup App
+ *   @{
+ */
+
 /** @addtogroup Rc
  *   @{
  */
@@ -33,7 +37,6 @@
 /** @addtogroup ComRxBus
  *   @{
  */
-
 
 /********************************************************************************
  * Defines
@@ -84,6 +87,7 @@ COM_RX_BUS_HANDLER_T ComRxBus_GetBusHandler(void) {
     return ComRxBus_BusHandler;
 }
 
-/** @} (end addtogroup ComRxBus)  */
-/** @} (end addtogroup RxDriver)  */
-/** @} (end addtogroup Rc)        */
+/** @} (end addtogroup ComRxBus)    */
+/** @} (end addtogroup RxDriver)    */
+/** @} (end addtogroup Rc)          */
+/** @} (end addtogroup App)         */

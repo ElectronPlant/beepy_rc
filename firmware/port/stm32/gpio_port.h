@@ -2,12 +2,12 @@
  * @file  gpio_port.h
  * @brief STM32 specific defines for the GPIOs.
  *
- * @ingroup   Stm32GpioPort
+ * @ingroup   GpioStm32
  * @version   V0.0
  * @author    David Arnaiz
  * @copyright 2026 David Arnaiz
  *
- * This file is part of BeepyRC <TODO: link to repo>.
+ * This file is part of BeepyRC (https://github.com/ElectronPlant/beepy_rc).
  * This project is licensed under the GNU General Public License v3.0 license.
  */
 
@@ -17,6 +17,19 @@
 #include "plt_types.h"
 
 #include "hal_includes.h"
+
+
+/** @addtogroup Port
+ *   @{
+ */
+
+/** @addtogroup Gpio
+ *   @{
+ */
+
+/** @addtogroup GpioStm32
+ *   @{
+ */
 
 
 /********************************************************************************
@@ -42,5 +55,9 @@ typedef struct {
  * Function Prototypes
  ********************************************************************************/
 
+
+/** @} (end addtogroup GpioStm32) */
+/** @} (end addtogroup Gpio)      */
+/** @} (end addtogroup Port)      */
 
 #endif /* __GPIO_PORT_H__       */

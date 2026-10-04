@@ -2,12 +2,12 @@
  * @file      pwm_timer.c
  * @brief     STM32 port for the PWM timer driver.
  *
- * @ingroup   PwmTim
+ * @ingroup   PwmTimerStm32
  * @version   V0.0
  * @author    David Arnaiz
  * @copyright 2025 David Arnaiz
  *
- * This file is part of BeepyRC <TODO: link to repo>.
+ * This file is part of BeepyRC (https://github.com/ElectronPlant/beepy_rc).
  * This project is licensed under the GNU General Public License v3.0 license.
  *
  * @note Module Prefix: PwmTim_
@@ -23,11 +23,15 @@
 #include "pwm_timer.h"
 
 
-/** @addtogroup PortsStm32
+/** @addtogroup Port
  *   @{
  */
 
 /** @addtogroup PwmTimer
+ *   @{
+ */
+
+/** @addtogroup PwmTimerStm32
  *   @{
  */
 
@@ -585,5 +589,6 @@ void PwmTim_StopTone(PWM_TIM_HANDLER_T pwm, PWM_TIM_CHANNELS_T chn) {
     PwmTim_SetCompareValue(pwm, chn, 0);
 }
 
-/** @} (end addtogroup PwmTimer)   */
-/** @} (end addtogroup PortsStm32)     */
+/** @} (end addtogroup PwmTimerStm32) */
+/** @} (end addtogroup PwmTimer)      */
+/** @} (end addtogroup Port)          */

@@ -27,6 +27,11 @@
 #include "serial.h"
 #include "std_frame.h"
 
+
+/** @addtogroup App
+ *   @{
+ */
+
 /** @addtogroup Rc
  *   @{
  */
@@ -438,6 +443,7 @@ void Sbus_DebugFrame(RXINT_RX_BUFFER_INFO_T* p_buffer_info) {
     printf("-----------------\n");
 }
 
-/** @} (end addtogroup Sbus)   */
-/** @} (end addtogroup RxDriver)   */
-/** @} (end addtogroup Rc)   */
+/** @} (end addtogroup Sbus)        */
+/** @} (end addtogroup RxDriver)    */
+/** @} (end addtogroup Rc)          */
+/** @} (end addtogroup App)         */

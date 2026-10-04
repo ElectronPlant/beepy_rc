@@ -18,6 +18,10 @@
 #include <stdint.h>
 #include <stdio.h>
 
+/** \addtogroup Plt
+ *   @{
+ */
+
 /** \addtogroup PltTypes
  *   @{
  */
@@ -41,5 +45,6 @@ typedef uint8_t bool_t;
 
 
 /** @} (end addtogroup PltTypes)  */
+/** @} (end addtogroup Plt)       */
 
-#endif /* __PLT_TYPES_H__      */
+#endif /* __PLT_TYPES_H__         */

@@ -17,6 +17,18 @@
 #include "plt_types.h"
 
 
+/** @addtogroup App
+ *    @{
+ */
+
+/** @addtogroup Controller
+ *    @{
+ */
+
+/** @addtogroup Curves
+ *    @{
+ */
+
 /********************************************************************************
  * Defines
  ********************************************************************************/
@@ -60,5 +72,10 @@ typedef struct CURVES_S {
  ********************************************************************************/
 void   Curves_ApplyCurve(const CURVES_T* p_curve, float32_t input, float32_t* p_output);
 bool_t Curves_Analog2Dig(float32_t v);
+
+
+/** @} (end addtogroup Curves)      */
+/** @} (end addtogroup Controller)  */
+/** @} (end addtogroup App)         */
 
 #endif /* __CURVES_H__       */

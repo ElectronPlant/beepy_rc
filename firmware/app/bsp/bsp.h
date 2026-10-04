@@ -2,7 +2,7 @@
  * @file      bsp.h
  * @brief     Board Support Packet - Enabling basic components of the board.
  *
- * @ingroup   Main
+ * @ingroup   Bsp
  * @version   V0.0
  * @author    David Arnaiz
  * @copyright 2025 David Arnaiz
@@ -15,6 +15,15 @@
 #define __BSP_H__
 
 #include "plt_types.h"
+
+
+/** @addtogroup App
+ *   @{
+ */
+
+/** @addtogroup Bsp
+ *   @{
+ */
 
 /********************************************************************************
  * Defines
@@ -33,5 +42,8 @@
  ********************************************************************************/
 bool_t BSP_Init(void);
 
+
+/** @} (end addtogroup Bsp)   */
+/** @} (end addtogroup App)   */
 
 #endif /* __BSP_H__       */

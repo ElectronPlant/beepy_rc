@@ -55,11 +55,22 @@ nav:
     - About:
         - about/credits.md
     - Source:
-        - template/files.md
-        - Modules:
-            - Main: template/group___main.md
+        - Files: template/files.md
+        - Groups:
+            - Libs: template/group__Libs.md
+            - Targets: template/group__Target.md
+            - Ports: template/group__Port.md
+            - App: template/group__App.md
+        - App Modules:
+            - RC: template/group__Rc.md
+            - Controller: template/group__Controller.md
+            - Supervisor: template/group__Supervisor.md
+            - BSP: template/group__Bsp.md
+            - Main: template/group__Main.md
         - Platform:
-            - Utils: template/group___plt_utils.md
-            - Types: template/group___plt_types.md
-            - Assert: template/group___plt_assert.md
+            - Utils: template/group__PltUtils.md
+            - Types: template/group__PltTypes.md
+            - Assert: template/group__PltAssert.md
+            - Defines: template/group__PltDefines.md
+            - Memory: template/group__PltMem.md
 

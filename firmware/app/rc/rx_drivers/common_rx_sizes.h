@@ -2,7 +2,7 @@
  * @file  common_rx_sizes.h
  * @brief Abstraction layer for the RX driver buffer and channel sizes.
  *
- * @ingroup   Rc
+ * @ingroup   ComRxSizes
  * @version   V0.0
  * @author    David Arnaiz
  * @copyright 2025 David Arnaiz
@@ -17,6 +17,22 @@
 #include "plt_types.h"
 #include "target.h"
 
+
+/** @addtogroup App
+ *   @{
+ */
+
+/** @addtogroup Rc
+ *   @{
+ */
+
+/** @addtogroup RxDriver
+ *   @{
+ */
+
+/** @addtogroup ComRxSizes
+ *   @{
+ */
 
 /********************************************************************************
  * Driver definitions
@@ -41,4 +57,9 @@
 #endif
 
 
-#endif /* __COMMON_RX_SIZES_H__       */
+/** @} (end addtogroup ComRxSizes)  */
+/** @} (end addtogroup RxDriver)    */
+/** @} (end addtogroup Rc)          */
+/** @} (end addtogroup App)         */
+
+#endif /* __COMMON_RX_SIZES_H__     */

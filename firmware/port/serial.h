@@ -2,7 +2,7 @@
  * @file     serial.h
  * @brief    Generic Serial implementation.
  *
- * @ingroup   Main
+ * @ingroup   Serial
  * @version   V0.0
  * @author    David Arnaiz
  * @copyright 2025 David Arnaiz
@@ -15,6 +15,15 @@
 #define __SERIAL_H__
 
 #include "plt_types.h"
+
+
+/** @addtogroup Port
+ *    @{
+ */
+
+/** @addtogroup Serial
+ *    @{
+ */
 
 /********************************************************************************
  * Defines
@@ -152,5 +161,8 @@ bool_t Serial_IsIrqEnabled(SERIAL_HANDLER_T ser);
         } \
     }
 
+
+/** @} (end addtogroup Port)        */
+/** @} (end addtogroup Serial)      */
 
 #endif /* __SERIAL_H__       */

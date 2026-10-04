@@ -20,6 +20,14 @@
 #include "gpio.h"
 
 
+/** @addtogroup Libs
+ *    @{
+ */
+
+/** @addtogroup Button
+ *    @{
+ */
+
 /********************************************************************************
  * Defines
  ********************************************************************************/
@@ -63,5 +71,9 @@ bool_t Button_Start(BUTTON_HANDLER_T button, BUTTON_CALLBACK_FUNC callback_func)
 bool_t Button_Stop(BUTTON_HANDLER_T button);
 void   Button_ResetTimer(BUTTON_HANDLER_T button);
 bool_t Button_Confirm(BUTTON_HANDLER_T button);
+
+
+/** @} (end addtogroup Button)  */
+/** @} (end addtogroup Libs)    */
 
 #endif /* __BUTTON_H__       */

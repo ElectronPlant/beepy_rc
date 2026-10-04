@@ -2,7 +2,7 @@
  * @file  exti.h
  * @brief External Interrupts.
  *
- * @ingroup   Main
+ * @ingroup   Exti
  * @version   V0.0
  * @author    David Arnaiz
  * @copyright 2026 David Arnaiz
@@ -18,6 +18,14 @@
 
 #include "gpio.h"
 
+
+/** @addtogroup Port
+ *    @{
+ */
+
+/** @addtogroup Exti
+ *    @{
+ */
 
 /********************************************************************************
  * Defines
@@ -71,5 +79,8 @@ bool_t Exti_Enable(
  * @return DEF_TRUE if successful, DEF_FALSE otherwise.
  */
 bool_t Exti_Disable(GPIO_HANDLER_T gpio);
+
+/** @} (end addtogroup Port)        */
+/** @} (end addtogroup Exti)        */
 
 #endif /* __EXTI_H__       */

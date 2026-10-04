@@ -2,7 +2,7 @@
  * @file  supervisor.h
  * @brief Supervisor task to control User Interface (UI) and internal state.
  *
- * @ingroup   Main
+ * @ingroup   Supervisor
  * @version   V0.0
  * @author    David Arnaiz
  * @copyright 2026 David Arnaiz
@@ -16,6 +16,14 @@
 
 #include "plt_types.h"
 
+
+/** @addtogroup App
+ *    @{
+ */
+
+/** @addtogroup Supervisor
+ *    @{
+ */
 
 /********************************************************************************
  * Defines
@@ -45,5 +53,8 @@ void Super_NotifyArmed(void);
 void Super_NotifyDisarmed(void);
 void Super_NotifyControllerError(void);
 
+
+/** @} (end addtogroup Supervisor)  */
+/** @} (end addtogroup App)         */
 
 #endif /* __SUPERVISOR_H__      */

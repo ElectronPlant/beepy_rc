@@ -19,6 +19,14 @@
 #include "plt_types.h"
 
 
+/** @addtogroup Libs
+ *    @{
+ */
+
+/** @addtogroup Peripherals
+ *    @{
+ */
+
 /********************************************************************************
  * Defines
  ********************************************************************************/
@@ -117,5 +125,9 @@ typedef struct PER_PERIPHERAL_S {
 bool_t Per_Init(const PER_PERIPHERAL_T* p_per);
 void   Per_Start(const PER_PERIPHERAL_T* p_per);
 void   Per_ApplySetpoint(const PER_PERIPHERAL_T* p_per, float32_t setpoint);
+
+
+/** @} (end addtogroup Peripherals)  */
+/** @} (end addtogroup Libs)  */
 
 #endif /* __PERIPHERALS_H__       */

@@ -2,12 +2,12 @@
  * @file  encoder_port.h
  * @brief STM32 specific defines for the serial interface.
  *
- * @ingroup   SerialPortStm32
+ * @ingroup   SerialStm32
  * @version   V0.0
  * @author    David Arnaiz
  * @copyright 2025 David Arnaiz
  *
- * This file is part of BeepyRC <TODO: link to repo>.
+ * This file is part of BeepyRC (https://github.com/ElectronPlant/beepy_rc).
  * This project is licensed under the GNU General Public License v3.0 license.
  */
 
@@ -17,6 +17,19 @@
 #include "plt_types.h"
 
 #include "hal_includes.h"
+
+
+/** @addtogroup Port
+ *    @{
+ */
+
+/** @addtogroup Serial
+ *    @{
+ */
+
+/** @addtogroup SerialStm32
+ *    @{
+ */
 
 
 /********************************************************************************
@@ -47,5 +60,10 @@ typedef struct {
     uint32_t      RxClk;
     void (*RxClkEnFn_Ptr)(uint32_t);
 } SERIAL_PERIPHERAL_PORT_T;
+
+
+/** @} (end addtogroup SerialStm32) */
+/** @} (end addtogroup Serial)      */
+/** @} (end addtogroup Port)        */
 
 #endif /* __SERIAL_PORT_H__       */

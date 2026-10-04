@@ -2,7 +2,7 @@
  * @file  rx_interface.h
  * @brief Common interface for the Rx protocols.
  *
- * @ingroup   Rc
+ * @ingroup   RxInterface
  * @version   V0.0
  * @author    David Arnaiz
  * @copyright 2025 David Arnaiz
@@ -21,6 +21,22 @@
 #include "common_rx_bus.h"
 #include "std_frame.h"
 
+
+/** @addtogroup App
+ *   @{
+ */
+
+/** @addtogroup Rc
+ *   @{
+ */
+
+/** @addtogroup RxDriver
+ *   @{
+ */
+
+/** @addtogroup RxInterface
+ *   @{
+ */
 
 /********************************************************************************
  * Defines
@@ -190,4 +206,10 @@ typedef struct {
  * Function Prototypes
  ********************************************************************************/
 
-#endif /* __RX_INTERFACE_H__       */
+
+/** @} (end addtogroup RxInterface) */
+/** @} (end addtogroup RxDriver)    */
+/** @} (end addtogroup Rc)          */
+/** @} (end addtogroup App)         */
+
+#endif /* __RX_INTERFACE_H__        */

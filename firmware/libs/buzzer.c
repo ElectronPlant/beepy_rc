@@ -28,6 +28,7 @@
 #include "buzzer.h"
 #include "pwm_timer.h"
 
+
 /** @addtogroup Libs
  *   @{
  */
@@ -35,7 +36,6 @@
 /** @addtogroup Buzzer
  *    @{
  */
-
 
 /********************************************************************************
  * Defines

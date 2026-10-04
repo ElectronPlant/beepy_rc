@@ -2,7 +2,7 @@
  * @file  supervisor_defines.h
  * @brief Generic defines for the supervisor task.
  *
- * @ingroup   Supervisor
+ * @ingroup   SupervisorDefs
  * @version   V0.0
  * @author    David Arnaiz
  * @copyright 2026 David Arnaiz
@@ -17,6 +17,18 @@
 #include "plt_types.h"
 #include "plt_utils.h"
 
+
+/** @addtogroup App
+ *    @{
+ */
+
+/** @addtogroup Supervisor
+ *    @{
+ */
+
+/** @addtogroup SupervisorDefs
+ *    @{
+ */
 
 /********************************************************************************
  * Defines
@@ -75,4 +87,9 @@ static inline bool_t SuperDef_IsAnyErrorSet(uint32_t map) {
         || PLT_UTILS_IS_BIT_OFFSET_SET(map, SUPERDEF_CONTEXT_OFFSET_CONTROLLER_ERROR);
 }
 
-#endif /* __SUPERVISOR_DEFINES_H__       */
+
+/** @} (end addtogroup SupervisorDefs)  */
+/** @} (end addtogroup Supervisor)      */
+/** @} (end addtogroup App)             */
+
+#endif /* __SUPERVISOR_DEFINES_H__      */

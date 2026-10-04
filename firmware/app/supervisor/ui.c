@@ -29,14 +29,17 @@
 #include "ui.h"
 
 
+/** @addtogroup App
+ *    @{
+ */
+
 /** @addtogroup Supervisor
  *    @{
  */
 
-/** @addtogroup UI
+/** @addtogroup Ui
  *    @{
  */
-
 
 /********************************************************************************
  * Defines
@@ -266,5 +269,6 @@ void Ui_PowerOff(void) {
     Gpio_Write(Target_BatEnable, GPIO_VALUE_HIGH);
 }
 
-/** @} (end addtogroup UI)  */
+/** @} (end addtogroup Ui)          */
 /** @} (end addtogroup Supervisor)  */
+/** @} (end addtogroup App)         */

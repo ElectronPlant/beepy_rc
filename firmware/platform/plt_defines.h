@@ -14,9 +14,20 @@
 #ifndef __PLT_DEFINES_H__
 #define __PLT_DEFINES_H__
 
+/** \addtogroup Plt
+ *   @{
+ */
+
+/** \addtogroup PltDefines
+ *   @{
+ */
+
 /******************************************
  * Configs
  ******************************************/
 #define PLT_DEFINES_USE_FREE_RTOS (1) /* Set to 1 if freeRTOS is used, 0 otherwise*/
 
-#endif /* __PLT_DEFINES_H__       */
+/** @} (end addtogroup PltDefines)   */
+/** @} (end addtogroup Plt)          */
+
+#endif /* __PLT_DEFINES_H__          */

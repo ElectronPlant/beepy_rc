@@ -21,6 +21,14 @@
 #include "pwm_timer.h"
 
 
+/** @addtogroup Libs
+ *   @{
+ */
+
+/** @addtogroup Motor
+ *    @{
+ */
+
 /********************************************************************************
  * Defines
  ********************************************************************************/
@@ -62,5 +70,8 @@ void   Motor_Stop(MOTOR_HANDLER_T mot);
 void Motor_SetSpeed(MOTOR_HANDLER_T mot, float32_t speed);
 void Motor_GetEncoderCnt(MOTOR_HANDLER_T mot, uint32_t* p_cnt, MOTOR_DIRECTION_T* p_enc_dir);
 
+
+/** @} (end addtogroup Motor)   */
+/** @} (end addtogroup Libs)    */
 
 #endif /* __MOTOR_H__       */

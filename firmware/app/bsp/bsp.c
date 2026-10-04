@@ -6,7 +6,7 @@
  *              @li The user button, which will trigger an interrupt. By default toggling the
  *                  onboard LED.
  *
- * @ingroup   BSP
+ * @ingroup   Bsp
  * @version   V0.0
  * @author    David Arnaiz
  * @copyright 2025 David Arnaiz
@@ -31,11 +31,13 @@
 
 #include "target.h"
 
-
-/** @addtogroup BSP
+/** @addtogroup App
  *   @{
  */
 
+/** @addtogroup Bsp
+ *   @{
+ */
 
 /********************************************************************************
  * Defines
@@ -143,4 +145,6 @@ int _write(int file, char* ptr, int len) {
     return len;
 }
 
-/** @} (end addtogroup BSP)   */
+
+/** @} (end addtogroup Bsp)   */
+/** @} (end addtogroup App)   */

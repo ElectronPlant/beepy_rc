@@ -17,6 +17,14 @@
 #include "plt_types.h"
 
 
+/** @addtogroup App
+ *    @{
+ */
+
+/** @addtogroup Controller
+ *    @{
+ */
+
 /********************************************************************************
  * Defines
  ********************************************************************************/
@@ -34,5 +42,9 @@
  ********************************************************************************/
 bool_t Ctrlr_Init(void);
 void   Ctrlr_HandleButtonDisarm(void);
+
+
+/** @} (end addtogroup Controller)      */
+/** @} (end addtogroup App)             */
 
 #endif /* __CONTROLLER_H__  */

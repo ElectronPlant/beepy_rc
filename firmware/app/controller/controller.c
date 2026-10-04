@@ -35,10 +35,13 @@
 
 #include "target.h"
 
-/** @addtogroup Controller
+/** @addtogroup App
  *    @{
  */
 
+/** @addtogroup Controller
+ *    @{
+ */
 
 /********************************************************************************
  * Defines
@@ -535,4 +538,5 @@ static void Ctrlr_TaskMain(PLT_UTILS_UNUSED void* parameters) {
     }
 }
 
-/** @} (end addtogroup Controller)  */
+/** @} (end addtogroup Controller)      */
+/** @} (end addtogroup App)             */

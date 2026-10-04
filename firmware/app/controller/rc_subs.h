@@ -15,7 +15,7 @@
  *
  *        Both control input types are handled using different subscription structs.
  *
- * @ingroup   RcInputs
+ * @ingroup   RcSubs
  * @version   V0.0
  * @author    David Arnaiz
  * @copyright 2026 David Arnaiz
@@ -31,6 +31,19 @@
 
 #include "curves.h"
 #include "peripherals.h"
+
+
+/** @addtogroup App
+ *    @{
+ */
+
+/** @addtogroup Controller
+ *    @{
+ */
+
+/** @addtogroup RcSubs
+ *    @{
+ */
 
 /********************************************************************************
  * Defines
@@ -91,5 +104,10 @@ typedef struct RCSUBS_AUX_INPUTS_S {
 /********************************************************************************
  * Function Prototypes
  ********************************************************************************/
+
+
+/** @} (end addtogroup RcSubs)      */
+/** @} (end addtogroup Controller)  */
+/** @} (end addtogroup App)         */
 
 #endif /* __RC_SUBS_H__   */

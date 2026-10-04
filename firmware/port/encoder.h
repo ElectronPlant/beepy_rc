@@ -2,7 +2,7 @@
  * @file  encoder.h
  * @brief Driver for the motor encoders.
  *
- * @ingroup   Main
+ * @ingroup   Encoder
  * @version   V0.0
  * @author    David Arnaiz
  * @copyright 2025 David Arnaiz
@@ -16,6 +16,14 @@
 
 #include "plt_types.h"
 
+
+/** @addtogroup Port
+ *    @{
+ */
+
+/** @addtogroup Encoder
+ *    @{
+ */
 
 /********************************************************************************
  * Defines
@@ -119,5 +127,8 @@ void Enc_ResetCount(ENC_HANDLER_T enc);
  */
 ENC_DIRECTION_T Enc_GetDirection(ENC_HANDLER_T enc);
 
+
+/** @} (end addtogroup Port)        */
+/** @} (end addtogroup Encoder)     */
 
 #endif /* __ENCODER_H__       */

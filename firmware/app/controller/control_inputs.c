@@ -27,6 +27,10 @@
 #include "peripherals.h"
 #include "std_frame.h"
 
+/** @addtogroup App
+ *    @{
+ */
+
 /** @addtogroup Controller
  *    @{
  */
@@ -34,7 +38,6 @@
 /** @addtogroup ControlInputs
  *    @{
  */
-
 
 /********************************************************************************
  * Defines
@@ -207,5 +210,6 @@ void CIn_HandleRcFrame(STD_FRAME_T* p_rc_frame) {
 }
 
 
-/** @} (end addtogroup ControlInputs)  */
-/** @} (end addtogroup Controller)  */
+/** @} (end addtogroup ControlInputs)   */
+/** @} (end addtogroup Controller)      */
+/** @} (end addtogroup App)             */

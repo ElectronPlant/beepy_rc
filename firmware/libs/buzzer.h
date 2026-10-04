@@ -21,6 +21,14 @@
 #include "pwm_timer.h"
 
 
+/** @addtogroup Libs
+ *   @{
+ */
+
+/** @addtogroup Buzzer
+ *    @{
+ */
+
 /********************************************************************************
  * Defines
  ********************************************************************************/
@@ -50,5 +58,9 @@ void   Buzz_Stop(BUZZER_HANDLER_T buzz);
 
 void Buzz_PlayTone(BUZZER_HANDLER_T buzz, float32_t freq_hz);
 void Buzz_StopTone(BUZZER_HANDLER_T buzz);
+
+
+/** @} (end addtogroup Buzzer)   */
+/** @} (end addtogroup Libs)     */
 
 #endif /* __BUZZER_H__       */

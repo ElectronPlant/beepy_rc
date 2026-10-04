@@ -16,6 +16,15 @@
 
 #include "plt_types.h"
 
+
+/** @addtogroup Port
+ *    @{
+ */
+
+/** @addtogroup PwmTimer
+ *    @{
+ */
+
 /********************************************************************************
  * Defines
  ********************************************************************************/
@@ -201,5 +210,9 @@ void PwmTim_SetTone(PWM_TIM_HANDLER_T pwm, PWM_TIM_CHANNELS_T chn, float32_t fre
  * @param  chn  Channel to update.
  */
 void PwmTim_StopTone(PWM_TIM_HANDLER_T pwm, PWM_TIM_CHANNELS_T chn);
+
+
+/** @} (end addtogroup Port)        */
+/** @} (end addtogroup PwmTimer)    */
 
 #endif /* __PWM_TIM_H__       */

@@ -2,12 +2,12 @@
  * @file  encoder_port.h
  * @brief STM32 specific defines for the encoders.
  *
- * @ingroup   DriveEncoderPort
+ * @ingroup   EncoderStm32
  * @version   V0.0
  * @author    David Arnaiz
  * @copyright 2025 David Arnaiz
  *
- * This file is part of BeepyRC <TODO: link to repo>.
+ * This file is part of BeepyRC (https://github.com/ElectronPlant/beepy_rc).
  * This project is licensed under the GNU General Public License v3.0 license.
  */
 
@@ -18,6 +18,18 @@
 
 #include "hal_includes.h"
 
+
+/** @addtogroup Port
+ *   @{
+ */
+
+/** @addtogroup Encoder
+ *   @{
+ */
+
+/** @addtogroup EncoderStm32
+ *   @{
+ */
 
 /********************************************************************************
  * Defines
@@ -46,4 +58,9 @@ typedef struct {
     void (*Gpio2ClkEnFn_Ptr)(uint32_t);
 } ENC_PERIPHERAL_PORT_T;
 
-#endif /* __ENCODER_PORT_H__       */
+
+/** @} (end addtogroup EncoderStm32) */
+/** @} (end addtogroup Encoder)      */
+/** @} (end addtogroup Port)         */
+
+#endif /* __ENCODER_PORT_H__         */

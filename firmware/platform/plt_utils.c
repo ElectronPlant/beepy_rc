@@ -21,11 +21,11 @@
 #include "FreeRTOSConfig.h"
 #include "task.h"
 
-/** @addtogroup Platform
+/** @addtogroup Plt
  *    @{
  */
 
-/** @addtogroup Utils
+/** @addtogroup PltUtils
  *    @{
  */
 
@@ -99,5 +99,5 @@ uint32_t PltUtils_GetMillis(void) {
 }
 
 
-/** @} (end addtogroup Utils)  */
-/** @} (end addtogroup Platform)  */
+/** @} (end addtogroup PltUtils)  */
+/** @} (end addtogroup Plt)       */

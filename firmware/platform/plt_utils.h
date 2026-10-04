@@ -24,6 +24,10 @@
     #include "task.h"
 #endif /* USE_FREE_RTOS == 1 */
 
+/** \addtogroup Plt
+ *   @{
+ */
+
 /** \addtogroup PltUtils
  *   @{
  */
@@ -229,4 +233,6 @@ uint32_t PltUtils_GetMillis(void);
 #define PLT_UTILS_STM_ERR_STATUS_TO_PLT(X) (SUCCESS == X ? DEF_TRUE : DEF_FALSE)
 
 /** @} (end addtogroup PltUtils)  */
-#endif /* __PLT_UTILS_H__       */
+/** @} (end addtogroup Plt)       */
+
+#endif /* __PLT_UTILS_H__         */

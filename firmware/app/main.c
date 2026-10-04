@@ -1,21 +1,19 @@
-/* USER CODE BEGIN Header */
 /**
- ******************************************************************************
- * @file           : main.c
- * @brief          : Main program body
- ******************************************************************************
- * @attention
+ * @file      main.c
+ * @brief     Main.
  *
- * Copyright (c) 2025 STMicroelectronics.
- * All rights reserved.
+ * @ingroup   Main
+ * @version   V0.0
+ * @author    David Arnaiz
+ * @copyright 2025 David Arnaiz
  *
- * This software is licensed under terms that can be found in the LICENSE file
- * in the root directory of this software component.
- * If no LICENSE file comes with this software, it is provided AS-IS.
+ * This file is part of BeepyRC (https://github.com/ElectronPlant/beepy_rc).
+ * This project is licensed under the GNU General Public License v3.0 license.
  *
- ******************************************************************************
+ * @note Module Prefix: Main_
+ *
  */
-/* Includes ------------------------------------------------------------------*/
+
 #include "FreeRTOS.h"
 #include "string.h"
 #include "task.h"
@@ -28,13 +26,17 @@
 #include "supervisor.h"
 
 
-/* Private includes ----------------------------------------------------------*/
-/* Private typedef -----------------------------------------------------------*/
-/* Private define ------------------------------------------------------------*/
-/* Private macro -------------------------------------------------------------*/
-/* Private variables ---------------------------------------------------------*/
-/* Private function prototypes -----------------------------------------------*/
-/* Private user code ---------------------------------------------------------*/
+/** @addtogroup App
+ *   @{
+ */
+
+/** @addtogroup Main
+ *   @{
+ */
+
+/********************************************************************************
+ * Function Implementations
+ ********************************************************************************/
 
 /**
  * @brief Initializes the hardware components.
@@ -104,3 +106,6 @@ void vApplicationStackOverflowHook(TaskHandle_t xTask, char* pcTaskName) {
     (void)pcTaskName;
     PLT_UNREACHABLE;
 }
+
+/** @} (end addtogroup Main)   */
+/** @} (end addtogroup App)    */

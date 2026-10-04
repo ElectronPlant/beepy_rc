@@ -2,7 +2,7 @@
  * @file  sound.h
  * @brief Module to play sounds using the board's buzzer.
  *
- * @ingroup   Main
+ * @ingroup   Sound
  * @version   V0.0
  * @author    David Arnaiz
  * @copyright 2026 David Arnaiz
@@ -16,6 +16,18 @@
 
 #include "plt_types.h"
 
+
+/** @addtogroup App
+ *    @{
+ */
+
+/** @addtogroup Supervisor
+ *    @{
+ */
+
+/** @addtogroup Sound
+ *    @{
+ */
 
 /********************************************************************************
  * Defines
@@ -45,5 +57,9 @@ typedef enum SOUND_MELODIES_E {
 bool_t Sound_Init(void);
 void   Sound_StartMelody(SOUND_MELODIES_T melody_type);
 
+
+/** @} (end addtogroup Sound)       */
+/** @} (end addtogroup Supervisor)  */
+/** @} (end addtogroup App)         */
 
 #endif /* __SOUND_H__       */

@@ -2,12 +2,12 @@
  * @file  todo.c
  * @brief TODO
  *
- * @ingroup   GPIO
+ * @ingroup   GpioStm32
  * @version   V0.0
  * @author    David Arnaiz
  * @copyright 2026 David Arnaiz
  *
- * This file is part of BeepyRC <TODO: link to repo>.
+ * This file is part of BeepyRC (https://github.com/ElectronPlant/beepy_rc).
  * This project is licensed under the GNU General Public License v3.0 license.
  *
  * @note    Module Prefix: Todo_
@@ -25,12 +25,16 @@
 #include "gpio.h"
 
 
-/** @addtogroup Ports
- *    @{
+/** @addtogroup Port
+ *   @{
  */
 
-/** @addtogroup GPIO
- *    @{
+/** @addtogroup Gpio
+ *   @{
+ */
+
+/** @addtogroup GpioStm32
+ *   @{
  */
 
 
@@ -164,5 +168,7 @@ GPIO_VALUE_T Gpio_Read(GPIO_HANDLER_T gpio) {
     return reading == 0x00000000U ? GPIO_VALUE_LOW : GPIO_VALUE_HIGH;
 }
 
-/** @} (end addtogroup GPIO)    */
-/** @} (end addtogroup Ports)   */
+
+/** @} (end addtogroup GpioStm32) */
+/** @} (end addtogroup Gpio)      */
+/** @} (end addtogroup Port)      */

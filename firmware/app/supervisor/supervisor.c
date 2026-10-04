@@ -2,7 +2,7 @@
  * @file  supervisor.c
  * @brief Supervisor task to control User Interface (UI) and internal state.
  *
- * @ingroup   Main
+ * @ingroup   Supervisor
  * @version   V0.0
  * @author    David Arnaiz
  * @copyright 2026 David Arnaiz
@@ -29,10 +29,13 @@
 #include "controller.h"
 
 
-/** @addtogroup Supervisor
+/** @addtogroup App
  *    @{
  */
 
+/** @addtogroup Supervisor
+ *    @{
+ */
 
 /********************************************************************************
  * Defines
@@ -377,4 +380,6 @@ static void Super_TaskMain(PLT_UTILS_UNUSED void* parameters) {
     }
 }
 
-/** @} (end addtogroup supervisor)  */
+
+/** @} (end addtogroup Supervisor)  */
+/** @} (end addtogroup App)         */

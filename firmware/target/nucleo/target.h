@@ -19,6 +19,14 @@
 /* BSP */
 #include "bsp.h"
 
+/** @addtogroup Target
+ *    @{
+ */
+/** @addtogroup Nucleo
+ *    @{
+ */
+
+
 /********************************************************************************
  * Defines
  ********************************************************************************/
@@ -133,5 +141,7 @@ extern const RCSUBS_AUX_INPUTS_T Target_AuxSubs[TARGET_NUM_AUX_PERIPHERALS];
  * API
  ********************************************************************************/
 
+/** @} (end addtogroup Target)      */
+/** @} (end addtogroup Nucleo)      */
 
 #endif /* __TARGET_H__       */

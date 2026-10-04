@@ -2,7 +2,7 @@
  * @file  common_rx_interface.h
  * @brief Abstraction layer for the RX driver interface.
  *
- * @ingroup   Rc
+ * @ingroup   ComRxInterface
  * @version   V0.0
  * @author    David Arnaiz
  * @copyright 2025 David Arnaiz
@@ -19,6 +19,22 @@
 #include "rx_interface.h"
 #include "target.h"
 
+
+/** @addtogroup App
+ *   @{
+ */
+
+/** @addtogroup Rc
+ *   @{
+ */
+
+/** @addtogroup RxDriver
+ *   @{
+ */
+
+/** @addtogroup ComRxInterface
+ *   @{
+ */
 
 /********************************************************************************
  * Driver definitions
@@ -69,4 +85,9 @@ static inline void ComRxInt_CheckInterface(void) {
 }
 
 
-#endif /* __COMMON_RX_INT_H__       */
+/** @} (end addtogroup ComRxInterface)  */
+/** @} (end addtogroup RxDriver)        */
+/** @} (end addtogroup Rc)              */
+/** @} (end addtogroup App)             */
+
+#endif /* __COMMON_RX_INT_H__           */

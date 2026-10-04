@@ -32,6 +32,10 @@
 
 #include "plt_types.h"
 
+/** \addtogroup Plt
+ *   @{
+ */
+
 /** \addtogroup PltAssert
  *   @{
  */
@@ -152,5 +156,7 @@ void PltAssert_WarningAssert(const char* file, uint32_t line);
 #define PLT_BUILD_ASSERT(expr) ((void)sizeof(char[1 - 2 * !(expr)]))
 
 
-/** @} (end addtogroup PltAssert)  */
-#endif /* __PLT_ASSERTS_H__     */
+/** @} (end addtogroup PltAssert)   */
+/** @} (end addtogroup Plt)         */
+
+#endif /* __PLT_ASSERTS_H__         */

@@ -2,7 +2,7 @@
  * @file  model.h
  * @brief Maintainer for the stick inputs and vehicle attitude model.
  *
- * @ingroup   Main
+ * @ingroup   Model
  * @version   V0.0
  * @author    David Arnaiz
  * @copyright 2026 David Arnaiz
@@ -20,6 +20,18 @@
 #include "rc_subs.h"
 #include "target.h"
 
+
+/** @addtogroup App
+ *    @{
+ */
+
+/** @addtogroup Controller
+ *    @{
+ */
+
+/** @addtogroup Model
+ *    @{
+ */
 
 /********************************************************************************
  * Defines
@@ -91,5 +103,10 @@ void   Model_UpdateAttitude(MODEL_ATTITUDE_T* p_attitude);
 void Model_GetRcSetpoint(MODEL_RC_SETPOINT_T* p_frame);
 void Model_GetPosition(MODEL_POS_T* p_pos);
 void Model_GetAttitude(MODEL_ATTITUDE_T* p_attitude);
+
+
+/** @} (end addtogroup Model)      */
+/** @} (end addtogroup Controller)  */
+/** @} (end addtogroup App)         */
 
 #endif /* __MODELS_H__      */

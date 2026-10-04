@@ -18,6 +18,23 @@
 #include "plt_types.h"
 #include "plt_utils.h"
 
+
+/** @addtogroup App
+ *   @{
+ */
+
+/** @addtogroup Rc
+ *   @{
+ */
+
+/** @addtogroup RxDriver
+ *   @{
+ */
+
+/** @addtogroup Sbus
+ *   @{
+ */
+
 /********************************************************************************
  * Defines
  ********************************************************************************/
@@ -27,5 +44,11 @@
 #define SBUS_FRAME_SIZE_BYTES    (25U)
 
 #define SBUS_SERIAL_BAUDRATE (100000U) // Real: (100000U) Fake: (115200)
+
+
+/** @} (end addtogroup Sbus)        */
+/** @} (end addtogroup RxDriver)    */
+/** @} (end addtogroup Rc)          */
+/** @} (end addtogroup App)         */
 
 #endif /* __SBUS_H__    */

@@ -2,7 +2,7 @@
  * @file      rx.h
  * @brief     Radio Control module - Rx from the radio.
  *
- * @ingroup   Main
+ * @ingroup   Rc
  * @version   V0.0
  * @author    David Arnaiz
  * @copyright 2025 David Arnaiz
@@ -15,6 +15,15 @@
 #define __RC_H__
 
 #include "plt_types.h"
+
+
+/** @addtogroup App
+ *   @{
+ */
+
+/** @addtogroup Rc
+ *   @{
+ */
 
 /********************************************************************************
  * Defines
@@ -32,5 +41,9 @@
  * API
  ********************************************************************************/
 bool_t Rc_Init(void);
+
+
+/** @} (end addtogroup Rc)          */
+/** @} (end addtogroup App)         */
 
 #endif /* __RC_H__      */

@@ -2,7 +2,7 @@
  * @file  vehicle_int.h
  * @brief Definition of the generic vehicle interface.
  *
- * @ingroup   VehicleInt
+ * @ingroup   Vehicles
  * @version   V0.0
  * @author    David Arnaiz
  * @copyright 2026 David Arnaiz
@@ -16,6 +16,22 @@
 
 #include "plt_types.h"
 
+
+/** @addtogroup App
+ *    @{
+ */
+
+/** @addtogroup Controller
+ *    @{
+ */
+
+/** @addtogroup Vehicles
+ *    @{
+ */
+
+/** @addtogroup Fwd
+ *    @{
+ */
 
 /********************************************************************************
  * Defines
@@ -74,4 +90,8 @@ typedef struct {
  ********************************************************************************/
 
 
-#endif /* __VEHICLE_INT_H__       */
+/** @} (end addtogroup Vehicles)    */
+/** @} (end addtogroup Controller)  */
+/** @} (end addtogroup App)         */
+
+#endif /* __VEHICLE_INT_H__         */

@@ -2,7 +2,7 @@
  * @file  fwd.c
  * @brief Controller for the fwd (four wheel drive) vehicle.
  *
- * @ingroup   FWD
+ * @ingroup   Fwd
  * @version   V0.0
  * @author    David Arnaiz
  * @copyright 2026 David Arnaiz
@@ -24,10 +24,21 @@
 #include "rc_subs.h"
 
 
-/** @addtogroup FWD
+/** @addtogroup App
  *    @{
  */
 
+/** @addtogroup Controller
+ *    @{
+ */
+
+/** @addtogroup Vehicles
+ *    @{
+ */
+
+/** @addtogroup Fwd
+ *    @{
+ */
 
 /********************************************************************************
  * Defines
@@ -165,4 +176,7 @@ void Fwd_Disarm(void) {
     );
 }
 
-/** @} (end addtogroup FWD)  */
+/** @} (end addtogroup Fwd)         */
+/** @} (end addtogroup Vehicles)    */
+/** @} (end addtogroup Controller)  */
+/** @} (end addtogroup App)         */

@@ -18,6 +18,22 @@
 #include "target.h"
 
 
+/** @addtogroup App
+ *   @{
+ */
+
+/** @addtogroup Rc
+ *   @{
+ */
+
+/** @addtogroup RxDriver
+ *   @{
+ */
+
+/** @addtogroup ComRxBus
+ *   @{
+ */
+
 /********************************************************************************
  * Bus Handler
  ********************************************************************************/
@@ -33,5 +49,10 @@ typedef SERIAL_HANDLER_T COM_RX_BUS_HANDLER_T;
 extern const COM_RX_BUS_HANDLER_T ComRxBus_BusHandler;
 COM_RX_BUS_HANDLER_T              ComRxBus_GetBusHandler(void);
 
+
+/** @} (end addtogroup ComRxBus)    */
+/** @} (end addtogroup RxDriver)    */
+/** @} (end addtogroup Rc)          */
+/** @} (end addtogroup App)         */
 
 #endif /* __COMMON_RX_BUS_H__       */

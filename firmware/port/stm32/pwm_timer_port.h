@@ -2,12 +2,12 @@
  * @file  pwm_timer_port.h
  * @brief STM32 specific defines for the PWM timer channels.
  *
- * @ingroup   DrivePwmTimerPort
+ * @ingroup   PwmTimerStm32
  * @version   V0.0
  * @author    David Arnaiz
  * @copyright 2025 David Arnaiz
  *
- * This file is part of BeepyRC <TODO: link to repo>.
+ * This file is part of BeepyRC (https://github.com/ElectronPlant/beepy_rc).
  * This project is licensed under the GNU General Public License v3.0 license.
  */
 
@@ -18,6 +18,18 @@
 
 #include "hal_includes.h"
 
+
+/** @addtogroup Port
+ *   @{
+ */
+
+/** @addtogroup PwmTimer
+ *   @{
+ */
+
+/** @addtogroup PwmTimerStm32
+ *   @{
+ */
 
 /********************************************************************************
  * Defines
@@ -51,5 +63,10 @@ typedef struct {
 
     const PWM_TIM_PORT_CHN_T* Channels[PWM_TIM_PORT_MAX_NUM_CHANNELS];
 } PWM_TIM_PORT_T;
+
+
+/** @} (end addtogroup PwmTimerStm32) */
+/** @} (end addtogroup PwmTimer)      */
+/** @} (end addtogroup Port)          */
 
 #endif /* __PWM_TIMER_PORT_H__       */

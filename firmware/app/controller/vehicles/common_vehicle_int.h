@@ -21,6 +21,18 @@
 #include "vehicle_int.h"
 
 
+/** @addtogroup App
+ *    @{
+ */
+
+/** @addtogroup Controller
+ *    @{
+ */
+
+/** @addtogroup Vehicles
+ *    @{
+ */
+
 /********************************************************************************
  * Driver definitions
  ********************************************************************************/
@@ -60,5 +72,9 @@ static inline void ComVInt_CheckInterface(void) {
     PLT_BUILD_ASSERT(NULL != CVInt_Interface.VInt_Disarm);
 }
 
+
+/** @} (end addtogroup Vehicles)    */
+/** @} (end addtogroup Controller)  */
+/** @} (end addtogroup App)         */
 
 #endif /* __COMMON_VEHICLE_INT_H__       */
