@@ -14,3 +14,8 @@ This project consists of multiple parts, each licensed differently:
    This includes all files in /docs unless specified otherwise.
    Licensed under Creative Commons Attribution-ShareAlike 4.0 International (CC BY-SA 4.0).
    See /docs/LICENSE for the full text.
+
+4. MECHANICAL / ENCLOSURE (CAD files, STLs, etc.):
+   This includes all files in /mech unless specified otherwise.
+   Licensed under the CERN Open Hardware License Version 2 - Strongly Reciprocal (CERN-OHL-S).
+   See /mech/LICENSE for the full text.

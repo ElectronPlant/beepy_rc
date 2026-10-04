@@ -49,12 +49,11 @@ nav:
     - Getting Started:
         - getting_started/setup.md
         - getting_started/hardware.md
-    - Info:
-        - info/motor_driver.md
-        - info/sbus.md
+    - Notes:
+        - notes/motor_driver.md
+        - notes/sbus.md
     - About:
         - about/credits.md
-        - license.md
     - Source:
         - template/files.md
         - Modules:

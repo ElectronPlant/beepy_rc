@@ -23,17 +23,17 @@ FrSky RSII:
 
 * [RSSI is on CH16](https://drones.stackexchange.com/questions/803/how-do-i-set-up-the-rssi-readout-on-an-xm-receiver-channel)
 
-SBUS information:
+about SBUS information:
 
 * [info](https://uwarg-docs.atlassian.net/wiki/spaces/ZP/pages/2238283817/SBUS+Protocol)
 
 
 Update Taranis
 
-* https://blog.georgi-yanev.com/quick-tips/how-to-flash-taranis-q-x7-internal-module/
-* https://oscarliang.com/flash-taranis-internal-module/
-* Software: https://www.frsky-rc.com/taranis-q-x7-3/
+* (tutorial 1)[https://blog.georgi-yanev.com/quick-tips/how-to-flash-taranis-q-x7-internal-module/]
+* (tutorial 2)[https://oscarliang.com/flash-taranis-internal-module/]
+* (Taranis software)[https://www.frsky-rc.com/taranis-q-x7-3/]
 
 Nice to have:
 
-* https://raw.githubusercontent.com/mrRobot62/betaflight_processing/refs/heads/BF4.3/bf-4.3_processing-workflow.drawio.svg
+* (Betaflight block diagram)[https://raw.githubusercontent.com/mrRobot62/betaflight_processing/refs/heads/BF4.3/bf-4.3_processing-workflow.drawio.svg]

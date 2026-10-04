@@ -1,14 +1,12 @@
 # BeepyRC
-Hobby project to see if I can connect multiple spare parts I have around my house to make a radio
-controlled rover. This is a project I'm doing for fun in my spare time, so there are no warranties
-of operation or delivery.
+Hobby project to make a RC rover platform using spare RC parts. The goal of this project is to develop a complete platform to support long term RC assisted missions.
 
 ## Project Roadmap
-* [ ] __Release 1: Minimum Viable Rover__
+* [ ] __Release 1: PoC Nerf Blaster FPV Rover__
     * [x] Receive and parse the RC frames.
     * [x] Use RC inputs to control motors.
     * [x] Custom hardware for the RC rover.
-    * [ ] Control servos with aux channels (camera pan/tilt, fire nerf gun).
+    * [X] Control servos with aux channels (camera pan/tilt, fire nerf gun).
     * [ ] 3D printed case.
 * [ ] __Release 2: Sensor-Assisted Rover__
     * [ ] Motor encoders for precise individual motor adjustments.
@@ -20,36 +18,36 @@ of operation or delivery.
 * [ ] __Release 4: Autonomous Robotic Platform__
 
 
-## Summary
-
-The following high-level plan will be followed:
-
-* Everything will start on a STM32 Nucleo-F446RE board. Then, it will progress to a custom board. Refer to the [Hardware page](getting_started/hardware.md) for more information.
-* The task scheduling will be done using [FreeRTOS](https://www.freertos.org/).
-* Radio control setpoints will be received using a MX+ FrSky receiver, which is connected to the MCU through SBUS.
-* 4 * Simple motors will be used to move the rover.
-* VTx will be used too, yet to be defined.
-
 ---
 
-## Releases
+# Releases
 
-### Firmware Releases
-No releases yet.
+Release table linking releases with the supported versions and tags.
 
-### Hardware
+| Release     | FW Version | HW Version        | Mech Version |
+|-------------|------------|-------------------|--------------|
+| __Rel. 1__  | FWv0.0     | beepyRcBrd_rev0.0 | TODO         |
 
-#### BeepyRcBrd Rev0.0
 
-Initial release of the four wheel drive rover with preliminary support for all planned features.
+# Versions
 
-* [Schematics](beepyRcBrd/rev_0_0/beepyRcBrd_rev_0_0.pdf)
-* [Reworks](beepyRcBrd/rev_0_0/reworks.md)
-* [Fabrication Files](beepyRcBrd/rev_0_0/fabrication_files.zip)
+Each component has its own versioning which are independent from the releases. This allows reusing a given version on multiple releases, or having multiple versions compatible between releases for patches and improvements.
 
-Checkout the [design notes](beepyRcBrd/pcb_notes.md).
+## Firmware Versions
 
-### Mechanical
+| Version     | Tag        | Description|
+|-------------|------------|------------|
+| __V 0.0__ | [FWv0.0](https://github.com/ElectronPlant/beepy_rc/releases/tag/FWv0.0)    | Minimal features for Release 1 |
+
+
+## Hardware
+
+| Version | Tag | Schematics | Reworks | Fabrication Files| Description |
+|---|---|---|---|---|---|
+| __REV 0.0__ | [beepyRcBrd_rev0.0](https://github.com/ElectronPlant/beepy_rc/tree/beepyRcBrd_rev0.0)| [Schematics](beepyRcBrd/rev_0_0/beepyRcBrd_rev_0_0.pdf) | [Reworks](beepyRcBrd/rev_0_0/reworks.md) |[Fabrication Files](beepyRcBrd/rev_0_0/fabrication_files.zip)| Preliminary support for all planned features. Checkout the [design notes](beepyRcBrd/rev_0_0/design_notes.md). |
+
+
+## Mechanical
 
 No releases yet.
 
@@ -72,24 +70,6 @@ The design files for the custom PCB are located in the ```hardware/``` directory
 
 The 3D printed case is located in the ```mechanical/``` directory.
 
-## License
-
-This project consists of multiple parts, each licensed differently:
-
-1. FIRMWARE/CODE:
-   This includes all files in ```/firmware``` unless specified otherwise.
-   Licensed under the GNU General Public License v3.0.
-   See ```/firmware/LICENSE``` for the full text.
-
-2. HARDWARE (Schematics, PCB, Gerbers, BOMs, etc):
-   This includes all files in ```/hardware``` unless specified otherwise.
-   Licensed under the CERN Open Hardware License Version 2 - Strongly Reciprocal (CERN-OHL-S).
-   See ```/hardware/LICENSE``` for the full text.
-
-3. DOCUMENTATION (images, documentation, etc.):
-   This includes all files in ```/docs``` unless specified otherwise.
-   Licensed under Creative Commons Attribution-ShareAlike 4.0 International (CC BY-SA 4.0).
-   See ```/docs/LICENSE``` for the full text.
 
 ## Credits
 This projects uses external libraries that are documented in the ```NOTICE.md``` file in the
